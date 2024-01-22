@@ -3,7 +3,11 @@
 </script>
 
 <template>
-  <main>
-
-  </main>
+    <div>
+        
+    </div>
 </template>
+
+<style>
+
+</style>
