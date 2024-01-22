@@ -4,14 +4,16 @@
             <!-- 이메일 , 비밀번호 입력 폼  -->
             <form @submit.prevent="logIn">
                 <div class="logininput">
-                    <input type="text" placeholder="email" v-model.trim="useremail">
+                    email
+                    <input type="text" placeholder="email" v-model.trim="useremail">    
                 </div>
                 <div class="logininput">
+                    password
                     <input type="text" placeholder="password" v-model.trim="password">
                 </div>
-                <div>
-                    <input type="submit" value="로그인">
-                </div>
+               
+                <button type="submit">로그인</button>
+              
             </form>
             
 
