@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
+import LoginView from '../views/account/LoginView.vue'
+import RegisterView from '../views/account/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,18 +19,19 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     },
-    
-    
-    
-    
-    
-    
-    
-    {
+    { 
+      // 로그인
       path: '/login',
       name: 'login',
       component: LoginView
-    }
+    },
+    { 
+      // 회원가입 수의사 일반 사용자 선택
+      path: '/register',
+      name: 'register',
+      component: RegisterView
+    },
+    
   ]
 })
 
