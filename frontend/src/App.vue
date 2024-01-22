@@ -1,35 +1,19 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-
+import LoginView from './views/account/LoginView.vue';
+import RegisterView from './views/account/RegisterView.vue';
 
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <v-card
-        loading
-        title="Card title"
-        subtitle="Subtitle"
-        text="..."
-      >
-        <v-card-actions>
-          <v-btn>Click me</v-btn>
-        </v-card-actions>
-      </v-card>
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/login">로그인</RouterLink>
+        <RouterLink to="/register">회원가입</RouterLink>
       </nav>
-    </div>
   </header>
-
   <RouterView />
 </template>
 
