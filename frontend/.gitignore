@@ -1,30 +1,23 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Created by https://www.toptal.com/developers/gitignore/api/vuejs,vue
+# Edit at https://www.toptal.com/developers/gitignore?templates=vuejs,vue
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
-*.local
+### Vue ###
+# gitignore template for Vue.js projects
+#
+# Recommended template: Node.gitignore
 
-/cypress/videos/
-/cypress/screenshots/
+# TODO: where does this rule come from?
+docs/_book
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# TODO: where does this rule come from?
+test/
 
-*.tsbuildinfo
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+
+# End of https://www.toptal.com/developers/gitignore/api/vuejs,vue
