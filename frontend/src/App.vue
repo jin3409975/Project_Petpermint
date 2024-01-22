@@ -9,16 +9,6 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-      <v-card
-        loading
-        title="Card title"
-        subtitle="Subtitle"
-        text="..."
-      >
-        <v-card-actions>
-          <v-btn>Click me</v-btn>
-        </v-card-actions>
-      </v-card>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
