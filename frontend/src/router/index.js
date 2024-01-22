@@ -106,34 +106,67 @@ const router = createRouter({
       redirect: { name: 'reserve-user' },
       children: [
         {
-          path: 'user',
-          name: 'reserve-user',
+          path: 'initial',
+          name: 'reserve-initial',
           component: '',
           redirect: { name: '' },
           children: [
             {
               path: 'date',
-              name: 'reserve-user-date',
+              name: 'reserve-initial-date',
               component: '',
             },
             {
               path: 'hospital',
-              name: 'reserve-user-hospital',
+              name: 'reserve-initial-hospital',
               component: '',
             },
             {
               path: 'time',
-              name: 'reserve-user-time',
+              name: 'reserve-initial-time',
               component: '',
             },
             {
               path: 'pet',
-              name: 'reserve-user-pet',
+              name: 'reserve-initial-pet',
               component: '',
             },
             {
               path: 'complete',
-              name: 'reserve-user-complete',
+              name: 'reserve-initial-complete',
+              component: '',
+            },
+          ],
+        },
+        {
+          path: 'appoint',
+          name: 'reserve-appoint',
+          component: '',
+          redirect: { name: '' },
+          children: [
+            {
+              path: 'date',
+              name: 'reserve-appoint-date',
+              component: '',
+            },
+            {
+              path: 'hospital',
+              name: 'reserve-appoint-hospital',
+              component: '',
+            },
+            {
+              path: 'time',
+              name: 'reserve-appoint-time',
+              component: '',
+            },
+            {
+              path: 'pet',
+              name: 'reserve-appoint-pet',
+              component: '',
+            },
+            {
+              path: 'complete',
+              name: 'reserve-appoint-complete',
               component: '',
             },
           ],
