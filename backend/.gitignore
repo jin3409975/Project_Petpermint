@@ -37,3 +37,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### FrontEnd build files ###
+/src/main/resources/dist/
