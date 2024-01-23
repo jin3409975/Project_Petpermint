@@ -11,7 +11,7 @@ import Footer from '@/components/Footer.vue'
     <v-app>
         <Navbar />
         <v-main>
-            <MainView />
+            <RouterView />
         </v-main>
         <Footer />
     </v-app>

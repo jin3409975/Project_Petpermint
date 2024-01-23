@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/MainView.vue'
+// import HomeView from '../views/MainView.vue'
 import RegisterView from '../views/account/RegisterView.vue'
 import LoginView from '../views/account/LoginView.vue'
+
+import Main from '@/components/Main.vue'
 import RegisterUser from '../components/RegisterUser.vue'
+import MainView from '@/views/MainView.vue'
+
+import RegisterType from '@/components/RegisterType.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,13 +15,13 @@ const router = createRouter({
         {
             path: '/',
             name: 'main',
-            component: HomeView,
-            redirect: { name: 'main-default' },
+            component: MainView,
+            redirect: { name: 'main-home' },
             children: [
                 {
-                    path: 'default',
-                    name: 'main-default',
-                    component: ''
+                    path: '/',
+                    name: 'main-home',
+                    component: Main
                 },
                 {
                     path: 'user',
@@ -39,7 +44,7 @@ const router = createRouter({
                 {
                     path: '/',
                     name: 'register-home',
-                    component: ''
+                    component: RegisterType
                 },
                 {
                     path: 'vet',
