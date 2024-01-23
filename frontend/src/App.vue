@@ -7,15 +7,28 @@ import LoginView from './views/account/LoginView.vue';
 </script>
 
 <template>
-  <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">로그인</RouterLink>
-        <RouterLink to="/register">회원가입</RouterLink>
-      </nav>
-  </header>
-  <RouterView />
+    <v-app>
+        <Navbar/>
+        <v-main>
+            <Home/>
+        </v-main>
+        <Footer/>
+    </v-app>
 </template>
 
-<style scoped>
+<script>
+import Navbar from '@/components/Navbar.vue'
+import Home from '@/components/Home.vue'
+import Footer from '@/components/Footer.vue'
+
+export default {
+    components: {
+        Navbar,
+        Home,
+        Footer
+    }
+}
+</script>
+
+<style>
 </style>
