@@ -9,9 +9,9 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import RegisterVetView from '@/views/account/RegisterVetView.vue'
-import RegisterUserView from '@/views/account/RegisterUserView.vue'
+// import { RouterLink, RouterView } from 'vue-router'
+// import RegisterVetView from '@/views/account/RegisterVetView.vue'
+// import RegisterUserView from '@/views/account/RegisterUserView.vue'
 </script>
 
 <style>
