@@ -2,11 +2,15 @@
 import '@mdi/font/css/materialdesignicons.css' // MDI CSS 임포트
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
+import { createVuetify, VuetifyDateAdapter } from 'vuetify'
 
 Vue.use(Vuetify)
 
-export default new Vuetify({
+export default createVuetify({
     icons: {
-        iconfont: 'mdi', // MDI 아이콘 사용 설정
+        iconfont: 'mdi' // MDI 아이콘 사용 설정
     },
+    date: {
+        adapter: VuetifyDateAdapter
+    }
 })
