@@ -1,17 +1,12 @@
 <script setup>
 import MainTopBanner from '@/components/MainTopBanner.vue'
+import MainLifeBanner from '@/components/MainLifeBanner.vue'
 </script>
 
 <template>
     <div>
         <MainTopBanner />
-    </div>
-    <div class="carousel">
-        <!-- 홍보 배너 캐로셀 -->
-    </div>
-
-    <div>
-        <p>라이브 방송 캐로셀</p>
+        <MainLifeBanner />
     </div>
 </template>
 
