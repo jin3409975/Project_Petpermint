@@ -1,11 +1,9 @@
-<script>
-export default {
-    computed: {
-        logoUrl() {
-            return new URL('@/assets/img/logo.png', import.meta.url).href
-        }
-    }
-}
+<script setup>
+import { computed } from 'vue'
+
+const logoUrl = computed(() => {
+    return new URL('@/assets/img/logo.png', import.meta.url).href
+})
 </script>
 
 <template>
