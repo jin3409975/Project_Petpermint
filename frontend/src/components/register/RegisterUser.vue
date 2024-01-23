@@ -1,9 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { useAccountStore } from '@/stores/account.js'
-import Complete from '@/components/register/Complete.vue'
+import { useRouter } from 'vue-router'
+// import { useAccountStore } from '@/stores/account.js'
+// import Complete from '@/components/register/Complete.vue'
 
-const store = useAccountStore()
+const router = useRouter()
+// const store = useAccountStore()
+
 const username = ref(null)
 const email = ref(null)
 const address = ref(null)
@@ -13,18 +16,19 @@ const password2 = ref(null)
 
 // 회원가입 폼 / 회원가입이 완료 컴포넌트
 // const showSignUpForm = ref(true)
-const showSignUpComplete = ref(false)
+// const showSignUpComplete = ref(false)
 
 const signUp = function () {
-    const payload = {
-        username: username.value,
-        email: email.value,
-        address: address.value,
-        phone: phone.value,
-        password1: password1.value,
-        password2: password2.value
-    }
-    store.signUp(payload)
+    // const payload = {
+    //     username: username.value,
+    //     email: email.value,
+    //     address: address.value,
+    //     phone: phone.value,
+    //     password1: password1.value,
+    //     password2: password2.value
+    // }
+    // store.signUp(payload) (추후 개발시 활성화)
+    router.push({ name: 'register-complete' })
 
     // 데이터가 잘 전달 되면 회원가입 완료 페이지 띄우기(추후수정)
     //   try {
@@ -57,7 +61,7 @@ const signUp = function () {
         </form>
     </div>
     <!-- `showSignUpComplete`이 true이면 회원가입 완료 화면을 표시합니다. -->
-    <Complete v-if="showSignUpComplete" />
+    <!-- <Complete v-if="showSignUpComplete" /> -->
 </template>
 
 <style></style>

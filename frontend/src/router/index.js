@@ -2,12 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import HomeView from '../views/MainView.vue'
 import RegisterView from '../views/account/RegisterView.vue'
 import LoginView from '../views/account/LoginView.vue'
-
-import Main from '@/components/Main.vue'
-import RegisterUser from '../components/RegisterUser.vue'
 import MainView from '@/views/MainView.vue'
 
-import RegisterType from '@/components/RegisterType.vue'
+import Main from '@/components/Main.vue'
+import RegisterType from '@/components/register/RegisterType.vue'
+import RegisterComplete from '@/components/register/RegisterComplete.vue'
+import RegisterUser from '@/components/register/RegisterUser.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,7 +66,7 @@ const router = createRouter({
                 {
                     path: 'complete',
                     name: 'register-complete',
-                    component: ''
+                    component: RegisterComplete
                 }
             ]
         },
