@@ -7,6 +7,8 @@ import Main from '@/components/Main.vue'
 import RegisterUser from '../components/RegisterUser.vue'
 import MainView from '@/views/MainView.vue'
 
+import RegisterType from '@/components/RegisterType.vue'
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -17,7 +19,7 @@ const router = createRouter({
             redirect: { name: 'main-home' },
             children: [
                 {
-                    path: 'home',
+                    path: '/',
                     name: 'main-home',
                     component: Main
                 },
@@ -42,7 +44,7 @@ const router = createRouter({
                 {
                     path: '/',
                     name: 'register-home',
-                    component: ''
+                    component: RegisterType
                 },
                 {
                     path: 'vet',
