@@ -1,3 +1,11 @@
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HomeView from './views/HomeView.vue';
+import RegisterView from './views/account/RegisterView.vue';
+import LoginView from './views/account/LoginView.vue';
+
+</script>
+
 <template>
     <v-app>
         <Navbar/>
