@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useAccountStore } from '@/stores/account.js'
-import Complete from './Complete.vue'
+import Complete from '@/components/register/Complete.vue'
+
 const store = useAccountStore()
 const username = ref(null)
 const email = ref(null)
@@ -11,7 +12,7 @@ const password1 = ref(null)
 const password2 = ref(null)
 
 // 회원가입 폼 / 회원가입이 완료 컴포넌트
-const showSignUpForm = ref(true)
+// const showSignUpForm = ref(true)
 const showSignUpComplete = ref(false)
 
 const signUp = function () {
