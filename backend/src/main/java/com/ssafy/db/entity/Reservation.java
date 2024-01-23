@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * 유저 모델 정의.
+ * 예약 모델 정의.
  */
 @Entity
 @Getter
