@@ -10,8 +10,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("UserRegisterPostRequest")
-public class UserRegisterPostReq {
+@ApiModel("NormalUserRegisterPostRequest")
+public class NormalUserRegisterPostReq {
 	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
 	String userId;
 	@ApiModelProperty(name="유저 Password", example="your_password")
