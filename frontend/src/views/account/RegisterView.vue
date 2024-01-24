@@ -1,13 +1,20 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import RegisterType from '@/components/register/RegisterType.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 import RegisterUser from '@/components/register/RegisterUser.vue'
 
-const selectedType = ref(null)
+const router = useRouter()
+const selectedType = ref('')
 
 const setType = (type) => {
     selectedType.value = type
+    if (type === 'vet') {
+        router.push({ name: 'register-vet' })
+    } else if (type === 'user') {
+        router.push({ name: 'register-user' })
+    }
 }
 </script>
 
