@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 
 const logoUrl = computed(() => {
     return new URL('@/assets/img/logo.png', import.meta.url).href
-});
+})
 
 const router = useRouter()
 
