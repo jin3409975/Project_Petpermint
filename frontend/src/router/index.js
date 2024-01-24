@@ -4,8 +4,9 @@ import RegisterView from '../views/account/RegisterView.vue'
 import LoginView from '../views/account/LoginView.vue'
 import MainView from '@/views/MainView.vue'
 
-import Main from '@/components/Main.vue'
+import Main from '@/components/main/Main.vue'
 import RegisterType from '@/components/register/RegisterType.vue'
+import RegisterVet from '@/components/register/RegisterVet.vue'
 import RegisterComplete from '@/components/register/RegisterComplete.vue'
 import RegisterUser from '@/components/register/RegisterUser.vue'
 
@@ -49,7 +50,7 @@ const router = createRouter({
                 {
                     path: 'vet',
                     name: 'register-vet',
-                    component: ''
+                    component: RegisterVet
                 },
                 {
                     path: 'user',
