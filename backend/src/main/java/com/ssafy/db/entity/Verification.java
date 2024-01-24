@@ -2,7 +2,6 @@ package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,18 +16,9 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @ToString
-public class User{
+public class Verification{
 
     @Id
     String userId;
-    String userName;
-    String address;
-    String phone;
-    int type;
-    String picture;
-    int isDelete;
-
-    @JsonIgnore
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String password;
+    String verificationCode;
 }
