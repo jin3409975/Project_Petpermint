@@ -16,12 +16,12 @@ import '@mdi/font/css/materialdesignicons.css'
 const app = createApp(App)
 
 const vuetify = createVuetify({
-    components,
+  components,
   directives,
   icons: {
-    iconfont: 'mdi',
-    },
-  })
+    iconfont: 'mdi'
+  }
+})
 
 app.use(createPinia())
 app.use(router)
