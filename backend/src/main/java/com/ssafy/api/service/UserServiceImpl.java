@@ -167,4 +167,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
+
+	void test() {}
 }
