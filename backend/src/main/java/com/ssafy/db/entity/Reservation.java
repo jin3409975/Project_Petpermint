@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Reservation extends BaseEntity{
 
     @Id
@@ -27,9 +29,4 @@ public class Reservation extends BaseEntity{
     int hospitalNo;
     String userId;
 
-
-
-//    @JsonIgnore
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    String password;
 }
