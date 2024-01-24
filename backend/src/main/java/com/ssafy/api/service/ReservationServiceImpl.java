@@ -20,6 +20,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	ReservationRepository reservationRepository;
 	@Override
+//	상담 예약 생성
 	public boolean createConsultReservation(ReservationRegisterPostReq reservationRegisterPostReq) {
 		Reservation reservation = new Reservation();
 		reservation.setTime(reservationRegisterPostReq.getTime());
@@ -29,5 +30,19 @@ public class ReservationServiceImpl implements ReservationService {
 		Reservation result = reservationRepository.save(reservation);
 
         return result != null;
+	}
+
+
+//	병원 예약 생성
+	public boolean createHospitalReservation(ReservationRegisterPostReq reservationRegisterPostReq) {
+		Reservation reservation = new Reservation();
+		reservation.setTime(reservationRegisterPostReq.getTime());
+		reservation.setType(2);
+		reservation.setUserId(reservationRegisterPostReq.getUserId());
+		reservation.setHospitalNo(reservationRegisterPostReq.getHospitalNo());
+
+		Reservation result = reservationRepository.save(reservation);
+
+		return result != null;
 	}
 }

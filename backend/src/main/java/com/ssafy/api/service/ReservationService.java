@@ -10,5 +10,6 @@ import com.ssafy.db.entity.User;
  */
 public interface ReservationService {
 	boolean createConsultReservation(ReservationRegisterPostReq reservationRegisterPostReq);
+	boolean createHospitalReservation(ReservationRegisterPostReq reservationRegisterPostReq);
 
 }

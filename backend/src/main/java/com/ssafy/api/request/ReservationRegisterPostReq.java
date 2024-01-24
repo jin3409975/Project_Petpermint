@@ -15,14 +15,15 @@ import lombok.ToString;
 @ApiModel("ReservationRegisterPostRequest")
 public class ReservationRegisterPostReq {
 	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
-//	int appointId;
-//
-//	String diagnosis;
-//	String note;
-//	int type;
-//	int isDelete;
-//	String licenseNumber;
-//	int hospitalNo;
+	int appointId;
+
+	String diagnosis;
+	String note;
+	int type;
+	int isDelete;
+	String licenseNumber;
+	int hospitalNo;
+
 	String userId;
 	String time;
 }
