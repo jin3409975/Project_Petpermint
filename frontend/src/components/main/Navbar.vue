@@ -1,9 +1,16 @@
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 const logoUrl = computed(() => {
     return new URL('@/assets/img/logo.png', import.meta.url).href
-})
+});
+
+const router = useRouter()
+
+const navigateToRegister = () => {
+    router.push({ name: 'register-home' })
+}
 </script>
 
 <template>
@@ -24,8 +31,8 @@ const logoUrl = computed(() => {
 
             <!-- 오른쪽 항목: 로그인, 회원가입 버튼 -->
             <div class="d-flex justify-end">
-                <v-btn text>로그인</v-btn>
-                <v-btn text>회원가입</v-btn>
+                <v-btn>로그인</v-btn>
+                <v-btn text @click="navigateToRegister">회원가입</v-btn>
             </div>
         </div>
     </v-app-bar>
