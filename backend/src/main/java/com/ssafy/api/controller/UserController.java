@@ -1,14 +1,10 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.ExpertUserRegisterPostReq;
-import com.ssafy.api.request.NormalUserRegisterPostReq;
-import com.ssafy.api.request.RecoverReq;
-import com.ssafy.api.request.UserLoginPostReq;
-import com.ssafy.api.response.ExpertUserRes;
-import com.ssafy.api.response.RecoverRes;
-import com.ssafy.api.response.UserLoginPostRes;
-import com.ssafy.api.response.UserRes;
+import com.ssafy.api.request.*;
+import com.ssafy.api.response.*;
+import com.ssafy.api.service.AnimalService;
 import com.ssafy.common.util.JwtTokenUtil;
+import com.ssafy.db.entity.Animal;
 import com.ssafy.db.entity.ExpertUser;
 import com.ssafy.db.entity.Verification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +38,9 @@ public class UserController {
 	UserService userService;
 
 	@Autowired
+	AnimalService animalService;
+
+	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@PostMapping("/signup/normal")
@@ -53,8 +53,6 @@ public class UserController {
     })
 	public ResponseEntity<? extends BaseResponseBody> signupNormal(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) NormalUserRegisterPostReq registerInfo) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-
 		if(userService.createNormalUser(registerInfo)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -67,13 +65,10 @@ public class UserController {
 	@ApiOperation(value = "수의사 회원 가입", notes = "<strong>아이디, 패스워드, 이름, 면허번호, 소개, 진료 가능 시간</strong>을 통해 회원가입 한다.")
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공"),
-        @ApiResponse(code = 401, message = "인증 실패"),
-        @ApiResponse(code = 404, message = "사용자 없음"),
-        @ApiResponse(code = 500, message = "서버 오류")
+        @ApiResponse(code = 400, message = "실패")
     })
 	public ResponseEntity<? extends BaseResponseBody> signupExpert(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) ExpertUserRegisterPostReq registerInfo) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		if(userService.createExpertUser(registerInfo)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -85,16 +80,11 @@ public class UserController {
 	@ApiOperation(value = "일반 사용자 정보 조회", notes = "로그인 되어 있는 일반 사용자의 아이디를 기반으로 정보를 조회한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> meNormal(
 			@ApiParam(value="현재 로그인 되어 있는 아이디", required = true) String userId) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		User user = userService.getUserByUserId(userId);
-		System.out.println("UserId  = " + userId);
-		System.out.println("User = " + user);
 		if(user != null) {
 			return ResponseEntity.status(200).body(UserRes.of(200, "Success", user));
 		} else {
@@ -106,13 +96,10 @@ public class UserController {
 	@ApiOperation(value = "수의사 사용자 정보 조회", notes = "로그인 되어 있는 수의사 사용자의 아이디를 기반으로 정보를 조회한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> meExpert(
 			@ApiParam(value="현재 로그인 되어 있는 아이디", required = true) String userId) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		User user = userService.getUserByUserId(userId);
 		ExpertUser expertUser = userService.getExpertUserByUserId(userId);
 		if(user != null) {
@@ -126,13 +113,10 @@ public class UserController {
 	@ApiOperation(value = "이메일 인증 신청", notes = "사용자가 작성한 이메일 주소로 랜덤한 6자리 숫자를 보내는 이메일 인증을 신청한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> emailRequest(
 			@ApiParam(value="이메일 인증에 사용 할 이메일 주소", required = true) String userId) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		boolean result = userService.createVerification(userId);
 		if(result) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
@@ -145,13 +129,10 @@ public class UserController {
 	@ApiOperation(value = "이메일 인증 검증", notes = "사용자가 요청한 이메일 인증을 검증한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> emailValidate(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) Verification verification) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		if(userService.emailValidate(verification)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -184,10 +165,8 @@ public class UserController {
 	@PostMapping("/recover/id")
 	@ApiOperation(value = "아이디 찾기", notes = "<strong>이름과 전화번호</strong>를 통해 아이디를 찾는다.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
-			@ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
-			@ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
-			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<RecoverRes> recoverId(@RequestBody @ApiParam(value="로그인 정보", required = true) RecoverReq recoverReq) {
 		String userName = recoverReq.getUserName();
@@ -206,10 +185,8 @@ public class UserController {
 	@PostMapping("/recover/password")
 	@ApiOperation(value = "비밀번호 초기화", notes = "<strong>아이디와 이름, 이메일 인증</strong>를 통해 패스워드를 변경한다.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
-			@ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
-			@ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
-			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<BaseResponseBody> recoverPassword(@RequestBody @ApiParam(value="로그인 정보", required = true) RecoverReq recoverReq) {
 		String userId = recoverReq.getUserId();
@@ -227,15 +204,10 @@ public class UserController {
 	@ApiOperation(value = "일반 사용자 정보 수정", notes = "현재 로그인 한 유저의 아이디를 통해 해당 유저의 비밀번호, 이름, 프로필 사진을 수정한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateNormal(
 			 @ApiParam(value="수정할 회원 정보") @RequestBody Map<String, Object> params) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-		System.out.println("params = " + params.toString());
-
 		if(userService.userUpdateNormal(params)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -247,15 +219,10 @@ public class UserController {
 	@ApiOperation(value = "일반 사용자 정보 수정", notes = "현재 로그인 한 유저의 아이디를 통해 해당 유저의 비밀번호, 이름, 프로필 사진을 수정한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateExpert(
 			@ApiParam(value="수정할 회원 정보") @RequestBody Map<String, Object> params) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-		System.out.println("params = " + params.toString());
-
 		if(userService.userUpdateNormal(params) && userService.userUpdateExpert(params)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -267,15 +234,88 @@ public class UserController {
 	@ApiOperation(value = "사용자 삭제", notes = "현재 로그인 한 유저의 아이디를 통해 해당 유저의 정보를 삭제한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> deleteUser(
 			@ApiParam(value="수정할 회원 정보") String userId) {
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음
-		System.out.println("delete = " + userId);
 		if(userService.deleteUser(userId)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+	@PostMapping("/pet/create")
+	@ApiOperation(value = "반려동물 정보 추가", notes = "<strong>이름, 사진, 종, 나이, 정보, 무게, 성별, 사용자 아이디</strong>을 통해 반려동물 정보를 추가한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> petCreate(
+			@RequestBody @ApiParam(value="반려동물 정보", required = true) AnimalReq animalReq) {
+		if(animalService.animalCreate(animalReq)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+	@GetMapping("/pet/data")
+	@ApiOperation(value = "반려동물 정보 조회", notes = "사용자 아이디를 입력받아 해당 사용자의 반려동물 정보를 모두 출력한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> petData(
+			@ApiParam(value="반려동물 소유 유저 아이디", required = true) String userId) {
+		List<Animal> result = animalService.findAllAnimalByUserId(userId);
+		if(result != null) {
+			return ResponseEntity.status(200).body(AnimalListRes.of(200,"Success", result));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+	@GetMapping("/pet/detail")
+	@ApiOperation(value = "반려동물 상세 정보", notes = "반려동물 고유 아이디를 통해 반려동물 상세 정보를 조회한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> petDetail(
+			@ApiParam(value="반려동물 고유 아이디", required = true) int animalId) {
+		Animal animal = animalService.findAnimalByAnimalId(animalId);
+		if(animal != null) {
+			return ResponseEntity.status(200).body(AnimalRes.of(200,"Success", animal));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+	@PutMapping("/pet/update")
+	@ApiOperation(value = "반려동물 정보 수정", notes = "반려동물의 정보를 수정한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> petUpdate(
+			@ApiParam(value="수정할 반려동물 정보") @RequestBody AnimalReq animalReq) {
+		if(animalService.animalUpdate(animalReq)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+	@DeleteMapping("/pet/delete")
+	@ApiOperation(value = "반려동물 정보 삭제", notes = "반려동물 고유 아이디를 통해 해당 반려동물의 정보를 삭제한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> petDelete(
+			@ApiParam(value="삭제할 반려동물 고유 아이디") int animalId) {
+		if(animalService.animalDelete(animalId)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));

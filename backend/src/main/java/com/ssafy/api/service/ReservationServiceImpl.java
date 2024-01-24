@@ -1,7 +1,6 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.ReservationRegisterPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ReservationRepository;
