@@ -1,12 +1,15 @@
-<script setup></script>
+<script setup>
+const emit = defineEmits(['type-selected'])
+
+const selectType = (type) => {
+    emit('type-selected', type)
+}
+</script>
 
 <template>
     <div>
-        <!-- 회원가입 뷰
-        <RouterLink to="/register/vet">수의사</RouterLink> -->
-
-        <RouterLink to="/register/user">일반회원</RouterLink>
-        <p>수의사 회원가입</p>
+        <button @click="selectType('vet')">수의사</button>
+        <button @click="selectType('user')">일반 유저</button>
     </div>
 </template>
 
