@@ -8,13 +8,13 @@ import Footer from '@/components/main/Footer.vue'
 </script>
 
 <template>
-    <v-app>
-        <Navbar />
-        <v-main>
-            <RouterView />
-        </v-main>
-        <Footer />
-    </v-app>
+  <v-app>
+    <Navbar />
+    <v-main>
+      <RouterView />
+    </v-main>
+    <Footer />
+  </v-app>
 </template>
 
 <style></style>
