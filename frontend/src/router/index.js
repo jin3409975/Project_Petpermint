@@ -20,7 +20,7 @@ const router = createRouter({
             redirect: { name: 'main-home' },
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: 'main-home',
                     component: Main
                 },
@@ -43,7 +43,7 @@ const router = createRouter({
             redirect: { name: 'register-home' },
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: 'register-home',
                     component: RegisterType
                 },
@@ -78,7 +78,7 @@ const router = createRouter({
             redirect: { name: 'login-home' },
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: 'login-home',
                     component: ''
                 },
