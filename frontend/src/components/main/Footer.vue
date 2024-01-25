@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-
 // 반응형 데이터 icons 정의
 const icons = ref(['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'])
 
