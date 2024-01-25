@@ -1,5 +1,7 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.ConsultReservationUpdatePutReq;
+import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.api.response.ConsultReservationRes;
 import com.ssafy.api.response.HospitalReservationRes;
@@ -9,7 +11,6 @@ import com.ssafy.db.entity.Reservation;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -79,6 +80,22 @@ public class ReservationController {
 	}
 
 
+	@PutMapping("/consult/update")
+	@ApiOperation(value = "상담 예약 수정", notes = "상담 예약 정보 수정")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 404, message = "상담 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> updateConsultReservation(
+			@RequestBody @ApiParam(value = "상담 예약 수정 정보", required = true) ConsultReservationUpdatePutReq consultReservationUpdatePutReq) {
+		if (reservationService.updateConsultReservation(consultReservationUpdatePutReq)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "상담 예약이 없습니다."));
+		}
+	}
+
 
 
 
@@ -137,6 +154,22 @@ public class ReservationController {
 		}
 
 		return ResponseEntity.status(200).body(HospitalReservationRes.ofHospital(reservation));
+	}
+
+	@PutMapping("/hospital/update")
+	@ApiOperation(value = "병원 예약 수정", notes = "병원 예약 정보 수정")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 404, message = "병원 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> updateHospitalReservation(
+			@RequestBody @ApiParam(value = "병원 예약 수정 정보", required = true) HospitalReservationUpdatePutReq hospitalReservationUpdatePutReq) {
+		if (reservationService.updateHospitalReservation(hospitalReservationUpdatePutReq)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "상담 예약이 없습니다."));
+		}
 	}
 
 }

@@ -20,9 +20,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // 특정 사용자의 상담 & 병원 예약 개별 조회
     Reservation findByAppointId(int appointId);
 
-
-    // 상담 예약 수정
-
-
-
 }

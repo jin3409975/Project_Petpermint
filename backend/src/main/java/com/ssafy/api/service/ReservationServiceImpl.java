@@ -1,5 +1,7 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.ConsultReservationUpdatePutReq;
+import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
 import com.ssafy.db.repository.ReservationRepository;
@@ -43,7 +45,23 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 //	상담 예약 수정
+	public boolean updateConsultReservation(ConsultReservationUpdatePutReq consultReservationUpdatePutReq) {
+		Reservation reservation = reservationRepository.findByAppointId(consultReservationUpdatePutReq.getAppointId());
 
+		if (reservation == null) {
+			return false; // 해당 예약이 존재하지 않으면 수정 실패
+		}
+
+		// 예약 정보 업데이트
+		reservation.setTime(consultReservationUpdatePutReq.getTime());
+		reservation.setLicenseNumber(consultReservationUpdatePutReq.getLicenseNumber());
+		reservation.setNote(consultReservationUpdatePutReq.getNote());
+
+		// Repository를 통해 업데이트
+		reservationRepository.save(reservation);
+
+		return true;
+	}
 
 
 
@@ -71,5 +89,24 @@ public class ReservationServiceImpl implements ReservationService {
 	// 특정 사용자의 병원 예약 개별 조회
 	public Reservation getHospitalReservation(int appointId) {
 		return reservationRepository.findByAppointId(appointId);
+	}
+
+	// 병원 예약 수정
+	public boolean updateHospitalReservation(HospitalReservationUpdatePutReq hospitalReservationUpdatePutReq) {
+		Reservation reservation = reservationRepository.findByAppointId(hospitalReservationUpdatePutReq.getAppointId());
+
+		if (reservation == null) {
+			return false; // 해당 예약이 존재하지 않으면 수정 실패
+		}
+
+		// 예약 정보 업데이트
+		reservation.setTime(hospitalReservationUpdatePutReq.getTime());
+		reservation.setHospitalNo(hospitalReservationUpdatePutReq.getHospitalNo());
+		reservation.setNote(hospitalReservationUpdatePutReq.getNote());
+
+		// Repository를 통해 업데이트
+		reservationRepository.save(reservation);
+
+		return true;
 	}
 }
