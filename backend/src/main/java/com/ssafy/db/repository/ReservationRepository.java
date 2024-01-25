@@ -14,6 +14,15 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     // 아래와 같이, Query Method 인터페이스(반환값, 메소드명, 인자) 정의를 하면 자동으로 Query Method 구현됨.
 
-    // 상담 예약 전체 조회
-    List<Reservation> findByType(int type);
+    // 특정 사용자의 상담 & 병원 예약 전체 조회
+    List<Reservation> findByTypeAndAndUserId(int type, String userId);
+
+    // 특정 사용자의 상담 & 병원 예약 개별 조회
+    Reservation findByAppointId(int appointId);
+
+
+    // 상담 예약 수정
+
+
+
 }
