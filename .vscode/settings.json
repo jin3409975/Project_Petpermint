@@ -7,5 +7,6 @@
   "indentRainbow.ignoreErrorLanguages": ["*"],
   "javascript.updateImportsOnFileMove.enabled": "always",
   "vue.updateImportsOnFileMove.enabled": true,
-  "markdown.updateLinksOnFileMove.enabled": "always"
+  "markdown.updateLinksOnFileMove.enabled": "always",
+  "git.autofetch": true
 }
