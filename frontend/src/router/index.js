@@ -14,7 +14,7 @@ import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
 import ReserveDate from '@/components/reserve/ReserveDate.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
-import ReserveTime from '@/components/reserves/ReserveTlme.vue'
+import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
 
 const router = createRouter({
