@@ -42,13 +42,13 @@ function formatDate(selectedDate) {
 
 <template>
   <div>
+    <p>날짜 선택 페이지입니다</p>
     <v-app>
       <v-container>
         <v-date-picker v-model="selectedDate"></v-date-picker>
       </v-container>
     </v-app>
   </div>
-  Selected Date: {{ selectedDate }}
 </template>
-
+cd
 <style scoped></style>

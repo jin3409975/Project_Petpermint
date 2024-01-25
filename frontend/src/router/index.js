@@ -12,10 +12,12 @@ import RegisterUser from '@/components/register/RegisterUser.vue'
 
 import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
+import ReserveAppointView from '@/views/ReserveAppointView.vue'
 import ReserveDate from '@/components/reserve/ReserveDate.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
-import ReserveTime from '@/components/reserves/ReserveTlme.vue'
+import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
+import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -197,40 +199,40 @@ const router = createRouter({
             {
               path: 'complete',
               name: 'reserve-initial-complete',
-              component: ''
+              component: ReserveComplete
             }
           ]
         },
         {
           path: 'appoint',
           name: 'reserve-appoint',
-          component: '',
-          redirect: { name: '' },
+          component: ReserveAppointView,
+          redirect: { name: 'reserve-appoint-date' },
           children: [
             {
               path: 'date',
               name: 'reserve-appoint-date',
-              component: ''
+              component: ReserveDate
             },
             {
               path: 'hospital',
               name: 'reserve-appoint-hospital',
-              component: ''
+              component: ReserveHospital
             },
             {
               path: 'time',
               name: 'reserve-appoint-time',
-              component: ''
+              component: ReserveTime
             },
             {
               path: 'pet',
               name: 'reserve-appoint-pet',
-              component: ''
+              component: ReservePet
             },
             {
               path: 'complete',
               name: 'reserve-appoint-complete',
-              component: ''
+              component: ReserveComplete
             }
           ]
         },
