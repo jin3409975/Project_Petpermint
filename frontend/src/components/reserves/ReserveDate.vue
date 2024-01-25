@@ -14,7 +14,7 @@ export default {
     // reserveStore에 선택 날짜 저장
     const reserveStore = useReserveStore()
     const selectedDate = ref(null)
-    const formattedDate = ref('') // Define formattedDate within setup
+    const formattedDate = ref('')
 
     watchEffect(() => {
       formattedDate.value = formatDate(selectedDate.value)
@@ -23,11 +23,11 @@ export default {
 
     return {
       selectedDate,
-      formattedDate // Include formattedDate in the return statement
+      formattedDate
     }
   }
 }
-
+// ex 2024-01-24형태로 날짜 포맷
 function formatDate(selectedDate) {
   if (selectedDate) {
     const date = new Date(selectedDate)
@@ -48,7 +48,7 @@ function formatDate(selectedDate) {
       </v-container>
     </v-app>
   </div>
-  Selected Date: {{ selectedDate }} Formatted Date: {{ formattedDate }}
+  Selected Date: {{ selectedDate }}
 </template>
 
 <style scoped></style>

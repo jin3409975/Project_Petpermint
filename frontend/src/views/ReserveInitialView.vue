@@ -14,8 +14,7 @@ const selectedDate = computed(() => !!reserveStore.date)
     <p>초기상담페이지 입니다</p>
   </div>
   <ReserveDate />
-
-  <ReserveHospital v-if="selectedDate.value"></ReserveHospital>
+  <ReserveHospital></ReserveHospital>
   <ReserveTIme></ReserveTIme>
   <ReservePet></ReservePet>
 </template>
