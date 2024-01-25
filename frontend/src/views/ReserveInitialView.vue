@@ -1,7 +1,7 @@
 <script setup>
 import ReserveDate from '@/components/reserve/ReserveDate.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
-import ReserveTIme from '@/components/reserve/ReserveTIme.vue'
+import ReserveTIme from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
 import { useReserveStore } from '@/stores/reserve.js'
 import { computed } from 'vue'
