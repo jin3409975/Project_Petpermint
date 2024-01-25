@@ -133,7 +133,7 @@ const workRules = ref([
           hide-details="auto"
         ></v-text-field>
         <v-text-field
-          label="이름  *"
+          label="이름 *"
           v-model="name"
           :rules="nameRules"
           hide-details="auto"
