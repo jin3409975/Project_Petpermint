@@ -14,6 +14,9 @@ const navigateToRegister = () => {
 const navigateToInitial = () => {
   router.push({ name: 'reserve-initial' })
 }
+const navigateToAppoint = () => {
+  router.push({ name: 'reserve-appoint' })
+}
 </script>
 
 <template>
@@ -23,7 +26,7 @@ const navigateToInitial = () => {
       <div class="d-flex justify-start">
         <v-btn text>Home</v-btn>
         <v-btn text @click="navigateToInitial">초기 상담예약</v-btn>
-        <v-btn text>병원 진료예약</v-btn>
+        <v-btn text @click="navigateToAppoint">병원 진료예약</v-btn>
         <v-btn text>라이프케어</v-btn>
       </div>
 
