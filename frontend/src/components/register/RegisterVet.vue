@@ -25,6 +25,8 @@ const address = ref(null)
 // const showSignUpForm = ref(true)
 // const showSignUpComplete = ref(false)
 
+const snackbar = ref(false)
+
 const signUp = function () {
   // const payload = {
   //     email: email.value,
@@ -42,7 +44,12 @@ const signUp = function () {
   //     address: address.value,
   // }
   // store.signUp(payload) (추후 개발시 활성화)
-  router.push({ name: 'register-complete' })
+  snackbar.value = true // 회원가입 완료 시 스낵바 표시
+
+  // 스낵바가 표시된 후 일정 시간이 지난 후 페이지 이동
+  setTimeout(() => {
+    router.push({ name: 'main-home' })
+  }, 3000) // 예: 3초 후 이동
 
   // 데이터가 잘 전달 되면 회원가입 완료 페이지 띄우기(추후수정)
   //   try {
@@ -184,7 +191,17 @@ const workRules = ref([
         <v-text-field label="나머지 주소" v-model="address" hide-details="auto"></v-text-field>
       </div>
       <div class="button-container">
-        <v-btn type="submit" variant="outlined" class="submit-btn">회원가입</v-btn>
+        <v-btn type="submit" color="indigo" @click="signUp">회원가입</v-btn>
+
+        <v-snackbar v-model="snackbar" :timeout="3000" vertical>
+          <div class="text-subtitle-1 pb-2">회원가입이 완료되었습니다.</div>
+
+          <p>인증과정에 1~2일 가량 소요될 수 있습니다.</p>
+
+          <p>홈페이지로 이동합니다.</p>
+
+          <template v-slot:actions> </template>
+        </v-snackbar>
       </div>
     </form>
   </div>
