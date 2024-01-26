@@ -1,16 +1,10 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 const pets = ref([createPet()]) // 반려동물 정보 배열
-
-const radios = ref(null)
-const type = ref(null)
-const petname = ref(null)
-const petage = ref(null)
-const more = ref(null)
 
 const rules = {
   radios: [(v) => !!v || '반려동물의 종류를 선택해주세요.'],
@@ -45,14 +39,29 @@ function removePetForm(index) {
   }
 }
 
-const signUp = function () {
-  // const payload = {
-  //     type: type.value,
-  //     petname: petname.value,
-  //     petage: petage.value,
-  //     more: more.value,
-  // }
-  router.push({ name: 'register-complete' })
+// 모든 폼이 유효한지 확인하는 계산된 속성
+const allFormsValid = computed(() => {
+  return pets.value.every((pet) => pet.type && pet.petname && pet.petage && pet.radios)
+})
+
+// 최소 하나의 폼이 완전히 입력되었는지 확인하는 계산된 속성
+const atLeastOneFormComplete = computed(() => {
+  return pets.value.some((pet) => pet.type && pet.petname && pet.petage && pet.radios)
+})
+
+// 회원가입 버튼 클릭 시 실행되는 함수
+const signUp = () => {
+  if (atLeastOneFormComplete.value) {
+    if (allFormsValid.value) {
+      // 모든 데이터가 유효한 경우, 회원가입 진행
+      // 데이터 전송 로직
+      router.push({ name: 'register-complete' })
+    } else {
+      alert('모든 폼의 입력을 완료해주세요.')
+    }
+  } else {
+    alert('최소 하나의 폼을 완전히 입력해주세요.')
+  }
 }
 </script>
 
@@ -92,7 +101,6 @@ const signUp = function () {
         <div class="button-row">
           <v-btn @click="removePetForm(index)">삭제하기</v-btn>
           <v-spacer></v-spacer>
-          <!-- 공간 분할 -->
           <v-btn @click="addPetForm">추가하기</v-btn>
         </div>
       </div>
