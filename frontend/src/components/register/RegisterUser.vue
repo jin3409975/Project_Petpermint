@@ -33,7 +33,7 @@ const signUp = function () {
   //     address2: address2.value,
   // }
   // store.signUp(payload) (추후 개발시 활성화)
-  router.push({ name: 'register-complete' })
+  router.push({ name: 'register-pet' })
 
   // 데이터가 잘 전달 되면 회원가입 완료 페이지 띄우기(추후수정)
   //   try {
