@@ -12,10 +12,12 @@ import RegisterUser from '@/components/register/RegisterUser.vue'
 
 import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
+import ReserveAppointView from '@/views/ReserveAppointView.vue'
 import ReserveDate from '@/components/reserve/ReserveDate.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
+import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
