@@ -1,8 +1,9 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.ConsultReservationUpdatePutReq;
+import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
-import com.ssafy.db.entity.User;
 
 import java.util.List;
 
@@ -12,13 +13,24 @@ import java.util.List;
 public interface ReservationService {
 	// 상담 예약 생성
 	boolean createConsultReservation(ReservationRegisterPostReq reservationRegisterPostReq);
-	// 상담 예약 전체 조회
-	List<Reservation> getAllConsultReservations();
+	// 특정 사용자의 상담 예약 전체 조회
+	List<Reservation> getAllConsultReservations(String userId);
+	// 특정 사용자의 상담 예약 개별 조회
+	Reservation getConsultReservation(int appointId);
+	// 상담 예약 수정
+	boolean updateConsultReservation(ConsultReservationUpdatePutReq consultReservationUpdatePutReq);
+
+
+
 
 	// 병원 예약 생성
 	boolean createHospitalReservation(ReservationRegisterPostReq reservationRegisterPostReq);
-	// 병원 예약 전체 조회
-	List<Reservation> getAllHospitalReservations();
+	// 특정 사용자의 병원 예약 전체 조회
+	List<Reservation> getAllHospitalReservations(String userId);
+	// 특정 사용자의 병원 예약 개별 조회
+	Reservation getHospitalReservation(int appointId);
+	// 병원 예약 수정
+	boolean updateHospitalReservation(HospitalReservationUpdatePutReq hospitalReservationUpdatePutReq);
 }
 
 

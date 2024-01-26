@@ -7,23 +7,17 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 예약 관리 API ([POST]/api/v1/reserve) 요청에 필요한 리퀘스트 바디 정의.
+ * 예약 관리 API ([PUT]/api/v1/reserve) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter
 @ToString
-@ApiModel("ConsultReservationRegisterPostRequest")
-public class ReservationRegisterPostReq {
+@ApiModel("HospitalReservationUpdatePutRequest")
+public class HospitalReservationUpdatePutReq {
 	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
 	int appointId;
-
-	String diagnosis;
-	String note;
-	int type;
-	int isDelete;
-	String licenseNumber;
-	int hospitalNo;
-
-	String userId;
 	String time;
+	int hospitalNo;
+	String note;
+
 }
