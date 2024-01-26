@@ -19,7 +19,8 @@ public interface ReservationService {
 	Reservation getConsultReservation(int appointId);
 	// 상담 예약 수정
 	boolean updateConsultReservation(ConsultReservationUpdatePutReq consultReservationUpdatePutReq);
-
+	// 상담 예약 삭제
+	boolean deleteConsultReservation(int appointId);
 
 
 
@@ -31,6 +32,8 @@ public interface ReservationService {
 	Reservation getHospitalReservation(int appointId);
 	// 병원 예약 수정
 	boolean updateHospitalReservation(HospitalReservationUpdatePutReq hospitalReservationUpdatePutReq);
+	// 병원 예약 삭제
+	boolean deleteHospitalReservation(int appointId);
 }
 
 

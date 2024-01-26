@@ -63,6 +63,24 @@ public class ReservationServiceImpl implements ReservationService {
 		return true;
 	}
 
+//	상담 예약 삭제
+	public boolean deleteConsultReservation(int appointId) {
+		Reservation reservation = reservationRepository.findByAppointId(appointId);
+
+		if (reservation == null) {
+			return false; // 해당 예약이 존재하지 않으면 삭제 실패
+		}
+
+		// 삭제
+		reservation.setIsDelete(1);
+//		reservation.setLicenseNumber(consultReservationDeleteDeleteReq.getLicenseNumber());
+//		reservation.setNote(consultReservationDeleteDeleteReq.getNote());
+
+		// Repository를 통해 업데이트
+		reservationRepository.save(reservation);
+
+		return true;
+}
 
 
 
@@ -103,6 +121,25 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setTime(hospitalReservationUpdatePutReq.getTime());
 		reservation.setHospitalNo(hospitalReservationUpdatePutReq.getHospitalNo());
 		reservation.setNote(hospitalReservationUpdatePutReq.getNote());
+
+		// Repository를 통해 업데이트
+		reservationRepository.save(reservation);
+
+		return true;
+	}
+
+	//	상담 예약 삭제
+	public boolean deleteHospitalReservation(int appointId) {
+		Reservation reservation = reservationRepository.findByAppointId(appointId);
+
+		if (reservation == null) {
+			return false; // 해당 예약이 존재하지 않으면 삭제 실패
+		}
+
+		// 삭제
+		reservation.setIsDelete(1);
+//		reservation.setLicenseNumber(consultReservationDeleteDeleteReq.getLicenseNumber());
+//		reservation.setNote(consultReservationDeleteDeleteReq.getNote());
 
 		// Repository를 통해 업데이트
 		reservationRepository.save(reservation);

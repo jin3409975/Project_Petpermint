@@ -4,6 +4,7 @@ import com.ssafy.api.request.ConsultReservationUpdatePutReq;
 import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.api.response.ConsultReservationRes;
+import com.ssafy.api.response.EmergencyReservationRes;
 import com.ssafy.api.response.HospitalReservationRes;
 import com.ssafy.api.service.ReservationService;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -55,10 +56,10 @@ public class ReservationController {
 			@ApiResponse(code = 404, message = "상담 예약 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<List<ConsultReservationRes>> getAllConsultReservationInfo(@ApiIgnore String userId) {
+	public ResponseEntity<ConsultReservationRes> getAllConsultReservationInfo(@ApiIgnore String userId) {
 		List<Reservation> reservations = reservationService.getAllConsultReservations(userId);
-		List<ConsultReservationRes> reservationResList = ConsultReservationRes.listOfConsult(reservations);
-		return ResponseEntity.status(200).body(reservationResList);
+
+		return ResponseEntity.status(200).body(ConsultReservationRes.ofConsult(200,"Success",reservations));
 	}
 
 
@@ -73,10 +74,10 @@ public class ReservationController {
 	public ResponseEntity<ConsultReservationRes> getConsultReservationInfo(@PathVariable int appointId) {
 		Reservation reservation = reservationService.getHospitalReservation(appointId);
 		if (reservation == null) {
-			return ResponseEntity.status(404).body(null); // 예약이 없을 경우 404 응답.
+			return ResponseEntity.status(404).body(ConsultReservationRes.ofConsult(400,"Fail",reservation)); // 예약이 없을 경우 404 응답.
 		}
 
-		return ResponseEntity.status(200).body(ConsultReservationRes.ofConsult(reservation));
+		return ResponseEntity.status(200).body(ConsultReservationRes.ofConsult(200,"Success",reservation));
 	}
 
 
@@ -97,6 +98,20 @@ public class ReservationController {
 	}
 
 
+	@DeleteMapping("/consult/delete")
+	@ApiOperation(value = "상담 예약 삭제", notes = "상담 예약 삭제")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> deleteConsultReservation(
+			@ApiParam(value="수정할 회원 정보") int appointId) {
+		if(reservationService.deleteConsultReservation(appointId)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
 
 
 
@@ -130,12 +145,10 @@ public class ReservationController {
 			@ApiResponse(code = 404, message = "병원 예약 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<List<HospitalReservationRes>> getAllHospitalReservationInfo(@ApiIgnore String userId) {
+	public ResponseEntity<HospitalReservationRes> getAllHospitalReservationInfo(@ApiIgnore String userId) {
 		List<Reservation> reservations = reservationService.getAllHospitalReservations(userId);
-		List<HospitalReservationRes> reservationResList = HospitalReservationRes.listOfHospital(reservations);
-		System.out.println(reservations.toString());
-		System.out.println(reservationResList.toString());
-		return ResponseEntity.status(200).body(reservationResList);
+
+		return ResponseEntity.status(200).body(HospitalReservationRes.ofHospital(200,"Success",reservations));
 	}
 
 
@@ -150,10 +163,10 @@ public class ReservationController {
 	public ResponseEntity<HospitalReservationRes> getHospitalReservationInfo(@PathVariable int appointId) {
 		Reservation reservation = reservationService.getHospitalReservation(appointId);
 		if (reservation == null) {
-			return ResponseEntity.status(404).body(null); // 예약이 없을 경우 404 응답.
+			return ResponseEntity.status(404).body(HospitalReservationRes.ofHospital(400,"Fail",reservation)); // 예약이 없을 경우 404 응답.
 		}
 
-		return ResponseEntity.status(200).body(HospitalReservationRes.ofHospital(reservation));
+		return ResponseEntity.status(200).body(HospitalReservationRes.ofHospital(200,"Success",reservation));
 	}
 
 	@PutMapping("/hospital/update")
@@ -169,6 +182,21 @@ public class ReservationController {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "상담 예약이 없습니다."));
+		}
+	}
+
+	@DeleteMapping("/hospital/delete")
+	@ApiOperation(value = "병원 예약 삭제", notes = "병원 예약 삭제")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> deleteHospitalReservation(
+			@ApiParam(value="수정할 회원 정보") int appointId) {
+		if(reservationService.deleteHospitalReservation(appointId)) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 		}
 	}
 
