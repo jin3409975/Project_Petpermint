@@ -49,13 +49,20 @@ const atLeastOneFormComplete = computed(() => {
   return pets.value.some((pet) => pet.type && pet.petname && pet.petage && pet.radios)
 })
 
+const snackbar = ref(false)
+
 // 회원가입 버튼 클릭 시 실행되는 함수
 const signUp = () => {
   if (atLeastOneFormComplete.value) {
     if (allFormsValid.value) {
       // 모든 데이터가 유효한 경우, 회원가입 진행
       // 데이터 전송 로직
-      router.push({ name: 'register-complete' })
+      snackbar.value = true // 회원가입 완료 시 스낵바 표시
+
+      // 스낵바가 표시된 후 일정 시간이 지난 후 페이지 이동
+      setTimeout(() => {
+        router.push({ name: 'main-home' })
+      }, 3000) // 예: 3초 후 이동
     } else {
       alert('모든 폼의 입력을 완료해주세요.')
     }
@@ -105,7 +112,12 @@ const signUp = () => {
         </div>
       </div>
       <div class="button-container">
-        <v-btn type="submit" variant="outlined" class="submit-btn">회원가입</v-btn>
+        <v-btn type="submit" color="indigo" @click="signUp">회원가입</v-btn>
+
+        <v-snackbar v-model="snackbar" :timeout="3000" vertical>
+          <div class="text-subtitle-1 pb-2">회원가입이 완료되었습니다.</div>
+          <template v-slot:actions> </template>
+        </v-snackbar>
       </div>
     </form>
   </div>
