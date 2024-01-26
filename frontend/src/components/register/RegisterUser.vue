@@ -20,7 +20,7 @@ const address2 = ref(null)
 // const showSignUpForm = ref(true)
 // const showSignUpComplete = ref(false)
 
-const signUp = function () {
+const InfoConfirm = function () {
   // const payload = {
   //     email: email.value,
   //     confirm: confirm.value,
@@ -79,7 +79,7 @@ const address2Rules = ref([(v) => !!v || '나머지 주소도 입력해주세요
     <h1 class="title">일반 사용자 회원가입</h1>
     <h3>개인 및 계정 정보</h3>
     <!-- <form v-if="showSignUpForm" @submit.prevent="signUp"> -->
-    <form @submit.prevent="signUp" class="sign-up-form">
+    <form @submit.prevent="InfoConfirm" class="sign-up-form">
       <div>
         <v-text-field
           label="이메일 *"
