@@ -17,12 +17,5 @@ import java.util.List;
  */
 @Repository
 public interface VenueRepository extends JpaRepository<VenueData, Long> {
-    VideoRoom findByRoomIdAndIsDelete(int roomId, boolean isDelete);
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query(value = "update VideoRoom set startTime = :startTime, note = :note, roomName = :roomName" +
-            " where roomId = :roomId", nativeQuery = true )
-    List<VenueData> getList(@Param("category") String[] category, @Param("sido") String sido, @Param("gungu") String gungu, @Param("myungdong") String myungdong, @Param("venName") String venName);
 
 }

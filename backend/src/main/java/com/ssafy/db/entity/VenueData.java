@@ -2,6 +2,7 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Type;
 
@@ -24,8 +25,8 @@ public class VenueData extends BaseEntity{
     String category;
     String gungu;
     String myundong;
-    double lat;
-    double lon;
+    String lat;
+    String lon;
     int posNum;
     String roadAddr;
     String lotAddr;

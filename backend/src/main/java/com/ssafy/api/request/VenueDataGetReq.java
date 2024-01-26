@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 댓글 조회 API ([GET] /community/comment/data) 요청에 필요한 리퀘스트 바디 정의.
+ * 편의시설 API ([GET] /venue/data) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter

@@ -1,5 +1,6 @@
 package com.ssafy.api.response;
 
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.VenueData;
 import com.ssafy.db.entity.VideoRoom;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @ApiModel("VenueDataGetResponse")
-public class VenueDataGetRes {
+public class VenueDataGetRes extends BaseResponseBody {
 	@ApiModelProperty(name="Venue ID")
 	int dataNo;
 	String venName;
@@ -24,8 +25,8 @@ public class VenueDataGetRes {
 	String sido;
 	String gungu;
 	String myundong;
-	double lat;
-	double lon;
+	String lat;
+	String lon;
 	int posNum;
 	String roadAddr;
 	String lotAddr;
@@ -38,11 +39,13 @@ public class VenueDataGetRes {
 	String limit;
 
 
-	public static List<VenueDataGetRes> of(List<VenueData> datas) {
+	public static List<VenueDataGetRes> of(Integer statusCode, String message, List<VenueData> datas) {
 		List<VenueDataGetRes> resList=new ArrayList<VenueDataGetRes>();
 		for (VenueData data: datas) {
 			VenueDataGetRes res = new VenueDataGetRes();
 			res.setDataNo(data.getDataNo());
+			res.setStatusCode(statusCode);
+			res.setMessage(message);
 			res.setCategory(data.getCategory());
 			res.setSido(data.getSido());
 			res.setGungu(data.getGungu());

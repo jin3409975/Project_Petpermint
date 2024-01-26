@@ -36,10 +36,10 @@ public class VenueController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<List<VenueDataGetRes>> get(VenueDataGetReq dataInfo) {
+	public ResponseEntity<List<? extends BaseResponseBody>> get(VenueDataGetReq dataInfo) {
 		List<VenueData> dataList = venueService.dataVenue(dataInfo);
 
-		return ResponseEntity.status(200).body(VenueDataGetRes.of(dataList));
+		return ResponseEntity.status(200).body(VenueDataGetRes.of(200,"Success",dataList));
 	}
 
 

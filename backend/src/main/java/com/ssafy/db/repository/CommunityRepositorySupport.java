@@ -2,6 +2,7 @@ package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.CommunityUpdatePutReq;
+import com.ssafy.db.entity.QPostFiles;
 import com.ssafy.db.entity.QUserPost;
 
 import com.ssafy.db.entity.UserPost;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,6 +22,7 @@ public class CommunityRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
     QUserPost quserPost= QUserPost.userPost;
+    QPostFiles qpostFiles= QPostFiles.postFiles;
 
     public Optional<UserPost> findDataByPostId(int postId) {
         UserPost userPost = jpaQueryFactory.select(quserPost).from(quserPost)
@@ -65,5 +68,11 @@ public class CommunityRepositorySupport {
         return Optional.ofNullable(result);
     }
 
+
+    public Optional<Integer> findMaxPostId() {
+        int max= jpaQueryFactory.select(quserPost.postId.max()).from(quserPost).fetchOne();
+        if(max == 0) return Optional.empty();
+        return Optional.ofNullable(max);
+    }
 
 }
