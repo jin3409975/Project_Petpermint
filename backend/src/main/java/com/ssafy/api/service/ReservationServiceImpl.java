@@ -1,17 +1,15 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.ConsultReservationUpdatePutReq;
+import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
-import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ReservationRepository;
-import com.ssafy.db.repository.UserRepository;
-import com.ssafy.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *	예약 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -28,16 +26,45 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setTime(reservationRegisterPostReq.getTime());
 		reservation.setType(1);
 		reservation.setUserId(reservationRegisterPostReq.getUserId());
+		reservation.setLicenseNumber(reservationRegisterPostReq.getLicenseNumber());
+		reservation.setNote(reservationRegisterPostReq.getNote());
 
 		Reservation result = reservationRepository.save(reservation);
 
         return result != null;
 	}
 
-//	상담 예약 전체 조회
-	public List<Reservation> getAllConsultReservations() {
-		return reservationRepository.findByType(1); // 1은 상담 예약을 나타내는 타입.
+//	특정 사용자의 상담 예약 전체 조회
+	public List<Reservation> getAllConsultReservations(String userId) {
+		return reservationRepository.findByTypeAndAndUserId(1, userId); // 1은 상담 예약을 나타내는 타입.
 	}
+
+//  특정 사용자의 상담 예약 개별 조회
+	public Reservation getConsultReservation(int appointId) {
+		return reservationRepository.findByAppointId(appointId);
+	}
+
+//	상담 예약 수정
+	public boolean updateConsultReservation(ConsultReservationUpdatePutReq consultReservationUpdatePutReq) {
+		Reservation reservation = reservationRepository.findByAppointId(consultReservationUpdatePutReq.getAppointId());
+
+		if (reservation == null) {
+			return false; // 해당 예약이 존재하지 않으면 수정 실패
+		}
+
+		// 예약 정보 업데이트
+		reservation.setTime(consultReservationUpdatePutReq.getTime());
+		reservation.setLicenseNumber(consultReservationUpdatePutReq.getLicenseNumber());
+		reservation.setNote(consultReservationUpdatePutReq.getNote());
+
+		// Repository를 통해 업데이트
+		reservationRepository.save(reservation);
+
+		return true;
+	}
+
+
+
 
 
 //	병원 예약 생성
@@ -47,14 +74,39 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setType(2);
 		reservation.setUserId(reservationRegisterPostReq.getUserId());
 		reservation.setHospitalNo(reservationRegisterPostReq.getHospitalNo());
+		reservation.setNote(reservationRegisterPostReq.getNote());
 
 		Reservation result = reservationRepository.save(reservation);
 
 		return result != null;
 	}
 
-	// 병원 예약 전체 조회
-	public List<Reservation> getAllHospitalReservations() {
-		return reservationRepository.findByType(2); // 2는 병원 예약을 나타내는 타입.
+	// 특정 사용자의 병원 예약 전체 조회
+	public List<Reservation> getAllHospitalReservations(String userId) {
+		return reservationRepository.findByTypeAndAndUserId(2,userId); // 2는 병원 예약을 나타내는 타입.
+	}
+
+	// 특정 사용자의 병원 예약 개별 조회
+	public Reservation getHospitalReservation(int appointId) {
+		return reservationRepository.findByAppointId(appointId);
+	}
+
+	// 병원 예약 수정
+	public boolean updateHospitalReservation(HospitalReservationUpdatePutReq hospitalReservationUpdatePutReq) {
+		Reservation reservation = reservationRepository.findByAppointId(hospitalReservationUpdatePutReq.getAppointId());
+
+		if (reservation == null) {
+			return false; // 해당 예약이 존재하지 않으면 수정 실패
+		}
+
+		// 예약 정보 업데이트
+		reservation.setTime(hospitalReservationUpdatePutReq.getTime());
+		reservation.setHospitalNo(hospitalReservationUpdatePutReq.getHospitalNo());
+		reservation.setNote(hospitalReservationUpdatePutReq.getNote());
+
+		// Repository를 통해 업데이트
+		reservationRepository.save(reservation);
+
+		return true;
 	}
 }

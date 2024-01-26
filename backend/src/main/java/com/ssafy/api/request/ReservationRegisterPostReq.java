@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@ApiModel("ReservationRegisterPostRequest")
+@ApiModel("ConsultReservationRegisterPostRequest")
 public class ReservationRegisterPostReq {
 	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
 	int appointId;

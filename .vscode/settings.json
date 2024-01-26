@@ -4,5 +4,9 @@
   "editor.tabSize": 2,
   "editor.detectIndentation": true,
   "indentRainbow.colorOnWhiteSpaceOnly": true,
-  "indentRainbow.ignoreErrorLanguages": ["*"]
+  "indentRainbow.ignoreErrorLanguages": ["*"],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "vue.updateImportsOnFileMove.enabled": true,
+  "markdown.updateLinksOnFileMove.enabled": "always",
+  "git.autofetch": true
 }
