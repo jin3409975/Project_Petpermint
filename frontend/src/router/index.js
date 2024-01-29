@@ -22,6 +22,17 @@ import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
 import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
+import MypageView from '@/views/MypageView.vue'
+import MypageUserView from '@/views/MypageUserView.vue'
+import MypageVetView from '@/views/MypageVetView.vue'
+import MypageUserInfo from '@/components/mypage/MypageUserInfo.vue'
+import MypageUserListView from '@/views/MypageUserListView.vue'
+import MypageUserListCurrent from '@/components/mypage/MypageUserListCurrent.vue'
+import MypageUserListPast from '@/components/mypage/MypageUserListPast.vue'
+import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
+import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
+import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -166,40 +177,40 @@ const router = createRouter({
                 {
                   path: 'complete',
                   name: 'reserve-initial-complete',
-                  component: ''
+                  component: ReserveComplete
                 }
               ]
             },
             {
               path: 'appoint',
               name: 'reserve-appoint',
-              component: '',
-              redirect: { name: '' },
+              component: ReserveAppointView,
+              redirect: { name: 'reserve-appoint-date' },
               children: [
                 {
                   path: 'date',
                   name: 'reserve-appoint-date',
-                  component: ''
+                  component: ReserveDate
                 },
                 {
                   path: 'hospital',
                   name: 'reserve-appoint-hospital',
-                  component: ''
+                  component: ReserveDate
                 },
                 {
                   path: 'time',
                   name: 'reserve-appoint-time',
-                  component: ''
+                  component: ReserveTime
                 },
                 {
                   path: 'pet',
                   name: 'reserve-appoint-pet',
-                  component: ''
+                  component: ReservePet
                 },
                 {
                   path: 'complete',
                   name: 'reserve-appoint-complete',
-                  component: ''
+                  component: ReserveComplete
                 }
               ]
             },
@@ -279,35 +290,35 @@ const router = createRouter({
         {
           path: '/mypage',
           name: 'mypage',
-          component: '',
+          component: MypageView,
           redirect: { name: 'mypage-user' },
           children: [
             {
               path: 'user',
               name: 'mypage-user',
-              component: '',
+              component: MypageUserView,
               redirect: { name: 'mypage-user-info' },
               children: [
                 {
                   path: 'info',
                   name: 'mypage-user-info',
-                  component: ''
+                  component: MypageUserInfo
                 },
                 {
                   path: 'list',
                   name: 'mypage-user-list',
-                  component: '',
+                  component: MypageUserListView,
                   redirect: { name: 'mypage-user-list-current' },
                   children: [
                     {
                       path: 'current',
                       name: 'mypage-user-list-current',
-                      component: ''
+                      component: MypageUserListCurrent
                     },
                     {
                       path: 'past',
                       name: 'mypage-user-list-past',
-                      component: ''
+                      component: MypageUserListPast
                     }
                   ]
                 }
@@ -315,14 +326,14 @@ const router = createRouter({
             },
             {
               path: 'vet',
-              name: 'mypage-user',
-              component: '',
+              name: 'mypage-vet',
+              component: MypageVetView,
               redirect: { name: 'mypage-vet-info' },
               children: [
                 {
                   path: 'info',
                   name: 'mypage-vet-info',
-                  component: ''
+                  component: MypageVetInfo
                 },
                 {
                   path: 'list',
@@ -333,12 +344,12 @@ const router = createRouter({
                     {
                       path: 'current',
                       name: 'mypage-vet-list-current',
-                      component: ''
+                      component: MypageVetListCurrent
                     },
                     {
                       path: 'past',
                       name: 'mypage-vet-list-past',
-                      component: ''
+                      component: MypageVetListPast
                     }
                   ]
                 }
