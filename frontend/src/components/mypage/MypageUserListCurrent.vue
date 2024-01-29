@@ -2,7 +2,7 @@
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { myPageStore } from '@/stores/mypage.js'
-import { watchEffect, ref } from 'vue'
+import { ref } from 'vue'
 
 export default {
   components: {
