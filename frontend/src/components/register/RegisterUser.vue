@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 // import { useAccountStore } from '@/stores/account.js'
 // import Complete from '@/components/register/Complete.vue'
@@ -72,14 +72,48 @@ const phoneRules = ref([
 ])
 const address1Rules = ref([(v) => !!v || '자택 주소는 필수입니다.'])
 const address2Rules = ref([(v) => !!v || '나머지 주소도 입력해주세요.'])
+
+// stepper 정보
+const state = reactive({
+  step: 1,
+  items: ['개인 및 계정 정보', '마이 펫 정보', '회원가입 완료']
+})
 </script>
 
 <template>
-  <div class="sign-up-container">
+  <!-- 로고 -->
+  <!-- <RouterLink to="/">
+    <div class="auth-logo d-flex align-center gap-x-3">
+      <VNodeRenderer :nodes="themeConfig.app.logo" />
+      <h1 class="auth-title">
+        {{ themeConfig.app.title }}
+      </h1>
+    </div>
+  </RouterLink> -->
+
+  <v-row no-gutters class="auth-wrapper">
+    <v-col md="4" class="d-none d-md-flex">
+      <div class="d-flex align-center w-100 h-100 justify-end pa-10">
+        <img src="@/assets/img/doctor_dog.png" max-width="359" />
+      </div>
+    </v-col>
+    <v-col cols="12" md="8" class="auth-card-v2 d-flex align-center justify-center pa-10">
+      <v-card flat class="mt-12 mt-sm-0">
+        <v-stepper
+          v-model="step"
+          :items="items"
+          show-actions
+          :direction="$vuetify.display.smAndUp ? 'horizontal' : 'vertical'"
+        ></v-stepper>
+      </v-card>
+    </v-col>
+  </v-row>
+
+  <!-- <div class="sign-up-container">
     <h1 class="title">일반 사용자 회원가입</h1>
-    <h3>개인 및 계정 정보</h3>
-    <!-- <form v-if="showSignUpForm" @submit.prevent="signUp"> -->
-    <form @submit.prevent="InfoConfirm" class="sign-up-form">
+    <h3>개인 및 계정 정보</h3> -->
+  <!-- <form v-if="showSignUpForm" @submit.prevent="signUp"> -->
+  <!-- <form @submit.prevent="InfoConfirm" class="sign-up-form">
       <div>
         <v-text-field
           label="이메일 *"
@@ -134,12 +168,16 @@ const address2Rules = ref([(v) => !!v || '나머지 주소도 입력해주세요
         <v-btn type="submit" variant="outlined" class="submit-btn">다음</v-btn>
       </div>
     </form>
-  </div>
+  </div> -->
   <!-- `showSignUpComplete`이 true이면 회원가입 완료 화면을 표시합니다. -->
   <!-- <Complete v-if="showSignUpComplete" /> -->
 </template>
 
 <style>
+.auth-wrapper {
+  min-block-size: 100dvh;
+}
+
 .sign-up-container {
   display: flex;
   flex-direction: column;
