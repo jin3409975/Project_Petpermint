@@ -19,6 +19,8 @@ import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
 import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
+import AdminViewVue from '@/views/AdminView.vue'
+import AdminAcountVue from '@/components/admin/AdminAcount.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -340,13 +342,13 @@ const router = createRouter({
         {
           path: '/admin',
           name: 'admin',
-          component: '',
+          component: AdminViewVue,
           redirect: { name: 'admin-account' },
           children: [
             {
               path: 'account',
               name: 'admin-account',
-              component: ''
+              component: AdminAcountVue
             },
             {
               path: 'reserve',
