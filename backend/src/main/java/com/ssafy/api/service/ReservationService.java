@@ -4,6 +4,8 @@ import com.ssafy.api.request.ConsultReservationUpdatePutReq;
 import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
+import com.ssafy.db.join.ReservationExpertUserList;
+import com.ssafy.db.join.ReservationHospitalList;
 
 import java.util.List;
 
@@ -31,6 +33,10 @@ public interface ReservationService {
 	Reservation getHospitalReservation(int appointId);
 	// 병원 예약 수정
 	boolean updateHospitalReservation(HospitalReservationUpdatePutReq hospitalReservationUpdatePutReq);
+
+	List<ReservationExpertUserList> findAllAvailableExpert(String startTime, String endTime, String time);
+
+	List<ReservationHospitalList> findAllAvailableHospital(String time);
 }
 
 
