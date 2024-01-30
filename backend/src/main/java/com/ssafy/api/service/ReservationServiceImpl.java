@@ -75,7 +75,7 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setUserId(reservationRegisterPostReq.getUserId());
 		reservation.setHospitalNo(reservationRegisterPostReq.getHospitalNo());
 		reservation.setNote(reservationRegisterPostReq.getNote());
-
+		reservation.setAnimalId(reservationRegisterPostReq.getAnimalId());
 		Reservation result = reservationRepository.save(reservation);
 
 		return result != null;

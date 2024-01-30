@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 export const useReserveStore = defineStore('reserve', () => {
-  const router = useRouter();
+  const router = useRouter()
   // type : 1초기상담, 2 병원진료, 3 응급예약
   const type = ref(0)
   // 상담 날짜 date
@@ -29,7 +29,7 @@ export const useReserveStore = defineStore('reserve', () => {
     }
   ])
   const reservepet = ref('')
-  const reservepetindex = ref();
+  const reservepetindex = ref()
 
   const petList = ref(['초롱', '금동', '루이', '솔이', '코코'])
 
@@ -37,28 +37,48 @@ export const useReserveStore = defineStore('reserve', () => {
 
   function consultCreate() {
     axios({
-      method : 'post',
-      url : API_URL + 'consult/create',
-      data : {
-        userId : '123',
-        type : 1,
-        time : reservedate.value + " " + starttime.value,
-        licenseNumber : '12345',
-        animalId : reservepetindex.value
+      method: 'post',
+      url: API_URL + 'consult/create',
+      data: {
+        userId: '123',
+        type: 1,
+        time: reservedate.value + ' ' + starttime.value,
+        licenseNumber: '12345',
+        animalId: reservepetindex.value
       }
-    }).then(r => {
+    }).then((r) => {
       console.log(r)
       console.log(r.data.statusCode)
-      if(r.data.statusCode == 200) {
+      if (r.data.statusCode == 200) {
         console.log('qwewqeqweeqw')
-        router.push({ name: 'router.push' })
+        router.push({ name: 'reserve-initial-complete' })
+      }
+    })
+  }
+  function hospitalCreate() {
+    axios({
+      method: 'post',
+      url: API_URL + 'hospital/create',
+      data: {
+        userId: '123',
+        type: 2,
+        time: reservedate.value + ' ' + starttime.value,
+        hospitalNo: 30,
+        animalId: reservepetindex.value + 1
+      }
+    }).then((r) => {
+      console.log(r)
+      console.log(r.data.statusCode)
+      if (r.data.statusCode == 200) {
+        console.log('qwewqeqweeqw')
+        router.push({ name: 'reserve-initial-complete' })
       }
     })
   }
 
   return {
     reservedate, //yyyy-mm-dd
-    type, 
+    type,
     reservehospital, //병원 이름, 수의사 이름
     starttime,
     endtime,
@@ -68,6 +88,7 @@ export const useReserveStore = defineStore('reserve', () => {
     reservepet, //고른 펫
     doctorList,
     consultCreate,
-    reservepetindex
+    reservepetindex,
+    hospitalCreate
   }
 })

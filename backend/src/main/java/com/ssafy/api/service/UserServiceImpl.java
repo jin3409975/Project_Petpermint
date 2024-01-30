@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 		expertUser.setNote(userRegisterInfo.getNote());
 		expertUser.setStartTime(userRegisterInfo.getStartTime());
 		expertUser.setEndTime(userRegisterInfo.getEndTime());
-		expertUser.setHospitalNo(userRegisterInfo.getHospitalNo());
+		expertUser.setHospitalName(userRegisterInfo.getHospitalName());
 
 		try {
 			userRepository.save(user);

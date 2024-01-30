@@ -5,23 +5,25 @@ import { useReserveStore } from '@/stores/reserve'
 import { useRouter } from 'vue-router'
 
 const reserveStore = useReserveStore()
-const { petList, reservepet, reservehospital, reservepetindex } = storeToRefs(reserveStore)
+const { petList, reservepet, reservehospital, reservepetindex, type } = storeToRefs(reserveStore)
 const vuetify = createVuetify({
   theme: {
     defaultTheme: 'light'
     //
   }
 })
-const router = useRouter()
 
 const selectPet = (pet, id) => {
   console.log(pet, id)
-  reservepetindex.value = id;
+  reservepetindex.value = id
   reservepet.value = pet
 }
 const navigateToReserveComplete = () => {
-  //router.push({ name: 'reserve-initial-complete' })
-  reserveStore.consultCreate();
+  if (type == 1) {
+    reserveStore.consultCreate()
+  } else {
+    reserveStore.hospitalCreate()
+  }
 }
 </script>
 
@@ -31,7 +33,7 @@ const navigateToReserveComplete = () => {
   </div>
   <div>
     <v-container fluid>
-      <div v-for="pet,index in petList" :key="pet.id">
+      <div v-for="(pet, index) in petList" :key="pet.id">
         <v-checkbox :label="pet" @click="selectPet(pet, index)"></v-checkbox>
       </div>
     </v-container>
