@@ -188,6 +188,14 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    implementation 'javax.mail:mail:1.4.7'
+    // Spring Context Support
+    implementation 'org.springframework:spring-context-support:5.3.9'
+
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 test {

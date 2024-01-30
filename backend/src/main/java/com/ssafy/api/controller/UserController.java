@@ -3,6 +3,7 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.AnimalService;
+import com.ssafy.api.service.EmailValidateService;
 import com.ssafy.api.service.S3UpDownloadService;
 import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.Animal;
@@ -48,6 +49,9 @@ public class UserController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	EmailValidateService emailValidateService;
 
 	@PostMapping("/signup/normal")
 	@ApiOperation(value = "일반 사용자 회원 가입", notes = "<strong>아이디, 패스워드, 이름, 주소, 전화번호</strong>를 통해 회원가입 한다.")
@@ -116,16 +120,19 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/email/request")
+	@PostMapping("/email/request")
 	@ApiOperation(value = "이메일 인증 신청", notes = "사용자가 작성한 이메일 주소로 랜덤한 6자리 숫자를 보내는 이메일 인증을 신청한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
 			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> emailRequest(
-			@ApiParam(value="이메일 인증에 사용 할 이메일 주소", required = true) String userId) {
-		boolean result = userService.createVerification(userId);
-		if(result) {
+			@RequestBody @ApiParam(value="이메일 인증에 사용 할 이메일 주소", required = true) EmailValidateReq emailValidateReq) {
+		System.out.println(emailValidateReq.getUserId());
+		String result = emailValidateService.emailContent(emailValidateReq.getUserId());
+		System.out.println("이메일 인증 이메일 : "+emailValidateReq.getUserId());
+		System.out.println("이메일 인증 번호 : "+result);
+		if(result != null) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
@@ -140,7 +147,7 @@ public class UserController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> emailValidate(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) Verification verification) {
-		if(userService.emailValidate(verification)) {
+		if(emailValidateService.validate(verification.getUserId(),verification.getVerificationCode())) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
