@@ -34,6 +34,6 @@ public class ExpertUserRegisterPostReq {
 	String startTime;
 	@ApiModelProperty(name="수의사 유저 진료 종료 시간", example="18:00")
 	String endTime;
-	@ApiModelProperty(name="수의사 유저 병원 번호", example="123")
-	int hospitalNo;
+	@ApiModelProperty(name="수의사 유저 병원 아름", example="사랑동물병원")
+	String hospitalName;
 }
