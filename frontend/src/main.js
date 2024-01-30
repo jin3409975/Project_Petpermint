@@ -13,6 +13,9 @@ import * as directives from 'vuetify/directives'
 // MDI CSS 추가
 import '@mdi/font/css/materialdesignicons.css'
 
+// Axios 추가
+import axios from 'axios'
+
 const app = createApp(App)
 
 const vuetify = createVuetify({
@@ -26,5 +29,5 @@ const vuetify = createVuetify({
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
-
+app.use(axios)
 app.mount('#app')

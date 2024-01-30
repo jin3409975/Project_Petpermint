@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-// import { useAccountStore } from '@/stores/account.js'
+import { useAccountStore } from '@/stores/account.js'
 // import Complete from '@/components/register/Complete.vue'
 
 const router = useRouter()
-// const store = useAccountStore()
+const store = useAccountStore()
 
 const email = ref(null)
 const confirm = ref(null)
@@ -21,20 +21,21 @@ const address2 = ref(null)
 // const showSignUpComplete = ref(false)
 
 const signUp = function () {
-  // const payload = {
-  //     email: email.value,
-  //     confirm: confirm.value,
-  //     address: address.value,
-  //     password1: password1.value,
-  //     password2: password2.value,
-  //     name: name.value,
-  //     phone: phone.value,
-  //     address1: address1.value,
-  //     address2: address2.value,
-  // }
+  const payload = {
+      email: email.value,
+      confirm: confirm.value,
+      password1: password1.value,
+      password2: password2.value,
+      name: name.value,
+      phone: phone.value,
+      address1: address1.value,
+      address2: address2.value,
+  }
   // store.signUp(payload) (추후 개발시 활성화)
-  router.push({ name: 'register-complete' })
-
+  //router.push({ name: 'register-complete' })
+  //console.log(payload)
+  store.signup(payload)
+  //console.log(store.result.value)
   // 데이터가 잘 전달 되면 회원가입 완료 페이지 띄우기(추후수정)
   //   try {
   //

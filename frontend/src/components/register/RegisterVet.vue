@@ -138,12 +138,12 @@ const workRules = ref([
           :rules="nameRules"
           hide-details="auto"
         ></v-text-field>
-        <v-text-field
+        <!-- <v-text-field
           label="주민등록번호 (앞 6자리) *"
           v-model="identification"
           :rules="identificationRules"
           hide-details="auto"
-        ></v-text-field>
+        ></v-text-field> -->
         <v-text-field
           label="핸드폰번호 *"
           v-model="phone"
@@ -156,7 +156,7 @@ const workRules = ref([
           :rules="licenseRules"
           hide-details="auto"
         ></v-text-field>
-        <v-text-field
+        <!-- <v-text-field
           label="면허증 사본 *"
           v-model="copy"
           :rules="copyRules"
@@ -173,7 +173,7 @@ const workRules = ref([
           v-model="graduate"
           :rules="graduateRules"
           hide-details="auto"
-        ></v-text-field>
+        ></v-text-field> -->
         <v-text-field
           label="직장명 *"
           v-model="work"
@@ -181,7 +181,7 @@ const workRules = ref([
           hide-details="auto"
         ></v-text-field>
         <v-text-field label="직장주소" hide-details="auto"></v-text-field>
-        <v-text-field label="나머지 주소" v-model="address" hide-details="auto"></v-text-field>
+        <!-- <v-text-field label="나머지 주소" v-model="address" hide-details="auto"></v-text-field> -->
       </div>
       <div class="button-container">
         <v-btn type="submit" variant="outlined" class="submit-btn">회원가입</v-btn>
