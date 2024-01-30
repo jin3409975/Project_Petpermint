@@ -27,4 +27,5 @@ public class ExpertUser{
     String endTime;
     String userId;
     int hospitalNo;
+    String hospitalName;
 }
