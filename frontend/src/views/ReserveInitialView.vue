@@ -34,9 +34,10 @@ onMounted(() => {
   <div class="box">
     <ReservePet />
   </div>
-  <div>
+  <!-- <div>
     <ReserveComplete />
-  </div>
+  </div> -->
+  <!-- <router-view></router-view> -->
 </template>
 
 <style>

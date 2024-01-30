@@ -48,8 +48,10 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     }).then(r => {
       console.log(r)
+      console.log(r.data.statusCode)
       if(r.data.statusCode == 200) {
-        router.push({ name: 'reserve-initial-complete' })
+        console.log('qwewqeqweeqw')
+        router.push({ name: 'router.push' })
       }
     })
   }

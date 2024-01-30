@@ -176,12 +176,12 @@ const router = createRouter({
                   name: 'reserve-initial-pet',
                   component: ReservePet
                 },
-                {
-                  path: 'complete',
-                  name: 'reserve-initial-complete',
-                  component: ReserveComplete
-                }
               ]
+            },
+            {
+              path: 'complete',
+              name: 'reserve-initial-complete',
+              component: ReserveComplete
             },
             {
               path: 'appoint',
