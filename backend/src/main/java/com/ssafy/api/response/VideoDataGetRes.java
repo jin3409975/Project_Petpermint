@@ -1,5 +1,6 @@
 package com.ssafy.api.response;
 
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.UserPost;
 import com.ssafy.db.entity.VideoRoom;
 import io.swagger.annotations.ApiModel;
@@ -13,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("VideoDataGetResponse")
-public class VideoDataGetRes {
+public class VideoDataGetRes extends BaseResponseBody {
 	@ApiModelProperty(name="Room ID")
 	int roomId;
 	String userId;
@@ -21,9 +22,11 @@ public class VideoDataGetRes {
 	String roomName;
 	String note;
 
-	public static VideoDataGetRes of(VideoRoom data) {
+	public static VideoDataGetRes of(Integer statusCode, String message, VideoRoom data) {
 		VideoDataGetRes res = new VideoDataGetRes();
 		res.setRoomId(data.getRoomId());
+		res.setStatusCode(statusCode);
+		res.setMessage(message);
 		res.setUserId(data.getUserId());
 		res.setStartTime(data.getStartTime());
 		res.setRoomName(data.getRoomName());

@@ -3,6 +3,7 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.AnimalService;
+import com.ssafy.api.service.S3UpDownloadService;
 import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.Animal;
 import com.ssafy.db.entity.ExpertUser;
@@ -21,8 +22,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +44,9 @@ public class UserController {
 	AnimalService animalService;
 
 	@Autowired
+	S3UpDownloadService s3service;
+
+	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@PostMapping("/signup/normal")
@@ -52,8 +58,9 @@ public class UserController {
         @ApiResponse(code = 500, message = "서버 오류")
     })
 	public ResponseEntity<? extends BaseResponseBody> signupNormal(
-			@RequestBody @ApiParam(value="회원가입 정보", required = true) NormalUserRegisterPostReq registerInfo) {
-		if(userService.createNormalUser(registerInfo)) {
+			@ModelAttribute @ApiParam(value="회원가입 정보", required = true) NormalUserRegisterPostReq registerInfo) throws IOException {
+		String url=s3service.saveProfile(registerInfo.getPicture(),registerInfo.getUserId());
+		if(userService.createNormalUser(registerInfo,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
@@ -207,8 +214,9 @@ public class UserController {
 			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateNormal(
-			 @ApiParam(value="수정할 회원 정보") @RequestBody Map<String, Object> params) {
-		if(userService.userUpdateNormal(params)) {
+			 @ApiParam(value="수정할 회원 정보") @ModelAttribute NormalUserUpdatePutReq updatePutReq) throws IOException {
+		String url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		if(userService.userUpdateNormal(updatePutReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
@@ -222,8 +230,9 @@ public class UserController {
 			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateExpert(
-			@ApiParam(value="수정할 회원 정보") @RequestBody Map<String, Object> params) {
-		if(userService.userUpdateNormal(params) && userService.userUpdateExpert(params)) {
+			@ApiParam(value="수정할 회원 정보") @ModelAttribute ExpertUserUpdatePutReq updatePutReq) throws IOException {
+		String url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		if(userService.userUpdateExpert(updatePutReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
@@ -252,8 +261,10 @@ public class UserController {
 			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> petCreate(
-			@RequestBody @ApiParam(value="반려동물 정보", required = true) AnimalReq animalReq) {
-		if(animalService.animalCreate(animalReq)) {
+			@ModelAttribute @ApiParam(value="반려동물 정보", required = true) AnimalReq animalReq) throws IOException {
+		System.out.println(animalReq.getPicture().toString());
+		String url=s3service.savePetProfile(animalReq.getPicture(), animalReq);
+		if(animalService.animalCreate(animalReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
@@ -299,8 +310,9 @@ public class UserController {
 			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> petUpdate(
-			@ApiParam(value="수정할 반려동물 정보") @RequestBody AnimalReq animalReq) {
-		if(animalService.animalUpdate(animalReq)) {
+			@ApiParam(value="수정할 반려동물 정보") @RequestBody AnimalReq animalReq) throws IOException {
+		String url=s3service.savePetProfile(animalReq.getPicture(),animalReq);
+		if(animalService.animalUpdate(animalReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));

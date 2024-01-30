@@ -1,12 +1,9 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.AnimalReq;
-import com.ssafy.api.request.VideoCreatePostReq;
 import com.ssafy.db.entity.Animal;
-import com.ssafy.db.entity.VideoRoom;
 import com.ssafy.db.repository.AnimalRepository;
 import com.ssafy.db.repository.UserRepository;
-import com.ssafy.db.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +18,7 @@ public class AnimalServiceImpl implements AnimalService {
     UserRepository userRepository;
 
     @Override
-    public boolean animalCreate(AnimalReq animalReq) {
+    public boolean animalCreate(AnimalReq animalReq,String url) {
         if(userRepository.countByUserId(animalReq.getUserId()) == 1) {
             Animal animal = new Animal();
             animal.setUserId(animalReq.getUserId());
@@ -29,7 +26,7 @@ public class AnimalServiceImpl implements AnimalService {
             animal.setAge(animalReq.getAge());
             animal.setNote(animalReq.getNote());
             animal.setGender(animalReq.getGender());
-            animal.setPicture(animalReq.getPicture());
+            animal.setPicture(url);
             animal.setSpecie(animalReq.getSpecie());
             animal.setWeight(animalReq.getWeight());
             animalRepository.save(animal);
@@ -52,8 +49,8 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     @Override
-    public boolean animalUpdate(AnimalReq animalReq) {
-        animalRepository.updateAnimal(animalReq.getAnimalId(), animalReq.getName(), animalReq.getPicture(),
+    public boolean animalUpdate(AnimalReq animalReq, String url) {
+        animalRepository.updateAnimal(animalReq.getAnimalId(), animalReq.getName(), url,
                 animalReq.getSpecie(), animalReq.getAge(), animalReq.getNote(), animalReq.getWeight(), animalReq.getGender());
         return true;
     }

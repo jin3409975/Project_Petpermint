@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 유저 회원가입 API ([POST] /api/v1/users) 요청에 필요한 리퀘스트 바디 정의.
@@ -18,8 +19,8 @@ public class AnimalReq {
 	int animalId;
 	@ApiModelProperty(name="반려동물 이름", example="나비")
 	String name;
-	@ApiModelProperty(name="반려동물 사진", example="image_url")
-	String picture;
+	@ApiModelProperty(name="반려동물 사진", example="image")
+	MultipartFile picture;
 	@ApiModelProperty(name="반려동물 종", example="고양이")
 	String specie;
 	@ApiModelProperty(name="반려동물 나이", example="1살 or 12개월")

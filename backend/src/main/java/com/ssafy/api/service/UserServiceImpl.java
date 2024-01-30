@@ -2,6 +2,8 @@ package com.ssafy.api.service;
 
 import
 		com.ssafy.api.request.ExpertUserRegisterPostReq;
+import com.ssafy.api.request.ExpertUserUpdatePutReq;
+import com.ssafy.api.request.NormalUserUpdatePutReq;
 import com.ssafy.db.entity.ExpertUser;
 import com.ssafy.db.entity.Verification;
 import com.ssafy.db.repository.*;
@@ -35,12 +37,13 @@ public class UserServiceImpl implements UserService {
 	VerificationRepository verificationRepository;
 
 	@Override
-	public Boolean createNormalUser(NormalUserRegisterPostReq userRegisterInfo) {
+	public Boolean createNormalUser(NormalUserRegisterPostReq userRegisterInfo,String url) {
 		User user = new User();
 		user.setUserId(userRegisterInfo.getUserId());
 		user.setAddress(userRegisterInfo.getAddress());
 		user.setUserName(userRegisterInfo.getUserName());
 		user.setPhone(userRegisterInfo.getPhone());
+		user.setPicture(url);
 		user.setType(1);
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
@@ -140,9 +143,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean userUpdateNormal(Map<String, Object> params) {
-		if(userRepository.countByUserId((String)params.get("userId")) == 1) {
-			userRepository.userUpdateNormal((String)params.get("userId"),(String)params.get("userName"),passwordEncoder.encode((String)params.get("password")),(String)params.get("picture"));
+	public boolean userUpdateNormal(NormalUserUpdatePutReq updatePutReq, String url) {
+		if(userRepository.countByUserId(updatePutReq.getUserId()) == 1) {
+			userRepository.userUpdateNormal(updatePutReq.getUserId(),updatePutReq.getUserName(),passwordEncoder.encode(updatePutReq.getPassword()),url);
 			return true;
 		} else {
 			return false;
@@ -150,10 +153,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean userUpdateExpert(Map<String, Object> params) {
-		if(userRepository.countByUserId((String)params.get("userId")) == 1) {
-			userRepository.userUpdateNormal((String)params.get("userId"),(String)params.get("userName"),passwordEncoder.encode((String)params.get("password")),(String)params.get("picture"));
-			userRepository.userUpdateExpert((String)params.get("userId"),(String)params.get("note"),(String)params.get("startTime"),(String)params.get("endTime"),(String)params.get("hospitalNo"));
+	public boolean userUpdateExpert(ExpertUserUpdatePutReq updatePutReq, String url) {
+		if(userRepository.countByUserId(updatePutReq.getUserId()) == 1) {
+			userRepository.userUpdateNormal(updatePutReq.getUserId(),updatePutReq.getUserName(),passwordEncoder.encode(updatePutReq.getPassword()),url);
+			userRepository.userUpdateExpert(updatePutReq.getUserId(),updatePutReq.getNote(),updatePutReq.getStartTime(),updatePutReq.getEndTime(),updatePutReq.getHospitalNo());
 			return true;
 		} else {
 			return false;
