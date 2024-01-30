@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @ApiModel("CommunityDataGetResponse")
-public class CommunityDataGetRes{
+public class CommunityDataGetRes extends BaseResponseBody{
 	@ApiModelProperty(name="Post ID")
 	int postId;
 	int hits;
@@ -23,15 +23,19 @@ public class CommunityDataGetRes{
 	int likes;
 	String registTime;
 	String userId;
+	List<String> urls;
 
-	public static CommunityDataGetRes of(UserPost data) {
+	public static CommunityDataGetRes of(Integer statusCode,String message,UserPost data,List<String>urls) {
 		CommunityDataGetRes res = new CommunityDataGetRes();
 		res.setPostId(data.getPostId());
+		res.setStatusCode(statusCode);
+		res.setMessage(message);
 		res.setHits(data.getHits());
 		res.setContent(data.getContent());
 		res.setLikes(data.getLikes());
 		res.setRegistTime(data.getRegistTime());
 		res.setUserId(data.getUserId());
+		res.setUrls(urls);
 		return res;
 	}
 }

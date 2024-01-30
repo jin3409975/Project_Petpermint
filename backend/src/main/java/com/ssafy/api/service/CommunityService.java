@@ -23,5 +23,11 @@ public interface CommunityService {
     Long deleteComment(CommentDeleteDeleteReq deleteInfo);
     Long increaseLike(int postId);
     Long increaseHit(int postId);
+
+    int findPostCount();
+
+    int writeUrl(int postId, List<String>urls, List<String> strings);
+    List<String> getUrl(int postId);
+    int deleteUrl(int postId);
 }
 

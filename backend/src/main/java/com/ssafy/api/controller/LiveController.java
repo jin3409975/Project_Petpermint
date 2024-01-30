@@ -34,12 +34,15 @@ public class LiveController {
         @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 		@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
     })
-	public ResponseEntity<UserLoginPostRes> create(@RequestBody @ApiParam(value="라이브 방 정보", required = true) VideoCreatePostReq createInfo) {
+	public ResponseEntity<BaseResponseBody> create(@RequestBody @ApiParam(value="라이브 방 정보", required = true) VideoCreatePostReq createInfo) {
 
 		VideoRoom videoRoom = liveService.createRoom(createInfo);
 
 		// 정상적으로 등록되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully created", null));
+		if(videoRoom!=null)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@GetMapping("/data")
@@ -50,43 +53,52 @@ public class LiveController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<VideoDataGetRes> get(int postId) {
+	public ResponseEntity<? extends BaseResponseBody> get(int postId) {
 
 		VideoRoom videoRoom = liveService.dataRoom(postId);
 
-		return ResponseEntity.status(200).body(VideoDataGetRes.of(videoRoom));
+		if(videoRoom!=null)
+			return ResponseEntity.status(200).body(VideoDataGetRes.of(200,"Success",videoRoom));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"Fail"));
 	}
 
-	@PutMapping("/update")
-	@ApiOperation(value = "라이브 방 수정", notes = "방송에 대한 정보를 수정한다")
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
-			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
-			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
-			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
-	})
-	public ResponseEntity<UserLoginPostRes> update(@RequestBody @ApiParam(value="글 수정 정보", required = true) VideoDataDeleteReq updateRoomReq) {
-		int roomId=updateRoomReq.getRoomId();
-		//Long result= liveService.updateRoom(roomId);
-
-		// 정상적으로 수정되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully updated", null));
-	}
+//	@PutMapping("/update")
+//	@ApiOperation(value = "라이브 방 수정", notes = "방송에 대한 정보를 수정한다")
+//	@ApiResponses({
+//			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+//			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+//			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+//			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+//	})
+//	public ResponseEntity<BaseResponseBody> update(@RequestBody @ApiParam(value="글 수정 정보", required = true) VideoDataDeleteReq updateRoomReq) {
+//		int roomId=updateRoomReq.getRoomId();
+//		Long result= liveService.updateRoom(roomId);
+//
+//		// 정상적으로 수정되었을 때
+//		if(result>0)
+//			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//		else
+//			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+//	}
 
 	@DeleteMapping("/delete")
-	@ApiOperation(value = "글 삭제", notes = "<strong>방 번호</strong>를 사용하여 방을 삭제한다")
+	@ApiOperation(value = "방 삭제", notes = "<strong>방 번호</strong>를 사용하여 방을 삭제한다")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
 			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> delete(@RequestBody @ApiParam(value="글 삭제 정보", required = true) VideoDataDeleteReq deleteRoomReq) {
+	public ResponseEntity<BaseResponseBody> delete(@RequestBody @ApiParam(value="글 삭제 정보", required = true) VideoDataDeleteReq deleteRoomReq) {
 		int roomId=deleteRoomReq.getRoomId();
 		Long result = liveService.deleteRoom(roomId);
 
 		// 정상적으로 삭제되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully deleted", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 

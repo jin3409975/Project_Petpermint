@@ -41,7 +41,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "update ExpertUser set note = :note, startTime = :startTime, endTime = :endTime, hospitalNo = :hospitalNo" +
                     " where userId = :userId", nativeQuery = true )
     void userUpdateExpert(@Param("userId") String userId, @Param("note") String note, @Param("startTime") String startTime,
-                          @Param("endTime") String endTime, @Param("hospitalNo") String hospitalNo);
+                          @Param("endTime") String endTime, @Param("hospitalNo") int hospitalNo);
 
     @Transactional
     @Modifying(clearAutomatically = true)

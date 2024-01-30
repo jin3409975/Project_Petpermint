@@ -2,13 +2,15 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.*;
 import com.ssafy.db.entity.PostComment;
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.PostFiles;
 import com.ssafy.db.repository.*;
 import com.ssafy.db.entity.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("communityService")
@@ -23,12 +25,17 @@ public class CommunityServiceImpl implements CommunityService {
     @Autowired
     CommentRepositorySupport commentRepositorySupport;
 
+    @Autowired
+    PostFilesRepository postFilesRepository;
+
     @Override
     public UserPost writePost(CommunityWritePostReq writeInfo) {
 
         UserPost userPost = new UserPost();
         userPost.setUserId(writeInfo.getUserId());
         userPost.setContent(writeInfo.getContent());
+
+
         //userPost.setImages(writeInfo.getImages());
         return communityRepository.save(userPost);
 
@@ -64,7 +71,6 @@ public class CommunityServiceImpl implements CommunityService {
         postComment.setPostId(createInfo.getPostId());
         postComment.setUserId(createInfo.getUserId());
         postComment.setContent(createInfo.getContent());
-        //userPost.setImages(writeInfo.getImages());
         return commentRepository.save(postComment);
     }
 
@@ -96,6 +102,52 @@ public class CommunityServiceImpl implements CommunityService {
     public Long increaseHit(int postId) {
         Long result=communityRepositorySupport.updateHitByPostId(postId).get();
         return result;
+    }
+
+    @Override
+    public int findPostCount() {
+        int count=communityRepositorySupport.findMaxPostId().get();
+        return count+1;
+    }
+
+    @Override
+    @Transactional
+
+    public int writeUrl(int postId, List<String> fileNames,List<String> urls) {
+        int i;
+        for(i=0;i<urls.size(); i++) {
+            PostFiles postFiles = new PostFiles();
+            postFiles.setPostId(postId);
+            postFiles.setUrl(urls.get(i));
+            postFiles.setFileName(fileNames.get(i));
+            try {
+                System.out.println("posing: "+ postFiles.getFileName());
+
+                postFilesRepository.save(postFiles);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }
+
+        return i+1;
+    }
+
+    @Override
+    public List<String> getUrl(int postId) {
+        List<PostFiles> postFiles=postFilesRepository.findByPostId(postId);
+        List<String> urls=new ArrayList<String>();
+        for(PostFiles postFile: postFiles)
+            urls.add(postFile.getUrl());
+        return urls;
+    }
+
+
+    @Override
+    @Transactional
+    public int deleteUrl(int postId) {
+        int delete_result= postFilesRepository.deleteByPostId(postId);
+        return delete_result;
     }
 
 
