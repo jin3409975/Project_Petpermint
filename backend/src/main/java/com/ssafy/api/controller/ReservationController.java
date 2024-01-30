@@ -39,6 +39,7 @@ public class ReservationController {
 
 			@RequestBody @ApiParam(value = "상담 예약 정보", required = true) ReservationRegisterPostReq reservationRegisterPostReq) {
 		// System.out.println(reservationRegisterPostReq); 어디가 잘못인지 찾아보자
+		System.out.println(reservationRegisterPostReq);
 		if (reservationService.createConsultReservation(reservationRegisterPostReq)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {

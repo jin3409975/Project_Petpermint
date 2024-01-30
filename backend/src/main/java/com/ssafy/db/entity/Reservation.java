@@ -28,5 +28,5 @@ public class Reservation extends BaseEntity{
     String licenseNumber;
     int hospitalNo;
     String userId;
-
+    int animalId;
 }

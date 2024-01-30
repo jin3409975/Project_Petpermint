@@ -23,7 +23,7 @@ public class ReservationRegisterPostReq {
 	int isDelete;
 	String licenseNumber;
 	int hospitalNo;
-
+	int animalId;
 	String userId;
 	String time;
 }
