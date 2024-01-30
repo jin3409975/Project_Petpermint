@@ -58,6 +58,7 @@ const router = createRouter({
           path: '/register',
           name: 'register',
           component: RegisterView,
+          meta: { hideFooter: true },
           redirect: { name: 'register-home' },
           children: [
             {
@@ -68,12 +69,14 @@ const router = createRouter({
             {
               path: 'vet',
               name: 'register-vet',
+              meta: { hideNavbar: true },
               component: RegisterVet
             },
             {
               path: 'user',
               name: 'register-user',
               component: RegisterUserView,
+              meta: { hideNavbar: true },
               redirect: { name: 'register-info' },
               children: [
                 {
