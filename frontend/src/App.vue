@@ -1,19 +1,21 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import RegisterView from './views/account/RegisterView.vue'
-import LoginView from './views/account/LoginView.vue'
 import Navbar from '@/components/main/Navbar.vue'
-import MainView from '@/views/MainView.vue'
 import Footer from '@/components/main/Footer.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const hideNavbar = computed(() => route.meta.hideNavbar)
+const hideFooter = computed(() => route.meta.hideFooter)
 </script>
 
 <template>
   <v-app>
-    <Navbar />
+    <Navbar v-if="!hideNavbar" />
     <v-main>
       <RouterView />
     </v-main>
-    <Footer />
+    <Footer v-if="!hideFooter" />
   </v-app>
 </template>
 
