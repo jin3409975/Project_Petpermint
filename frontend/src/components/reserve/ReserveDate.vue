@@ -50,5 +50,5 @@ function formatDate(selectedDate) {
     </v-app>
   </div>
 </template>
-cd
+
 <style scoped></style>

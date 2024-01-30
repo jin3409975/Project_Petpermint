@@ -5,14 +5,21 @@ import com.ssafy.api.response.CommentDataGetRes;
 import com.ssafy.api.response.CommunityDataGetRes;
 import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.CommunityService;
+import com.ssafy.api.service.S3UpDownloadService;
 import com.ssafy.common.model.response.BaseResponseBody;
 
 import com.ssafy.db.entity.PostComment;
+import com.ssafy.db.entity.PostFiles;
 import com.ssafy.db.entity.UserPost;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 커뮤니티 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -23,6 +30,8 @@ import org.springframework.web.bind.annotation.*;
 public class CommunityController {
 	@Autowired
 	CommunityService communityService;
+	@Autowired
+	private S3UpDownloadService s3service;
 	
 	@PostMapping("/write")
 	@ApiOperation(value = "글 작성", notes = "<strong>내용과 이미지</strong>를 사용하여 게시물을 작성한다")
@@ -32,12 +41,30 @@ public class CommunityController {
         @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 		@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
     })
-	public ResponseEntity<UserLoginPostRes> write(@RequestBody @ApiParam(value="글 작성 정보", required = true) CommunityWritePostReq writeInfo) {
-
+	public ResponseEntity<BaseResponseBody> write(@RequestPart @ApiParam(value="사용자 아이디", required = true) String userId, @RequestPart @ApiParam(value="내용 정보", required = true) String content, @RequestPart(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
+		CommunityWritePostReq writeInfo=new CommunityWritePostReq();
+		writeInfo.setUserId(userId);
+		writeInfo.setContent(content);
+		List<String> urls=new ArrayList<String>();
+		List<String> fileNames=new ArrayList<String>();
+		int postId = communityService.findPostCount();
 		UserPost userPost = communityService.writePost(writeInfo);
+		if(images!=null) {
+			for (int i = 0; i < images.size(); i++) {
+
+				String fileName=i+"_"+images.get(i).getOriginalFilename();
+				String url = s3service.saveImage(images.get(i), fileName,postId);
+				urls.add(url);
+				fileNames.add(fileName);
+			}
+			int uploads = communityService.writeUrl(postId, fileNames, urls);
+		}
 
 		// 정상적으로 등록되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully written", null));
+		if(userPost !=null)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@GetMapping("/data")
@@ -48,11 +75,15 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<CommunityDataGetRes> get(int postId) {
+	public ResponseEntity<? extends BaseResponseBody> get(int postId) {
 
 		UserPost userPost = communityService.dataPost(postId);
+		List<String> urls = communityService.getUrl(postId);
 
-		return ResponseEntity.status(200).body(CommunityDataGetRes.of(userPost));
+		if(userPost!=null)
+			return ResponseEntity.status(200).body(CommunityDataGetRes.of(200,"200",userPost,urls));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
 	}
 
 	@PutMapping("/update")
@@ -63,12 +94,40 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> update(@RequestBody @ApiParam(value="글 수정 정보", required = true) CommunityUpdatePutReq updateInfo) {
-
+	public ResponseEntity<BaseResponseBody> update(@RequestPart @ApiParam(value="게시물 번호", required = true) int postId, @RequestPart @ApiParam(value="내용 정보", required = true) String content, @RequestPart(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
+		CommunityUpdatePutReq updateInfo=new CommunityUpdatePutReq();
+		updateInfo.setPostId(postId);
+		updateInfo.setContent(content);
 		Long result = communityService.updatePost(updateInfo);
+		List<String> del_urls=communityService.getUrl(postId);
+		if(images!=null) {
+
+
+			List<String> urls = new ArrayList<>();
+			List<String> fileNames = new ArrayList<>();
+			int delete_result = communityService.deleteUrl(postId);
+			System.out.println("del: "+delete_result);
+			for (String url : del_urls) {
+				s3service.deleteFile(url);
+			}
+			int i=0;
+			for (MultipartFile image : images) {
+				System.out.println("image: "+image);
+				String fileName=i+"_"+image.getOriginalFilename();
+				String url = s3service.saveImage(image, fileName,postId);
+				urls.add(url);
+				fileNames.add(fileName);
+				i++;
+			}
+
+			communityService.writeUrl(updateInfo.getPostId(), fileNames, urls);
+		}
 
 		// 정상적으로 수정되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully updated", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@DeleteMapping("/delete")
@@ -79,12 +138,15 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> delete(@RequestBody @ApiParam(value="글 삭제 정보", required = true) CommunityDeleteDeleteReq deletePostReq) {
+	public ResponseEntity<BaseResponseBody> delete(@RequestBody @ApiParam(value="글 삭제 정보", required = true) CommunityDeleteDeleteReq deletePostReq) {
 		int postId=deletePostReq.getPostId();
 		Long result = communityService.isDeletePost(postId);
 
 		// 정상적으로 삭제되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully deleted", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@DeleteMapping("/delete/admin")
@@ -95,12 +157,15 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> adminDelete(@RequestBody @ApiParam(value="글 삭제 정보", required = true) CommunityDeleteDeleteReq deletePostReq) {
+	public ResponseEntity<BaseResponseBody> adminDelete(@RequestBody @ApiParam(value="글 삭제 정보", required = true) CommunityDeleteDeleteReq deletePostReq) {
 		int postId=deletePostReq.getPostId();
 		Long result = communityService.deletePost(postId);
 
 		// 정상적으로 삭제되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully deleted", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@PostMapping("/comment/create")
@@ -111,11 +176,14 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> createComment(@RequestBody @ApiParam(value="글 작성 정보", required = true) CommentCreatePostReq createInfo) {
+	public ResponseEntity<BaseResponseBody> createComment(@RequestBody @ApiParam(value="글 작성 정보", required = true) CommentCreatePostReq createInfo) {
 
 		PostComment postComment = communityService.createComment(createInfo);
 		// 정상적으로 등록되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully written", null));
+		if(postComment!=null)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@GetMapping("/comment/data")
@@ -126,11 +194,13 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<CommentDataGetRes> getComment(int postId) {
+	public ResponseEntity<? extends BaseResponseBody> getComment(int postId) {
 
 		PostComment postComment = communityService.dataComment(postId);
-
-		return ResponseEntity.status(200).body(CommentDataGetRes.of(postComment));
+		if(postComment!=null)
+			return ResponseEntity.status(200).body(CommentDataGetRes.of(200,"Success",postComment));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"Fail"));
 	}
 
 	@DeleteMapping("/comment/delete")
@@ -141,11 +211,14 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> deleteComment(@RequestBody @ApiParam(value="댓글 삭제 정보", required = true)  CommentDeleteDeleteReq deleteCommentReq) {
+	public ResponseEntity<BaseResponseBody> deleteComment(@RequestBody @ApiParam(value="댓글 삭제 정보", required = true)  CommentDeleteDeleteReq deleteCommentReq) {
 		Long result = communityService.isDeleteComment(deleteCommentReq);
 
 		// 정상적으로 삭제되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully deleted", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@DeleteMapping("/comment/delete/admin")
@@ -156,11 +229,14 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> adminDeleteComment(@RequestBody @ApiParam(value="댓글 삭제 정보", required = true)  CommentDeleteDeleteReq deleteCommentReq) {
+	public ResponseEntity<BaseResponseBody> adminDeleteComment(@RequestBody @ApiParam(value="댓글 삭제 정보", required = true)  CommentDeleteDeleteReq deleteCommentReq) {
 		Long result = communityService.deleteComment(deleteCommentReq);
 
 		// 정상적으로 삭제되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully deleted", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@PutMapping("/like")
@@ -171,12 +247,15 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> like(@RequestBody @ApiParam(value="좋아요 정보", required = true) CommunityLikeHitPutReq updateInfo) {
+	public ResponseEntity<BaseResponseBody> like(@RequestBody @ApiParam(value="좋아요 정보", required = true) CommunityLikeHitPutReq updateInfo) {
 
 		Long result = communityService.increaseLike(updateInfo.getPostId());
 
 		// 정상적으로 수정되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully updated", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 
 	@PutMapping("/hit")
@@ -187,11 +266,14 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<UserLoginPostRes> hit(@RequestBody @ApiParam(value="방문 정보", required = true) CommunityLikeHitPutReq updateInfo) {
+	public ResponseEntity<BaseResponseBody> hit(@RequestBody @ApiParam(value="방문 정보", required = true) CommunityLikeHitPutReq updateInfo) {
 
 		Long result = communityService.increaseHit(updateInfo.getPostId());
 
 		// 정상적으로 수정되었을 때
-		return ResponseEntity.status(200).body(UserLoginPostRes.of(200, "Successfully updated", null));
+		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 	}
 }

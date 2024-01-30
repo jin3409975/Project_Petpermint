@@ -5,15 +5,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 /**
  * 유저 회원가입 API ([POST] /api/v1/users) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter
 @ApiModel("ExpertUserRegisterPostRequest")
-public class ExpertUserRegisterPostReq {
+public class ExpertUserUpdatePutReq extends NormalUserUpdatePutReq{
 	@ApiModelProperty(name="이메일 형식 수의사 유저 ID", example="ssafy_web@gmail.com")
 	String userId;
 	@ApiModelProperty(name="수의사 유저 Password", example="your_password")
@@ -34,6 +32,6 @@ public class ExpertUserRegisterPostReq {
 	String startTime;
 	@ApiModelProperty(name="수의사 유저 진료 종료 시간", example="18:00")
 	String endTime;
-	@ApiModelProperty(name="수의사 유저 병원 아름", example="사랑동물병원")
-	String hospitalName;
+	@ApiModelProperty(name="수의사 유저 병원 번호", example="123")
+	int hospitalNo;
 }

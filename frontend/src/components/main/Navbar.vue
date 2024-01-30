@@ -8,6 +8,9 @@ const logoUrl = computed(() => {
 
 const router = useRouter()
 
+const navigateToLogin = () => {
+  router.push({ name: 'login-home' })
+}
 const navigateToRegister = () => {
   router.push({ name: 'register-home' })
 }
@@ -37,7 +40,7 @@ const navigateToAppoint = () => {
 
       <!-- 오른쪽 항목: 로그인, 회원가입 버튼 -->
       <div class="d-flex justify-end">
-        <v-btn>로그인</v-btn>
+        <v-btn text @click="navigateToLogin">로그인</v-btn>
         <v-btn text @click="navigateToRegister">회원가입</v-btn>
       </div>
     </div>

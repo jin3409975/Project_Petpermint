@@ -1,61 +1,37 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-// import { useAccountStore } from '@/stores/account.js'
+import { useAccountStore } from '@/stores/account.js'
 // import Complete from '@/components/register/Complete.vue'
 
-const router = useRouter()
-// const store = useAccountStore()
+const store = useAccountStore()
 
 const email = ref(null)
 const confirm = ref(null)
 const password1 = ref(null)
 const password2 = ref(null)
 const name = ref(null)
-const identification = ref(null)
+// const identification = ref(null)
 const phone = ref(null)
 const license = ref(null)
-const copy = ref(null)
-const university = ref(null)
-const graduate = ref(null)
+// const copy = ref(null)
+// const university = ref(null)
+// const graduate = ref(null)
 const work = ref(null)
-const address = ref(null)
-
-// 회원가입 폼 / 회원가입이 완료 컴포넌트
-// const showSignUpForm = ref(true)
-// const showSignUpComplete = ref(false)
+// const address = ref(null)
 
 const signUp = function () {
-  // const payload = {
-  //     email: email.value,
-  //     confirm: confirm.value,
-  //     password1: password1.value,
-  //     password2: password2.value
-  //     name: name.value,
-  //     identification: identification.value,
-  //     phone: phone.value,
-  //     license: license.value,
-  //     copy: copt.value
-  //     university: university.value,
-  //     graduate: graduate.value,
-  //     work: work.value,
-  //     address: address.value,
-  // }
-  // store.signUp(payload) (추후 개발시 활성화)
-  router.push({ name: 'register-complete' })
-
-  // 데이터가 잘 전달 되면 회원가입 완료 페이지 띄우기(추후수정)
-  //   try {
-  //
-  //     await store.signUp(payload)
-
-  //   // 회원가입이 성공하면 상태를 업데이트, 회원가입 완료표시
-  //   showSignUpForm.value = false
-  //   showSignUpComplete.value = true
-  // } catch (error) {
-  //   // 회원가입 실패
-  //   console.error('회원가입 실패:', error)
-  // }
+  const payload = {
+    email: email.value,
+    confirm: confirm.value,
+    password1: password1.value,
+    password2: password2.value,
+    name: name.value,
+    phone: phone.value,
+    license: license.value,
+    work: work.value
+  }
+  store.vetsignUp(payload)
 }
 
 const emailRules = ref([
@@ -180,7 +156,7 @@ const workRules = ref([
           :rules="workRules"
           hide-details="auto"
         ></v-text-field>
-        <v-text-field label="직장주소" hide-details="auto"></v-text-field>
+        <!-- <v-text-field label="직장주소" hide-details="auto"></v-text-field> -->
         <!-- <v-text-field label="나머지 주소" v-model="address" hide-details="auto"></v-text-field> -->
       </div>
       <div class="button-container">
