@@ -8,10 +8,10 @@ import MainView from '@/views/MainView.vue'
 import Main from '@/components/main/Main.vue'
 import RegisterType from '@/components/register/RegisterType.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
-import RegisterComplete from '@/components/register/RegisterComplete.vue'
+// import RegisterComplete from '@/components/register/RegisterComplete.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
 import RegisterUser from '@/components/register/RegisterUser.vue'
-import RegisterPet from '@/components/register/RegisterPet.vue'
+// import RegisterPet from '@/components/register/RegisterPet.vue'
 
 import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
@@ -100,14 +100,14 @@ const router = createRouter({
                 {
                   path: 'pet',
                   name: 'register-pet',
-                  component: RegisterPet
+                  component: ''
                 }
               ]
             },
             {
               path: 'complete',
               name: 'register-complete',
-              component: RegisterComplete
+              component: ''
             }
           ]
         },
@@ -178,7 +178,7 @@ const router = createRouter({
                   path: 'pet',
                   name: 'reserve-initial-pet',
                   component: ReservePet
-                },
+                }
               ]
             },
             {
