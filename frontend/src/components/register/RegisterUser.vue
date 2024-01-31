@@ -17,11 +17,12 @@ const address1 = ref(null)
 const address2 = ref(null)
 
 const pets = ref([createPet()])
+const visible = ref(false)
 
+// 펫 정보
 function createPet() {
   return reactive({
     radios: '',
-    type: '',
     petname: '',
     petage: '',
     more: ''
@@ -30,9 +31,17 @@ function createPet() {
 
 // 펫 정보 폼 추가
 function addPetForm() {
-  if (pets.value.every((pet) => pet.radios && pet.type && pet.petname && pet.petage)) {
+  // 현재 폼의 개수가 5개 미만이고 모든 필수 입력값이 채워져 있을 때만 새로운 폼 추가
+  if (
+    pets.value.length < 3 &&
+    pets.value.every((pet) => pet.radios && pet.petname && pet.petage && pet.more)
+  ) {
     pets.value.push(createPet())
+  } else if (pets.value.length >= 3) {
+    // 폼의 개수가 최대치에 도달했을 경우
+    alert('폼을 더 이상 추가할 수 없습니다. 최대 3개까지만 추가 가능합니다.')
   } else {
+    // 필수 입력값이 모두 채워지지 않았을 경우
     alert('모든 필수 입력값을 채워주세요.')
   }
 }
@@ -67,38 +76,33 @@ const goToType = () => {
   router.push({ name: 'register-home' })
 }
 
+const rules = {
+  required: (value) => !!value || '입력해주세요'
+}
+
+function validateForm() {
+  if (!form.value.validate()) {
+    alert('폼을 완성해주세요.')
+  } else {
+    nextStep()
+  }
+}
+
 // 회원가입 폼 / 회원가입이 완료 컴포넌트
 // const showSignUpForm = ref(true)
 // const showSignUpComplete = ref(false)
 
-// 회원가입 완료하기 버튼
-const InfoConfirm = function () {
-  // const payload = {
-  //     email: email.value,
-  //     confirm: confirm.value,
-  //     address: address.value,
-  //     password1: password1.value,
-  //     password2: password2.value,
-  //     name: name.value,
-  //     phone: phone.value,
-  //     address1: address1.value,
-  //     address2: address2.value,
-  // }
-  // store.signUp(payload) (추후 개발시 활성화)
-  router.push({ name: 'register-complete' })
+const showSnackbar = ref(false)
 
-  // 데이터가 잘 전달 되면 회원가입 완료 페이지 띄우기(추후수정)
-  //   try {
-  //
-  //     await store.signUp(payload)
+function register() {
+  // 회원가입 처리 로직 여기에 추가
+  // 여기서는 예시로 바로 스낵바를 표시합니다.
+  showSnackbar.value = true
 
-  //   // 회원가입이 성공하면 상태를 업데이트, 회원가입 완료표시
-  //   showSignUpForm.value = false
-  //   showSignUpComplete.value = true
-  // } catch (error) {
-  //   // 회원가입 실패
-  //   console.error('회원가입 실패:', error)
-  // }
+  // 스낵바가 표시되고 2000ms 후에 메인 페이지로 이동
+  setTimeout(() => {
+    router.push({ name: 'main-home' })
+  }, 2000)
 }
 </script>
 
@@ -113,7 +117,7 @@ const InfoConfirm = function () {
     </div>
   </RouterLink> -->
 
-  <v-row no-gutters style="height: 100%">
+  <v-row no-gutters class="d-flex align-stretch" style="height: 100%">
     <!-- 왼쪽 이미지 -->
     <v-col md="4" class="d-none d-md-flex" style="background-color: #d2e0fb">
       <div
@@ -127,7 +131,7 @@ const InfoConfirm = function () {
       </div>
     </v-col>
     <v-col cols="12" md="8" class="d-flex align-center justify-center custom-padding">
-      <v-container>
+      <v-container style="height: 100%; padding-bottom: 0px">
         <v-stepper v-model="currentStep" hide-actions :items="['Account', 'Personal', 'Pet Info']">
           <!-- 1. 계정정보 -->
           <template v-slot:item.1>
@@ -160,6 +164,9 @@ const InfoConfirm = function () {
 
                 <v-col cols="12" md="6">
                   <v-text-field
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
+                    @click:append-inner="visible = !visible"
                     v-model="password1"
                     label="비밀번호"
                     placeholder="············"
@@ -171,6 +178,9 @@ const InfoConfirm = function () {
 
                 <v-col cols="12" md="6">
                   <v-text-field
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
+                    @click:append-inner="visible = !visible"
                     v-model="password2"
                     label="비밀번호 확인"
                     placeholder="············"
@@ -218,10 +228,13 @@ const InfoConfirm = function () {
                     bg-color="transparent"
                   />
                 </v-col>
-
-                <v-col cols="12" md="12">
+                <v-col style="padding-bottom: 0%">
+                  <p>자택 주소</p>
+                </v-col>
+                <v-col cols="12" md="12" style="padding-top: 6px; padding-bottom: 0">
                   <v-text-field
-                    label="자택 주소"
+                    label="주소 검색하기"
+                    prepend-inner-icon="mdi-home-search-outline"
                     v-model="address1"
                     variant="outlined"
                     color="#668ba7"
@@ -253,32 +266,41 @@ const InfoConfirm = function () {
               >
             </div>
           </template>
-
+          <!-- 3. 마이펫 정보 -->
           <template v-slot:item.3>
             <v-card flat>
               <h4 class="text-h4 mb-3">마이 펫 정보</h4>
               <p class="mb-5">내 반려동물의 정보를 입력해 주세요.</p>
               <div v-for="(pet, index) in pets" :key="index" class="pet-form">
                 <v-row class="mt-2">
-                  <v-col cols="12" md="6">
-                    <v-radio-group v-model="pet.radios">
-                      <v-radio label="강아지" value="강아지"></v-radio>
-                      <v-radio label="고양이" value="고양이"></v-radio>
-                      <v-radio label="기타" value="기타"></v-radio>
+                  <v-col cols="12" md="12" style="padding-top: 0%; padding-bottom: 0%">
+                    <v-btn
+                      class="custom-icon-color"
+                      icon="mdi-minus-box-multiple"
+                      size="large"
+                      @click="removePetForm(index)"
+                      style="box-shadow: none; position: absolute; top: 0; right: 0"
+                    ></v-btn>
+                    <v-col style="padding-bottom: 0%">
+                      <p>반려동물 종류</p>
+                    </v-col>
+                    <v-radio-group inline v-model="pet.radios">
+                      <v-col cols="12" md="4" style="padding-bottom: 0%">
+                        <v-radio label="강아지" value="강아지"></v-radio>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-radio label="고양이" value="고양이"></v-radio>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-radio label="기타" value="기타"></v-radio>
+                      </v-col>
                     </v-radio-group>
                   </v-col>
-                  <v-col cols="12" md="6">
-                    <v-text-field
-                      label="반려동물 종"
-                      v-model="pet.type"
-                      variant="outlined"
-                      color="#668ba7"
-                      bg-color="transparent"
-                    ></v-text-field>
-                  </v-col>
+
                   <v-col cols="12" md="6">
                     <v-text-field
                       label="반려동물 이름 "
+                      :rules="[rules.required]"
                       v-model="pet.petname"
                       variant="outlined"
                       color="#668ba7"
@@ -305,11 +327,17 @@ const InfoConfirm = function () {
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <!-- 반려동물 종류 선택 라디오 버튼 및 기타 입력 필드 -->
-                <div class="button-row">
-                  <v-btn @click="removePetForm(index)">삭제하기</v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn @click="addPetForm">추가하기</v-btn>
+                <div class="text-center">
+                  <v-btn
+                    @click="addPetForm"
+                    color="medium-emphasis"
+                    rounded
+                    variant="outlined"
+                    class="ma-2 mt-5"
+                  >
+                    펫 추가하기
+                    <v-icon end icon="mdi-plus-box-multiple-outline"></v-icon>
+                  </v-btn>
                 </div>
               </div>
             </v-card>
@@ -322,13 +350,15 @@ const InfoConfirm = function () {
                 >이전</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn
-                @click="InfoConfirm"
-                style="box-shadow: none; color: white"
-                variant="flat"
-                color="#d9c56a"
+              <v-btn @click="register" color="primary" variant="tonal" v-bind="props"
                 >회원가입</v-btn
               >
+              <v-snackbar v-model="showSnackbar" :timeout="2000" color="primary">
+                <div class="text-center">
+                  <h4>회원가입이 완료되었습니다.</h4>
+                  <p>메인페이지로 이동합니다.</p>
+                </div>
+              </v-snackbar>
             </div>
           </template>
         </v-stepper>
@@ -357,5 +387,15 @@ const InfoConfirm = function () {
 }
 .button-row {
   margin-top: 30px;
+}
+.pet-form {
+  border: 1px solid #ccc; /* 테두리 색상과 두께 설정 */
+  padding: 10px; /* 내부 여백 추가 */
+  margin-bottom: 10px; /* 폼 간 간격 추가 */
+  padding-top: 0px;
+  position: relative !important;
+}
+.custom-icon-color .v-icon {
+  color: #ef5350; /* 아이콘 색상을 녹색으로 변경 */
 }
 </style>
