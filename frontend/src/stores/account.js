@@ -32,12 +32,12 @@ export const useAccountStore = defineStore(
         url: API_URL + 'signup/normal',
         data,
         headers: {
-          "Content-Type" : 'multipart/formdata'
+          'Content-Type': 'multipart/formdata'
         }
       }).then((r) => {
         console.log(r)
         if (r.data.statusCode == 200) {
-          result.value = false;
+          result.value = false
           router.push({ name: 'register-complete' })
         }
       })
@@ -68,12 +68,12 @@ export const useAccountStore = defineStore(
         url: API_URL + 'signup/expert',
         data,
         headers: {
-          "Content-Type" : 'multipart/formdata'
+          'Content-Type': 'multipart/formdata'
         }
       }).then((r) => {
         console.log(r)
         if (r.data.statusCode == 200) {
-          result.value = false;
+          result.value = false
           router.push({ name: 'register-complete' })
         }
       })
@@ -84,7 +84,7 @@ export const useAccountStore = defineStore(
         method: 'post',
         url: API_URL + 'email/request',
         data: {
-          userId : email
+          userId: email
         }
       }).then((r) => {
         console.log(r)
@@ -102,8 +102,8 @@ export const useAccountStore = defineStore(
         method: 'post',
         url: API_URL + 'email/validate',
         data: {
-          userId : email,
-          verificationCode : code
+          userId: email,
+          verificationCode: code
         }
       }).then((r) => {
         console.log(r)
