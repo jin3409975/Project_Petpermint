@@ -2,22 +2,17 @@
 import { useAccountStore } from '@/stores/account.js'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
-
 const store = useAccountStore()
 const useremail = ref(null)
 const password = ref(null)
-
 const logIn = function () {
   // 로그인 데이터 준비
   // const logindata = {
   //   useremail: useremail.value,
   //   password: password.value
   // }
-
   // store.logIn(logindata)
-
   // 데이터 검증 로직
   if (useremail.value && password.value) {
     // 데이터 전송 로직
@@ -26,12 +21,10 @@ const logIn = function () {
     alert('로그인 정보를 입력해주세요.')
   }
 }
-
 const rules = {
   email: [(v) => !!v || '이메일을 입력해주세요.'],
   password: [(v) => !!v || '비밀번호를 입력해주세요.']
 }
-
 // const items = ref([
 //   {
 //     title: '아이디 찾기',
@@ -49,14 +42,12 @@ const rules = {
 //     name: 'register-home'
 //   }
 // ])
-
 // const navigate = (item) => {
 //   if (item.name) {
 //     router.push({ name: item.name })
 //   }
 // }
 </script>
-
 <template>
   <div class="my-12">
     <!-- <v-img
@@ -64,14 +55,12 @@ const rules = {
       max-width="228"
       src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
     ></v-img> -->
-
     <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
       <div class="text-h5 text-center font-weight-bold">로그인</div>
       <div
         class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between mt-6"
       >
         Email
-
         <a
           class="text-caption text-decoration-none text-blue"
           href="#"
@@ -81,18 +70,16 @@ const rules = {
           이메일 찾기</a
         >
       </div>
-
       <v-text-field
         density="compact"
         placeholder="이메일 입력"
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
         :rules="rules.email"
+        class="mb-5"
       ></v-text-field>
-
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
         Password
-
         <a
           class="text-caption text-decoration-none text-blue"
           href="#"
@@ -102,7 +89,6 @@ const rules = {
           비밀번호 찾기</a
         >
       </div>
-
       <v-text-field
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
@@ -113,9 +99,7 @@ const rules = {
         :rules="rules.password"
         @click:append-inner="visible = !visible"
       ></v-text-field>
-
-      <v-btn block class="mb-8" color="blue" size="large" variant="tonal"> 로그인 </v-btn>
-
+      <v-btn block class="mb-8 mt-10" color="blue" size="large" variant="tonal"> 로그인 </v-btn>
       <v-card-text class="text-center">
         <a
           class="text-blue text-decoration-none"
@@ -129,7 +113,6 @@ const rules = {
     </v-card>
   </div>
 </template>
-
 <style scoped>
 .d-flex {
   height: 0% !important;
