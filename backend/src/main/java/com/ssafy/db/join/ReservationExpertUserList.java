@@ -4,4 +4,5 @@ public interface ReservationExpertUserList {
 
     String getUserName();
     String getHospitalName();
+    String getLicenseNumber();
 }

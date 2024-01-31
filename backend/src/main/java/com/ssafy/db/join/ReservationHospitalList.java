@@ -4,4 +4,5 @@ public interface ReservationHospitalList {
 
     String getName();
     String getRoadNumberAddress();
+    String getHospitalNo();
 }
