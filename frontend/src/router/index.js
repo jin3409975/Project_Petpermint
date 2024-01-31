@@ -16,7 +16,7 @@ import RegisterPet from '@/components/register/RegisterPet.vue'
 import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
 import ReserveAppointView from '@/views/ReserveAppointView.vue'
-import ReserveDate from '@/components/reserve/ReserveDate.vue'
+
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
@@ -154,13 +154,8 @@ const router = createRouter({
               path: 'initial',
               name: 'reserve-initial',
               component: ReserveInitialView,
-              redirect: { name: 'reserve-initial-date' },
+              redirect: { name: 'reserve-initial-time' },
               children: [
-                {
-                  path: 'date',
-                  name: 'reserve-initial-date',
-                  component: ReserveDate
-                },
                 {
                   path: 'hospital',
                   name: 'reserve-initial-hospital',
@@ -175,7 +170,7 @@ const router = createRouter({
                   path: 'pet',
                   name: 'reserve-initial-pet',
                   component: ReservePet
-                },
+                }
               ]
             },
             {
@@ -187,17 +182,12 @@ const router = createRouter({
               path: 'appoint',
               name: 'reserve-appoint',
               component: ReserveAppointView,
-              redirect: { name: 'reserve-appoint-date' },
+              redirect: { name: 'reserve-appoint-time' },
               children: [
-                {
-                  path: 'date',
-                  name: 'reserve-appoint-date',
-                  component: ReserveDate
-                },
                 {
                   path: 'hospital',
                   name: 'reserve-appoint-hospital',
-                  component: ReserveDate
+                  component: ReserveHospital
                 },
                 {
                   path: 'time',
