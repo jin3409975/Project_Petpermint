@@ -12,31 +12,37 @@ const navigateToRegisterVet = () => {
 </script>
 
 <template>
-  <div class="d-flex justify-center">
-    <div class="half-width d-flex justify-center align-center">
-      <v-btn text @click="navigateToRegisterUser">일반회원</v-btn>
-    </div>
-    <div class="half-width d-flex justify-center align-center">
-      <v-btn text @click="navigateToRegisterVet">수의사</v-btn>
+  <div>
+    <h1 class="header">회원가입</h1>
+    <div class="card-container">
+      <v-container>
+        <v-card @click="navigateToRegisterUser" class="register-card">보호자</v-card>
+      </v-container>
+
+      <v-container>
+        <v-card @click="navigateToRegisterVet" class="register-card">수의사</v-card>
+      </v-container>
     </div>
   </div>
 </template>
 
-<style>
-.d-flex {
+<style scoped>
+.header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px; /* 원하는 크기로 조절 */
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.card-container {
   display: flex;
-  height: 100vh; /* 전체 뷰포트 높이 */
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
-.justify-center {
-  justify-content: center; /* 가로 중앙 정렬 */
-}
-
-.align-center {
-  align-items: center; /* 세로 중앙 정렬 */
-}
-
-.half-width {
-  width: 50%; /* 화면의 절반 크기 */
+.register-card {
+  height: 300px;
+  width: 400px;
 }
 </style>
