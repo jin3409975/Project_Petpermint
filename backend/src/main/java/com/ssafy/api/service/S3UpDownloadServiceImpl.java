@@ -72,6 +72,24 @@ public class S3UpDownloadServiceImpl implements S3UpDownloadService{
         return amazonS3Client.getUrl(bucket, "Petpermint/profile/"+userId+"/"+fileName).toString();
     }
 
+    @Override
+    public String saveLicenseFile(@RequestParam MultipartFile multipartFile,String licenseNumber) throws IOException {
+        System.out.println(amazonS3Client.getBucketLocation("primary-sun-bucket"));
+        String extension=FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        String fileName=licenseNumber+"."+extension;
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(multipartFile.getSize());
+        metadata.setContentType(multipartFile.getContentType());
+
+        try {
+            amazonS3Client.putObject(bucket, "Petpermint/LicensePicture/"+licenseNumber+"/"+fileName, multipartFile.getInputStream(), metadata);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return amazonS3Client.getUrl(bucket, "Petpermint/LicensePicture/"+licenseNumber+"/"+fileName).toString();
+    }
+
     public String savePetProfile(@RequestParam MultipartFile multipartFile, AnimalReq animalReq) throws IOException {
         System.out.println(amazonS3Client.getBucketLocation("primary-sun-bucket"));
         String extension=FilenameUtils.getExtension(multipartFile.getOriginalFilename());

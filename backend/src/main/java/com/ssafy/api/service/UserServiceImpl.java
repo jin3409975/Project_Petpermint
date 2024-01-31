@@ -5,6 +5,7 @@ import
 import com.ssafy.api.request.ExpertUserUpdatePutReq;
 import com.ssafy.api.request.NormalUserUpdatePutReq;
 import com.ssafy.db.entity.ExpertUser;
+import com.ssafy.db.entity.LicensePicture;
 import com.ssafy.db.entity.Verification;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	VerificationRepository verificationRepository;
 
+	@Autowired
+	LicensePictureRepository licensePictureRepository;
+
 	@Override
 	public Boolean createNormalUser(NormalUserRegisterPostReq userRegisterInfo,String url) {
 		User user = new User();
@@ -58,12 +62,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Boolean createExpertUser(ExpertUserRegisterPostReq userRegisterInfo) {
+	public Boolean createExpertUser(ExpertUserRegisterPostReq userRegisterInfo, String url, String license) {
 		User user = new User();
 		user.setUserId(userRegisterInfo.getUserId());
 		user.setAddress(userRegisterInfo.getAddress());
 		user.setUserName(userRegisterInfo.getUserName());
 		user.setPhone(userRegisterInfo.getPhone());
+		user.setPicture(url);
 		user.setType(2);
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
@@ -76,9 +81,14 @@ public class UserServiceImpl implements UserService {
 		expertUser.setEndTime(userRegisterInfo.getEndTime());
 		expertUser.setHospitalName(userRegisterInfo.getHospitalName());
 
+		LicensePicture licensePicture = new LicensePicture();
+		licensePicture.setLicenseNumber(userRegisterInfo.getLicenseNumber());
+		licensePicture.setPicture(license);
 		try {
 			userRepository.save(user);
 			expertUserRepository.save(expertUser);
+			licensePictureRepository.save(licensePicture);
+
 		} catch (Exception e) {
 			return false;
 		}

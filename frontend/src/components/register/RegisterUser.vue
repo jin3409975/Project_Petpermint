@@ -15,8 +15,28 @@ const name = ref(null)
 const phone = ref(null)
 const address1 = ref(null)
 const address2 = ref(null)
+const picture = ref(null);
+
+const emailRequest = function () {
+  console.log('이메일 인증 요청')
+  store.emailRequest(email.value)
+}
+
+const emailValidate = function () {
+  console.log('이메일 확인 요청')
+  store.emailValidate(email.value, confirm.value)
+}
+
+const getFile = function (event) {
+  console.log(event)
+  picture.value = event.target.files[0]
+}
 
 const signUp = function () {
+  if(!store.result) {
+    alert('이메일 인증을 진행 해주세요')
+    return false
+  }
   const payload = {
     email: email.value,
     confirm: confirm.value,
@@ -25,8 +45,10 @@ const signUp = function () {
     name: name.value,
     phone: phone.value,
     address1: address1.value,
-    address2: address2.value
+    address2: address2.value,
+    picture : picture.value
   }
+  console.log(payload)
   store.usersignup(payload)
 }
 
@@ -68,12 +90,14 @@ const address2Rules = ref([(v) => !!v || '나머지 주소도 입력해주세요
           :rules="emailRules"
           hide-details="auto"
         ></v-text-field>
+        <v-btn @click="emailRequest()">인증 요청</v-btn>
         <v-text-field
           label="인증번호 숫자 6자리 입력  *"
           v-model="confirm"
           :rules="confirmRules"
           hide-details="auto"
         ></v-text-field>
+        <v-btn @click="emailValidate()">인증 확인</v-btn>
         <v-text-field
           label="비밀번호 *"
           v-model="password1"
@@ -110,6 +134,7 @@ const address2Rules = ref([(v) => !!v || '나머지 주소도 입력해주세요
           :rules="address2Rules"
           hide-details="auto"
         ></v-text-field>
+        <input type="file" v-on:change="getFile">프로필 사진 업로드</input>
       </div>
       <div class="button-container">
         <v-btn type="submit" variant="outlined" class="submit-btn">다음</v-btn>

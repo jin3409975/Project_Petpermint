@@ -63,7 +63,12 @@ public class UserController {
     })
 	public ResponseEntity<? extends BaseResponseBody> signupNormal(
 			@ModelAttribute @ApiParam(value="회원가입 정보", required = true) NormalUserRegisterPostReq registerInfo) throws IOException {
-		String url=s3service.saveProfile(registerInfo.getPicture(),registerInfo.getUserId());
+		System.out.println(registerInfo);
+		String url = "0";
+		if(registerInfo.getPicture() != null) {
+			url=s3service.saveProfile(registerInfo.getPicture(),registerInfo.getUserId());
+		}
+
 		if(userService.createNormalUser(registerInfo,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -79,8 +84,19 @@ public class UserController {
         @ApiResponse(code = 400, message = "실패")
     })
 	public ResponseEntity<? extends BaseResponseBody> signupExpert(
-			@RequestBody @ApiParam(value="회원가입 정보", required = true) ExpertUserRegisterPostReq registerInfo) {
-		if(userService.createExpertUser(registerInfo)) {
+			@ModelAttribute @ApiParam(value="회원가입 정보", required = true) ExpertUserRegisterPostReq registerInfo) throws IOException {
+		System.out.println(registerInfo);
+		String url = "0";
+		if(registerInfo.getPicture() != null) {
+			url=s3service.saveProfile(registerInfo.getPicture(),registerInfo.getUserId());
+		}
+
+		String license = "0";
+		if(registerInfo.getLicensePicture() != null) {
+			license = s3service.saveLicenseFile(registerInfo.getLicensePicture(), registerInfo.getLicenseNumber());
+		}
+
+		if(userService.createExpertUser(registerInfo, url, license)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
@@ -135,7 +151,7 @@ public class UserController {
 		if(result != null) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
-			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+			return ResponseEntity.status(200).body(BaseResponseBody.of(400, "Fail"));
 		}
 	}
 
@@ -150,7 +166,7 @@ public class UserController {
 		if(emailValidateService.validate(verification.getUserId(),verification.getVerificationCode())) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
-			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+			return ResponseEntity.status(200).body(BaseResponseBody.of(400, "Fail"));
 		}
 	}
 

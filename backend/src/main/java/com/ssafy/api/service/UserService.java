@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface UserService {
 	Boolean createNormalUser(NormalUserRegisterPostReq userRegisterInfo, String url);
-	Boolean createExpertUser(ExpertUserRegisterPostReq userRegisterInfo);
+	Boolean createExpertUser(ExpertUserRegisterPostReq userRegisterInfo, String url, String license);
 	User getUserByUserId(String userId);
 	ExpertUser getExpertUserByUserId(String userId);
 	Boolean createVerification(String userId);

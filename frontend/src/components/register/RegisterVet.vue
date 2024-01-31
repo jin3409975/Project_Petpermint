@@ -19,19 +19,51 @@ const license = ref(null)
 // const graduate = ref(null)
 const work = ref(null)
 // const address = ref(null)
+const profile = ref(null)
+const licensePicture = ref(null)
+const emailcheck = ref(false)
+const address = ref(null)
+
+const getProfile = function (e) {
+  profile.value = e.target.files[0]
+}
+
+const getLicense = function (e) {
+  licensePicture.value = e.target.files[0]
+}
 
 const signUp = function () {
+  console.log('asdasdsd',emailcheck.value)
+  if(!store.result) {
+    alert('이메일 인증을 진행 해주세요')
+    return false
+  }
   const payload = {
     email: email.value,
     confirm: confirm.value,
     password1: password1.value,
     password2: password2.value,
+    address: address.value,
     name: name.value,
     phone: phone.value,
     license: license.value,
-    work: work.value
+    work: work.value,
+    picture : profile.value,
+    licensePicture : licensePicture.value
   }
-  store.vetsignUp(payload)
+  store.vetsignup(payload)
+}
+
+const emailRequest = function () {
+  console.log('이메일 인증 요청', emailcheck.value)
+  store.emailRequest(email.value)
+  console.log('결과',store.result)
+}
+
+const emailValidate = function () {
+  console.log('이메일 확인 요청', emailcheck.value)
+  emailcheck.value = store.emailValidate(email.value, confirm.value)
+  console.log('결과',store.result)
 }
 
 const emailRules = ref([
@@ -76,6 +108,7 @@ const workRules = ref([
   (v) => !!v || '직장명은 필수입니다. 수의사 인증에 필요하므로 정확히 입력해주세요.',
   (v) => (v && v.length == 4) || '숫자 4자리를 입력해주세요. 예) 2024'
 ])
+const address1Rules = ref([(v) => !!v || '자택 주소는 필수입니다.'])
 </script>
 
 <template>
@@ -90,12 +123,14 @@ const workRules = ref([
           :rules="emailRules"
           hide-details="auto"
         ></v-text-field>
+        <v-btn @click="emailRequest()">인증 요청</v-btn>
         <v-text-field
           label="인증번호 숫자 6자리 입력  *"
           v-model="confirm"
           :rules="confirmRules"
           hide-details="auto"
         ></v-text-field>
+        <v-btn @click="emailValidate()">인증 확인</v-btn>
         <v-text-field
           label="비밀번호 *"
           v-model="password1"
@@ -124,6 +159,12 @@ const workRules = ref([
           label="핸드폰번호 *"
           v-model="phone"
           :rules="phoneRules"
+          hide-details="auto"
+        ></v-text-field>
+        <v-text-field
+          label="주소 *"
+          v-model="address"
+          :rules="address1Rules"
           hide-details="auto"
         ></v-text-field>
         <v-text-field
@@ -158,6 +199,8 @@ const workRules = ref([
         ></v-text-field>
         <!-- <v-text-field label="직장주소" hide-details="auto"></v-text-field> -->
         <!-- <v-text-field label="나머지 주소" v-model="address" hide-details="auto"></v-text-field> -->
+        <input type="file" v-on:change="getProfile">프로필 사진 업로드</input>
+        <input type="file" v-on:change="getLicense">면허증 사진 업로드</input>
       </div>
       <div class="button-container">
         <v-btn type="submit" variant="outlined" class="submit-btn">회원가입</v-btn>

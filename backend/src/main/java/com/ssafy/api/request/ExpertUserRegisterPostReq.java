@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -36,4 +37,8 @@ public class ExpertUserRegisterPostReq {
 	String endTime;
 	@ApiModelProperty(name="수의사 유저 병원 아름", example="사랑동물병원")
 	String hospitalName;
+	@ApiModelProperty(name="프로필 사진", example="img")
+	MultipartFile picture;
+	@ApiModelProperty(name="면허증 사진", example="img")
+	MultipartFile licensePicture;
 }

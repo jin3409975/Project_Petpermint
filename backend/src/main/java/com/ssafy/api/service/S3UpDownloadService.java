@@ -19,6 +19,7 @@ public interface S3UpDownloadService {
 	public String saveProfile(@RequestParam MultipartFile multipartFile,String userId) throws IOException;
 	public String savePetProfile(@RequestParam MultipartFile multipartFile, AnimalReq animalReq) throws IOException;
 	public String deleteFile(String filePath);
+	public String saveLicenseFile(@RequestParam MultipartFile multipartFile,String userId) throws IOException;
 
 }
 
