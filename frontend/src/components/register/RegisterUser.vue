@@ -1,11 +1,13 @@
+
 <script setup>
-import { ref } from 'vue'
-// import { useRouter } from 'vue-router'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/account.js'
 // import Complete from '@/components/register/Complete.vue'
 
-// const router = useRouter()
+const router = useRouter()
 const store = useAccountStore()
+
 
 const email = ref(null)
 const confirm = ref(null)
@@ -16,6 +18,78 @@ const phone = ref(null)
 const address1 = ref(null)
 const address2 = ref(null)
 const picture = ref(null);
+
+const pets = ref([createPet()])
+const visible = ref(false)
+
+// 펫 정보
+function createPet() {
+  return reactive({
+    radios: '',
+    petname: '',
+    petage: '',
+    more: ''
+  })
+}
+
+// 펫 정보 폼 추가
+function addPetForm() {
+  // 현재 폼의 개수가 5개 미만이고 모든 필수 입력값이 채워져 있을 때만 새로운 폼 추가
+  if (
+    pets.value.length < 3 &&
+    pets.value.every((pet) => pet.radios && pet.petname && pet.petage && pet.more)
+  ) {
+    pets.value.push(createPet())
+  } else if (pets.value.length >= 3) {
+    // 폼의 개수가 최대치에 도달했을 경우
+    alert('폼을 더 이상 추가할 수 없습니다. 최대 3개까지만 추가 가능합니다.')
+  } else {
+    // 필수 입력값이 모두 채워지지 않았을 경우
+    alert('모든 필수 입력값을 채워주세요.')
+  }
+}
+
+// 펫 정보 폼 삭제
+function removePetForm(index) {
+  if (pets.value.length > 1) {
+    pets.value.splice(index, 1)
+  } else {
+    alert('최소 하나의 폼은 남겨야 합니다.')
+  }
+}
+
+const currentStep = ref(1)
+
+// 다음 버튼
+const nextStep = () => {
+  if (currentStep.value < 3) {
+    currentStep.value++
+  }
+}
+
+// 이전 버튼
+const previousStep = () => {
+  if (currentStep.value > 1) {
+    currentStep.value--
+  }
+}
+
+// 선택화면으로 돌아가기 버튼
+const goToType = () => {
+  router.push({ name: 'register-home' })
+}
+
+const rules = {
+  required: (value) => !!value || '입력해주세요'
+}
+
+// function validateForm() {
+//   if (!form.value.validate()) {
+//     alert('폼을 완성해주세요.')
+//   } else {
+//     nextStep()
+//   }
+// }
 
 const emailRequest = function () {
   console.log('이메일 인증 요청')
@@ -32,8 +106,11 @@ const getFile = function (event) {
   picture.value = event.target.files[0]
 }
 
-const signUp = function () {
-  if(!store.result) {
+const showSnackbar = ref(false)
+
+function register() {
+  // 회원가입 처리 로직 여기에 추가
+    if(!store.result) {
     alert('이메일 인증을 진행 해주세요')
     return false
   }
@@ -50,127 +127,310 @@ const signUp = function () {
   }
   console.log(payload)
   store.usersignup(payload)
-}
+  // 여기서는 예시로 바로 스낵바를 표시합니다.
+  showSnackbar.value = true
 
-const emailRules = ref([
-  (v) => !!v || '이메일은 필수입니다.',
-  (v) => (v && v.length >= 5) || '아이디는 최소 5자 이상이어야 합니다.'
-])
-const confirmRules = ref([
-  (v) => !!v || '이메일 확인은 필수입니다.',
-  (v) => (v && v.length == 5) || '인증번호를 다시 입력해 주세요.'
-])
-const password1Rules = ref([
-  (v) => !!v || '비밀번호는 필수입니다.',
-  (v) => (v && v.length >= 5) || '아이디는 최소 5자 이상이어야 합니다.'
-])
-const password2Rules = ref([
-  (v) => !!v || '비밀번호 확인은 필수입니다.',
-  (v) => v === password1.value || '비밀번호가 일치하지 않습니다.'
-])
-const nameRules = ref([(v) => !!v || '이름은 필수입니다.'])
-const phoneRules = ref([
-  (v) => !!v || '핸드폰번호는 필수입니다.',
-  (v) => (v && v.length == 13) || '010-0000-0000 형식으로 입력해주세요'
-])
-const address1Rules = ref([(v) => !!v || '자택 주소는 필수입니다.'])
-const address2Rules = ref([(v) => !!v || '나머지 주소도 입력해주세요.'])
+  // 스낵바가 표시되고 2000ms 후에 메인 페이지로 이동
+  setTimeout(() => {
+    router.push({ name: 'main-home' })
+  }, 2000)
+
+}
 </script>
 
 <template>
-  <div class="sign-up-container">
-    <h1 class="title">일반 사용자 회원가입</h1>
-    <h3>개인 및 계정 정보</h3>
-    <!-- <form v-if="showSignUpForm" @submit.prevent="signUp"> -->
-    <form @submit.prevent="signUp" class="sign-up-form">
-      <div>
-        <v-text-field
-          label="이메일 *"
-          v-model="email"
-          :rules="emailRules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-btn @click="emailRequest()">인증 요청</v-btn>
-        <v-text-field
-          label="인증번호 숫자 6자리 입력  *"
-          v-model="confirm"
-          :rules="confirmRules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-btn @click="emailValidate()">인증 확인</v-btn>
-        <v-text-field
-          label="비밀번호 *"
-          v-model="password1"
-          :rules="password1Rules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-text-field
-          label="비밀번호 확인 *"
-          v-model="password2"
-          :rules="password2Rules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-text-field
-          label="이름 *"
-          v-model="name"
-          :rules="nameRules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-text-field
-          label="핸드폰번호 *"
-          v-model="phone"
-          :rules="phoneRules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-text-field
-          label="직장주소 *"
-          v-model="address1"
-          :rules="address1Rules"
-          hide-details="auto"
-        ></v-text-field>
-        <v-text-field
-          label="나머지 주소 *"
-          v-model="address2"
-          :rules="address2Rules"
-          hide-details="auto"
-        ></v-text-field>
-        <input type="file" v-on:change="getFile">프로필 사진 업로드</input>
+  <!-- 로고 -->
+  <!-- <RouterLink to="/">
+    <div class="auth-logo d-flex align-center gap-x-3">
+      <VNodeRenderer :nodes="themeConfig.app.logo" />
+      <h1 class="auth-title">
+        {{ themeConfig.app.title }}
+      </h1>
+    </div>
+  </RouterLink> -->
+
+  <v-row no-gutters class="d-flex align-stretch" style="height: 100%">
+    <!-- 왼쪽 이미지 -->
+    <v-col md="4" class="d-none d-md-flex" style="background-color: #d2e0fb">
+      <div
+        class="d-flex align-center justify-end"
+        style="width: 100%; height: 100%; padding-bottom: 0%"
+      >
+        <img
+          src="@/assets/img/doctor_dog.png"
+          style="max-width: 100%; height: auto; object-fit: contain"
+        />
       </div>
-      <div class="button-container">
-        <v-btn type="submit" variant="outlined" class="submit-btn">다음</v-btn>
-      </div>
-    </form>
-  </div>
-  <!-- `showSignUpComplete`이 true이면 회원가입 완료 화면을 표시합니다. -->
-  <!-- <Complete v-if="showSignUpComplete" /> -->
+    </v-col>
+    <v-col cols="12" md="8" class="d-flex align-center justify-center custom-padding">
+      <v-container style="height: 100%; padding-bottom: 0px">
+        <v-stepper v-model="currentStep" hide-actions :items="['Account', 'Personal', 'Pet Info']">
+          <!-- 1. 계정정보 -->
+          <template v-slot:item.1>
+            <v-card flat>
+              <h4 class="text-h4 mb-2">계정 정보</h4>
+              <p class="mb-5">계정 정보를 입력해 주세요.</p>
+              <v-row class="mt-2">
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    dense
+                    v-model="email"
+                    label="이메일"
+                    placeholder="ssafy01@ssafy.com"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    v-model="confirm"
+                    label="이메일 인증번호"
+                    placeholder="123456"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                  <v-btn @click="emailRequest()">인증 요청</v-btn>
+                  <v-btn @click="emailValidate()">인증 확인</v-btn>
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
+                    @click:append-inner="visible = !visible"
+                    v-model="password1"
+                    label="비밀번호"
+                    placeholder="············"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
+                    @click:append-inner="visible = !visible"
+                    v-model="password2"
+                    label="비밀번호 확인"
+                    placeholder="············"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+            <div class="button-row">
+              <v-btn @click="goToType" style="box-shadow: none" variant="outlined" color="#757575"
+                >돌아가기</v-btn
+              >
+              <v-spacer></v-spacer>
+              <v-btn @click="nextStep" style="box-shadow: none" variant="flat" color="#668ba7"
+                >다음</v-btn
+              >
+            </div>
+          </template>
+          <!-- 2. 개인 정보 -->
+          <template v-slot:item.2>
+            <v-card flat>
+              <h4 class="text-h4 mb-3">개인 정보</h4>
+              <p class="mb-5">상담 및 병원 예약 시 필요한 개인 정보를 입력해 주세요.</p>
+              <v-row class="mt-2">
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    label="이름"
+                    v-model="name"
+                    placeholder="김싸피"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    label="휴대전화번호"
+                    v-model="phone"
+                    placeholder="01012345678"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+                <v-col style="padding-bottom: 0%">
+                  <p>자택 주소</p>
+                </v-col>
+                <v-col cols="12" md="12" style="padding-top: 6px; padding-bottom: 0">
+                  <v-text-field
+                    label="주소 검색하기"
+                    prepend-inner-icon="mdi-home-search-outline"
+                    v-model="address1"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+                <v-col cols="12" md="12">
+                  <v-text-field
+                    label="상세 주소"
+                    v-model="address2"
+                    variant="outlined"
+                    color="#668ba7"
+                    bg-color="transparent"
+                  />
+                </v-col>
+                <input type="file" v-on:change="getFile">프로필 사진 업로드</input>
+              </v-row>
+            </v-card>
+            <div class="button-row">
+              <v-btn
+                @click="previousStep"
+                style="box-shadow: none"
+                variant="outlined"
+                color="#757575"
+                >이전</v-btn
+              >
+              <v-spacer></v-spacer>
+              <v-btn @click="nextStep" style="box-shadow: none" variant="flat" color="#668ba7"
+                >다음</v-btn
+              >
+            </div>
+          </template>
+          <!-- 3. 마이펫 정보 -->
+          <template v-slot:item.3>
+            <v-card flat>
+              <h4 class="text-h4 mb-3">마이 펫 정보</h4>
+              <p class="mb-5">내 반려동물의 정보를 입력해 주세요.</p>
+              <div v-for="(pet, index) in pets" :key="index" class="pet-form">
+                <v-row class="mt-2">
+                  <v-col cols="12" md="12" style="padding-top: 0%; padding-bottom: 0%">
+                    <v-btn
+                      class="custom-icon-color"
+                      icon="mdi-minus-box-multiple"
+                      size="large"
+                      @click="removePetForm(index)"
+                      style="box-shadow: none; position: absolute; top: 0; right: 0"
+                    ></v-btn>
+                    <v-col style="padding-bottom: 0%">
+                      <p>반려동물 종류</p>
+                    </v-col>
+                    <v-radio-group inline v-model="pet.radios">
+                      <v-col cols="12" md="4" style="padding-bottom: 0%">
+                        <v-radio label="강아지" value="강아지"></v-radio>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-radio label="고양이" value="고양이"></v-radio>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-radio label="기타" value="기타"></v-radio>
+                      </v-col>
+                    </v-radio-group>
+                  </v-col>
+
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      label="반려동물 이름 "
+                      :rules="[rules.required]"
+                      v-model="pet.petname"
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      label="반려동물 나이"
+                      v-model="pet.petage"
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="12">
+                    <v-text-field
+                      label="특이사항"
+                      v-model="pet.more"
+                      placeholder="특이사항이 없을 시 '없음'으로 작성해주세요."
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <div class="text-center">
+                  <v-btn
+                    @click="addPetForm"
+                    color="medium-emphasis"
+                    rounded
+                    variant="outlined"
+                    class="ma-2 mt-5"
+                  >
+                    펫 추가하기
+                    <v-icon end icon="mdi-plus-box-multiple-outline"></v-icon>
+                  </v-btn>
+                </div>
+              </div>
+            </v-card>
+            <div class="button-row">
+              <v-btn
+                @click="previousStep"
+                style="box-shadow: none"
+                variant="outlined"
+                color="#757575"
+                >이전</v-btn
+              >
+              <v-spacer></v-spacer>
+              <v-btn @click="register" color="primary" variant="tonal" v-bind="props"
+                >회원가입</v-btn
+              >
+              <v-snackbar v-model="showSnackbar" :timeout="2000" color="primary">
+                <div class="text-center">
+                  <h4>회원가입이 완료되었습니다.</h4>
+                  <p>메인페이지로 이동합니다.</p>
+                </div>
+              </v-snackbar>
+            </div>
+          </template>
+        </v-stepper>
+      </v-container>
+    </v-col>
+  </v-row>
 </template>
 
 <style>
-.sign-up-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.custom-padding {
+  padding-top: 30px !important;
+  padding-left: 130px !important;
+  padding-right: 130px !important;
+}
+.v-stepper,
+.v-stepper-header,
+.v-stepper-content {
+  box-shadow: none !important;
 }
 
-.title {
-  margin-bottom: 30px; /* h1과 form 사이의 간격 */
+.v-stepper-header {
+  padding-bottom: 20px !important;
 }
-
-.sign-up-form {
-  width: 100%; /* 폼의 너비 */
-  max-width: 500px; /* 최대 폼 너비 */
-  margin-bottom: 30px; /* form과 버튼 사이의 간격 */
+.v-input__details {
+  display: none !important;
 }
-
-.submit-btn {
-  margin-top: 20px; /* 버튼 상단 간격 */
+.button-row {
+  margin-top: 30px;
 }
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px; /* 버튼 상단 간격 */
+.pet-form {
+  border: 1px solid #ccc; /* 테두리 색상과 두께 설정 */
+  padding: 10px; /* 내부 여백 추가 */
+  margin-bottom: 10px; /* 폼 간 간격 추가 */
+  padding-top: 0px;
+  position: relative !important;
+}
+.custom-icon-color .v-icon {
+  color: #ef5350; /* 아이콘 색상을 녹색으로 변경 */
 }
 </style>
