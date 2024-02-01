@@ -17,49 +17,45 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
-@ApiModel("ReservationResponse")
-public class ConsultReservationRes extends BaseResponseBody{
+@ApiModel("EmergencyReservationResponse")
+public class EmergencyReservationRes extends BaseResponseBody {
     @ApiModelProperty(name = "Appoint ID")
     int appointId;
     String time;
-    String diagnosis;
-    String note;
+//    String diagnosis;
+//    String note;
 //    int type;
 //    int isDelete;
-    String licenseNumber;
-//    int hospitalNo;
+//    String licenseNumber;
+    int hospitalNo;
 //    String userId;
     List<Reservation> result;
-
-    public static ConsultReservationRes ofConsult(Integer statusCode, String message, Reservation reservation) {
-        ConsultReservationRes res = new ConsultReservationRes();
+    public static EmergencyReservationRes ofHospital(Integer statusCode, String message, Reservation reservation) {
+        EmergencyReservationRes res = new EmergencyReservationRes();
         res.setStatusCode(statusCode);
         res.setMessage(message);
         res.setAppointId(reservation.getAppointId());
         res.setTime(reservation.getTime());
-        res.setLicenseNumber(reservation.getLicenseNumber());
-        res.setNote(reservation.getNote());
-        res.setDiagnosis(reservation.getDiagnosis());
+        res.setHospitalNo(reservation.getHospitalNo());
 
         // 반환하지 않아도 되는 데이터
 //        res.setType(reservation.getType());
 //        res.setIsDelete(reservation.getIsDelete());
-//        res.setHospitalNo(reservation.getHospitalNo());
 //        res.setUserId(reservation.getUserId());
+//        res.setLicenseNumber(reservation.getLicenseNumber());
+//        res.setNote(reservation.getNote());
+//        res.setDiagnosis(reservation.getDiagnosis());
 
         return res;
     }
-
-    public static ConsultReservationRes ofConsult(Integer statusCode, String message, List<Reservation> reservation) {
-        ConsultReservationRes res = new ConsultReservationRes();
+    public static EmergencyReservationRes ofHospital(Integer statusCode, String message, List<Reservation> reservation) {
+        EmergencyReservationRes res = new EmergencyReservationRes();
         res.setStatusCode(statusCode);
         res.setMessage(message);
         res.result = reservation;
         return res;
     }
-
-
-//    public static List<ConsultReservationRes> listOfConsult(List<Reservation> reservations) {
-//        return reservations.stream().map(ConsultReservationRes::ofConsult).collect(Collectors.toList());
+//    public static List<EmergencyReservationRes> listOfHospital(List<Reservation> reservations) {
+//        return reservations.stream().map(EmergencyReservationRes::ofHospital).collect(Collectors.toList());
 //    }
 }

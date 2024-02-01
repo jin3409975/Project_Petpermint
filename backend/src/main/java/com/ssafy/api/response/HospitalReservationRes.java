@@ -1,5 +1,6 @@
 package com.ssafy.api.response;
 
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Reservation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @ApiModel("ReservationResponse")
-public class HospitalReservationRes {
+public class HospitalReservationRes extends BaseResponseBody{
     @ApiModelProperty(name = "Appoint ID")
     int appointId;
     String time;
@@ -28,10 +29,12 @@ public class HospitalReservationRes {
 //    String licenseNumber;
     int hospitalNo;
 //    String userId;
+    List<Reservation> result;
 
-    public static HospitalReservationRes ofHospital(Reservation reservation) {
+    public static HospitalReservationRes ofHospital(Integer statusCode, String message, Reservation reservation) {
         HospitalReservationRes res = new HospitalReservationRes();
-
+        res.setStatusCode(statusCode);
+        res.setMessage(message);
         res.setAppointId(reservation.getAppointId());
         res.setTime(reservation.getTime());
         res.setHospitalNo(reservation.getHospitalNo());
@@ -47,7 +50,15 @@ public class HospitalReservationRes {
         return res;
     }
 
-    public static List<HospitalReservationRes> listOfHospital(List<Reservation> reservations) {
-        return reservations.stream().map(HospitalReservationRes::ofHospital).collect(Collectors.toList());
+    public static HospitalReservationRes ofHospital(Integer statusCode, String message, List<Reservation> reservation) {
+        HospitalReservationRes res = new HospitalReservationRes();
+        res.setStatusCode(statusCode);
+        res.setMessage(message);
+        res.result = reservation;
+        return res;
     }
+
+//    public static List<HospitalReservationRes> listOfHospital(List<Reservation> reservations) {
+//        return reservations.stream().map(HospitalReservationRes::ofHospital).collect(Collectors.toList());
+//    }
 }
