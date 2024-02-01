@@ -23,10 +23,10 @@ public class ConsultReservationRes {
     String time;
     String diagnosis;
     String note;
-//    int type;
+    int type;
 //    int isDelete;
     String licenseNumber;
-//    int hospitalNo;
+    int hospitalNo;
 //    String userId;
 
     public static ConsultReservationRes ofConsult(Reservation reservation) {
@@ -37,7 +37,8 @@ public class ConsultReservationRes {
         res.setLicenseNumber(reservation.getLicenseNumber());
         res.setNote(reservation.getNote());
         res.setDiagnosis(reservation.getDiagnosis());
-
+        res.setType(reservation.getType());
+        res.setHospitalNo(reservation.getHospitalNo());
         // 반환하지 않아도 되는 데이터
 //        res.setType(reservation.getType());
 //        res.setIsDelete(reservation.getIsDelete());

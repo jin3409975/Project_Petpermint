@@ -208,4 +208,21 @@ public class ReservationController {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
 		}
 	}
+
+	@GetMapping("/all")
+	@ApiOperation(value = "특정 사용자의 예약 전체 조회", notes = "특정 사용자의 예약 전체 조회")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "상담 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<List<ConsultReservationRes>> getAllReservation(@ApiIgnore String userId) {
+		List<Reservation> consultReservation = reservationService.getAllConsultReservations(userId);
+		List<Reservation> hospitalReservation = reservationService.getAllHospitalReservations(userId);
+		List<ConsultReservationRes> reservationResList = ConsultReservationRes.listOfConsult(consultReservation);
+		List<ConsultReservationRes> reservationResList2 = ConsultReservationRes.listOfConsult(hospitalReservation);
+        reservationResList.addAll(reservationResList2);
+		return ResponseEntity.status(200).body(reservationResList);
+	}
 }
