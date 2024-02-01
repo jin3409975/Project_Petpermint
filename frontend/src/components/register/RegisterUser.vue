@@ -108,7 +108,20 @@ const goToType = () => {
   router.push({ name: 'register-home' })
 }
 
+// 이메일 인증
 const emailStatus = ref('request')
+
+const emailRequest = function () {
+  console.log('이메일 인증 요청', emailcheck.value)
+  store.emailRequest(email.value)
+  console.log('결과', store.result)
+}
+
+const emailValidate = function () {
+  console.log('이메일 확인 요청', emailcheck.value)
+  emailcheck.value = store.emailValidate(email.value, confirm.value)
+  console.log('결과', store.result)
+}
 
 const emailAction = () => {
   if (emailStatus.value === 'request') {
@@ -343,12 +356,9 @@ function openKakaoAddressSearch() {
                     bg-color="transparent"
                   />
                 </v-col>
-                <v-col style="padding-bottom: 0%">
-                  <p>자택 주소</p>
-                </v-col>
-                <v-col cols="12" md="12" style="padding-top: 6px; padding-bottom: 0">
+                <v-col cols="12" md="10" style="padding-top: 20px; padding-bottom: 0">
                   <v-text-field
-                    label="주소 검색하기"
+                    label="자택주소 검색하기"
                     density="comfortable"
                     prepend-inner-icon="mdi-home-search-outline"
                     v-model="address1"
@@ -359,9 +369,9 @@ function openKakaoAddressSearch() {
                     @click="openKakaoAddressSearch"
                   />
                 </v-col>
-                <v-col cols="12" md="12">
+                <v-col cols="12" md="10">
                   <v-text-field
-                    label="상세 주소"
+                    label="자택 상세주소"
                     density="comfortable"
                     v-model="address2"
                     variant="outlined"
