@@ -41,7 +41,18 @@ const navigateToRegisterVet = () => {
           <img src="@/assets/img/hospital-icon-1.png" alt="hospital-icon" />
           <v-card-title>수의사</v-card-title>
           <v-card class="inner-card" color="#BBDEFB">
-            <v-card-text class="register-card-text"> 언 </v-card-text>
+            <v-card-text class="register-card-text">
+              펫퍼민트만의 특별한 혜택을 <br />경험해보세요!<br />
+              <br />
+              <br />
+              1. 편리한 예약 관리
+              <br />
+              <br />
+              2. 효율적인 시간 관리
+              <br />
+              <br />
+              3.
+            </v-card-text>
           </v-card>
         </v-card>
       </v-container>
@@ -76,16 +87,19 @@ const navigateToRegisterVet = () => {
   text-align: center;
 }
 
+.inner-card {
+  height: 280px;
+  width: 280px;
+  margin: 10px;
+  margin-bottom: 10px;
+}
+
 .user-card {
   margin-right: 50%; /* 보호자 카드 오른쪽 부분과 수의사 카드 왼쪽 부분 간격 조절 */
 }
 
 .vet-card {
   margin-left: 50px; /* 보호자 카드 오른쪽 부분과 수의사 카드 왼쪽 부분 간격 조절 */
-}
-
-.inner-card {
-  opacity: 0.8;
 }
 
 .register-card-text {
