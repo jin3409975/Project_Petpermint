@@ -1,9 +1,9 @@
 <script>
 import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
+// import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { myPageStore } from '@/stores/mypage.js'
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 
 export default {
   components: {
@@ -11,7 +11,11 @@ export default {
   },
   setup() {
     const mypagestore = myPageStore()
-
+    onBeforeMount(() => {
+      console.log('onmounted')
+      mypagestore.getmyevents()
+      console.log(mypagestore.myevents)
+    })
     // Use a ref for calendarOptions to ensure reactivity
     const calendarOptions = ref({
       plugins: [timeGridPlugin],
@@ -28,6 +32,7 @@ export default {
 
 <template>
   <h1>나의 예약 현황</h1>
+  <button @cilck="mypagestore.getmyevents()">test</button>
   <FullCalendar :options="calendarOptions"> </FullCalendar>
 </template>
 <style>

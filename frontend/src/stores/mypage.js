@@ -2,7 +2,8 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 export const myPageStore = defineStore('mypage', () => {
-  const API_URL = `${VITE_SERVER_URI}/reserve/`
+  const { VITE_SERVER_URI } = import.meta.env
+  // const API_URL = `${VITE_SERVER_URI}/reserve/`
   // axios 요청 예정
   const myevents = ref([
     // title : 일정이름 start(2024-01-31T05:00-06:00) 일정 시작일 end:일정 완료일, url:일정클릭시 이동
@@ -11,15 +12,18 @@ export const myPageStore = defineStore('mypage', () => {
   ])
 
   function getmyevents() {
+    console.log('test')
     axios({
       method: 'get',
-      url: API_URL + 'consult/data',
+      url: VITE_SERVER_URI + '/reserve/hospital/data',
       params: {
         userId: 'alswl9703@naver.com'
       }
     }).then((r) => {
+      console.log(r)
       if (r.data.statusCode == 200) {
-        console.log('예약내역 불러오기 성공', r)
+        console.log(r)
+        myevents.value = r
       }
     })
   }
