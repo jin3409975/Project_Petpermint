@@ -18,6 +18,7 @@ watchEffect(() => {
 })
 const selectDate = () => {
   reserveStore.getdoctorList()
+  reserveStore.gethospitalList()
   // starttime , endtime 에 저장 .... 선택한 시간에서 20분 더한 시간을 추출하는 법을 모르겟습니다
   console.log(doctorList)
 }

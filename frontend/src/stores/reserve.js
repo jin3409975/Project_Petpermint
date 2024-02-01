@@ -12,7 +12,7 @@ export const useReserveStore = defineStore('reserve', () => {
   const starttime = ref('')
   const endtime = ref('')
   // 예약 병원 Hospital.id
-  const reservehospital = ref(null)
+  const reservehospitalno = ref(0)
   //예약병원 or 수의사 리스트 임시데이터 생성 -> 추후 axios요청예정
   const doctorList = ref([])
   const hospitalList = ref([])
@@ -32,7 +32,7 @@ export const useReserveStore = defineStore('reserve', () => {
         userId: '123',
         type: 1,
         time: reservedate.value,
-        licenseNumber: '12345', // reservelicense
+        licenseNumber: reservelicense.value, // reservelicense
         animalId: reservepet.value
       }
     }).then((r) => {
@@ -52,7 +52,7 @@ export const useReserveStore = defineStore('reserve', () => {
         userId: '123',
         type: 2,
         time: reservedate.value,
-        hospitalNo: 30, //reservehospital
+        hospitalNo: reservehospitalno.value, //reservehospitalno
         animalId: reservepet.value
       }
     }).then((r) => {
@@ -101,7 +101,7 @@ export const useReserveStore = defineStore('reserve', () => {
   return {
     reservedate, //yyyy-mm-dd
     type,
-    reservehospital, //병원 이름, 수의사 이름
+    reservehospitalno, //예약되는 병원
     petList,
     reservepet, //고른 펫
     doctorList,
@@ -110,7 +110,7 @@ export const useReserveStore = defineStore('reserve', () => {
     hospitalCreate,
     getdoctorList,
     gethospitalList,
-    reservelicense,
+    reservelicense, //예약되는 수의사 면허번호
     hospitalList,
     starttime,
     endtime
