@@ -5,23 +5,23 @@ import { useReserveStore } from '@/stores/reserve'
 import { useRouter } from 'vue-router'
 
 const reserveStore = useReserveStore()
-const { petList, reservepet, reservehospital, reservepetindex } = storeToRefs(reserveStore)
+const { petList, reservepet, reservehospital, reservepetindex, type } = storeToRefs(reserveStore)
 const vuetify = createVuetify({
   theme: {
     defaultTheme: 'light'
     //
   }
 })
-const router = useRouter()
 
-const selectPet = (pet, id) => {
-  console.log(pet, id)
-  reservepetindex.value = id;
-  reservepet.value = pet
+const selectPet = () => {
+  reservepet.value = reservepetindex.value + 1
 }
 const navigateToReserveComplete = () => {
-  //router.push({ name: 'reserve-initial-complete' })
-  reserveStore.consultCreate();
+  if (type == 1) {
+    reserveStore.consultCreate()
+  } else {
+    reserveStore.hospitalCreate()
+  }
 }
 </script>
 
@@ -31,12 +31,19 @@ const navigateToReserveComplete = () => {
   </div>
   <div>
     <v-container fluid>
-      <div v-for="pet,index in petList" :key="pet.id">
-        <v-checkbox :label="pet" @click="selectPet(pet, index)"></v-checkbox>
-      </div>
+      <v-radio-group v-model="reservepetindex" @change="selectPet">
+        <v-radio
+          v-for="(pet, index) in petList"
+          :key="pet.id"
+          :label="pet"
+          :value="index"
+        ></v-radio>
+      </v-radio-group>
     </v-container>
   </div>
-  <p>{{ reservehospital }} 수의사님과 진료를 볼 선택한 자녀는 {{ reservepet }} 입니다 !</p>
+  <p>
+    {{ reservehospital }} 수의사님과 진료를 볼 선택한 자녀는 {{ petList[reservepet - 1] }} 입니다 !
+  </p>
   <button @click="navigateToReserveComplete">완료</button>
 </template>
 

@@ -4,6 +4,8 @@ import com.ssafy.api.request.ConsultReservationUpdatePutReq;
 import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
+import com.ssafy.db.join.ReservationExpertUserList;
+import com.ssafy.db.join.ReservationHospitalList;
 import com.ssafy.db.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,7 +77,7 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setUserId(reservationRegisterPostReq.getUserId());
 		reservation.setHospitalNo(reservationRegisterPostReq.getHospitalNo());
 		reservation.setNote(reservationRegisterPostReq.getNote());
-
+		reservation.setAnimalId(reservationRegisterPostReq.getAnimalId());
 		Reservation result = reservationRepository.save(reservation);
 
 		return result != null;
@@ -108,5 +110,17 @@ public class ReservationServiceImpl implements ReservationService {
 		reservationRepository.save(reservation);
 
 		return true;
+	}
+
+	@Override
+	public List<ReservationExpertUserList> findAllAvailableExpert(String startTime, String endTime, String time) {
+		List<ReservationExpertUserList> result = reservationRepository.findAllAvailableExpert(startTime, endTime, time);
+		return result;
+	}
+
+	@Override
+	public List<ReservationHospitalList> findAllAvailableHospital(String time) {
+		List<ReservationHospitalList> result = reservationRepository.findAllAvailableHospital(time);
+		return result;
 	}
 }

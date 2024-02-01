@@ -1,9 +1,7 @@
 <script setup>
-import ReserveDate from '@/components/reserve/ReserveDate.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTIme from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
-import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 import { useReserveStore } from '@/stores/reserve.js'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -22,9 +20,6 @@ onMounted(() => {
     <p>초기상담페이지 입니다</p>
   </div>
 
-  <div class="box">
-    <ReserveDate />
-  </div>
   <div class="box">
     <ReserveTIme />
   </div>

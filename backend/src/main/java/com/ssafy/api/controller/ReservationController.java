@@ -3,11 +3,13 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.ConsultReservationUpdatePutReq;
 import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
-import com.ssafy.api.response.ConsultReservationRes;
-import com.ssafy.api.response.HospitalReservationRes;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.ReservationService;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Animal;
 import com.ssafy.db.entity.Reservation;
+import com.ssafy.db.join.ReservationExpertUserList;
+import com.ssafy.db.join.ReservationHospitalList;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -173,4 +175,37 @@ public class ReservationController {
 		}
 	}
 
+	@GetMapping("/consult/list")
+	@ApiOperation(value = "정해진 시간에 상담 가능한 수의사 리스트 출력", notes = "캘린더와 시간 리스트를 통해 정해진 시간에 상담이 비어있는 수의사 유저를 출력한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> consultList(
+			@ApiParam(value="상담 시작 시간, 상담 끝 시간, 상담 전체 시간", required = true) String startTime, String endTime, String time) {
+		System.out.println(startTime + " " + endTime + " " + time);
+		List<ReservationExpertUserList> result = reservationService.findAllAvailableExpert(startTime, endTime, time);
+		if(result != null) {
+			return ResponseEntity.status(200).body(ReservationConsultExpertListRes.of(200,"Success", result));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+	@GetMapping("/hospital/list")
+	@ApiOperation(value = "정해진 시간에 진료 가능한 병원 리스트 출력", notes = "캘린더와 시간 리스트를 통해 정해진 시간에 상담이 비어있는 병원을 출력한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> hospitalList(
+			@ApiParam(value="진료 전체 시간", required = true)  String time) {
+		System.out.println(time);
+		List<ReservationHospitalList> result = reservationService.findAllAvailableHospital(time);
+		if(result != null) {
+			return ResponseEntity.status(200).body(ReservationHospitalListRes.of(200,"Success", result));
+		} else {
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
 }

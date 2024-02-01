@@ -1,5 +1,4 @@
 <script setup>
-import ReserveDate from '@/components/reserve/ReserveDate.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTIme from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
@@ -20,9 +19,7 @@ onMounted(() => {
   <div>
     <p>병원진료예약 페이지 입니다</p>
   </div>
-  <div class="box">
-    <ReserveDate />
-  </div>
+
   <div class="box">
     <ReserveTIme />
   </div>
