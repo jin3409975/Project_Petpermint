@@ -35,6 +35,9 @@ import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
 import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
 import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
 
+import FindId from '@/components/login/FindId.vue'
+import FindPassword from '@/components/login/FindPassword.vue'
+import FindinfoView from '@/views/account/FindinfoView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -132,18 +135,18 @@ const router = createRouter({
         {
           path: '/find',
           name: 'find',
-          component: '',
+          component: FindinfoView,
           redirect: { name: 'find-id' },
           children: [
             {
               path: 'id',
               name: 'find-id',
-              component: ''
+              component: FindId
             },
             {
               path: 'password',
               name: 'find-password',
-              component: ''
+              component: FindPassword
             }
           ]
         },
