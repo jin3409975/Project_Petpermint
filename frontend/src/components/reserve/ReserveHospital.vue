@@ -15,14 +15,19 @@ const selectHospital = (hospital) => {
   reservehospitalno.value = hospital.hospitalNo
   // 예약에 필요한 병원 번호를 store변수에 저장
 }
+onMounted(() => {
+  doctorList.value = null;
+  hospitalList.value = null;
+})
 </script>
 
 <template>
   <div>
     <p>병원선택입니다.</p>
-    <p>선택한 시간 {{ reservedate }}에 상담 가능 수의사는 다음과 같습니다</p>
+    <p>선택한 시간 {{ reservedate }}</p>
   </div>
   <div v-if="type == 1">
+    <p>선택한 시간 {{ reservedate }}에 상담 가능 수의사는 다음과 같습니다</p>
     <v-card class="mx-auto" max-width="300">
       <v-list-item
         v-for="(doctor, i) in doctorList"
@@ -36,7 +41,7 @@ const selectHospital = (hospital) => {
     </v-card>
   </div>
   <div v-else="type == 2">
-    <p>병원진료예약입니다.</p>
+    <p>선택한 시간 {{ reservedate }}에 진료 가능 병원은 다음과 같습니다</p>
     <v-card class="mx-auto" max-width="300">
       <v-list-item
         v-for="(hospital, i) in hospitalList"
