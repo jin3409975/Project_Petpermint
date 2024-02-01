@@ -38,6 +38,10 @@ import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
+
+import LifecareViewVue from '@/views/LifecareView.vue'
+import VenueMapVue from '@/components/lifecare/VenueMap.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -245,8 +249,8 @@ const router = createRouter({
         {
           path: '/lifecare',
           name: 'lifecare',
-          component: '',
-          redirect: { name: 'lifecare-community' },
+          component: LifecareViewVue,
+          redirect: { name: 'lifecare-venue' },
           children: [
             {
               path: 'community',
@@ -269,11 +273,11 @@ const router = createRouter({
             {
               path: 'venue',
               name: 'lifecare-venue',
-              component: ''
+              component: VenueMapVue
             },
             {
               path: 'broadcast',
-              name: 'lifecare-venue',
+              name: 'lifecare-broadcast',
               component: '',
               children: [
                 {
