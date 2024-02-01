@@ -1,13 +1,28 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
+import axios from 'axios'
 export const myPageStore = defineStore('mypage', () => {
+  const API_URL = `${VITE_SERVER_URI}/reserve/`
   // axios 요청 예정
-  const myevents = [
+  const myevents = ref([
     // title : 일정이름 start(2024-01-31T05:00-06:00) 일정 시작일 end:일정 완료일, url:일정클릭시 이동
-    { title: 'Meeting1', start: '2024-01-31' },
-    { title: 'Meeting2', start: '2024-01-30' }
-  ]
+    // { title: 'Meeting1', start: '2024-01-31' },
+    // { title: 'Meeting2', start: '2024-01-30' }
+  ])
+
+  function getmyevents() {
+    axios({
+      method: 'get',
+      url: API_URL + 'consult/data',
+      params: {
+        userId: 'alswl9703@naver.com'
+      }
+    }).then((r) => {
+      if (r.data.statusCode == 200) {
+        console.log('예약내역 불러오기 성공', r)
+      }
+    })
+  }
   // 일반 유저 user mypage 과거 상담 내역 리스트
   const userpastList = ref([
     { title: '2024-01-01', text: '초콜릿먹은 강아지' },
@@ -26,5 +41,5 @@ export const myPageStore = defineStore('mypage', () => {
     { title: '2024-01-30', text: '고양이2' },
     { title: '2024-01-31', text: '고양이3' }
   ])
-  return { myevents, userpastList, vetpastList }
+  return { myevents, userpastList, vetpastList, getmyevents }
 })

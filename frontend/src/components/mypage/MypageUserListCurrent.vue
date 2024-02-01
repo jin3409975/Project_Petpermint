@@ -1,6 +1,7 @@
 <script>
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
 import { myPageStore } from '@/stores/mypage.js'
 import { ref } from 'vue'
 
@@ -13,8 +14,8 @@ export default {
 
     // Use a ref for calendarOptions to ensure reactivity
     const calendarOptions = ref({
-      plugins: [dayGridPlugin],
-      initialView: 'dayGridWeek', // 월별 보기 initialView: 'dayGridMonth'
+      plugins: [timeGridPlugin],
+      initialView: 'timeGridWeek', // 월별 보기 initialView: 'dayGridMonth'
       weekends: true,
       selectable: true,
       events: mypagestore.myevents
@@ -29,3 +30,11 @@ export default {
   <h1>나의 예약 현황</h1>
   <FullCalendar :options="calendarOptions"> </FullCalendar>
 </template>
+<style>
+.fc-h-event .fc-event-title-container {
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0px;
+  min-height: 50px;
+}
+</style>

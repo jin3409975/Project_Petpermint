@@ -51,7 +51,7 @@ export const useReserveStore = defineStore('reserve', () => {
       method: 'post',
       url: API_URL + 'hospital/create',
       data: {
-        userId: '123',
+        userId: 'alswl9703@naver.com',
         type: 2,
         time: reservedate.value,
         hospitalNo: reservehospitalno.value, //reservehospitalno
