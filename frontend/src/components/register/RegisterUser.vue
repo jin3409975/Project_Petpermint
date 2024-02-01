@@ -21,8 +21,17 @@ const address1 = ref(null)
 const address2 = ref(null)
 const picture = ref(null)
 
-const pets = ref([{ id: 1, radios: '', petname: '', petage: '', more: '', name: 'Pet 1' }])
+const pets = ref([
+  { id: 1, petspecies: '', petname: '', petage: '', petweight: '', more: '', name: 'Pet 1' }
+])
 const visible = ref(false)
+
+const gender = ref(['암컷', '수컷'])
+
+// 로고
+const logoUrl = computed(() => {
+  return new URL('@/assets/img/logo.png', import.meta.url).href
+})
 
 // 탭
 const tab = ref(null)
@@ -50,7 +59,15 @@ const addPetForm = () => {
   if (pets.value.length < 5) {
     const newId = pets.value.reduce((maxId, pet) => Math.max(maxId, pet.id), 0) + 1
     const newName = `Pet ${newId}`
-    pets.value.push({ id: newId, name: newName, petname: '', petage: '', more: '' })
+    pets.value.push({
+      id: newId,
+      name: newName,
+      petname: '',
+      petage: '',
+      petspecies: '',
+      petweight: '',
+      more: ''
+    })
     tab.value = newId - 1 // 새롭게 추가된 탭으로 이동 (0부터 시작하는 인덱스로 변환)
   } else if (pets.value.length >= 3) {
     // 폼의 개수가 최대치에 도달했을 경우
@@ -91,18 +108,6 @@ const goToType = () => {
   router.push({ name: 'register-home' })
 }
 
-const rules = {
-  required: (value) => !!value || '입력해주세요'
-}
-
-// function validateForm() {
-//   if (!form.value.validate()) {
-//     alert('폼을 완성해주세요.')
-//   } else {
-//     nextStep()
-//   }
-// }
-
 const emailStatus = ref('request')
 
 const emailAction = () => {
@@ -117,11 +122,11 @@ const emailAction = () => {
   }
 }
 
-// 채은: 프로필수정은 마이페이지에서 하는게 좋을듯..
-// const getFile = function (event) {
-//   console.log(event)
-//   picture.value = event.target.files[0]
-// }
+// 파일 업로드
+const getFile = function (event) {
+  console.log(event)
+  picture.value = event.target.files[0]
+}
 
 const showSnackbar = ref(false)
 
@@ -152,31 +157,62 @@ function register() {
     router.push({ name: 'main-home' })
   }, 2000)
 }
+
+// 카카오 주소 검색
+function openKakaoAddressSearch() {
+  new window.daum.Postcode({
+    oncomplete: (data) => {
+      if (address2.value !== '') {
+        address2.value = ''
+      }
+      if (data.userSelectedType === 'R') {
+        // 사용자가 도로명 주소를 선택했을 경우
+        address1.value = data.roadAddress
+      } else {
+        // 사용자가 지번 주소를 선택했을 경우(J)
+        address1.value = data.jibunAddress
+      }
+
+      // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+      // if (data.userSelectedType === 'R') {
+      //   // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+      //   // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+      //   if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+      //     address2.value += data.bname
+      //   }
+      //   // 건물명이 있고, 공동주택일 경우 추가한다.
+      //   if (data.buildingName !== '' && data.apartment === 'Y') {
+      //     address2.value += address2.value !== '' ? `, ${data.buildingName}` : data.buildingName
+      //   }
+      //   // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+      //   // if (address2.value !== '') {
+      //   //   address2.value = `(${address2.value})`
+      //   // }
+      // } else {
+      //   address2.value = ''
+      // }
+      // 우편번호를 입력한다.
+      // this.postcode = data.zonecode
+    }
+  }).open()
+}
 </script>
 
 <template>
-  <!-- 로고 -->
-  <!-- <RouterLink to="/">
-    <div class="auth-logo d-flex align-center gap-x-3">
-      <VNodeRenderer :nodes="themeConfig.app.logo" />
-      <h1 class="auth-title">
-        {{ themeConfig.app.title }}
-      </h1>
-    </div>
-  </RouterLink> -->
-
   <v-row no-gutters class="d-flex align-stretch" style="height: 100%">
-    <!-- 왼쪽 이미지 -->
-    <v-col md="4" class="d-none d-md-flex" style="background-color: #d2e0fb">
-      <div
-        class="d-flex align-center justify-end"
-        style="width: 100%; height: 100%; padding-bottom: 0%"
+    <v-col
+      md="4"
+      class="d-none d-md-flex align-end justify-center image-container"
+      style="background-color: #d2e0fb; position: relative"
+    >
+      <!-- 로고 -->
+      <RouterLink
+        to="/"
+        class="logo-container"
+        style="position: absolute; top: 0; left: 50%; padding: 20px; transform: translateX(-50%)"
       >
-        <img
-          src="@/assets/img/doctor_dog.png"
-          style="max-width: 100%; height: auto; object-fit: contain"
-        />
-      </div>
+        <img :src="logoUrl" style="height: 90px" />
+      </RouterLink>
     </v-col>
     <v-col cols="12" md="8" class="d-flex align-center justify-center custom-padding">
       <v-container style="height: 100%; padding-bottom: 0px">
@@ -184,7 +220,7 @@ function register() {
           <!-- 1. 계정정보 -->
           <template v-slot:item.1>
             <v-card flat>
-              <h4 class="text-h4 mb-2">계정 정보</h4>
+              <h4 class="text-h4 mb-2" style="margin-top: 30px">계정 정보</h4>
               <p class="mb-5">계정 정보를 입력해 주세요.</p>
               <v-row class="mt-2">
                 <v-col cols="12" md="6">
@@ -193,6 +229,7 @@ function register() {
                     v-model="email"
                     label="이메일"
                     placeholder="ssafy01@ssafy.com"
+                    density="comfortable"
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
@@ -203,6 +240,7 @@ function register() {
                   <v-text-field
                     v-model="confirm"
                     label="이메일 인증번호"
+                    density="comfortable"
                     placeholder="123456"
                     variant="outlined"
                     color="#668ba7"
@@ -243,6 +281,7 @@ function register() {
                     @click:append-inner="visible = !visible"
                     v-model="password1"
                     label="비밀번호"
+                    density="comfortable"
                     placeholder="············"
                     variant="outlined"
                     color="#668ba7"
@@ -255,6 +294,7 @@ function register() {
                     :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="visible ? 'text' : 'password'"
                     @click:append-inner="visible = !visible"
+                    density="comfortable"
                     v-model="password2"
                     label="비밀번호 확인"
                     placeholder="············"
@@ -283,6 +323,7 @@ function register() {
                 <v-col cols="12" md="6">
                   <v-text-field
                     label="이름"
+                    density="comfortable"
                     v-model="name"
                     placeholder="김싸피"
                     variant="outlined"
@@ -294,6 +335,7 @@ function register() {
                 <v-col cols="12" md="6">
                   <v-text-field
                     label="휴대전화번호"
+                    density="comfortable"
                     v-model="phone"
                     placeholder="01012345678"
                     variant="outlined"
@@ -307,24 +349,26 @@ function register() {
                 <v-col cols="12" md="12" style="padding-top: 6px; padding-bottom: 0">
                   <v-text-field
                     label="주소 검색하기"
+                    density="comfortable"
                     prepend-inner-icon="mdi-home-search-outline"
                     v-model="address1"
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
+                    readonly
+                    @click="openKakaoAddressSearch"
                   />
                 </v-col>
                 <v-col cols="12" md="12">
                   <v-text-field
                     label="상세 주소"
+                    density="comfortable"
                     v-model="address2"
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
                   />
                 </v-col>
-                <!-- 채은: 마이페이지에서 프로필 수정하는게 좋을듯.. -->
-                <!-- <input type="file" v-on:change="getFile">프로필 사진 업로드</input> -->
               </v-row>
             </v-card>
             <div class="d-flex justify-space-between button-row">
@@ -345,7 +389,7 @@ function register() {
           <template v-slot:item.3>
             <v-card flat>
               <h4 class="text-h4 mb-3">마이 펫 정보</h4>
-              <p class="mb-5">내 반려동물의 정보를 입력해 주세요.</p>
+              <p>내 반려동물의 정보를 입력해 주세요. (최대 5마리)</p>
               <!-- Tabs -->
               <v-tabs v-model="tab">
                 <v-tab v-for="pet in pets" :key="pet.id" :value="pet.id">{{ pet.name }}</v-tab>
@@ -366,44 +410,74 @@ function register() {
                             @click="removePetForm(index)"
                             style="box-shadow: none; position: absolute; top: 0; right: 0"
                           ></v-btn>
-                          <v-col style="padding-bottom: 0%">
-                            <p>반려동물 종류</p>
-                          </v-col>
-                          <v-radio-group inline v-model="pet.radios">
-                            <v-col cols="12" md="4" style="padding-bottom: 0%">
-                              <v-radio label="강아지" value="강아지"></v-radio>
-                            </v-col>
-                            <v-col cols="12" md="4">
-                              <v-radio label="고양이" value="고양이"></v-radio>
-                            </v-col>
-                            <v-col cols="12" md="4">
-                              <v-radio label="기타" value="기타"></v-radio>
-                            </v-col>
-                          </v-radio-group>
                         </v-col>
-
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="5">
                           <v-text-field
-                            label="반려동물 이름 "
-                            :rules="[rules.required]"
+                            label="펫 이름"
+                            placeholder="금동이"
+                            density="comfortable"
                             v-model="pet.petname"
                             variant="outlined"
                             color="#668ba7"
                             bg-color="transparent"
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="6">
+
+                        <v-col cols="12" md="3">
                           <v-text-field
-                            label="반려동물 나이"
+                            label="나이"
+                            placeholder="5개월"
+                            density="comfortable"
                             v-model="pet.petage"
                             variant="outlined"
                             color="#668ba7"
                             bg-color="transparent"
                           ></v-text-field>
                         </v-col>
+
+                        <v-col cols="12" md="3">
+                          <v-select
+                            :items="gender"
+                            v-model="pet.gender"
+                            density="comfortable"
+                            label="성별"
+                            variant="outlined"
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                          <v-text-field
+                            label="펫 종류"
+                            density="comfortable"
+                            placeholder="말티즈"
+                            v-model="pet.petspecies"
+                            variant="outlined"
+                            color="#668ba7"
+                            bg-color="transparent"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="3">
+                          <v-text-field
+                            label="몸무게"
+                            density="comfortable"
+                            placeholder="3kg"
+                            v-model="pet.petweight"
+                            variant="outlined"
+                            color="#668ba7"
+                            bg-color="transparent"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="5">
+                          <v-file-input
+                            label="반려동물 사진"
+                            variant="underlined"
+                            v-on:change="getFile"
+                          ></v-file-input>
+                        </v-col>
+
                         <v-col cols="12" md="12">
                           <v-text-field
                             label="특이사항"
+                            density="comfortable"
                             v-model="pet.more"
                             placeholder="특이사항이 없을 시 '없음'으로 작성해주세요."
                             variant="outlined"
@@ -426,10 +500,10 @@ function register() {
                 >이전</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn @click="register" color="primary" variant="tonal" v-bind="props"
+              <v-btn @click="register" color="#668ba7" variant="flat" v-bind="props"
                 >회원가입</v-btn
               >
-              <v-snackbar v-model="showSnackbar" :timeout="2000" color="primary">
+              <v-snackbar v-model="showSnackbar" :timeout="2000" color="#668ba7">
                 <div class="text-center">
                   <h4>회원가입이 완료되었습니다.</h4>
                   <p>메인페이지로 이동합니다.</p>
@@ -478,5 +552,15 @@ function register() {
 }
 .custom-icon-color .v-icon {
   color: #ef5350; /* 아이콘 색상을 녹색으로 변경 */
+}
+.profile-upload {
+  cursor: pointer;
+}
+.image-container {
+  background-image: url('../../assets/img/owner.PNG');
+  background-size: cover; /* 이미지가 컨테이너를 완전히 채우도록 조정 */
+  background-position: center; /* 이미지 중심이 컨테이너 중심과 일치하도록 조정 */
+  width: 100%; /* 컨테이너의 전체 너비를 사용 */
+  height: 100%; /* 컨테이너의 전체 높이를 사용 */
 }
 </style>
