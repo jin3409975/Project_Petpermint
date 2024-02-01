@@ -124,6 +124,8 @@ processResources {
 //[끝]
 
 dependencies {
+    // Openvidu 의존성
+    implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.+'
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-security")
