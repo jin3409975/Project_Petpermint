@@ -76,7 +76,7 @@ const confirmRules = ref([
 ])
 const password1Rules = ref([
   (v) => !!v || '비밀번호는 필수입니다.',
-  (v) => (v && v.length >= 5) || '아이디는 최소 5자 이상이어야 합니다.'
+  (v) => (v && v.length >= 5) || '비밀번호는 최소 5자 이상이어야 합니다.'
 ])
 const password2Rules = ref([
   (v) => !!v || '비밀번호 확인은 필수입니다.',
