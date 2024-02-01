@@ -5,6 +5,7 @@ import { useAccountStore } from '@/stores/account.js'
 // import Complete from '@/components/register/Complete.vue'
 
 const store = useAccountStore()
+const router = useRouter()
 
 const email = ref(null)
 const confirm = ref(null)
@@ -32,6 +33,8 @@ const getLicense = function (e) {
   licensePicture.value = e.target.files[0]
 }
 
+const snackbar = ref(false)
+
 const signUp = function () {
   console.log('asdasdsd',emailcheck.value)
   if(!store.result) {
@@ -52,7 +55,14 @@ const signUp = function () {
     licensePicture : licensePicture.value
   }
   store.vetsignup(payload)
+  snackbar.value = true // 회원가입 완료 시 스낵바 표시
+
+  // 스낵바가 표시된 후 일정 시간이 지난 후 페이지 이동
+  setTimeout(() => {
+    router.push({ name: 'main-home' })
+  }, 3000) // 예: 3초 후 이동
 }
+
 
 const emailRequest = function () {
   console.log('이메일 인증 요청', emailcheck.value)
@@ -244,7 +254,17 @@ function openKakaoAddressSearch() {
         <input type="file" v-on:change="getLicense">면허증 사진 업로드</input>
       </div>
       <div class="button-container">
-        <v-btn type="submit" variant="outlined" class="submit-btn">회원가입</v-btn>
+        <v-btn type="submit" color="indigo" @click="signUp">회원가입</v-btn>
+
+        <v-snackbar v-model="snackbar" :timeout="3000" vertical>
+          <div class="text-subtitle-1 pb-2">회원가입이 완료되었습니다.</div>
+
+          <p>인증과정에 1~2일 가량 소요될 수 있습니다.</p>
+
+          <p>홈페이지로 이동합니다.</p>
+
+          <template v-slot:actions> </template>
+        </v-snackbar>
       </div>
     </form>
   </div>
