@@ -8,6 +8,8 @@ const props = defineProps({
   title: String
 })
 
+const visible = ref(false)
+
 const store = useAccountStore()
 const router = useRouter()
 
@@ -88,7 +90,6 @@ const goToType = () => {
 const showSnackbar = ref(false)
 
 const register = function () {
-  console.log('asdasdsd', emailcheck.value)
   if (!store.result) {
     alert('이메일 인증을 진행 해주세요')
     return false
@@ -161,7 +162,7 @@ function openKakaoAddressSearch() {
   <v-row no-gutters class="d-flex align-stretch" style="height: 100%">
     <v-col
       md="4"
-      class="d-none d-md-flex align-end justify-center image-container"
+      class="d-none d-md-flex align-end justify-center vetimage-container"
       style="background-color: #d2e0fb; position: relative"
     >
       <!-- 로고 -->
@@ -178,7 +179,7 @@ function openKakaoAddressSearch() {
         <v-stepper
           v-model="currentStep"
           hide-actions
-          :items="['Account', 'Personal/Veterian', 'Hospital']"
+          :items="['Account', 'Personal/veterinarian', 'Hospital']"
         >
           <!-- 1. 계정 정보 -->
           <template v-slot:item.1>
@@ -473,8 +474,8 @@ function openKakaoAddressSearch() {
 .profile-upload {
   cursor: pointer;
 }
-.image-container {
-  background-image: url('../../assets/img/owner.PNG');
+.vetimage-container {
+  background-image: url('../../assets/img/vet.PNG');
   background-size: cover; /* 이미지가 컨테이너를 완전히 채우도록 조정 */
   background-position: center; /* 이미지 중심이 컨테이너 중심과 일치하도록 조정 */
   width: 100%; /* 컨테이너의 전체 너비를 사용 */
