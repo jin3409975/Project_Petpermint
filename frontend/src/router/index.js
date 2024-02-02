@@ -46,6 +46,7 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: MainView,
+      meta: { hideNavbar: true },
       redirect: { name: 'main-home' },
       children: [
         {

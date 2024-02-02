@@ -31,7 +31,7 @@ const isScrolled = ref(false)
 
 const updateAppBarBackground = () => {
   console.log(window.scrollY) // 디버깅을 위한 로그
-  isScrolled.value = window.scrollY > 0
+  isScrolled.value = window.scrollY > 600
 }
 
 onMounted(() => {
@@ -102,7 +102,8 @@ onUnmounted(() => {
 }
 
 #custom-nav-bar {
-  background-color: rgba(68, 52, 213, 0.592); /* 초기 투명 상태 */
+  z-index: 1000 !important;
+  background-color: rgba(255, 255, 255, 0.232); /* 초기 투명 상태 */
   backdrop-filter: blur(5px);
   transition: background-color 2.5s ease; /* 부드러운 색상 전환 */
 }
