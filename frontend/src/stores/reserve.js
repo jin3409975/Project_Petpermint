@@ -21,13 +21,14 @@ export const useReserveStore = defineStore('reserve', () => {
   const reservepet = ref() // 예약할 펫 인덱스 저장
   const reservepetindex = ref()
 
-  const { VITE_SERVER_URI } = import.meta.env
-  const API_URL = `${VITE_SERVER_URI}/reserve/`
+  const { VITE_APP_SERVER_URI } = import.meta.env
+
+  const API_URL = `${VITE_APP_SERVER_URI}/reserve/`
 
   function consultCreate() {
     axios({
       method: 'post',
-      url: VITE_SERVER_URI + '/consult/create',
+      url: VITE_APP_SERVER_URI + '/consult/create',
       data: {
         userId: 'alswl9703@naver.com',
         type: 1,
@@ -47,7 +48,7 @@ export const useReserveStore = defineStore('reserve', () => {
   function hospitalCreate() {
     axios({
       method: 'post',
-      url: VITE_SERVER_URI + '/reserve/hospital/create',
+      url: VITE_APP_SERVER_URI + '/reserve/hospital/create',
       data: {
         userId: 'alswl9703@naver.com',
         type: 2,
@@ -99,10 +100,10 @@ export const useReserveStore = defineStore('reserve', () => {
       .catch((err) => console.log(err))
   }
   function getpetList() {
-    console.log(VITE_SERVER_URI + 'user/pet/data/')
+    console.log(VITE_APP_SERVER_URI + 'user/pet/data/')
     axios({
       method: 'get',
-      url: VITE_SERVER_URI + '/user/pet/data/',
+      url: VITE_APP_SERVER_URI + '/user/pet/data/',
       params: {
         userId: 'alswl9703@naver.com'
       }
