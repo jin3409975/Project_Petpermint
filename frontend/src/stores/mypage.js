@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 export const myPageStore = defineStore('mypage', () => {
-  const { VITE_SERVER_URI } = import.meta.env
+  const { VITE_APP_SERVER_URI } = import.meta.env
   // const API_URL = `${VITE_SERVER_URI}/reserve/`
   // axios 요청 예정
   const myevents = ref([
@@ -12,25 +12,21 @@ export const myPageStore = defineStore('mypage', () => {
   ])
 
   function getmyevents() {
-    console.log('test')
     axios({
       method: 'get',
-      url: VITE_SERVER_URI + '/reserve/all',
+      url: VITE_APP_SERVER_URI + '/reserve/all',
       params: {
         userId: 'alswl9703@naver.com'
       }
     }).then((r) => {
-      console.log(r)
-      if (r.status == 200) {
-        console.log(r)
-        console.log('extar 확인', extractEvents(r.data))
-        myevents.value = extractEvents(r.data)
+      if (r.data.statusCode == 200) {
+        extractEvents(r.data.result)
+        myevents.value = extractEvents(r.data.result)
         console.log('myevents', myevents.value)
       }
     })
   }
   function extractEvents(data) {
-    console.log('data', data)
     // data 배열을 map 함수를 사용하여 새 배열 생성
     return data.map((item) => ({
       id: item.appointId,

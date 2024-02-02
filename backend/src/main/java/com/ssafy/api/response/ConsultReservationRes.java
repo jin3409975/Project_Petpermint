@@ -51,7 +51,7 @@ public class ConsultReservationRes extends BaseResponseBody{
         return res;
     }
 
-    public static ConsultReservationRes ofConsult(Integer statusCode, String message, List<Reservation> reservation) {
+    public static ConsultReservationRes listofConsult(Integer statusCode, String message, List<Reservation> reservation) {
         ConsultReservationRes res = new ConsultReservationRes();
         res.setStatusCode(statusCode);
         res.setMessage(message);
