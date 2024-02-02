@@ -61,7 +61,7 @@ public class ReservationController {
 	public ResponseEntity<ConsultReservationRes> getAllConsultReservationInfo(@ApiIgnore String userId) {
 		List<Reservation> reservations = reservationService.getAllConsultReservations(userId);
 
-		return ResponseEntity.status(200).body(ConsultReservationRes.ofConsult(200,"Success",reservations));
+		return ResponseEntity.status(200).body(ConsultReservationRes.listofConsult(200,"Success",reservations));
 	}
 
 
@@ -241,12 +241,10 @@ public class ReservationController {
 			@ApiResponse(code = 404, message = "상담 예약 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<List<ConsultReservationRes>> getAllReservation(@ApiIgnore String userId) {
+	public ResponseEntity<ConsultReservationRes> getAllReservation(@ApiIgnore String userId) {
 		List<Reservation> consultReservation = reservationService.getAllConsultReservations(userId);
-		List<Reservation> hospitalReservation = reservationService.getAllHospitalReservations(userId);
-		List<ConsultReservationRes> reservationResList = ConsultReservationRes.listOfConsult(consultReservation);
-		List<ConsultReservationRes> reservationResList2 = ConsultReservationRes.listOfConsult(hospitalReservation);
-        reservationResList.addAll(reservationResList2);
+		consultReservation.addAll(reservationService.getAllHospitalReservations(userId));
+		ConsultReservationRes reservationResList = ConsultReservationRes.listofConsult(200,"success",consultReservation);
 		return ResponseEntity.status(200).body(reservationResList);
 	}
 }

@@ -234,20 +234,13 @@ const showSnackbar = ref(false)
 
 function register() {
   // 회원가입 처리 로직 여기에 추가
-  if (!store.result) {
-    alert('이메일 인증을 진행 해주세요')
-    return false
-  }
   const payload = {
     email: email.value,
     confirm: confirm.value,
-    password1: password1.value,
-    password2: password2.value,
+    password: password1.value,
     name: name.value,
     phone: phone.value,
-    address1: address1.value,
-    address2: address2.value,
-    picture: picture.value
+    address: address1.value + ' ' + address2.value
   }
   console.log(payload)
   store.usersignup(payload)

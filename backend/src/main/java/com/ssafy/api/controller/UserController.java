@@ -35,6 +35,7 @@ import java.util.Map;
  */
 @Api(value = "유저 API", tags = {"User"})
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/user")
 public class UserController {
 	
