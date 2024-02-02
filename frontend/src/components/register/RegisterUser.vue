@@ -87,7 +87,7 @@ function removePetForm(index) {
   }
 }
 
-const currentStep = ref(2)
+const currentStep = ref(1)
 
 // 다음 버튼
 const nextStep = () => {
@@ -110,18 +110,6 @@ const goToType = () => {
 
 // 이메일 인증
 const emailStatus = ref('request')
-
-const emailRequest = function () {
-  console.log('이메일 인증 요청', emailcheck.value)
-  store.emailRequest(email.value)
-  console.log('결과', store.result)
-}
-
-const emailValidate = function () {
-  console.log('이메일 확인 요청', emailcheck.value)
-  emailcheck.value = store.emailValidate(email.value, confirm.value)
-  console.log('결과', store.result)
-}
 
 const emailAction = async () => {
   if (emailStatus.value === 'request') {
@@ -146,7 +134,6 @@ const emailAction = async () => {
 //1페이지 검증 시작
 const checkPage1 = ref(true)
 const emailTest = (e) => {
-  console.log(e)
   if(e == '' || e == null) {
     checkPage1.value = false
     return false
@@ -161,7 +148,6 @@ const emailTest = (e) => {
 }
 
 const passwordTest = (p) => {
-  console.log(p)
   if(p != password1.value) {
     checkPage1.value = false
     return false
@@ -185,6 +171,7 @@ const page1Test = () => {
 
 //2페이지 검증 시작
 const checkPage2 = ref(true) 
+
 const nameTest = (n) => {
   if(n == '' || n == null) {
     checkPage2.value = false
@@ -236,13 +223,11 @@ function register() {
   // 회원가입 처리 로직 여기에 추가
   const payload = {
     email: email.value,
-    confirm: confirm.value,
     password: password1.value,
     name: name.value,
     phone: phone.value,
     address: address1.value + ' ' + address2.value
   }
-  console.log(payload)
   store.usersignup(payload)
   // 여기서는 예시로 바로 스낵바를 표시합니다.
   showSnackbar.value = true
