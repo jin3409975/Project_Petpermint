@@ -87,7 +87,7 @@ function removePetForm(index) {
   }
 }
 
-const currentStep = ref(1)
+const currentStep = ref(2)
 
 // 다음 버튼
 const nextStep = () => {
@@ -123,17 +123,106 @@ const emailValidate = function () {
   console.log('결과', store.result)
 }
 
-const emailAction = () => {
+const emailAction = async () => {
   if (emailStatus.value === 'request') {
-    console.log('이메일 인증 요청')
-    store.emailRequest(email.value)
-    emailStatus.value = 'validate'
+    console.log('이메일 인증 요청 user')
+    let result = await store.emailRequest(email.value)
+    if(result) {
+      emailStatus.value = 'validate'
+    } else {
+      return false
+    }
   } else if (emailStatus.value === 'validate') {
-    console.log('이메일 확인 요청')
-    store.emailValidate(email.value, confirm.value)
-    emailStatus.value = 'completed'
+    console.log('이메일 확인 요청 user')
+    let result = await store.emailValidate(email.value, confirm.value)
+    if(result) {
+      emailStatus.value = 'completed'
+    } else {
+      return false
+    }
   }
 }
+
+//1페이지 검증 시작
+const checkPage1 = ref(true)
+const emailTest = (e) => {
+  console.log(e)
+  if(e == '' || e == null) {
+    checkPage1.value = false
+    return false
+  }
+  if(!/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(e)) {
+    checkPage1.value = false
+    return false
+  }
+
+  checkPage1.value = true
+  return true
+}
+
+const passwordTest = (p) => {
+  console.log(p)
+  if(p != password1.value) {
+    checkPage1.value = false
+    return false
+  }
+  checkPage1.value = true
+  return true
+}
+
+const page1Test = () => {
+  if(emailStatus.value != 'completed') {
+    alert('이메일 인증을 완료 해주세요')
+    return false
+  }
+  if(checkPage1.value == false) {
+    alert('기입한 정보를 확인 해주세요')
+    return false
+  }
+  nextStep()
+}
+//1페이지 검증 완료
+
+//2페이지 검증 시작
+const checkPage2 = ref(true) 
+const nameTest = (n) => {
+  if(n == '' || n == null) {
+    checkPage2.value = false
+    return false
+  }
+
+  checkPage2.value = true
+  return true
+}
+
+const phoneTest = (p) => {
+  if(!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(p)) {
+    checkPage2.value = false
+    return false
+  }
+  
+  checkPage2.value = true
+  return true
+}
+
+const addressTest = (a) => {
+  if(a == '' || a == null) {
+    checkPage2.value = false
+    return false
+  }
+  
+  checkPage2.value = true
+  return true
+}
+
+const page2Test = () => {
+  if(checkPage2.value == false) {
+    alert('기입한 정보를 확인 해주세요')
+    return false
+  }
+  nextStep()
+}
+//2페이지 검증 완료
 
 // 파일 업로드
 const getFile = function (event) {
@@ -232,6 +321,7 @@ function openKakaoAddressSearch() {
         <v-stepper v-model="currentStep" hide-actions :items="['Account', 'Personal', 'Pet Info']">
           <!-- 1. 계정정보 -->
           <template v-slot:item.1>
+            <v-form ref="form" lazy-validation>
             <v-card flat>
               <h4 class="text-h4 mb-2" style="margin-top: 30px">계정 정보</h4>
               <p class="mb-5">계정 정보를 입력해 주세요.</p>
@@ -246,6 +336,8 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
+                    :readonly="emailStatus === 'validate' || emailStatus === 'completed'"
+                    :rules="[v => emailTest(v)]"
                   />
                 </v-col>
 
@@ -258,7 +350,7 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
-                    :readonly="emailStatus === 'validate' || emailStatus === 'completed'"
+                    :readonly="emailStatus === 'completed'"
                   >
                     <template v-slot:append>
                       <v-btn
@@ -314,6 +406,8 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
+                    :rules="[(v) => passwordTest(v)]"
+                    hide-details=true
                   />
                 </v-col>
               </v-row>
@@ -322,10 +416,11 @@ function openKakaoAddressSearch() {
               <v-btn @click="goToType" style="box-shadow: none" variant="outlined" color="#757575"
                 >돌아가기</v-btn
               >
-              <v-btn @click="nextStep" style="box-shadow: none" variant="flat" color="#668ba7"
+              <v-btn @click="page1Test" style="box-shadow: none" variant="flat" color="#668ba7"
                 >다음</v-btn
               >
             </div>
+          </v-form>
           </template>
           <!-- 2. 개인 정보 -->
           <template v-slot:item.2>
@@ -342,6 +437,7 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
+                    :rules="[(v) => nameTest(v)]"
                   />
                 </v-col>
 
@@ -350,10 +446,11 @@ function openKakaoAddressSearch() {
                     label="휴대전화번호"
                     density="comfortable"
                     v-model="phone"
-                    placeholder="01012345678"
+                    placeholder="010-1234-5678"
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
+                    :rules="[v => phoneTest(v)]"
                   />
                 </v-col>
                 <v-col cols="12" md="10" style="padding-top: 20px; padding-bottom: 0">
@@ -377,6 +474,7 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
+                    :rules="[v => addressTest(v)]"
                   />
                 </v-col>
               </v-row>
@@ -390,7 +488,7 @@ function openKakaoAddressSearch() {
                 >이전</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn @click="nextStep" style="box-shadow: none" variant="flat" color="#668ba7"
+              <v-btn @click="page2Test" style="box-shadow: none" variant="flat" color="#668ba7"
                 >다음</v-btn
               >
             </div>
