@@ -38,6 +38,9 @@ import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
+
+import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -238,7 +241,7 @@ const router = createRouter({
             {
               path: 'broadcast',
               name: 'cam-broadcast',
-              component: ''
+              component: CamBroadcastVue
             }
           ]
         },
