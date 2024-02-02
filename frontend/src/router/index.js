@@ -30,10 +30,8 @@ import MypageVetView from '@/views/MypageVetView.vue'
 import MypageUserInfo from '@/components/mypage/MypageUserInfo.vue'
 import MypageUserListView from '@/views/MypageUserListView.vue'
 import MypageUserListCurrent from '@/components/mypage/MypageUserListCurrent.vue'
-import MypageUserListPast from '@/components/mypage/MypageUserListPast.vue'
 import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
 import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
-import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
 
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
@@ -312,11 +310,6 @@ const router = createRouter({
                       path: 'current',
                       name: 'mypage-user-list-current',
                       component: MypageUserListCurrent
-                    },
-                    {
-                      path: 'past',
-                      name: 'mypage-user-list-past',
-                      component: MypageUserListPast
                     }
                   ]
                 }
@@ -343,11 +336,6 @@ const router = createRouter({
                       path: 'current',
                       name: 'mypage-vet-list-current',
                       component: MypageVetListCurrent
-                    },
-                    {
-                      path: 'past',
-                      name: 'mypage-vet-list-past',
-                      component: MypageVetListPast
                     }
                   ]
                 }
