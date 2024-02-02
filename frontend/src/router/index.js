@@ -4,7 +4,6 @@ import RegisterView from '@/views/account/RegisterView.vue'
 import LoginView from '@/views/account/LoginView.vue'
 import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
-
 import Main from '@/components/main/Main.vue'
 import RegisterType from '@/components/register/RegisterType.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
@@ -12,16 +11,13 @@ import RegisterVet from '@/components/register/RegisterVet.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
 import RegisterUser from '@/components/register/RegisterUser.vue'
 // import RegisterPet from '@/components/register/RegisterPet.vue'
-
 import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
 import ReserveAppointView from '@/views/ReserveAppointView.vue'
-
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
 import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
-
 import AdminViewVue from '@/views/AdminView.vue'
 import AdminAcountVue from '@/components/admin/AdminAcount.vue'
 import MypageView from '@/views/MypageView.vue'
@@ -32,12 +28,11 @@ import MypageUserListView from '@/views/MypageUserListView.vue'
 import MypageUserListCurrent from '@/components/mypage/MypageUserListCurrent.vue'
 import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
 import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
-
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
-
 import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
+import CommunityListVue from '@/views/CommunityListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -258,7 +253,7 @@ const router = createRouter({
                 {
                   path: 'list',
                   name: 'lifecare-community-list',
-                  component: ''
+                  component: CommunityListVue
                 },
                 {
                   path: 'detail/:listno',
@@ -373,5 +368,4 @@ const router = createRouter({
     }
   ]
 })
-
 export default router

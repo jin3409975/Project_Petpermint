@@ -10,8 +10,8 @@ import com.ssafy.api.service.S3UpDownloadService;
 import com.ssafy.common.model.response.BaseResponseBody;
 
 import com.ssafy.db.entity.PostComment;
-import com.ssafy.db.entity.PostFiles;
 import com.ssafy.db.entity.UserPost;
+import com.ssafy.db.join.PostUrlList;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -97,11 +97,10 @@ public class CommunityController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> list() {
 
-		List<UserPost> userPosts = communityService.listPost();
-		List<PostFiles> urls = communityService.listUrl();
+		List<PostUrlList> postJoins = communityService.listJoin();
 
-		if(userPosts!=null)
-			return ResponseEntity.status(200).body(CommunityListGetRes.of(200,"200",userPosts,urls));
+		if(postJoins!=null)
+			return ResponseEntity.status(200).body(CommunityListGetRes.of(200, "200", postJoins));
 		else
 			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
 	}

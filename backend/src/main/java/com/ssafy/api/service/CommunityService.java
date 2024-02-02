@@ -2,7 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.*;
 import com.ssafy.db.entity.*;
-import org.springframework.web.multipart.MultipartFile;
+import com.ssafy.db.join.PostUrlList;
 
 import java.util.List;
 
@@ -29,5 +29,10 @@ public interface CommunityService {
     int writeUrl(int postId, List<String>urls, List<String> strings);
     List<String> getUrl(int postId);
     int deleteUrl(int postId);
+
+    List<UserPost> listPost();
+    List<PostFiles> listUrl();
+
+    List<PostUrlList> listJoin();
 }
 

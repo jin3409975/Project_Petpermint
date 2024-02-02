@@ -1,31 +1,25 @@
 <script setup>
 import CommunityList from '../components/lifecare/CommunityList.vue'
+import { useCommunityStore } from '@/stores/community'
+const store = useCommunityStore()
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const articles = ref()
 
-onMounted(() => {
-  getReviews()
-})
-
-const getReviews = function () {
-  var url = '/community/list'
-
-  async function getTodo(url) {
-    const response = await axios.get(url)
-    console.log(response)
-    //articles.value = response.data.resdata.list;
-    //totalpage.value = response.data.resdata.totalpage;
-  }
-  getTodo(url).catch((error) => {
-    console.log(error)
-  })
+const getCommunityList = function () {
+  store.communitylist()
 }
+
+onMounted(() => {
+  getCommunityList()
+})
 </script>
 
 <template>
-  <v-container fluid class="w-50"> hello </v-container>
+  <v-container fluid class="w-50">
+    <v-btn variant="tonal"> Button </v-btn>
+  </v-container>
 </template>
 
 <style></style>

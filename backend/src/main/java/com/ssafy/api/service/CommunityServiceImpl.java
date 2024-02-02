@@ -3,11 +3,11 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.*;
 import com.ssafy.db.entity.PostComment;
 import com.ssafy.db.entity.PostFiles;
+import com.ssafy.db.join.PostUrlList;
 import com.ssafy.db.repository.*;
 import com.ssafy.db.entity.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -36,7 +36,6 @@ public class CommunityServiceImpl implements CommunityService {
         userPost.setContent(writeInfo.getContent());
 
 
-        //userPost.setImages(writeInfo.getImages());
         return communityRepository.save(userPost);
 
     }
@@ -148,6 +147,24 @@ public class CommunityServiceImpl implements CommunityService {
     public int deleteUrl(int postId) {
         int delete_result= postFilesRepository.deleteByPostId(postId);
         return delete_result;
+    }
+
+    @Override
+    public List<UserPost> listPost() {
+        List<UserPost> posts=communityRepository.findByIsDelete(false);
+        return posts;
+    }
+
+    @Override
+    public List<PostFiles> listUrl() {
+        List<PostFiles> urls=postFilesRepository.findAll();
+        return urls;
+    }
+
+    @Override
+    public List<PostUrlList> listJoin() {
+        List<PostUrlList> joins=communityRepository.findPostUrlJoin();
+        return joins;
     }
 
 
