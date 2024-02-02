@@ -15,21 +15,20 @@ export const useAccountStore = defineStore(
     const result = ref(false)
     const vetdata = ref({})
 
-    const usersignup = function (userData) {
+    const usersignup = async function (userData) {
       console.log(userData)
       var data = new FormData()
       data.append('userId', userData.email)
       data.append('userName', userData.name)
-      data.append('password', userData.password1)
-      data.append('address', userData.address1)
+      data.append('password', userData.password)
+      data.append('address', userData.address)
       data.append('phone', userData.phone)
-      data.append('picture', userData.picture)
       // var userId = userData.email
       // var userName = userData.name
       // var password = userData.password1
       // var address = userData.address1
       // var phone = userData.phone
-      axios({
+      let result = await axios({
         method: 'post',
         url: API_URL + 'signup/normal',
         data,
@@ -39,10 +38,10 @@ export const useAccountStore = defineStore(
       }).then((r) => {
         console.log(r)
         if (r.data.statusCode == 200) {
-          result.value = false
-          router.push({ name: 'register-complete' })
+          return true
         }
       })
+      return result
     }
 
     const vetsignup = function (userData) {
@@ -81,8 +80,8 @@ export const useAccountStore = defineStore(
       })
     }
 
-    const emailRequest = function (email) {
-      axios({
+    const emailRequest = async function (email) {
+      let emailcheck = await axios({
         method: 'post',
         url: API_URL + 'email/request',
         data: {
@@ -92,15 +91,18 @@ export const useAccountStore = defineStore(
         console.log(r)
         if (r.data.statusCode == 200) {
           alert('이메일 인증 요청이 완료되었습니다. 5분 이내에 입력해 주세요.')
+          return true
         } else {
           alert('이메일 인증 요청이 실패 했습니다. 입력한 이메일 주소를 확인해 주세요.')
+          return false
         }
       })
+      return emailcheck
     }
 
-    const emailValidate = function (email, code) {
+    const emailValidate = async function (email, code) {
       console.log(email, code)
-      axios({
+      let emailcheck = await axios({
         method: 'post',
         url: API_URL + 'email/validate',
         data: {
@@ -111,12 +113,13 @@ export const useAccountStore = defineStore(
         console.log(r)
         if (r.data.statusCode == 200) {
           alert('이메일 인증에 성공 하셨습니다.')
-          result.value = true
+          return true
         } else {
           alert('이메일 인증에 실패 하셨습니다.')
-          result.value = false
+          return false
         }
       })
+      return emailcheck
     }
     const logIn = function (userdata) {
       console.log('logindatacheck', userdata)
