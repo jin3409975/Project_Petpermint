@@ -24,7 +24,7 @@ public class HospitalReservationRes extends BaseResponseBody{
     String time;
     String diagnosis;
     String note;
-//    int type;
+    int type;
 //    int isDelete;
 //    String licenseNumber;
     int hospitalNo;
@@ -40,7 +40,7 @@ public class HospitalReservationRes extends BaseResponseBody{
         res.setHospitalNo(reservation.getHospitalNo());
         res.setNote(reservation.getNote());
         res.setDiagnosis(reservation.getDiagnosis());
-
+        res.setType(reservation.getType());
         // 반환하지 않아도 되는 데이터
 //        res.setType(reservation.getType());
 //        res.setIsDelete(reservation.getIsDelete());

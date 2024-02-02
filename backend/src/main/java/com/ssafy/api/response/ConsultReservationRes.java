@@ -24,10 +24,10 @@ public class ConsultReservationRes extends BaseResponseBody{
     String time;
     String diagnosis;
     String note;
-//    int type;
+    int type;
 //    int isDelete;
     String licenseNumber;
-//    int hospitalNo;
+    int hospitalNo;
 //    String userId;
     List<Reservation> result;
 
@@ -40,7 +40,8 @@ public class ConsultReservationRes extends BaseResponseBody{
         res.setLicenseNumber(reservation.getLicenseNumber());
         res.setNote(reservation.getNote());
         res.setDiagnosis(reservation.getDiagnosis());
-
+        res.setType(reservation.getType());
+        res.setHospitalNo(reservation.getHospitalNo());
         // 반환하지 않아도 되는 데이터
 //        res.setType(reservation.getType());
 //        res.setIsDelete(reservation.getIsDelete());
