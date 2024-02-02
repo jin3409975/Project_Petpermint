@@ -12,9 +12,7 @@ const hideFooter = computed(() => route.meta.hideFooter)
 <template>
   <v-app>
     <Navbar v-if="!hideNavbar" />
-    <v-main>
-      <RouterView />
-    </v-main>
+    <RouterView />
     <Footer v-if="!hideFooter" />
   </v-app>
 </template>
