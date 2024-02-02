@@ -2,10 +2,9 @@
 import axios from 'axios'
 import { OpenVidu } from 'openvidu-browser'
 import UserVideo from '@/components/cam/UserVideo.vue'
+const { VITE_APP_SERVER_URI } = import.meta.env
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-
-const APPLICATION_SERVER_URL = 'https://i10b303.p.ssafy.io:5000/'
 
 export default {
   name: 'App',
@@ -140,7 +139,7 @@ export default {
 
     async createSession(sessionId) {
       const response = await axios.post(
-        APPLICATION_SERVER_URL + 'api/sessions',
+        VITE_APP_SERVER_URI + '/api/sessions',
         { customSessionId: sessionId },
         {
           headers: { 'Content-Type': 'application/json' }
@@ -151,7 +150,7 @@ export default {
 
     async createToken(sessionId) {
       const response = await axios.post(
-        APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections',
+        VITE_APP_SERVER_URI + '/api/sessions/' + sessionId + '/connections',
         {},
         {
           headers: { 'Content-Type': 'application/json' }
