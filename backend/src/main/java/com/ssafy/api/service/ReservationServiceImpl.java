@@ -140,6 +140,7 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<ReservationHospitalList> findAllAvailableHospital(String time) {
 		List<ReservationHospitalList> result = reservationRepository.findAllAvailableHospital(time);
 		return result;
+	}
 	//	상담 예약 삭제
 	public boolean deleteHospitalReservation(int appointId) {
 		Reservation reservation = reservationRepository.findByAppointId(appointId);
