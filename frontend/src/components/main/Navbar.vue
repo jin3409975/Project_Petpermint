@@ -8,6 +8,9 @@ const logoUrl = computed(() => {
 
 const router = useRouter()
 
+const navigateToMain = () => {
+  router.push({ name: 'main-home' })
+}
 const navigateToLogin = () => {
   router.push({ name: 'login-home' })
 }
@@ -20,6 +23,9 @@ const navigateToInitial = () => {
 const navigateToAppoint = () => {
   router.push({ name: 'reserve-appoint' })
 }
+const navigateToCommunity = () => {
+  router.push({ name: 'lifecare-community-list' })
+}
 </script>
 
 <template>
@@ -27,15 +33,22 @@ const navigateToAppoint = () => {
     <div class="d-flex justify-between w-100">
       <!-- 왼쪽 항목: 페퍼민트란, 초기상담 예약, 병원진료 예약, 라이프케어 -->
       <div class="d-flex justify-start">
-        <v-btn text>Home</v-btn>
+        <v-btn text @click="navigateToMain">Home</v-btn>
         <v-btn text @click="navigateToInitial">초기 상담예약</v-btn>
         <v-btn text @click="navigateToAppoint">병원 진료예약</v-btn>
-        <v-btn text>라이프케어</v-btn>
+        <v-btn text @click="navigateToCommunity">라이프케어</v-btn>
       </div>
 
       <!-- 로고 이미지 -->
       <div class="d-flex justify-center">
-        <img :src="logoUrl" class="my-2" contain height="70" />
+        <img
+          @click="navigateToMain"
+          :src="logoUrl"
+          class="my-2"
+          contain
+          height="70"
+          style="cursor: pointer"
+        />
       </div>
 
       <!-- 오른쪽 항목: 로그인, 회원가입 버튼 -->
