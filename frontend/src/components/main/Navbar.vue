@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const logoUrl = computed(() => {
@@ -20,10 +20,25 @@ const navigateToInitial = () => {
 const navigateToAppoint = () => {
   router.push({ name: 'reserve-appoint' })
 }
+
+const isScrolled = ref(false)
+
+const updateAppBarBackground = () => {
+  console.log(window.scrollY) // 디버깅을 위한 로그
+  isScrolled.value = window.scrollY > 0
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', updateAppBarBackground)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateAppBarBackground)
+})
 </script>
 
 <template>
-  <v-app-bar app fixed id="custom-nav-bar">
+  <v-app-bar app fixed id="custom-nav-bar" :class="{ 'app-bar-scrolled': isScrolled }">
     <div class="d-flex justify-between w-100">
       <!-- 왼쪽 항목: 페퍼민트란, 초기상담 예약, 병원진료 예약, 라이프케어 -->
       <div class="d-flex justify-start">
@@ -71,5 +86,17 @@ const navigateToAppoint = () => {
 .justify-end {
   justify-content: flex-end;
   flex: 1;
+}
+
+#custom-nav-bar {
+  background-color: rgba(68, 52, 213, 0.592); /* 초기 투명 상태 */
+  backdrop-filter: blur(5px);
+  transition: background-color 2.5s ease; /* 부드러운 색상 전환 */
+}
+
+/* 스크롤 시: 흰색 배경 */
+.app-bar-scrolled {
+  background-color: white !important; /* 흰색 배경 */
+  transition: background-color 0.3s; /* 부드러운 색상 전환 */
 }
 </style>
