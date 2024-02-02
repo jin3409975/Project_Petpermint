@@ -20,10 +20,10 @@ export const useReserveStore = defineStore('reserve', () => {
   const petList = ref([]) // 유저의 반려동물 리스트
   const reservepet = ref() // 예약할 펫 인덱스 저장
   const reservepetindex = ref()
-
+  const petname = ref('')
   const { VITE_APP_SERVER_URI } = import.meta.env
-
   const API_URL = `${VITE_APP_SERVER_URI}/reserve/`
+  const hospitalname = ref('')
 
   function consultCreate() {
     axios({
@@ -131,6 +131,8 @@ export const useReserveStore = defineStore('reserve', () => {
     hospitalList,
     starttime,
     endtime,
-    getpetList
+    getpetList,
+    petname,
+    hospitalname
   }
 })

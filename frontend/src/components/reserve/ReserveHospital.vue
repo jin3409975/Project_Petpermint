@@ -4,8 +4,16 @@ import { useReserveStore } from '@/stores/reserve'
 import { storeToRefs } from 'pinia'
 
 const reserveStore = useReserveStore()
-const { reservedate, doctorList, reservehospitalno, type, reservelicense, hospitalList, petList } =
-  storeToRefs(reserveStore)
+const {
+  reservedate,
+  doctorList,
+  reservehospitalno,
+  type,
+  reservelicense,
+  hospitalList,
+  petList,
+  hospitalname
+} = storeToRefs(reserveStore)
 
 const selectDoctor = (doctor) => {
   reservelicense.value = doctor.licenseNumber
@@ -13,6 +21,7 @@ const selectDoctor = (doctor) => {
 const selectHospital = (hospital) => {
   console.log('hos', hospital)
   reservehospitalno.value = hospital.hospitalNo
+  hospitalname.value = hospital.name
   // 예약에 필요한 병원 번호를 store변수에 저장
 }
 onMounted(() => {

@@ -6,7 +6,8 @@ import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 
 const reserveStore = useReserveStore()
-const { petList, reservepet, reservehospital, reservepetindex, type } = storeToRefs(reserveStore)
+const { petList, reservepet, reservehospital, reservepetindex, type, petname } =
+  storeToRefs(reserveStore)
 const vuetify = createVuetify({
   theme: {
     defaultTheme: 'light'
@@ -17,6 +18,7 @@ const vuetify = createVuetify({
 const selectPet = () => {
   console.log(reservepetindex.value)
   reservepet.value = petList.value[reservepetindex.value].animalId
+  petname.value = petList.value[reservepetindex.value].name
 }
 const navigateToReserveComplete = () => {
   if (type == 1) {
@@ -43,9 +45,7 @@ const navigateToReserveComplete = () => {
       </v-radio-group>
     </v-container>
   </div>
-  <p>
-    {{ reservehospital }} 수의사님과 진료를 볼 선택한 자녀는 {{ petList[reservepetindex] }} 입니다 !
-  </p>
+  <p></p>
   <button @click="navigateToReserveComplete">완료</button>
 </template>
 
