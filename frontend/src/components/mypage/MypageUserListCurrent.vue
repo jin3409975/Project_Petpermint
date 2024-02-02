@@ -3,18 +3,18 @@ import FullCalendar from '@fullcalendar/vue3'
 // import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { myPageStore } from '@/stores/mypage.js'
-import { ref, onMounted, onBeforeMount } from 'vue'
-
+import { ref, onBeforeMount } from 'vue'
+import { storeToRefs } from 'pinia'
 export default {
   components: {
     FullCalendar
   },
   setup() {
     const mypagestore = myPageStore()
+    const { myevents } = storeToRefs(mypagestore)
     onBeforeMount(() => {
       console.log('onmounted')
       mypagestore.getmyevents()
-      console.log(mypagestore.myevents)
     })
     // Use a ref for calendarOptions to ensure reactivity
     const calendarOptions = ref({
@@ -22,7 +22,9 @@ export default {
       initialView: 'timeGridWeek', // 월별 보기 initialView: 'dayGridMonth'
       weekends: true,
       selectable: true,
-      events: mypagestore.myevents
+      events: myevents,
+      allDay: false
+      // eventColor: '#378006'
     })
 
     return { calendarOptions }
@@ -32,14 +34,7 @@ export default {
 
 <template>
   <h1>나의 예약 현황</h1>
-  <button @cilck="mypagestore.getmyevents()">test</button>
+  <button @click="tes">test</button>
   <FullCalendar :options="calendarOptions"> </FullCalendar>
 </template>
-<style>
-.fc-h-event .fc-event-title-container {
-  flex-grow: 1;
-  flex-shrink: 1;
-  min-width: 0px;
-  min-height: 50px;
-}
-</style>
+<style></style>

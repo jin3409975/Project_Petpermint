@@ -15,17 +15,29 @@ export const myPageStore = defineStore('mypage', () => {
     console.log('test')
     axios({
       method: 'get',
-      url: VITE_SERVER_URI + '/reserve/hospital/data',
+      url: VITE_SERVER_URI + '/reserve/all',
       params: {
         userId: 'alswl9703@naver.com'
       }
     }).then((r) => {
       console.log(r)
-      if (r.data.statusCode == 200) {
+      if (r.status == 200) {
         console.log(r)
-        myevents.value = r
+        console.log('extar 확인', extractEvents(r.data))
+        myevents.value = extractEvents(r.data)
+        console.log('myevents', myevents.value)
       }
     })
+  }
+  function extractEvents(data) {
+    console.log('data', data)
+    // data 배열을 map 함수를 사용하여 새 배열 생성
+    return data.map((item) => ({
+      id: item.appointId,
+      title: item.type === 1 ? '온라인 상담' : item.type === 2 ? '병원 진료' : '알 수 없음', // type 값에 따라 title 결정, // type 값을 title로 매핑
+      start: item.time, // time 값을 start로 매핑
+      color: item.type === 1 ? '#d2e0fb' : item.type === 2 ? '#53b257' : '#53b257'
+    }))
   }
   // 일반 유저 user mypage 과거 상담 내역 리스트
   const userpastList = ref([
@@ -45,5 +57,5 @@ export const myPageStore = defineStore('mypage', () => {
     { title: '2024-01-30', text: '고양이2' },
     { title: '2024-01-31', text: '고양이3' }
   ])
-  return { myevents, userpastList, vetpastList, getmyevents }
+  return { myevents, userpastList, vetpastList, getmyevents, extractEvents }
 })
