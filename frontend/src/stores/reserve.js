@@ -22,9 +22,9 @@ export const useReserveStore = defineStore('reserve', () => {
 
   const petList = ref(['초롱', '금동', '루이', '솔이', '코코'])
 
-  const { VITE_SERVER_URI } = import.meta.env
+  const { VITE_APP_SERVER_URI } = import.meta.env
 
-  const API_URL = `${VITE_SERVER_URI}/reserve/`
+  const API_URL = `${VITE_APP_SERVER_URI}/reserve/`
 
   function consultCreate() {
     axios({

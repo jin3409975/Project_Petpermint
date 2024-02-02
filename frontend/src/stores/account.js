@@ -3,13 +3,13 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
 import axios from 'axios'
-const { VITE_SERVER_URI } = import.meta.env
+const { VITE_APP_SERVER_URI } = import.meta.env
 
 export const useAccountStore = defineStore(
   'account',
   () => {
     const router = useRouter()
-    const API_URL = `${VITE_SERVER_URI}/user/`
+    const API_URL = `${VITE_APP_SERVER_URI}/user/`
     // const token = ref(null)
     const userdata = ref({})
     const result = ref(false)
