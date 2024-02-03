@@ -14,7 +14,8 @@ export const useAccountStore = defineStore(
     const userdata = ref({})
     const result = ref(false)
     const vetdata = ref({})
-
+    //로그인 여부 확인 변수
+    const isLoggedIn = ref(false)
     const usersignup = async function (userData) {
       console.log(userData)
       var data = new FormData()
@@ -133,6 +134,9 @@ export const useAccountStore = defineStore(
       }).then((r) => {
         if (r.data.statusCode == 200) {
           console.log('success login', r)
+          localStorage.setItem('useremail', r.data.userId)
+          localStorage.setItem('usertype', r.data.type)
+          localStorage.setItem('token', r.data.accessToken)
         } else {
           console.log('failed login', r)
         }
@@ -177,6 +181,11 @@ export const useAccountStore = defineStore(
         }
       })
     }
+    const logout = function () {
+      localStorage.removeItem('useremail')
+      localStorage.removeItem('usertype')
+      localStorage.removeItem('token')
+    }
     return {
       usersignup,
       vetsignup,
@@ -185,7 +194,9 @@ export const useAccountStore = defineStore(
       emailValidate,
       logIn,
       findId,
-      updatePassword
+      updatePassword,
+      logout,
+      isLoggedIn
     }
   },
   { persist: true }

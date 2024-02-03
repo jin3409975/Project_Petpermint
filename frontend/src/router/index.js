@@ -39,6 +39,7 @@ import FindinfoView from '@/views/account/FindinfoView.vue'
 
 import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
 
+import MainVet from '@/components/main/MainVet.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -67,7 +68,7 @@ const router = createRouter({
             {
               path: 'vet',
               name: 'main-vet',
-              component: ''
+              component: MainVet
             }
           ]
         },

@@ -6,17 +6,18 @@ export const myPageStore = defineStore('mypage', () => {
   // const API_URL = `${VITE_SERVER_URI}/reserve/`
   // axios 요청 예정
   const myevents = ref([
-    // title : 일정이름 start(2024-01-31T05:00-06:00) 일정 시작일 end:일정 완료일, url:일정클릭시 이동
-    // { title: 'Meeting1', start: '2024-01-31' },
-    // { title: 'Meeting2', start: '2024-01-30' }
+    // 사용자 예약 리스트
   ])
+  const vetevents = ref([]) // 수의사의 예약 내역
+  const useremail = localStorage.getItem('useremail')
 
   function getmyevents() {
+    //일반 회원의 예약 내역을 불러오기
     axios({
       method: 'get',
       url: VITE_APP_SERVER_URI + '/reserve/all',
       params: {
-        userId: 'alswl9703@naver.com'
+        userId: useremail
       }
     }).then((r) => {
       if (r.data.statusCode == 200) {
@@ -27,31 +28,41 @@ export const myPageStore = defineStore('mypage', () => {
     })
   }
   function extractEvents(data) {
-    // data 배열을 map 함수를 사용하여 새 배열 생성
-    return data.map((item) => ({
-      id: item.appointId,
-      title: item.type === 1 ? '온라인 상담' : item.type === 2 ? '병원 진료' : '알 수 없음', // type 값에 따라 title 결정, // type 값을 title로 매핑
-      start: item.time, // time 값을 start로 매핑
-      color: item.type === 1 ? '#d2e0fb' : item.type === 2 ? '#53b257' : '#53b257'
-    }))
+    return data.map((item) => {
+      // 시작 시간을 Date 객체로 파싱
+      const startTime = new Date(item.time)
+
+      // 끝나는 시간을 계산하기 위해 20분을 추가
+      const endTime = new Date(startTime.getTime())
+      endTime.setMinutes(startTime.getMinutes() + 20)
+
+      // Date 객체를 원하는 형태의 문자열로 변환
+      const formatDateTime = (date) => date.toISOString().replace('T', ' ').substring(0, 16)
+
+      return {
+        id: item.appointId,
+        title: item.type === 1 ? '온라인 상담' : item.type === 2 ? '병원 진료' : '알 수 없음',
+        time: {
+          start: formatDateTime(startTime),
+          end: formatDateTime(endTime)
+        },
+        color: item.type === 1 ? 'blue' : item.type === 2 ? 'green' : 'yellow'
+      }
+    })
   }
-  // 일반 유저 user mypage 과거 상담 내역 리스트
-  const userpastList = ref([
-    { title: '2024-01-01', text: '초콜릿먹은 강아지' },
-    { title: '2024-01-11', text: '초콜릿먹은 고양이' },
-    { title: '2024-01-21', text: '초콜릿 못 먹은 강아지' },
-    { title: '2024-01-3', text: '초콜릿 못 먹은 고양이' },
-    { title: '2024-01-30', text: '초콜릿 먹고 싶은 강아지' },
-    { title: '2024-01-31', text: '초콜릿 먹고 싶은 고양이' }
-  ])
-  // 수의사 과거 상담 리스트
-  const vetpastList = ref([
-    { title: '2024-01-01', text: '강아지1' },
-    { title: '2024-01-11', text: '강아지2' },
-    { title: '2024-01-21', text: '강아지3' },
-    { title: '2024-01-3', text: '고양이1' },
-    { title: '2024-01-30', text: '고양이2' },
-    { title: '2024-01-31', text: '고양이3' }
-  ])
-  return { myevents, userpastList, vetpastList, getmyevents, extractEvents }
+  function getvetevents() {
+    //일반 회원의 예약 내역을 불러오기
+    axios({
+      method: 'get',
+      url: VITE_APP_SERVER_URI + '',
+      params: {}
+    }).then((r) => {
+      if (r.data.statusCode == 200) {
+        extractEvents(r.data.result)
+        vetevents.value = extractEvents(r.data.result)
+        console.log('vetevents', vetevents.value)
+      }
+    })
+  }
+  return { myevents, vetevents, getmyevents, getvetevents, extractEvents }
 })

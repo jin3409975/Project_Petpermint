@@ -33,7 +33,7 @@ export default {
 
 <template>
   <div>
-    <p>나의 예약 내역 보기</p>
+    <p>수의사 메인페이지</p>
     <Qalendar :events="events" :config="config" />
   </div>
 </template>

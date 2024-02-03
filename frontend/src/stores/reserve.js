@@ -24,13 +24,14 @@ export const useReserveStore = defineStore('reserve', () => {
   const { VITE_APP_SERVER_URI } = import.meta.env
   const API_URL = `${VITE_APP_SERVER_URI}/reserve/`
   const hospitalname = ref('')
+  const useremail = localStorage.getItem('useremail')
 
   function consultCreate() {
     axios({
       method: 'post',
       url: VITE_APP_SERVER_URI + '/consult/create',
       data: {
-        userId: 'alswl9703@naver.com',
+        userId: useremail,
         type: 1,
         time: reservedate.value,
         licenseNumber: reservelicense.value, // reservelicense
@@ -50,7 +51,7 @@ export const useReserveStore = defineStore('reserve', () => {
       method: 'post',
       url: VITE_APP_SERVER_URI + '/reserve/hospital/create',
       data: {
-        userId: 'alswl9703@naver.com',
+        userId: useremail,
         type: 2,
         time: reservedate.value,
         hospitalNo: reservehospitalno.value, //reservehospitalno
@@ -105,7 +106,7 @@ export const useReserveStore = defineStore('reserve', () => {
       method: 'get',
       url: VITE_APP_SERVER_URI + '/user/pet/data/',
       params: {
-        userId: 'alswl9703@naver.com'
+        userId: useremail
       }
     })
       .then((res) => {
