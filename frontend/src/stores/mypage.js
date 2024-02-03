@@ -51,7 +51,7 @@ export const myPageStore = defineStore('mypage', () => {
     })
   }
   function getvetevents() {
-    //일반 회원의 예약 내역을 불러오기
+    //수의사 회원의 예약 내역을 불러오기
     axios({
       method: 'get',
       url: VITE_APP_SERVER_URI + '',
