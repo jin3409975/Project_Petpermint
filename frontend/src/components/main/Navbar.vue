@@ -33,14 +33,26 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', updateNavBarOnScroll)
 })
 
+const isLoggedIn = ref(false)
+const checkLoginStatus = () => {
+  isLoggedIn.value = localStorage.getItem('useremail') !== null
+}
+const handleLoginLogout = () => {
+  if (isLoggedIn.value) {
+    // localStorage.removeItem('useremail');
+    isLoggedIn.value = false
+    router.push({ name: 'main-home' })
+  } else {
+    router.push({ name: 'login-home' })
+  }
+}
+
+onMounted(() => {
+  checkLoginStatus()
+})
+
 const navigateToMain = () => {
   router.push({ name: 'main-home' })
-}
-const navigateToLogin = () => {
-  router.push({ name: 'login-home' })
-}
-const navigateToRegister = () => {
-  router.push({ name: 'register-home' })
 }
 const navigateToInitial = () => {
   router.push({ name: 'reserve-initial' })
@@ -50,6 +62,12 @@ const navigateToAppoint = () => {
 }
 const navigateToCommunity = () => {
   router.push({ name: 'lifecare-community-list' })
+}
+const navigateToVetRegister = () => {
+  router.push({ name: 'register-vet' })
+}
+const navigateToUserRegister = () => {
+  router.push({ name: 'register-user' })
 }
 </script>
 
@@ -76,7 +94,7 @@ const navigateToCommunity = () => {
               <v-icon>mdi-triangle-small-down</v-icon>
             </a>
           </template>
-          <v-list bg-color="black">
+          <v-list>
             <v-list-item link>
               <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
             </v-list-item>
@@ -90,14 +108,35 @@ const navigateToCommunity = () => {
         </v-menu>
       </div>
       <div style="display: flex; align-items: center; column-gap: 25px; margin-right: 15px">
-        <a @click="navigateToLogin" class="home-link">로그인</a>
-        <a @click="navigateToRegister" class="home-link">회원가입</a>
+        <!-- @이민지 로그인되었을 때 마이페이지로 갈 수 있게하는 라우터 필요. 자신의 프로필 이미지를 동그랗게 만들고 그걸 클릭하면 마이페지로 바로 보내면 됩니다.
+        <img v-if="isLoggedIn" src="" alt=""> -->
+        <a @click="handleLoginLogout" class="home-link">{{ isLoggedIn ? '로그아웃' : '로그인' }}</a>
+        <v-menu v-if="!isLoggedIn" open-on-hover>
+          <template v-slot:activator="{ props }">
+            <a v-bind="props" class="home-link">
+              회원가입
+              <v-icon>mdi-triangle-small-down</v-icon>
+            </a>
+          </template>
+          <v-list>
+            <v-list-item link>
+              <v-list-item-title @click="navigateToUserRegister"
+                >보호자용 회원가입</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-title @click="navigateToVetRegister"
+                >수의사용 회원가입</v-list-item-title
+              >
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
     </div>
   </v-app-bar>
 </template>
 
-<style>
+<style scoped>
 .home-link {
   font-size: 18px;
   font-weight: bold;
