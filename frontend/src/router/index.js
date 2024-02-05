@@ -6,7 +6,6 @@ import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
 
 import Main from '@/components/main/Main.vue'
-import RegisterType from '@/components/register/RegisterType.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 // import RegisterComplete from '@/components/register/RegisterComplete.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
@@ -46,7 +45,6 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: MainView,
-      meta: { hideNavbar: true },
       redirect: { name: 'main-home' },
       children: [
         {
@@ -57,6 +55,7 @@ const router = createRouter({
           children: [
             {
               path: '',
+              meta: { hideNavbarMain: true },
               name: 'main-home',
               component: Main
             },
@@ -79,40 +78,30 @@ const router = createRouter({
           meta: { hideFooter: true },
           redirect: { name: 'register-home' },
           children: [
-            {
-              path: '',
-              name: 'register-home',
-              component: RegisterType
-            },
+            // {
+            //   path: '',
+            //   name: 'register-home',
+            //   component: RegisterType
+            // },
             {
               path: 'vet',
               name: 'register-vet',
-              meta: { hideNavbar: true },
+              meta: { hideNavbarMain: true, hideNavbar: true },
               component: RegisterVet
             },
             {
               path: 'user',
               name: 'register-user',
+              meta: { hideNavbarMain: true },
               component: RegisterUserView,
-              meta: { hideNavbar: true },
               redirect: { name: 'register-info' },
               children: [
                 {
                   path: 'info',
                   name: 'register-info',
                   component: RegisterUser
-                },
-                {
-                  path: 'pet',
-                  name: 'register-pet',
-                  component: ''
                 }
               ]
-            },
-            {
-              path: 'complete',
-              name: 'register-complete',
-              component: ''
             }
           ]
         },
@@ -229,6 +218,7 @@ const router = createRouter({
         {
           path: '/cam',
           name: 'cam',
+          meta: { hideNavbarMain: true },
           component: '',
           redirect: { name: 'cam-consult' },
           children: [
@@ -351,6 +341,7 @@ const router = createRouter({
           path: '/admin',
           name: 'admin',
           component: AdminViewVue,
+          meta: { hideNavbarMain: true },
           redirect: { name: 'admin-account' },
           children: [
             {

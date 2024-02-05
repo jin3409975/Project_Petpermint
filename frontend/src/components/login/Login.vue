@@ -49,7 +49,7 @@ const rules = {
 // }
 </script>
 <template>
-  <div class="my-12">
+  <div style="margin-top: 120px; margin-bottom: 80px">
     <!-- <v-img
       class="mx-auto my-6"
       max-width="228"
