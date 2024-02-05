@@ -1,5 +1,4 @@
 <script setup>
-import Navbar from '@/components/main/Navbar.vue'
 import Footer from '@/components/main/Footer.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
@@ -10,11 +9,12 @@ const hideFooter = computed(() => route.meta.hideFooter)
 </script>
 
 <template>
-  <v-app>
-    <Navbar v-if="!hideNavbar" />
-    <RouterView />
-    <Footer v-if="!hideFooter" />
-  </v-app>
+  <body>
+    <v-app>
+      <RouterView />
+      <Footer v-if="!hideFooter" />
+    </v-app>
+  </body>
 </template>
 
 <style></style>
