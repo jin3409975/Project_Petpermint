@@ -33,6 +33,10 @@ public interface CommunityService {
     List<UserPost> listPost();
     List<PostFiles> listUrl();
 
-    List<PostUrlList> listJoin();
+    List<PostUrlList> findPostUrlJoin();
+
+    PostLikes insertIntoLikeTable(int postId, String userId);
+
+    PostLikes findPostLikesByPostIdUserId(int postId, String userId);
 }
 

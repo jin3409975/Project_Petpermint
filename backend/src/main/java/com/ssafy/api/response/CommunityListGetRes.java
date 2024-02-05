@@ -3,7 +3,6 @@ package com.ssafy.api.response;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.join.PostUrlList;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +15,11 @@ import java.util.List;
 @Setter
 @ApiModel("CommunityListGetResponse")
 public class CommunityListGetRes extends BaseResponseBody{
-	@ApiModelProperty(name="Post ID")
-	List<PostUrlList>postJoins;
+	List<PostUrlList>postList;
 
-	public static CommunityListGetRes of(Integer statusCode, String message, List<PostUrlList> postJoins) {
+	public static CommunityListGetRes of(Integer statusCode, String message, List<PostUrlList> postList) {
 		CommunityListGetRes res = new CommunityListGetRes();
-		res.setPostJoins(postJoins);
+		res.postList=postList;
 		res.setStatusCode(statusCode);
 		res.setMessage(message);
 		return res;

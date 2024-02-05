@@ -1,14 +1,17 @@
 <script setup>
 import CommunityList from '../components/lifecare/CommunityList.vue'
 import { useCommunityStore } from '@/stores/community'
-const store = useCommunityStore()
+const stores = useCommunityStore()
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
 
-const articles = ref()
+const articles = ref([])
 
-const getCommunityList = function () {
-  store.communitylist()
+const getCommunityList = async function () {
+  try {
+    articles.value = await stores.communitylist()
+  } catch (error) {
+    console.error('Error fetching community list:', error)
+  }
 }
 
 onMounted(() => {
@@ -18,7 +21,8 @@ onMounted(() => {
 
 <template>
   <v-container fluid class="w-50">
-    <v-btn variant="tonal"> Button </v-btn>
+    <CommunityList v-for="article in articles" :key="article.postId" :article="article">
+    </CommunityList>
   </v-container>
 </template>
 

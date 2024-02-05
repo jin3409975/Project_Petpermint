@@ -4,13 +4,16 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 
+
 public interface PostUrlList {
 
-    int postId();
-    int hits();
-    String content();
-    int likes();
-    String registTime();
-    String userId();
-    String url();
+    int getPostId();
+
+    String getUserName();
+    int getHits();
+    String getContent();
+    int getLikes();
+    String getRegistTime();
+    String getUserId();
+    String getUrl();
 }

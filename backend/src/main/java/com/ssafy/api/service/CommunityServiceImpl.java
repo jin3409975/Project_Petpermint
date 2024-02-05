@@ -3,6 +3,7 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.*;
 import com.ssafy.db.entity.PostComment;
 import com.ssafy.db.entity.PostFiles;
+import com.ssafy.db.entity.PostLikes;
 import com.ssafy.db.join.PostUrlList;
 import com.ssafy.db.repository.*;
 import com.ssafy.db.entity.UserPost;
@@ -27,6 +28,8 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Autowired
     PostFilesRepository postFilesRepository;
+    @Autowired
+    PostLikesRepository postLikesRepository;
 
     @Override
     public UserPost writePost(CommunityWritePostReq writeInfo) {
@@ -162,9 +165,26 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<PostUrlList> listJoin() {
-        List<PostUrlList> joins=communityRepository.findPostUrlJoin();
-        return joins;
+    public List<PostUrlList> findPostUrlJoin() {
+        List<PostUrlList> result=communityRepository.findPostUrlJoin();
+        return result;
+    }
+
+    @Override
+    public PostLikes insertIntoLikeTable(int postId, String userId) {
+        PostLikes postLikes= new PostLikes();
+        postLikes.setUserId(userId);
+        postLikes.setPostId(postId);
+
+        return postLikesRepository.save(postLikes);
+    }
+
+    @Override
+    public PostLikes findPostLikesByPostIdUserId(int postId, String userId) {
+        PostLikes postLikes= new PostLikes();
+        postLikes.setUserId(userId);
+        postLikes.setPostId(postId);
+        return postLikesRepository.find(userId,postId);
     }
 
 

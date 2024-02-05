@@ -1,15 +1,13 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
-import com.ssafy.api.response.CommentDataGetRes;
-import com.ssafy.api.response.CommunityDataGetRes;
-import com.ssafy.api.response.CommunityListGetRes;
-import com.ssafy.api.response.UserLoginPostRes;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.CommunityService;
 import com.ssafy.api.service.S3UpDownloadService;
 import com.ssafy.common.model.response.BaseResponseBody;
 
 import com.ssafy.db.entity.PostComment;
+import com.ssafy.db.entity.PostLikes;
 import com.ssafy.db.entity.UserPost;
 import com.ssafy.db.join.PostUrlList;
 import io.swagger.annotations.*;
@@ -97,10 +95,13 @@ public class CommunityController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> list() {
 
-		List<PostUrlList> postJoins = communityService.listJoin();
+//		List<UserPost> userPosts = communityService.listPost();
+//		List<PostFiles> urls = communityService.listUrl();
 
-		if(postJoins!=null)
-			return ResponseEntity.status(200).body(CommunityListGetRes.of(200, "200", postJoins));
+		List<PostUrlList> result= communityService.findPostUrlJoin();
+
+		if(result!=null)
+			return ResponseEntity.status(200).body(CommunityListGetRes.of(200, "200", result));
 		else
 			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
 	}
@@ -269,9 +270,29 @@ public class CommunityController {
 	public ResponseEntity<BaseResponseBody> like(@RequestBody @ApiParam(value="좋아요 정보", required = true) CommunityLikeHitPutReq updateInfo) {
 
 		Long result = communityService.increaseLike(updateInfo.getPostId());
+		PostLikes liked=communityService.insertIntoLikeTable(updateInfo.getPostId(),updateInfo.getUserId());
 
 		// 정상적으로 수정되었을 때
-		if(result>0)
+		if(result>0 || liked!=null)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+	}
+
+	@GetMapping("/likecheck")
+	@ApiOperation(value = "좋아요 확인", notes = "게시물의 좋아요 수를 확인한다")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+	})
+	public ResponseEntity<BaseResponseBody> likecheck(@RequestBody @ApiParam(value="좋아요 정보", required = true) CommunityLikeHitPutReq updateInfo) {
+
+		PostLikes liked=communityService.findPostLikesByPostIdUserId(updateInfo.getPostId(),updateInfo.getUserId());
+
+		// 정상적으로 수정되었을 때
+		if(liked==null)
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		else
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));

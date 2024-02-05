@@ -33,6 +33,7 @@ import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
 import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
 import CommunityListVue from '@/views/CommunityListView.vue'
+import CommunityDetailVue from '@/views/CommunityDetailVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -256,9 +257,9 @@ const router = createRouter({
                   component: CommunityListVue
                 },
                 {
-                  path: 'detail/:listno',
+                  path: 'detail/:postId',
                   name: 'lifecare-venue-detail',
-                  component: ''
+                  component: CommunityDetailVue
                 }
               ]
             },
