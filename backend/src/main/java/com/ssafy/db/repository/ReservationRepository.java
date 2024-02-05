@@ -23,6 +23,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // 특정 사용자의 상담 & 병원 예약 개별 조회
     Reservation findByAppointId(int appointId);
 
+    List<Reservation> findAllByLicenseNumber(String licenseNumber);
     @Query(value = "select u.userName, e.hospitalName, e.licenseNumber from User u join ExpertUser e on u.userId = e.userId " +
             "where u.isDelete = 0 and e.startTime <= :startTime and e.endTime >= :endTime and " +
             "licenseNumber not in (select licenseNumber from Reservation where time = :time and type = 1)", nativeQuery = true)

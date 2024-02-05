@@ -16,16 +16,16 @@ watchEffect(() => {
   starttime.value = formatstart(date.value)
   endtime.value = formatend(date.value)
 })
-const selectDate = () => {
-  if (reserveStore.type == 1) {
-    reserveStore.getdoctorList()
-  } else {
-    reserveStore.gethospitalList()
-  }
-  reserveStore.getpetList()
-  // starttime , endtime 에 저장 .... 선택한 시간에서 20분 더한 시간을 추출하는 법을 모르겟습니다
-  console.log(doctorList)
-}
+// const selectDate = () => {
+//   if (reserveStore.type == 1) {
+//     reserveStore.getdoctorList()
+//   } else {
+//     reserveStore.gethospitalList()
+//   }
+//   reserveStore.getpetList()
+//   // starttime , endtime 에 저장 .... 선택한 시간에서 20분 더한 시간을 추출하는 법을 모르겟습니다
+//   console.log(doctorList)
+// }
 function formatDate(selected) {
   if (selected) {
     const date = new Date(selected)
@@ -78,10 +78,6 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
 
 <template>
   <div>
-    <p>예약 시간 선택 페이지 입니다</p>
-    <!-- <p>해당 날짜 {{ reservedate }}의 상담 가능 시간은</p> -->
-  </div>
-  <div>
     <VueDatePicker
       v-model="date"
       :start-time="startTime"
@@ -92,8 +88,8 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
     >
     </VueDatePicker>
 
-    <button @click="selectDate">select</button>
-    {{ starttime }} {{ endtime }}
+    <!-- <button class="button" @click="selectDate">시간 선택 완료</button> -->
+    <!-- {{ starttime }} {{ endtime }} -->
   </div>
 </template>
 
@@ -125,5 +121,39 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
   --dp-range-between-dates-background-color: var(--dp-hover-color, #f3f3f3);
   --dp-range-between-dates-text-color: var(--dp-hover-text-color, #212121);
   --dp-range-between-border-color: var(--dp-hover-color, #f3f3f3);
+}
+/* Button base styles */
+.button {
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #007bff; /* Use your primary color here */
+  color: white; /* Text color */
+  border: none; /* No border */
+  outline: none; /* Remove outline */
+  border-radius: 20px; /* Rounded corners */
+  cursor: pointer; /* Mouse pointer on hover */
+  font-size: 1rem; /* Adjust font size as needed */
+  font-weight: bold; /* Bold font */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 0.05em; /* Spacing between letters */
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s; /* Transition for smooth effect on hover */
+}
+
+/* Button hover styles */
+.button:hover {
+  background-color: #0056b3; /* Darken the color on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Button focus styles */
+.button:focus {
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Add focus ring */
+}
+
+/* Button active styles */
+.button:active {
+  background-color: #004b9b; /* Even darker color on click */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
 }
 </style>
