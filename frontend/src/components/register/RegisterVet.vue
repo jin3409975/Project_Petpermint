@@ -30,7 +30,7 @@ const picture = ref(null)
 
 // 로고
 const logoUrl = computed(() => {
-  return new URL('@/assets/img/logo.png', import.meta.url).href
+  return new URL('@/assets/img/logomain.png', import.meta.url).href
 })
 
 // 파일 업로드
