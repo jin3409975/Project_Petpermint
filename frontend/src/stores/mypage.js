@@ -10,7 +10,7 @@ export const myPageStore = defineStore('mypage', () => {
   ])
   const vetevents = ref([]) // 수의사의 예약 내역
   const useremail = localStorage.getItem('useremail')
-
+  const licenseNumber = localStorage.getItem('licenseNumber')
   function getmyevents() {
     //일반 회원의 예약 내역을 불러오기
     axios({
@@ -30,27 +30,34 @@ export const myPageStore = defineStore('mypage', () => {
     })
   }
   function extractEvents(data) {
-    return data.map((item) => {
-      // 시작 시간을 Date 객체로 파싱
-      const startTime = new Date(item.time)
+    return data
+      .map((item) => {
+        if (item.time.trim() === '') {
+          // time이 빈 값인지 확인
+          return null
+        }
+        // 시작 시간을 Date 객체로 파싱
+        const startTime = new Date(item.time)
 
-      // 끝나는 시간을 계산하기 위해 20분을 추가
-      const endTime = new Date(startTime.getTime())
-      endTime.setMinutes(startTime.getMinutes() + 20)
+        // 끝나는 시간을 계산하기 위해 20분을 추가
+        const endTime = new Date(startTime.getTime())
+        endTime.setMinutes(startTime.getMinutes() + 20)
 
-      // Date 객체를 원하는 형태의 문자열로 변환
-      const formatDateTime = (date) => date.toISOString().replace('T', ' ').substring(0, 16)
+        // Date 객체를 원하는 형태의 문자열로 변환
+        const formatDateTime = (date) => date.toISOString().replace('T', ' ').substring(0, 16)
 
-      return {
-        id: item.appointId,
-        title: item.type === 1 ? '온라인 상담' : item.type === 2 ? '병원 진료' : '알 수 없음',
-        time: {
-          start: formatDateTime(startTime),
-          end: formatDateTime(endTime)
-        },
-        color: item.type === 1 ? 'blue' : item.type === 2 ? 'green' : 'yellow'
-      }
-    })
+        return {
+          id: item.appointId,
+          title: item.type === 1 ? '온라인 상담' : item.type === 2 ? '병원 진료' : '알 수 없음',
+          time: {
+            start: formatDateTime(startTime),
+            end: formatDateTime(endTime)
+          },
+          color: item.type === 1 ? 'blue' : item.type === 2 ? 'green' : 'yellow',
+          description: item.note
+        }
+      })
+      .filter((event) => event !== null)
   }
 
   //수의사 메인페이지 예약 조회
@@ -59,7 +66,7 @@ export const myPageStore = defineStore('mypage', () => {
     axios({
       method: 'get',
       url: VITE_APP_SERVER_URI + '/reserve/all/expert',
-      params: { licenseNumber : '12345' }
+      params: { licenseNumber: licenseNumber }
     }).then((r) => {
       console.log(r)
       if (r.data.statusCode == 200) {

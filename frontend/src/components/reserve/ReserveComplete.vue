@@ -1,18 +1,22 @@
 <script setup>
 import { useReserveStore } from '@/stores/reserve'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 const reserveStore = useReserveStore()
-const { reservedate, starttime, endtime, petname, hospitalname } = storeToRefs(reserveStore)
+const { notetext } = storeToRefs(reserveStore)
+const note = ref('')
+const onChange = () => {
+  notetext = note.value
+  console.log(notetext)
+}
 </script>
 
 <template>
   <div>
-    <p>예약완료 페이지 입니다</p>
-    <p>예약 시간 {{ reservedate }}-{{ endtime }}</p>
-
-    <p>{{ hospitalname }}</p>
-    <p>예약 자녀 {{ petname }}</p>
-    <p></p>
+    <v-container>
+      <v-textarea v-model="note" variant="outlined" @change="onChange"> </v-textarea>
+      <v-btn @click="console.log(note)">전송하기</v-btn>
+    </v-container>
   </div>
 </template>
 

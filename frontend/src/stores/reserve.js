@@ -25,7 +25,7 @@ export const useReserveStore = defineStore('reserve', () => {
   const API_URL = `${VITE_APP_SERVER_URI}/reserve/`
   const hospitalname = ref('')
   const useremail = localStorage.getItem('useremail')
-
+  const notetext = ref('')
   function consultCreate() {
     axios({
       method: 'post',
@@ -35,14 +35,15 @@ export const useReserveStore = defineStore('reserve', () => {
         type: 1,
         time: reservedate.value,
         licenseNumber: reservelicense.value, // reservelicense
-        animalId: reservepet.value
+        animalId: reservepet.value,
+        note: notetext.value
       }
     }).then((r) => {
       console.log(r)
       console.log(r.data.statusCode)
       if (r.data.statusCode == 200) {
         console.log('qwewqeqweeqw')
-        router.push({ name: 'reserve-initial-complete' })
+        // router.push({ name: 'reserve-initial-complete' })
       }
     })
   }
@@ -55,14 +56,15 @@ export const useReserveStore = defineStore('reserve', () => {
         type: 2,
         time: reservedate.value,
         hospitalNo: reservehospitalno.value, //reservehospitalno
-        animalId: reservepet.value
+        animalId: reservepet.value,
+        note: notetext.value
       }
     }).then((r) => {
       console.log(r)
-      console.log(r.data.statusCode)
+      console.log(r.data.statusCode, notetext.value)
       if (r.data.statusCode == 200) {
         console.log('qwewqeqweeqw')
-        router.push({ name: 'reserve-initial-complete' })
+        // router.push({ name: 'reserve-initial-complete' })
       }
     })
   }
@@ -101,7 +103,7 @@ export const useReserveStore = defineStore('reserve', () => {
       .catch((err) => console.log(err))
   }
   function getpetList() {
-    console.log(VITE_APP_SERVER_URI + 'user/pet/data/')
+    // console.log(VITE_APP_SERVER_URI + 'user/pet/data/')
     axios({
       method: 'get',
       url: VITE_APP_SERVER_URI + '/user/pet/data/',
@@ -134,6 +136,7 @@ export const useReserveStore = defineStore('reserve', () => {
     endtime,
     getpetList,
     petname,
-    hospitalname
+    hospitalname,
+    notetext
   }
 })

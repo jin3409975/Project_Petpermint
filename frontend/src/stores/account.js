@@ -137,6 +137,10 @@ export const useAccountStore = defineStore(
           localStorage.setItem('useremail', r.data.userId)
           localStorage.setItem('usertype', r.data.type)
           localStorage.setItem('token', r.data.accessToken)
+          if (r.data.type == 2) {
+            console.log('type', r.data.type)
+            localStorage.setItem('licenseNumber', r.data.licenseNumber)
+          }
         } else {
           console.log('failed login', r)
         }
