@@ -184,7 +184,7 @@ const router = createRouter({
             {
               path: 'complete',
               name: 'reserve-initial-complete',
-              component: ReserveComplete
+              component: ''
             },
             {
               path: 'appoint',
