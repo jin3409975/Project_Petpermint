@@ -159,4 +159,10 @@ public class ReservationServiceImpl implements ReservationService {
 
 		return true;
 	}
+
+	@Override
+	public List<Reservation> getAllExpertReservations(String licenseNumber) {
+		List<Reservation> expertList = reservationRepository.findAllByLicenseNumber(licenseNumber);
+		return expertList;
+	}
 }

@@ -40,6 +40,9 @@ public interface ReservationService {
 	List<ReservationHospitalList> findAllAvailableHospital(String time);
 	// 병원 예약 삭제
 	boolean deleteHospitalReservation(int appointId);
+
+	//수의사 예약 조회
+	List<Reservation> getAllExpertReservations(String licenseNumber);
 }
 
 

@@ -14,7 +14,8 @@ export const useAccountStore = defineStore(
     const userdata = ref({})
     const result = ref(false)
     const vetdata = ref({})
-
+    //로그인 여부 확인 변수
+    const isLoggedIn = ref(false)
     const usersignup = async function (userData) {
       console.log(userData)
       var data = new FormData()
@@ -44,18 +45,21 @@ export const useAccountStore = defineStore(
       return result
     }
 
-    const vetsignup = function (userData) {
+    const vetsignup = async function (userData) {
       console.log(userData)
       var data = new FormData()
       data.append('userId', userData.email)
       data.append('userName', userData.name)
-      data.append('password', userData.password1)
+      data.append('password', userData.password)
       data.append('phone', userData.phone)
       data.append('address', userData.address)
-      data.append('picture', userData.picture)
+      //data.append('picture', userData.picture)
       data.append('licenseNumber', userData.license)
-      data.append('hospitalName', userData.work)
-      data.append('licensePicture', userData.licensePicture)
+      data.append('hospitalName', userData.hospitalname)
+      data.append('startTime', userData.start)
+      data.append('endTime', userData.end)
+      data.append('note', userData.note)
+      //data.append('licensePicture', userData.licensePicture)
       // var userId = userData.email
       // var userName = userData.name
       // var password = userData.password1
@@ -64,7 +68,7 @@ export const useAccountStore = defineStore(
       // var licenseNumber = userData.licenseNumber
       // var hospitalName = userData.work
       console.log(data)
-      axios({
+      let result = await axios({
         method: 'post',
         url: API_URL + 'signup/expert',
         data,
@@ -74,10 +78,12 @@ export const useAccountStore = defineStore(
       }).then((r) => {
         console.log(r)
         if (r.data.statusCode == 200) {
-          result.value = false
-          router.push({ name: 'register-complete' })
+          return true
+        } else {
+          return false
         }
       })
+      return result
     }
 
     const emailRequest = async function (email) {
@@ -133,6 +139,13 @@ export const useAccountStore = defineStore(
       }).then((r) => {
         if (r.data.statusCode == 200) {
           console.log('success login', r)
+          localStorage.setItem('useremail', r.data.userId)
+          localStorage.setItem('usertype', r.data.type)
+          localStorage.setItem('token', r.data.accessToken)
+          if (r.data.type == 2) {
+            console.log('type', r.data.type)
+            localStorage.setItem('licenseNumber', r.data.licenseNumber)
+          }
         } else {
           console.log('failed login', r)
         }
@@ -177,6 +190,11 @@ export const useAccountStore = defineStore(
         }
       })
     }
+    const logout = function () {
+      localStorage.removeItem('useremail')
+      localStorage.removeItem('usertype')
+      localStorage.removeItem('token')
+    }
     return {
       usersignup,
       vetsignup,
@@ -185,7 +203,9 @@ export const useAccountStore = defineStore(
       emailValidate,
       logIn,
       findId,
-      updatePassword
+      updatePassword,
+      logout,
+      isLoggedIn
     }
   },
   { persist: true }

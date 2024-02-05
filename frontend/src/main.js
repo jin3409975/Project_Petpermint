@@ -16,6 +16,9 @@ import '@mdi/font/css/materialdesignicons.css'
 // Axios 추가
 import axios from 'axios'
 
+// SASS 추가
+import './styles.scss'
+
 const app = createApp(App)
 
 const vuetify = createVuetify({

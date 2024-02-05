@@ -1,22 +1,19 @@
 <script setup>
-import Navbar from '@/components/main/Navbar.vue'
 import Footer from '@/components/main/Footer.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const hideNavbar = computed(() => route.meta.hideNavbar)
 const hideFooter = computed(() => route.meta.hideFooter)
 </script>
 
 <template>
-  <v-app>
-    <Navbar v-if="!hideNavbar" />
-    <v-main>
+  <body>
+    <v-app>
       <RouterView />
-    </v-main>
-    <Footer v-if="!hideFooter" />
-  </v-app>
+      <Footer v-if="!hideFooter" />
+    </v-app>
+  </body>
 </template>
 
 <style></style>

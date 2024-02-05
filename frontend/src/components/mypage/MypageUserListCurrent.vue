@@ -1,40 +1,46 @@
 <script>
-import FullCalendar from '@fullcalendar/vue3'
-// import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
+import { Qalendar } from 'qalendar'
 import { myPageStore } from '@/stores/mypage.js'
-import { ref, onBeforeMount } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+
 export default {
   components: {
-    FullCalendar
+    Qalendar
   },
   setup() {
     const mypagestore = myPageStore()
     const { myevents } = storeToRefs(mypagestore)
-    onBeforeMount(() => {
-      console.log('onmounted')
-      mypagestore.getmyevents()
-    })
-    // Use a ref for calendarOptions to ensure reactivity
-    const calendarOptions = ref({
-      plugins: [timeGridPlugin],
-      initialView: 'timeGridWeek', // 월별 보기 initialView: 'dayGridMonth'
-      weekends: true,
-      selectable: true,
-      events: myevents,
-      allDay: false
-      // eventColor: '#378006'
+
+    // Initialize config as a reactive reference
+    const config = ref({
+      // Configuration details go here
     })
 
-    return { calendarOptions }
+    onBeforeMount(() => {
+      console.log('Component is about to be mounted')
+      mypagestore.getmyevents()
+    })
+
+    // Return all reactive references and methods you want to use in the template
+    return {
+      events: myevents,
+      config
+    }
   }
 }
 </script>
 
 <template>
-  <h1>나의 예약 현황</h1>
-  <button @click="tes">test</button>
-  <FullCalendar :options="calendarOptions"> </FullCalendar>
+  <div>
+    <p>나의 예약 내역 보기</p>
+    <Qalendar :events="events" :config="config" />
+  </div>
 </template>
-<style></style>
+
+<style>
+@import 'qalendar/dist/style.css';
+.calendar-month__weekday[data-v-034f06d8] {
+  min-height: 80px;
+}
+</style>

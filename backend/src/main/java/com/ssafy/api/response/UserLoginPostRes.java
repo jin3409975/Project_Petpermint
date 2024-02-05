@@ -19,7 +19,8 @@ public class UserLoginPostRes extends BaseResponseBody{
 	String userId;
 	String userName;
 	int type;
-	public static UserLoginPostRes of(Integer statusCode, String message, String accessToken, String userId, String userName, int type) {
+	String licenseNumber;
+	public static UserLoginPostRes of(Integer statusCode, String message, String accessToken, String userId, String userName, int type, String licenseNumber) {
 		UserLoginPostRes res = new UserLoginPostRes();
 		res.setStatusCode(statusCode);
 		res.setMessage(message);
@@ -27,6 +28,7 @@ public class UserLoginPostRes extends BaseResponseBody{
 		res.setUserId(userId);
 		res.setUserName(userName);
 		res.setType(type);
+		res.setLicenseNumber(licenseNumber);
 		return res;
 	}
 }

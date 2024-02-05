@@ -1,12 +1,37 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const logoUrl = computed(() => {
-  return new URL('@/assets/img/logo.png', import.meta.url).href
-})
+const defaultLogoUrl = new URL('@/assets/img/logo.png', import.meta.url).href
+const scrolledLogoUrl = new URL('@/assets/img/logomain.png', import.meta.url).href
+
+const logoUrl = ref(defaultLogoUrl)
 
 const router = useRouter()
+
+const isScrolled = ref(false)
+
+const logoStyle = ref({
+  cursor: 'pointer',
+  marginBottom: '8px',
+  marginLeft: '5px',
+  height: '70px'
+})
+
+const updateNavBarOnScroll = () => {
+  const scrolled = window.scrollY > 50
+  isScrolled.value = scrolled
+  logoUrl.value = scrolled ? scrolledLogoUrl : defaultLogoUrl
+  logoStyle.value.height = scrolled ? '60px' : '70px'
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', updateNavBarOnScroll)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateNavBarOnScroll)
+})
 
 const navigateToMain = () => {
   router.push({ name: 'main-home' })
@@ -26,90 +51,84 @@ const navigateToAppoint = () => {
 const navigateToCommunity = () => {
   router.push({ name: 'lifecare-community-list' })
 }
-
-const isScrolled = ref(false)
-
-const updateAppBarBackground = () => {
-  console.log(window.scrollY) // 디버깅을 위한 로그
-  isScrolled.value = window.scrollY > 0
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', updateAppBarBackground)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', updateAppBarBackground)
-})
 </script>
 
 <template>
-  <v-app-bar app fixed id="custom-nav-bar" :class="{ 'app-bar-scrolled': isScrolled }">
-    <div class="d-flex justify-between w-100">
-      <!-- 왼쪽 항목: 페퍼민트란, 초기상담 예약, 병원진료 예약, 라이프케어 -->
-      <div class="d-flex justify-start">
-        <v-btn text @click="navigateToMain">Home</v-btn>
-        <v-btn text @click="navigateToInitial">초기 상담예약</v-btn>
-        <v-btn text @click="navigateToAppoint">병원 진료예약</v-btn>
-        <v-btn text @click="navigateToCommunity">라이프케어</v-btn>
+  <v-app-bar :class="{ 'is-scrolled': isScrolled }" app fixed id="custom-nav-bar">
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+      "
+    >
+      <div style="display: flex; align-items: center; column-gap: 45px">
+        <img @click="navigateToMain" :src="logoUrl" :style="logoStyle" />
+        <a @click.prevent="navigateToMain" class="home-link">Home</a>
+        <a @click.prevent="navigateToInitial" class="home-link">초기 상담예약</a>
+        <a @click.prevent="navigateToAppoint" class="home-link">병원 진료예약</a>
+        <v-menu open-on-hover>
+          <template v-slot:activator="{ props }">
+            <a v-bind="props" class="home-link">
+              라이프케어
+              <v-icon>mdi-triangle-small-down</v-icon>
+            </a>
+          </template>
+          <v-list bg-color="black">
+            <v-list-item link>
+              <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-title>전문가 라이브 방송</v-list-item-title>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-title>반려동물 시설/센터</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
-
-      <!-- 로고 이미지 -->
-      <div class="d-flex justify-center">
-        <img
-          @click="navigateToMain"
-          :src="logoUrl"
-          class="my-2"
-          contain
-          height="70"
-          style="cursor: pointer"
-        />
-      </div>
-
-      <!-- 오른쪽 항목: 로그인, 회원가입 버튼 -->
-      <div class="d-flex justify-end">
-        <v-btn text @click="navigateToLogin">로그인</v-btn>
-        <v-btn text @click="navigateToRegister">회원가입</v-btn>
+      <div style="display: flex; align-items: center; column-gap: 25px; margin-right: 15px">
+        <a @click="navigateToLogin" class="home-link">로그인</a>
+        <a @click="navigateToRegister" class="home-link">회원가입</a>
       </div>
     </div>
   </v-app-bar>
 </template>
 
 <style>
-.d-flex {
-  display: flex;
-  align-items: center;
-  flex: 1;
+.home-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+  background-image: linear-gradient(to right, transparent, transparent);
+  background-repeat: no-repeat;
+  background-size: 0% 3px;
+  background-position: 0 100%;
+  transition: background-size 0.3s ease;
+  cursor: pointer;
 }
 
-.justify-between {
-  justify-content: space-between;
-  width: 100%;
-}
-
-.justify-start {
-  justify-content: flex-start;
-  flex: 1;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-end {
-  justify-content: flex-end;
-  flex: 1;
+.home-link:hover {
+  background-image: linear-gradient(to right, #d2e0fb, #d2e0fb);
+  background-size: 100% 3px;
 }
 
 #custom-nav-bar {
-  background-color: rgba(68, 52, 213, 0.592); /* 초기 투명 상태 */
-  backdrop-filter: blur(5px);
-  transition: background-color 2.5s ease; /* 부드러운 색상 전환 */
+  z-index: 1000 !important;
+  background-color: rgba(0, 0, 0, 0.115);
+  backdrop-filter: blur(10px);
 }
 
-/* 스크롤 시: 흰색 배경 */
-.app-bar-scrolled {
-  background-color: white !important; /* 흰색 배경 */
-  transition: background-color 0.3s; /* 부드러운 색상 전환 */
+.is-scrolled {
+  background-color: white !important;
+  color: rgb(59, 59, 59);
+  transition: all 0.3s ease;
+}
+
+.is-scrolled .home-link {
+  color: rgb(59, 59, 59);
 }
 </style>
