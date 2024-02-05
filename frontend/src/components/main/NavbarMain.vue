@@ -1,0 +1,139 @@
+<script setup>
+import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const defaultLogoUrl = new URL('@/assets/img/logomain.png', import.meta.url).href
+
+const logoUrl = ref(defaultLogoUrl)
+
+const router = useRouter()
+
+const logoStyle = ref({
+  cursor: 'pointer',
+  marginBottom: '8px',
+  marginLeft: '5px',
+  height: '60px'
+})
+
+const isLoggedIn = ref(false)
+const checkLoginStatus = () => {
+  isLoggedIn.value = localStorage.getItem('useremail') !== null
+}
+const handleLoginLogout = () => {
+  if (isLoggedIn.value) {
+    // localStorage.removeItem('useremail');
+    isLoggedIn.value = false
+    router.push({ name: 'main-home' })
+  } else {
+    router.push({ name: 'login-home' })
+  }
+}
+
+onMounted(() => {
+  checkLoginStatus()
+})
+
+const navigateToMain = () => {
+  router.push({ name: 'main-home' })
+}
+const navigateToInitial = () => {
+  router.push({ name: 'reserve-initial' })
+}
+const navigateToAppoint = () => {
+  router.push({ name: 'reserve-appoint' })
+}
+const navigateToCommunity = () => {
+  router.push({ name: 'lifecare-community-list' })
+}
+const navigateToVetRegister = () => {
+  router.push({ name: 'register-vet' })
+}
+const navigateToUserRegister = () => {
+  router.push({ name: 'register-user' })
+}
+</script>
+
+<template>
+  <v-app-bar app fixed>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+      "
+    >
+      <div style="display: flex; align-items: center; column-gap: 45px">
+        <img @click="navigateToMain" :src="logoUrl" :style="logoStyle" />
+        <a @click.prevent="navigateToMain" class="home-link">Home</a>
+        <a @click.prevent="navigateToInitial" class="home-link">초기 상담예약</a>
+        <a @click.prevent="navigateToAppoint" class="home-link">병원 진료예약</a>
+        <v-menu open-on-hover>
+          <template v-slot:activator="{ props }">
+            <a v-bind="props" class="home-link">
+              라이프케어
+              <v-icon>mdi-triangle-small-down</v-icon>
+            </a>
+          </template>
+          <v-list>
+            <v-list-item link>
+              <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-title>전문가 라이브 방송</v-list-item-title>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-title>반려동물 시설/센터</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+      <div style="display: flex; align-items: center; column-gap: 25px; margin-right: 15px">
+        <!-- @이민지 로그인되었을 때 마이페이지로 갈 수 있게하는 라우터 필요. 자신의 프로필 이미지를 동그랗게 만들고 그걸 클릭하면 마이페지로 바로 보내면 됩니다.
+        <img v-if="isLoggedIn" src="" alt=""> -->
+        <a @click="handleLoginLogout" class="home-link">{{ isLoggedIn ? '로그아웃' : '로그인' }}</a>
+        <v-menu v-if="!isLoggedIn" open-on-hover>
+          <template v-slot:activator="{ props }">
+            <a v-bind="props" class="home-link">
+              회원가입
+              <v-icon>mdi-triangle-small-down</v-icon>
+            </a>
+          </template>
+          <v-list>
+            <v-list-item link>
+              <v-list-item-title @click="navigateToUserRegister"
+                >보호자용 회원가입</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-title @click="navigateToVetRegister"
+                >수의사용 회원가입</v-list-item-title
+              >
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+    </div>
+  </v-app-bar>
+</template>
+
+<style scoped>
+.home-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(59, 59, 59);
+  text-decoration: none;
+  background-image: linear-gradient(to right, transparent, transparent);
+  background-repeat: no-repeat;
+  background-size: 0% 3px;
+  background-position: 0 100%;
+  transition: background-size 0.3s ease;
+  cursor: pointer;
+}
+
+.home-link:hover {
+  background-image: linear-gradient(to right, #d2e0fb, #d2e0fb);
+  background-size: 100% 3px;
+}
+</style>
