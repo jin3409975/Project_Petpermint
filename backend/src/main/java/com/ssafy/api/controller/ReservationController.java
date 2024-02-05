@@ -233,7 +233,7 @@ public class ReservationController {
 		}
 	}
 
-	@GetMapping("/all")
+	@GetMapping("/all/normal")
 	@ApiOperation(value = "특정 사용자의 예약 전체 조회", notes = "특정 사용자의 예약 전체 조회")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
@@ -241,10 +241,24 @@ public class ReservationController {
 			@ApiResponse(code = 404, message = "상담 예약 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<ConsultReservationRes> getAllReservation(@ApiIgnore String userId) {
+	public ResponseEntity<ConsultReservationRes> getAllReservationNormal(@ApiIgnore String userId) {
 		List<Reservation> consultReservation = reservationService.getAllConsultReservations(userId);
 		consultReservation.addAll(reservationService.getAllHospitalReservations(userId));
 		ConsultReservationRes reservationResList = ConsultReservationRes.listofConsult(200,"success",consultReservation);
+		return ResponseEntity.status(200).body(reservationResList);
+	}
+
+	@GetMapping("/all/expert")
+	@ApiOperation(value = "특정 사용자의 예약 전체 조회", notes = "특정 사용자의 예약 전체 조회")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "상담 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<ConsultReservationRes> getAllReservationExpert(@ApiIgnore String licenseNumber) {
+		List<Reservation> result = reservationService.getAllExpertReservations(licenseNumber);
+		ConsultReservationRes reservationResList = ConsultReservationRes.listofConsult(200,"success",result);
 		return ResponseEntity.status(200).body(reservationResList);
 	}
 }
