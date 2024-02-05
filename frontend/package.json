@@ -22,6 +22,7 @@
     "openvidu-browser": "^2.29.1",
     "pinia": "^2.1.7",
     "qalendar": "^3.7.0",
+    "typed.js": "^2.1.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5",
     "vuetify": "^3.4.11"
