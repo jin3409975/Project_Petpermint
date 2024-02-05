@@ -21,6 +21,7 @@ export const myPageStore = defineStore('mypage', () => {
       }
     }).then((r) => {
       if (r.data.statusCode == 200) {
+        console.log(r.data.result)
         extractEvents(r.data.result)
         myevents.value = extractEvents(r.data.result)
         console.log('myevents', myevents.value)

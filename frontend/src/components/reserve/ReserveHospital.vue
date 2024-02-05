@@ -32,12 +32,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <p>병원선택입니다.</p>
-    <p>선택한 시간 {{ reservedate }}</p>
-  </div>
   <div v-if="type == 1">
-    <p>선택한 시간 {{ reservedate }}에 상담 가능 수의사는 다음과 같습니다</p>
+    <p>{{ reservedate }}에 상담 가능 수의사는 다음과 같습니다</p>
     <v-card class="mx-auto hospital-list-card" max-width="300">
       <v-list three-line class="scrollable-list">
         <v-list-item
@@ -55,7 +51,7 @@ onMounted(() => {
     </v-card>
   </div>
   <div v-else-if="type == 2">
-    <p>선택한 시간 {{ reservedate }}에 진료 가능 병원은 다음과 같습니다</p>
+    <p>{{ reservedate }}에 진료 가능 병원은 다음과 같습니다</p>
     <v-card class="mx-auto hospital-list-card" max-width="300">
       <v-list three-line class="scrollable-list">
         <v-list-item

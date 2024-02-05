@@ -31,10 +31,7 @@ const navigateToReserveComplete = () => {
 
 <template>
   <div>
-    <p>자녀 선택 페이지입니다</p>
-  </div>
-  <div>
-    <v-container fluid>
+    <v-container fluid class="d-flex justify-center">
       <v-radio-group v-model="reservepetindex" @change="selectPet()">
         <v-radio
           v-for="(pet, index) in petList"
@@ -45,11 +42,34 @@ const navigateToReserveComplete = () => {
       </v-radio-group>
     </v-container>
   </div>
-  <p></p>
-  <button class="button" @click="navigateToReserveComplete">완료</button>
+  <!-- <button class="button" @click="navigateToReserveComplete">완료</button> -->
 </template>
 
 <style>
+.v-container--fluid {
+  max-width: 30%;
+}
+.v-selection-control {
+  align-items: center;
+  contain: layout;
+  display: flex;
+  flex: 1 0;
+  grid-area: control;
+  position: relative;
+  user-select: none;
+  justify-content: center;
+}
+.card {
+  width: 80%;
+  text-align: center;
+  justify-content: center;
+}
+.d-flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
 /* Button base styles */
 .button {
   padding: 10px 20px; /* Adjust padding as needed */
