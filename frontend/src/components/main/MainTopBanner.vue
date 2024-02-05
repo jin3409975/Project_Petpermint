@@ -1,36 +1,151 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
-// 반응형 데이터로 이미지 URL을 생성
-const BigDogUrl = computed(() => {
-  return new URL('@/assets/img/OwnerDog.png', import.meta.url).href
+const switchState = ref(false)
+
+const row1 = ref(null)
+const row2 = ref(null)
+const row3 = ref(null)
+const row4 = ref(null)
+
+const animateRow1 = ref(false)
+const animateRow2 = ref(false)
+const animateRow3 = ref(false)
+const animateRow4 = ref(false)
+
+const checkScroll = () => {
+  console.log(window.scrollY)
+  if (scrollY > 300) animateRow1.value = true
+  if (scrollY > 800) animateRow2.value = true
+  if (scrollY > 1300) animateRow3.value = true
+  if (scrollY > 1800) animateRow4.value = true
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', checkScroll)
+  checkScroll()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkScroll)
 })
 </script>
 
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12" md="6">
-        <div class="title my-8">사랑스러운 반려동물의 건강은</div>
-        <div class="title mb-8">저희 펫퍼민트가</div>
-        <div class="title mb-8">초기 화상 상담으로</div>
-        <div class="title mb-8">지켜드려겠습니다.</div>
-        <v-btn color="blue" class="mr-4">초기 상담 <br />예약하기</v-btn>
-        <v-btn color="green">병원 진료 <br />예약하기</v-btn>
+    <v-row align="center" justify="start" no-gutters>
+      <v-col cols="auto" class="d-flex align-center justify-center">
+        <p class="mb-0" style="margin-right: 5px">반려동물 보호자</p>
       </v-col>
-      <v-col cols="12" md="6">
-        <img :src="BigDogUrl" aspect-ratio="1" class="rounded-lg" />
+      <v-col cols="auto" class="d-flex align-center justify-center">
+        <v-switch v-model="switchState"></v-switch>
+      </v-col>
+      <v-col cols="auto" class="d-flex align-center justify-center">
+        <p class="mb-0" style="margin-left: 5px">수의사</p>
       </v-col>
     </v-row>
+
+    <div v-if="!switchState">
+      <v-row justify="space-around" ref="row1">
+        <v-col cols="12" md="6" :class="{ 'animate-slide-in-left': animateRow1 }">
+          <p>온라인 초기 상담과 <br />에프터케어 서비스</p>
+        </v-col>
+        <v-col cols="12" md="6" :class="{ 'animate-slide-in-right': animateRow1 }">
+          <img src="../../assets/img/fun1.PNG" />
+        </v-col>
+      </v-row>
+      <v-row justify="space-around" ref="row2">
+        <v-col :class="{ 'animate-slide-in-left': animateRow2 }">
+          <p>간편 진료 예약 서비스</p>
+        </v-col>
+        <v-col :class="{ 'animate-slide-in-right': animateRow2 }">
+          <img src="../../assets/img/fun2.PNG" />
+        </v-col>
+      </v-row>
+      <v-row justify="space-around" ref="row3">
+        <v-col :class="{ 'animate-slide-in-left': animateRow3 }">
+          <p>응급 예약 서비스</p>
+        </v-col>
+        <v-col :class="{ 'animate-slide-in-right': animateRow3 }">
+          <img src="../../assets/img/fun3.PNG" />
+        </v-col>
+      </v-row>
+      <v-row justify="space-around" ref="row4">
+        <v-col :class="{ 'animate-slide-in-left': animateRow4 }">
+          <p>라이프케어</p>
+        </v-col>
+        <v-col :class="{ 'animate-slide-in-right': animateRow4 }">
+          <img src="../../assets/img/fun4.PNG" />
+        </v-col>
+      </v-row>
+    </div>
+
+    <div v-if="switchState">
+      <v-row justify="space-around" ref="row1">
+        <v-col :class="{ 'animate-slide-in-left': animateRow1 }">
+          <p>예약캘린더</p>
+        </v-col>
+        <v-col :class="{ 'animate-slide-in-right': animateRow1 }">
+          <img src="../../assets/img/fun11.PNG" />
+        </v-col>
+      </v-row>
+      <v-row justify="space-around" ref="row2">
+        <v-col cols="12" md="6" :class="{ 'animate-slide-in-left': animateRow2 }">
+          <p>온라인 초기 상담과 <br />에프터케어 서비스</p>
+        </v-col>
+        <v-col cols="12" md="6" :class="{ 'animate-slide-in-right': animateRow2 }">
+          <img src="../../assets/img/fun1.PNG" />
+        </v-col>
+      </v-row>
+
+      <v-row justify="space-around" ref="row3">
+        <v-col :class="{ 'animate-slide-in-left': animateRow3 }">
+          <p>라이프케어</p>
+        </v-col>
+        <v-col :class="{ 'animate-slide-in-right': animateRow3 }">
+          <img src="../../assets/img/fun4.PNG" />
+        </v-col>
+      </v-row>
+    </div>
   </v-container>
 </template>
 
-<style scoped>
-.title {
-  font-size: 30px;
-  font-weight: bold;
+<style>
+.slide-in-left,
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(-100%);
 }
-.rounded-lg {
-  border-radius: 0.5rem;
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  opacity: 1;
+}
+
+.animate-slide-in-right {
+  animation: 1s ease-out 0s 1 slideInFromRight;
+  opacity: 1;
 }
 </style>
