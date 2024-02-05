@@ -20,7 +20,6 @@ import ReserveAppointView from '@/views/ReserveAppointView.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
-import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
 import AdminViewVue from '@/views/AdminView.vue'
 import AdminAcountVue from '@/components/admin/AdminAcount.vue'
