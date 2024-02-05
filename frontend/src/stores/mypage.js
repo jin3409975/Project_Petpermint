@@ -15,11 +15,12 @@ export const myPageStore = defineStore('mypage', () => {
     //일반 회원의 예약 내역을 불러오기
     axios({
       method: 'get',
-      url: VITE_APP_SERVER_URI + '/reserve/all',
+      url: VITE_APP_SERVER_URI + '/reserve/all/normal',
       params: {
         userId: useremail
       }
     }).then((r) => {
+      console.log(r)
       if (r.data.statusCode == 200) {
         console.log(r.data.result)
         extractEvents(r.data.result)
@@ -51,13 +52,16 @@ export const myPageStore = defineStore('mypage', () => {
       }
     })
   }
+
+  //수의사 메인페이지 예약 조회
   function getvetevents() {
     //수의사 회원의 예약 내역을 불러오기
     axios({
       method: 'get',
-      url: VITE_APP_SERVER_URI + '',
-      params: {}
+      url: VITE_APP_SERVER_URI + '/reserve/all/expert',
+      params: { licenseNumber : '12345' }
     }).then((r) => {
+      console.log(r)
       if (r.data.statusCode == 200) {
         extractEvents(r.data.result)
         vetevents.value = extractEvents(r.data.result)

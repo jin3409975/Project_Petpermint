@@ -10,7 +10,7 @@ export default {
   },
   setup() {
     const mypagestore = myPageStore()
-    const { myevents } = storeToRefs(mypagestore)
+    const { vetevents } = storeToRefs(mypagestore)
 
     // Initialize config as a reactive reference
     const config = ref({
@@ -19,12 +19,12 @@ export default {
 
     onBeforeMount(() => {
       console.log('Component is about to be mounted')
-      mypagestore.getmyevents()
+      mypagestore.getvetevents()
     })
 
     // Return all reactive references and methods you want to use in the template
     return {
-      events: myevents,
+      events: vetevents,
       config
     }
   }
