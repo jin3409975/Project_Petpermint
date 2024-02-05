@@ -4,12 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 편의시설 API ([GET] /venue/data) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter
+@ToString
 @ApiModel("CommentDataGetRequest")
 public class VenueDataGetReq {
     @ApiModelProperty(name="카테고리", example="동물약국")
