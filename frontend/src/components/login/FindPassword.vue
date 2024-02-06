@@ -46,7 +46,7 @@ const password2Rules = ref([
 </script>
 
 <template>
-  <div class="my-12">
+  <div style="margin-top: 120px; margin-bottom: 80px">
     <v-card
       class="mx-auto pa-12 pb-8"
       variant="outlined"
