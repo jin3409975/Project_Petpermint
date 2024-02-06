@@ -38514,7 +38514,7 @@
         }
         if (2 & t) {
           const e = ie(3)
-          dt('fullscreen', e.isFullscreen), A(1), j('ngModel', e.nickname)
+          dt('전체 화면', e.isFullscreen), A(1), j('ngModel', e.nickname)
         }
       }
       function wee(t, n) {
@@ -38523,7 +38523,7 @@
           2 & t)
         ) {
           const e = ie(2)
-          dt('fullscreen', e.isFullscreen),
+          dt('전체 화면', e.isFullscreen),
             A(1),
             j('ngIf', !e.toggleNickname),
             A(1),
@@ -40201,7 +40201,7 @@
           ENABLE_SCREEN: 'Enable screen share',
           DISABLE_SCREEN: 'Disable screen share',
           MORE_OPTIONS: 'More options',
-          FULLSCREEN: 'Fullscreen',
+          FULLSCREEN: '전체 화면',
           EXIT_FULLSCREEN: 'Exit fullscreen',
           ENABLE_CAPTIONS: 'Enable captions',
           DISABLE_CAPTIONS: 'Disable captions',
@@ -46327,7 +46327,7 @@
                 ['class', 'OV_stream', 3, 'ngClass', 'id', 4, 'ngIf'],
                 [1, 'OV_stream', 3, 'ngClass', 'id'],
                 ['streamContainer', ''],
-                ['id', 'nickname-container', 'class', 'nickname', 3, 'fullscreen', 4, 'ngIf'],
+                ['id', 'nickname-container', 'class', 'nickname', 3, '전체 화면', 4, 'ngIf'],
                 ['id', 'audio-wave-container', 4, 'ngIf'],
                 [3, 'name', 'color', 4, 'ngIf'],
                 [3, 'streamManager', 'mutedSound', 'participantId', 'dblclick'],
@@ -46336,7 +46336,7 @@
                 ['id', 'settings-container', 'class', 'videoButtons', 4, 'ngIf'],
                 ['id', 'nickname-container', 1, 'nickname'],
                 ['class', 'nicknameContainer', 'selected', '', 3, 'click', 4, 'ngIf'],
-                ['id', 'nickname-input-container', 3, 'fullscreen', 4, 'ngIf'],
+                ['id', 'nickname-input-container', 3, '전체 화면', 4, 'ngIf'],
                 ['selected', '', 1, 'nicknameContainer', 3, 'click'],
                 ['id', 'nickname', 4, 'ngIf'],
                 ['id', 'nickname'],
