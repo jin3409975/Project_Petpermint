@@ -1,138 +1,147 @@
-<script setup>
-import { onMounted } from 'vue'
-import '../../assets/openvidu/openvidu-webcomponent-2.29.0'
-import '../../assets/openvidu/openvidu-webcomponent-2.29.0.css'
-import axios from 'axios'
-
-onMounted(() => {
-  const webComponent = document.querySelector('openvidu-webcomponent')
-  console.log(webComponent)
-  webComponent.addEventListener('onSessionCreated', (event) => {
-    const session = event.detail
-    session.on('connectionCreated', (e) => {
-      console.log('connectionCreated', e)
-    })
-
-    session.on('streamDestroyed', (e) => {
-      console.log('streamDestroyed', e)
-    })
-
-    session.on('streamCreated', (e) => {
-      console.log('streamCreated', e)
-    })
-
-    session.on('sessionDisconnected', (event) => {
-      console.warn('sessionDisconnected event')
-      webComponent.style.display = 'none'
-    })
-
-    session.on('exception', (exception) => {
-      console.error(exception)
-    })
-  })
-
-  webComponent.addEventListener('onJoinButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarLeaveButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarCameraButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarMicrophoneButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarScreenshareButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarParticipantsPanelButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarChatPanelButtonClicked', (event) => {})
-  webComponent.addEventListener('onToolbarFullscreenButtonClicked', (event) => {})
-  webComponent.addEventListener('onParticipantCreated', (event) => {})
-})
-
-async function createToken(sessionId) {
-  console.log('Start createToken ' + sessionId)
-  const config = {
-    method: 'post',
-    url: 'https://i10b303.p.ssafy.io:5000/api/sessions/' + sessionId + '/connection',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + 'MY_SECRET')
+<script>
+import $ from 'jquery' // Assuming you're using jQuery
+import '@/assets/openvidu/openvidu-webcomponent-2.29.0.js'
+import '@/assets/openvidu/openvidu-webcomponent-2.29.0.css'
+export default {
+  head() {
+    return {
+      script: [{ src: '@/assets/openvidu/openvidu-webcomponent-2.29.0.js' }],
+      link: [{ rel: 'stylesheet', href: '@/assets/openvidu/openvidu-webcomponent-2.29.0.css' }]
     }
-  }
+  },
+  data() {
+    return {
+      sessionName: this.$route.params.clubId,
+      participantName: sessionStorage.getItem('user_id'),
+      APPLICATION_SERVER_URL: `https://i10b303.p.ssafy.io:5000/`,
+      webComponent: null
+    }
+  },
+  mounted() {
+    this.webComponent = this.$refs.webComponent
 
-  const res = await axios(config)
+    this.webComponent.addEventListener('onSessionCreated', (event) => {
+      const session = event.detail
 
-  return res.data
-}
+      session.on('connectionCreated', (e) => {
+        console.log('connectionCreated', e)
+      })
 
-async function getToken(mySessionId) {
-  const sessionId = await createSession(mySessionId)
-  return createToken(sessionId)
-}
+      session.on('streamDestroyed', (e) => {
+        console.log('streamDestroyed', e)
+      })
 
-async function joinSession() {
-  const sessionId = 'AAA-BBB-CCC'
+      session.on('streamCreated', (e) => {
+        console.log('streamCreated', e)
+      })
 
-  console.warn('SESSION ID', sessionId)
+      session.on('sessionDisconnected', (event) => {
+        console.warn('sessionDisconnected event')
+        this.joinSession()
+      })
 
-  var promiseResults = await Promise.all([getToken(sessionId), getToken(sessionId)])
+      session.on('exception', (exception) => {
+        console.error(exception)
+      })
+    })
 
-  console.warn('promiseResults', promiseResults)
+    // this.getUserName()
+    this.joinSession()
+  },
+  methods: {
+    async getUserName() {
+      // const access_token = this.$store.state.access_token
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+          // Authorization: `Bearer ${access_token}`
+        }
+      }
 
-  var tokens = { webcam: promiseResults[0].token, screen: promiseResults[1].token }
+      const userId = sessionStorage.getItem('user_id')
 
-  var webComponent = document.querySelector('openvidu-webcomponent')
-  webComponent.tokens = tokens
-
-  hideForm()
-}
-
-function hideForm() {
-  var form = document.getElementById('main')
-  form.style.display = 'none'
-}
-
-function createSession(sessionId) {
-  console.log('createSession ', sessionId)
-  const data = JSON.stringify({
-    customSessionId: sessionId
-  })
-
-  const config = {
-    method: 'post',
-    url: 'https://i10b303.p.ssafy.io:5000/api/sessions',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + 'MY_SECRET')
+      // await this.$axios.get(`/user-service/user/${userId}/userName`, config).then((res) => {
+      //   this.webComponent.participantName = res.data
+      // })
     },
-    data: data
-  }
+    async joinSession() {
+      const tokens = await Promise.all([
+        this.getToken(this.sessionName),
+        this.getToken(this.sessionName)
+      ])
+      this.webComponent.tokens = {
+        webcam: tokens[0],
+        screen: tokens[1]
+      }
+    },
+    async getToken(mySessionId) {
+      const sessionId = await this.createSession(mySessionId)
+      return this.createToken(sessionId)
+    },
+    createSession(sessionId) {
+      // const access_token = this.$store.state.access_token
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+          // Authorization: `Bearer ${access_token}`
+        }
+      }
 
-  axios(config)
-    .then(function (response) {
-      console.log(response.data)
-      return response.data
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          type: 'POST',
+          url: this.APPLICATION_SERVER_URL + 'api/sessions',
+          config: config,
+          data: JSON.stringify({ customSessionId: sessionId }),
+          headers: { 'Content-Type': 'application/json' },
+          success: (response) => resolve(response),
+          error: (error) => reject(error)
+        })
+      })
+    },
+    createToken(sessionId) {
+      // const access_token = this.$store.state.access_token
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+          // Authorization: `Bearer ${access_token}`
+        }
+      }
+
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          type: 'POST',
+          url: this.APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections',
+          config: config,
+          data: JSON.stringify({}),
+          headers: { 'Content-Type': 'application/json' },
+          success: (response) => resolve(response),
+          error: (error) => reject(error)
+        })
+      })
+    }
+  },
+  beforeDestroy() {
+    this.webComponent.disconnect()
+    this.webComponent.tokens = null
+  }
 }
 </script>
 
-<template>
-  <div>
-    <!-- Form to connect to a video-session -->
-    <div id="main" style="text-align: center">
-      <h1>Join a video session</h1>
-      <form :onsubmit="joinSession()" style="padding: 80px; margin: auto">
-        <p>
-          <label>Session:</label>
-          <input type="text" id="sessionName" value="SessionA" required />
-        </p>
-        <p>
-          <label>User:</label>
-          <input type="text" id="user" value="User1" />
-        </p>
-        <p>
-          <input type="submit" value="JOIN" />
-        </p>
-      </form>
-    </div>
-    <openvidu-webcomponent></openvidu-webcomponent>
+<template style="display: flex; justify-content: center; height: 100%; width: 100%">
+  <div id="main" style="text-align: center; width: 100%; height: 100%">
+    <openvidu-webcomponent
+      ref="webComponent"
+      toolbar-captions-button="false"
+      toolbar-background-effects-button="false"
+      toolbar-recording-button="false"
+      toolbar-broadcasting-button="false"
+      toolbar-activities-panel-button="false"
+      toolbar-display-logo="false"
+      toolbar-display-session-name="false"
+      stream-resolution="'320x240'"
+      style="height: 100%; width: 100%; display: block !important"
+    >
+    </openvidu-webcomponent>
   </div>
 </template>
-
-<style scoped></style>
