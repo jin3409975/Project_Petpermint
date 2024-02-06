@@ -11,5 +11,11 @@ import java.util.List;
  */
 public interface VenueService {
     List<VenueData> dataVenue(VenueDataGetReq dataInfo);
+
+    List<String> getSidoData();
+
+    List<String> getMyundongData(String sido, String gungu);
+
+    List<String> getGunguData(String sido);
 }
 
