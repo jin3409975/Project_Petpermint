@@ -60,6 +60,7 @@ const router = createRouter({
             {
               path: '',
               name: 'main-home',
+              meta: { hideNavbarMain: true },
               component: Main
             },
             {
