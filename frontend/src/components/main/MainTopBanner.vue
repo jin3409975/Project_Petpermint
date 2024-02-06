@@ -51,7 +51,7 @@ onUnmounted(() => {
           <p>온라인 초기 상담과 <br />에프터케어 서비스</p>
         </v-col>
         <v-col cols="12" md="6" :class="{ 'animate-slide-in-right': animateRow1 }">
-          <img src="../../assets/img/fun1.png" />
+          <img src="@/assets/img/fun1.png" />
         </v-col>
       </v-row>
       <v-row justify="space-around" ref="row2">
@@ -59,7 +59,7 @@ onUnmounted(() => {
           <p>간편 진료 예약 서비스</p>
         </v-col>
         <v-col :class="{ 'animate-slide-in-right': animateRow2 }">
-          <img src="../../assets/img/fun2.png" />
+          <img src="@/assets/img/fun2.png" />
         </v-col>
       </v-row>
       <v-row justify="space-around" ref="row3">
@@ -67,7 +67,7 @@ onUnmounted(() => {
           <p>응급 예약 서비스</p>
         </v-col>
         <v-col :class="{ 'animate-slide-in-right': animateRow3 }">
-          <img src="../../assets/img/fun3.png" />
+          <img src="@/assets/img/fun3.png" />
         </v-col>
       </v-row>
       <v-row justify="space-around" ref="row4">
@@ -75,7 +75,7 @@ onUnmounted(() => {
           <p>라이프케어</p>
         </v-col>
         <v-col :class="{ 'animate-slide-in-right': animateRow4 }">
-          <img src="../../assets/img/fun4.png" />
+          <img src="@/assets/img/fun4.png" />
         </v-col>
       </v-row>
     </div>
@@ -86,7 +86,7 @@ onUnmounted(() => {
           <p>예약캘린더</p>
         </v-col>
         <v-col :class="{ 'animate-slide-in-right': animateRow1 }">
-          <img src="../../assets/img/fun11.png" />
+          <img src="@/assets/img/fun11.png" />
         </v-col>
       </v-row>
       <v-row justify="space-around" ref="row2">
@@ -94,7 +94,7 @@ onUnmounted(() => {
           <p>온라인 초기 상담과 <br />에프터케어 서비스</p>
         </v-col>
         <v-col cols="12" md="6" :class="{ 'animate-slide-in-right': animateRow2 }">
-          <img src="../../assets/img/fun1.png" />
+          <img src="@/assets/img/fun1.png" />
         </v-col>
       </v-row>
 
@@ -103,7 +103,7 @@ onUnmounted(() => {
           <p>라이프케어</p>
         </v-col>
         <v-col :class="{ 'animate-slide-in-right': animateRow3 }">
-          <img src="../../assets/img/fun4.png" />
+          <img src="@/assets/img/fun4.png" />
         </v-col>
       </v-row>
     </div>
