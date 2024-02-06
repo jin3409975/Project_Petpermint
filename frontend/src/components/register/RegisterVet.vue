@@ -616,7 +616,7 @@ function openKakaoAddressSearch() {
   cursor: pointer;
 }
 .vetimage-container {
-  background-image: url('@/assets/img/vet.png');
+  background-image: url('../../assets/img/vet.png');
   background-size: cover; /* 이미지가 컨테이너를 완전히 채우도록 조정 */
   background-position: center; /* 이미지 중심이 컨테이너 중심과 일치하도록 조정 */
   width: 100%; /* 컨테이너의 전체 너비를 사용 */
