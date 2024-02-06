@@ -2,8 +2,8 @@
 import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const defaultLogoUrl = new URL('@/assets/img/logo.png', import.meta.url).href
-const scrolledLogoUrl = new URL('@/assets/img/logomain.png', import.meta.url).href
+const defaultLogoUrl = new URL('/assets/img/logo.png', import.meta.url).href
+const scrolledLogoUrl = new URL('/assets/img/logomain.png', import.meta.url).href
 
 const logoUrl = ref(defaultLogoUrl)
 
