@@ -58,9 +58,9 @@ const handleMouseOut = () => {
 }
 
 .emerg-container:hover {
-  background-color: #d2e0fb;
+  background-color: #ff000099;
   border-radius: 15px;
-  border: #d2e0fb 2px solid;
+  border: #ff000099 2px solid;
 }
 span {
   white-space: nowrap;
