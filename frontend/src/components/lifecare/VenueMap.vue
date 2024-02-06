@@ -200,7 +200,7 @@ const listIndex = ref()
 
 <template>
   <div>
-    <div style="margin: 10px">
+    <div>
       <v-select
         v-model="sidoValue"
         :items="sidoItems"
@@ -210,7 +210,7 @@ const listIndex = ref()
         @update:model-value="getGungu"
       ></v-select>
     </div>
-    <div style="margin: 10px">
+    <div>
       <v-select
         v-model="gunguValue"
         :items="gunguItems"
@@ -220,7 +220,7 @@ const listIndex = ref()
         @update:model-value="getMyundong"
       ></v-select>
     </div>
-    <div style="margin: 10px">
+    <div>
       <v-select
         v-model="myundongValue"
         :items="myundongItems"
@@ -229,7 +229,7 @@ const listIndex = ref()
         clearable
       ></v-select>
     </div>
-    <div style="margin: 10px">
+    <div>
       <v-select
         v-model="categoryValue"
         :items="categoryItems"

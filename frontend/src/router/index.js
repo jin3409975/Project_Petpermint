@@ -6,7 +6,7 @@ import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
 
 import Main from '@/components/main/Main.vue'
-import RegisterType from '@/components/register/RegisterType.vue'
+// import RegisterType from '@/components/register/RegisterType.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 // import RegisterComplete from '@/components/register/RegisterComplete.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
@@ -20,7 +20,7 @@ import ReserveAppointView from '@/views/ReserveAppointView.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
-import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
+// import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
 import AdminViewVue from '@/views/AdminView.vue'
 import AdminAcountVue from '@/components/admin/AdminAcount.vue'
@@ -30,10 +30,10 @@ import MypageVetView from '@/views/MypageVetView.vue'
 import MypageUserInfo from '@/components/mypage/MypageUserInfo.vue'
 import MypageUserListView from '@/views/MypageUserListView.vue'
 import MypageUserListCurrent from '@/components/mypage/MypageUserListCurrent.vue'
-import MypageUserListPast from '@/components/mypage/MypageUserListPast.vue'
+// import MypageUserListPast from '@/components/mypage/MypageUserListPast.vue'
 import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
 import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
-import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
+// import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
 
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
@@ -81,11 +81,11 @@ const router = createRouter({
           meta: { hideFooter: true },
           redirect: { name: 'register-home' },
           children: [
-            {
-              path: '',
-              name: 'register-home',
-              component: RegisterType
-            },
+            // {
+            //   path: '',
+            //   name: 'register-home',
+            //   component: RegisterType
+            // },
             {
               path: 'vet',
               name: 'register-vet',
@@ -183,11 +183,11 @@ const router = createRouter({
                 }
               ]
             },
-            {
-              path: 'complete',
-              name: 'reserve-initial-complete',
-              component: ReserveComplete
-            },
+            // {
+            //   path: 'complete',
+            //   name: 'reserve-initial-complete',
+            //   component: ReserveComplete
+            // },
             {
               path: 'appoint',
               name: 'reserve-appoint',
@@ -208,12 +208,12 @@ const router = createRouter({
                   path: 'pet',
                   name: 'reserve-appoint-pet',
                   component: ReservePet
-                },
-                {
-                  path: 'complete',
-                  name: 'reserve-appoint-complete',
-                  component: ReserveComplete
                 }
+                // {
+                //   path: 'complete',
+                //   name: 'reserve-appoint-complete',
+                //   component: ReserveComplete
+                // }
               ]
             },
             {
@@ -316,12 +316,12 @@ const router = createRouter({
                       path: 'current',
                       name: 'mypage-user-list-current',
                       component: MypageUserListCurrent
-                    },
-                    {
-                      path: 'past',
-                      name: 'mypage-user-list-past',
-                      component: MypageUserListPast
                     }
+                    // {
+                    //   path: 'past',
+                    //   name: 'mypage-user-list-past',
+                    //   component: MypageUserListPast
+                    // }
                   ]
                 }
               ]
@@ -347,12 +347,12 @@ const router = createRouter({
                       path: 'current',
                       name: 'mypage-vet-list-current',
                       component: MypageVetListCurrent
-                    },
-                    {
-                      path: 'past',
-                      name: 'mypage-vet-list-past',
-                      component: MypageVetListPast
                     }
+                    // {
+                    //   path: 'past',
+                    //   name: 'mypage-vet-list-past',
+                    //   component: MypageVetListPast
+                    // }
                   ]
                 }
               ]
