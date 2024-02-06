@@ -27,7 +27,12 @@ const handleMouseOut = () => {
       <NavbarMain v-if="!hideNavbarMain" />
       <RouterView />
       <Footer v-if="!hideFooter" />
-      <div class="emerg-container" @mouseover="handleMouseOver" @mouseout="handleMouseOut">
+      <div
+        v-if="!hideicon"
+        class="emerg-container"
+        @mouseover="handleMouseOver"
+        @mouseout="handleMouseOut"
+      >
         <img :src="currentImage" class="img-style" />
         <span>응급예약</span>
       </div>
