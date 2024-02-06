@@ -38,7 +38,12 @@ public class VenueServiceImpl implements VenueService {
 	}
 
 	@Override
-	public List<String> getMyundongData(String sido) {
-		return venueRepository.findMyundong(sido);
+	public List<String> getMyundongData(String sido, String gungu) {
+		return venueRepository.findMyundong(sido, gungu);
+	}
+
+	@Override
+	public List<String> getGunguData(String sido) {
+		return venueRepository.findGungu(sido);
 	}
 }

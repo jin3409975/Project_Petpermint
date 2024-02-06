@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
+const { VITE_SERVER_URI } = import.meta.env
 
 const serviceKey =
   'YmLOCrrmdh8DGzVmGbT0Xu9jfrsXGgdJ6GsHZ%2FDGzKW82R5KrnlJU0dar8fqQ0nYXpb9fjuYjDQx1QuSigbTkw%3D%3D'
@@ -39,113 +40,91 @@ function initializeMap() {
 }
 
 function sidoCall() {
-  axios
-    .get(areaUrl)
-    .then((response) => {
-      makeOption(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  axios({
+    method: 'get',
+    url: VITE_SERVER_URI + '/venue/init'
+  }).then((r) => (sidoItems.value = r.data.result))
 }
 
-function makeOption(data) {
-  console.log(data)
-  let areas = data.response.body.items.item
-  console.log(areas)
-
-  let sel = document.querySelector('#search-area')
-  areas.forEach((area) => {
-    let opt = document.createElement('option')
-    opt.setAttribute('value', area.code)
-    opt.appendChild(document.createTextNode(area.name))
-
-    sel.appendChild(opt)
-  })
+function getGungu() {
+  axios({
+    method: 'get',
+    url: VITE_SERVER_URI + '/venue/gungu',
+    params: {
+      sido: sidoValue.value
+    }
+  }).then((r) => (gunguItems.value = r.data.result))
 }
 
-const Search = () => {
-  markers.value.forEach((marker) => {
-    marker.setMap(null)
+function getMyundong() {
+  axios({
+    method: 'get',
+    url: VITE_SERVER_URI + '/venue/myundong',
+    params: {
+      sido: sidoValue.value,
+      gungu: gunguValue.value
+    }
+  }).then((r) => (myundongItems.value = r.data.result))
+}
+
+var searchList = []
+const search = () => {
+  var category = []
+  categoryValue.value.forEach((v) => {
+    category.push(v)
   })
-  positions = ref([])
-  let baseUrl = '/api/enjoyboardlist?'
-
-  let areaCode = document.getElementById('search-area')?.value
-  let contentTypeId = document.getElementById('search-content-id')?.value
-  let keyword = document.getElementById('search-keyword').value
-
-  console.log(areaCode, contentTypeId, keyword)
-
-  if (parseInt(areaCode)) baseUrl += '&sido=' + areaCode
-  if (parseInt(contentTypeId)) baseUrl += '&content=' + contentTypeId
-  if (keyword) {
-    baseUrl += '&word=' + keyword
-  }
-
-  console.log(baseUrl)
-
-  fetch(baseUrl)
-    .then((response) => response.json())
-    .then((data) => makeList(data))
+  var data = category.join()
+  axios({
+    method: 'get',
+    url: 'http://localhost:8080/venue/data',
+    params: {
+      sido: sidoValue.value,
+      gungu: gunguValue.value,
+      myundong: myundongValue.value,
+      category: data,
+      venName: venName.value
+    }
+  }).then((r) => {
+    console.log(r)
+    searchList = r.data.result
+    makeList(searchList)
+  })
+  // markers.value.forEach((marker) => {
+  //   marker.setMap(null)
+  // })
+  // positions = ref([])
+  // let baseUrl = '/api/enjoyboardlist?'
+  // let areaCode = document.getElementById('search-area')?.value
+  // let contentTypeId = document.getElementById('search-content-id')?.value
+  // let keyword = document.getElementById('search-keyword').value
+  // console.log(areaCode, contentTypeId, keyword)
+  // if (parseInt(areaCode)) baseUrl += '&sido=' + areaCode
+  // if (parseInt(contentTypeId)) baseUrl += '&content=' + contentTypeId
+  // if (keyword) {
+  //   baseUrl += '&word=' + keyword
+  // }
+  // console.log(baseUrl)
+  // fetch(baseUrl)
+  //   .then((response) => response.json())
+  //   .then((data) => makeList(data))
 }
 var markers = ref([])
-var positions = ref([]) // marker 배열.
+var positions = [] // marker 배열.
 
 function makeList(data) {
   console.log('지도 출력')
   console.log(data)
 
-  let tripList = ''
   positions = []
-  data.resdata.forEach((area) => {
-    if (document.getElementById('search-keyword').value == '') {
-      if (data.resdata.length >= 50) {
-        if (data.resdata.length <= 300) {
-          if (Math.random() > 0.3) return
-        } else if (data.resdata.length <= 500) {
-          if (Math.random() > 0.2) return
-        } else {
-          if (Math.random() > 0.1) return
-        }
-      }
-    }
-
-    //console.log(area);
-    tripList +=
-      "<li class='carousel-single-wrap' onclick='moveCenter(" +
-      area.latitude +
-      ',' +
-      area.longitude +
-      ")'>" +
-      "<p><img src=' " +
-      area.first_image +
-      "' height='150px' style='border-radius: 10px'></p>" +
-      '<p>' +
-      area.title +
-      '</p>' +
-      '<p>' +
-      area.addr1 +
-      ' ' +
-      area.addr2 +
-      '</p>' +
-      '<p>' +
-      area.latitude +
-      '</p>' +
-      '<p>' +
-      area.longitude +
-      '</p>' +
-      '</li>'
-
+  data.forEach((area) => {
     let markerInfo = {
-      title: area.title,
-      latlng: new kakao.maps.LatLng(area.latitude, area.longitude)
+      title: area.venName,
+      latlng: new kakao.maps.LatLng(area.lat, area.lon)
     }
     positions.push(markerInfo)
   })
 
-  console.log(positions)
-  document.querySelector('.carousel-flex').innerHTML = tripList
+  console.log('asdsadasd', positions)
   displayMarker()
 }
 
@@ -154,6 +133,7 @@ function displayMarker() {
   var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png'
 
   for (var i = 0; i < positions.length; i++) {
+    //console.log(positions[i])
     // 마커 이미지의 이미지 크기 입니다
     var imageSize = new kakao.maps.Size(24, 35)
 
@@ -169,6 +149,14 @@ function displayMarker() {
         image: markerImage // 마커 이미지
       })
     )
+
+    for (let i = 0; i < markers.value.length; i++) {
+      kakao.maps.event.addListener(markers.value[i], 'click', function () {
+        console.log(searchList[i])
+        dialog.value = true
+        listIndex.value = i
+      })
+    }
   }
 
   // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
@@ -180,7 +168,16 @@ function moveCenter(lat, lng) {
   map.setCenter(new kakao.maps.LatLng(lat, lng))
 }
 
-const items = [
+const sidoItems = ref([])
+const sidoValue = ref()
+
+const gunguItems = ref([])
+const gunguValue = ref()
+
+const myundongItems = ref([])
+const myundongValue = ref()
+
+const categoryItems = ref([
   '호텔',
   '동물약국',
   '미용',
@@ -194,42 +191,77 @@ const items = [
   '식당',
   '박물관',
   '펜션'
-]
-const value = ref([])
-const test = function () {
-  console.log(value.value)
-}
+])
+const categoryValue = ref([])
+const venName = ref('')
+const dialog = ref(false)
+const listIndex = ref()
 </script>
 
 <template>
   <div>
     <div style="margin: 10px">
       <v-select
-        v-model="value"
-        :items="items"
-        chips
-        label="카테고리"
-        multiple
+        v-model="sidoValue"
+        :items="sidoItems"
+        label="시도"
         variant="underlined"
-        inline
+        clearable
+        @update:model-value="getGungu"
+      ></v-select>
+    </div>
+    <div style="margin: 10px">
+      <v-select
+        v-model="gunguValue"
+        :items="gunguItems"
+        label="군구"
+        variant="underlined"
+        clearable
+        @update:model-value="getMyundong"
+      ></v-select>
+    </div>
+    <div style="margin: 10px">
+      <v-select
+        v-model="myundongValue"
+        :items="myundongItems"
+        label="동읍면"
+        variant="underlined"
         clearable
       ></v-select>
-      <v-btn style="margin-top: 10px" @click="test">test</v-btn>
+    </div>
+    <div style="margin: 10px">
+      <v-select
+        v-model="categoryValue"
+        :items="categoryItems"
+        chips
+        label="카테고리"
+        variant="underlined"
+        multiple
+        clearable
+      ></v-select>
     </div>
     <div>
-      <select class="map-select" name="search-area" id="search-area">
-        <option value="">시도선택</option>
-      </select>
-
-      <input
-        class="map-select"
-        name="search-keyword"
-        id="search-keyword"
-        placeholder="검색어를 입력해주세요."
-      />
+      <v-text-field label="이름 검색" v-model="venName"></v-text-field>
+    </div>
+    <div>
+      <v-btn @click="search()">검색</v-btn>
+    </div>
+    <div style="margin: 10px">
       <div style="width: 80%; height: 80%">
         <div ref="mapContainer" style="width: 100%; height: 700px"></div>
       </div>
+    </div>
+    <div>
+      <v-dialog v-model="dialog" width="auto">
+        <v-card>
+          <v-card-text>
+            {{ searchList[listIndex] }}
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>

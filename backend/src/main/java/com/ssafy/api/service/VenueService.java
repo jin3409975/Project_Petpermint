@@ -14,6 +14,8 @@ public interface VenueService {
 
     List<String> getSidoData();
 
-    List<String> getMyundongData(String sido);
+    List<String> getMyundongData(String sido, String gungu);
+
+    List<String> getGunguData(String sido);
 }
 

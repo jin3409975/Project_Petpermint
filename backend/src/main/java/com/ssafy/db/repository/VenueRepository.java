@@ -20,6 +20,9 @@ public interface VenueRepository extends JpaRepository<VenueData, Long> {
     @Query(value = "select distinct sido from VenueData order by sido", nativeQuery = true )
     List<String> findSido();
 
-    @Query(value = "select distinct myundong from VenueData where sido = :sido order by sido", nativeQuery = true )
-    List<String> findMyundong(String sido);
+    @Query(value = "select distinct myundong from VenueData where sido = :sido and gungu = :gungu order by myundong", nativeQuery = true )
+    List<String> findMyundong(String sido, String gungu);
+
+    @Query(value = "select distinct gungu from VenueData where sido = :sido order by gungu", nativeQuery = true )
+    List<String> findGungu(String sido);
 }
