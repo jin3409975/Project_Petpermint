@@ -6,7 +6,7 @@ import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
 
 import Main from '@/components/main/Main.vue'
-// import RegisterType from '@/components/register/RegisterType.vue'
+import MainUser from '@/components/main/MainUser.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 // import RegisterComplete from '@/components/register/RegisterComplete.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
@@ -65,7 +65,8 @@ const router = createRouter({
             {
               path: 'user',
               name: 'main-user',
-              component: ''
+              meta: { hideNavbarMain: true },
+              component: MainUser
             },
             {
               path: 'vet',
