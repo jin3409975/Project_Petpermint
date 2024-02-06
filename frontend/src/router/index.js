@@ -17,7 +17,6 @@ import ReserveAppointView from '@/views/ReserveAppointView.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
-import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 import AdminViewVue from '@/views/AdminView.vue'
 import AdminAcountVue from '@/components/admin/AdminAcount.vue'
 import MypageView from '@/views/MypageView.vue'
@@ -179,7 +178,7 @@ const router = createRouter({
             {
               path: 'complete',
               name: 'reserve-initial-complete',
-              component: ReserveComplete
+              component: ''
             },
             {
               path: 'appoint',
@@ -205,7 +204,7 @@ const router = createRouter({
                 {
                   path: 'complete',
                   name: 'reserve-appoint-complete',
-                  component: ReserveComplete
+                  component: ''
                 }
               ]
             },
@@ -258,7 +257,12 @@ const router = createRouter({
                 },
                 {
                   path: 'detail/:postId',
-                  name: 'lifecare-venue-detail',
+                  name: 'lifecare-community-detail',
+                  component: CommunityDetailVue
+                },
+                {
+                  path: 'write/',
+                  name: 'lifecare-community-write',
                   component: CommunityDetailVue
                 }
               ]

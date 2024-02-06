@@ -17,13 +17,16 @@ import java.util.List;
 public interface CommunityRepository extends JpaRepository<UserPost, Long> {
     List<UserPost> findByIsDelete(boolean i);
     @Query(value = "select DISTINCT u.postId AS postId, s.userName as userName, u.hits AS hits, u.content AS content," +
-            " u.likes AS likes, u.registTime AS registTime, u.userId AS userId, p.url AS url " +
+            " u.likes AS likes, u.registTime AS registTime, u.userId AS userId, p.url AS url, s.picture AS picture " +
             "from UserPost u " +
             "left join PostFiles p " +
             "ON u.postId = p.postId " +
             "left join User s " +
             "ON u.userId = s.userId " +
             "where u.isDelete = 0 "+
-            "GROUP BY u.postId ORDER BY u.postId", nativeQuery = true)
-    List<PostUrlList> findPostUrlJoin();
+            "AND u.postId NOT IN (:postIds)"+
+            "GROUP BY u.postId ORDER BY RAND() LIMIT :page", nativeQuery = true)
+    List<PostUrlList> findPostUrlJoin(int page,List<Integer> postIds);
 }
+
+//LIMIT :startpg, :endpg

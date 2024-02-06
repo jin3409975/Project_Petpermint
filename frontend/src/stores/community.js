@@ -14,6 +14,8 @@ export const useCommunityStore = defineStore(
     const result = ref(false)
     const articles = ref([])
     const article = ref()
+    const hit = ref()
+    const likecheck = ref()
 
     const communitydetail = function (postId) {
       return new Promise((resolve, reject) => {
@@ -21,7 +23,8 @@ export const useCommunityStore = defineStore(
           method: 'get',
           url: API_URL + 'data',
           params: {
-            postId: postId
+            postId: postId,
+            userId: 'user'
           }
         })
           .then((response) => {
@@ -34,15 +37,78 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitylist = function () {
+    const communitylist = function (page, postIds) {
       return new Promise((resolve, reject) => {
         axios({
-          method: 'get',
-          url: API_URL + 'list'
+          method: 'patch',
+          url: API_URL + 'list',
+          data: {
+            page: page,
+            postIds: postIds
+          }
         })
           .then((response) => {
             articles.value = response.data.postList
             resolve(articles.value)
+            console.log(articles.value)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const communitylike = function (postId, userId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'put',
+          url: API_URL + 'like',
+          data: {
+            postId: postId,
+            userId: userId
+          }
+        })
+          .then((response) => {
+            resolve(likecheck.value)
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const communitylikecheck = function (postId, userId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: API_URL + 'likecheck',
+          params: {
+            postId: postId,
+            userId: userId
+          }
+        })
+          .then((response) => {
+            likecheck.value = response.data.message
+            resolve(likecheck.value)
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const communityhit = function (postId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'put',
+          url: API_URL + 'hit',
+          data: {
+            postId: postId
+          }
+        })
+          .then((response) => {
+            hit.value = response.data
+            resolve(hit.value)
+            console.log('hit')
           })
           .catch((error) => {
             reject(error)
@@ -53,7 +119,11 @@ export const useCommunityStore = defineStore(
       communitylist,
       articles,
       communitydetail,
-      article
+      article,
+      communityhit,
+      communitylikecheck,
+      likecheck,
+      communitylike
     }
   },
   { persist: true }

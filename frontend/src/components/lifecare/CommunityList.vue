@@ -17,6 +17,13 @@ onBeforeMount(() => {})
       <v-card-actions>
         <row>
           <col>
+          <img v-if="article.picture !== '0'" :src="article.picture" style="max-width: 10%"/>
+          <v-else>
+            <img src="@/assets/img/default_profile.png" style="max-width: 10%"/>
+          </v-else>
+            
+          </col>
+          <col>
             <img class="mx-auto" :src="article.url" style="max-width: 100%" />
           </col> 
           <col>
@@ -24,7 +31,7 @@ onBeforeMount(() => {})
                 <span style="font-size:12px"> 좋아요 {{ article.likes }}개 &nbsp;</span>
                 <span style="font-size:12px"> 조회수 {{ article.hits }}개 </span>
               <span> 
-                <router-link :to="{ name: 'lifecare-venue-detail', params: { postId: article.postId } }"
+                <router-link :to="{ name: 'lifecare-community-detail', params: { postId: article.postId } }"
                        class="article-title link-dark">
                   <v-btn style="margin-left:10px"> 더 알아보기 </v-btn>
                 </router-link>

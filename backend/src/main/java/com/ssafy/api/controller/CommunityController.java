@@ -85,7 +85,7 @@ public class CommunityController {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
 	}
 
-	@GetMapping("/list")
+	@PatchMapping("/list")
 	@ApiOperation(value = "글 목록 조회", notes = "글 목록을 응답한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
@@ -93,12 +93,13 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<? extends BaseResponseBody> list() {
+	public ResponseEntity<? extends BaseResponseBody> list(@RequestBody CommunityListPostReq listPostReq) {
+		int page= listPostReq.getPage();
+		List<Integer>postIds=listPostReq.getPostIds();
 
-//		List<UserPost> userPosts = communityService.listPost();
-//		List<PostFiles> urls = communityService.listUrl();
-
-		List<PostUrlList> result= communityService.findPostUrlJoin();
+		List<PostUrlList> result= communityService.findPostUrlJoin(page,postIds);
+		for(PostUrlList list: result)
+			System.out.println(list.getContent());
 
 		if(result!=null)
 			return ResponseEntity.status(200).body(CommunityListGetRes.of(200, "200", result));
@@ -287,15 +288,15 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<BaseResponseBody> likecheck(@RequestBody @ApiParam(value="좋아요 정보", required = true) CommunityLikeHitPutReq updateInfo) {
+	public ResponseEntity<BaseResponseBody> likecheck(int postId, String userId) {
 
-		PostLikes liked=communityService.findPostLikesByPostIdUserId(updateInfo.getPostId(),updateInfo.getUserId());
+		PostLikes liked=communityService.findPostLikesByPostIdUserId(postId,userId);
 
 		// 정상적으로 수정되었을 때
 		if(liked==null)
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		else
-			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Fail"));
 	}
 
 	@PutMapping("/hit")

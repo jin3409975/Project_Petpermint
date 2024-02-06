@@ -165,8 +165,11 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<PostUrlList> findPostUrlJoin() {
-        List<PostUrlList> result=communityRepository.findPostUrlJoin();
+    public List<PostUrlList> findPostUrlJoin(int page, List<Integer>postIds) {
+        int startpg=page*2;
+        int endpg=page*2+2;
+
+        List<PostUrlList> result=communityRepository.findPostUrlJoin(page, postIds);
         return result;
     }
 

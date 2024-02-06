@@ -77,7 +77,7 @@ const navigateToCommunity = () => {
             </a>
           </template>
           <v-list bg-color="black">
-            <v-list-item link>
+            <v-list-item :to="{ name: 'lifecare-community-list' }" link>
               <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
             </v-list-item>
             <v-list-item link>

@@ -16,4 +16,5 @@ public interface PostUrlList {
     String getRegistTime();
     String getUserId();
     String getUrl();
+    String getPicture();
 }
