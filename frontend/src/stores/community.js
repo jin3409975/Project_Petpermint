@@ -17,6 +17,24 @@ export const useCommunityStore = defineStore(
     const hit = ref()
     const likecheck = ref()
 
+    const communitywrite = function (formData) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'post',
+          url: API_URL + 'write',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          data: formData
+        })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
     const communitydetail = function (postId) {
       return new Promise((resolve, reject) => {
         axios({
@@ -123,7 +141,8 @@ export const useCommunityStore = defineStore(
       communityhit,
       communitylikecheck,
       likecheck,
-      communitylike
+      communitylike,
+      communitywrite
     }
   },
   { persist: true }

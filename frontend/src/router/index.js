@@ -259,11 +259,6 @@ const router = createRouter({
                   path: 'detail/:postId',
                   name: 'lifecare-community-detail',
                   component: CommunityDetailVue
-                },
-                {
-                  path: 'write/',
-                  name: 'lifecare-community-write',
-                  component: CommunityDetailVue
                 }
               ]
             },

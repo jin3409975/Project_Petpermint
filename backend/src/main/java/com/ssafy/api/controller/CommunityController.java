@@ -40,8 +40,9 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<BaseResponseBody> write(@RequestPart @ApiParam(value="사용자 아이디", required = true) String userId, @RequestPart @ApiParam(value="내용 정보", required = true) String content, @RequestPart(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
+	public ResponseEntity<BaseResponseBody> write(@RequestParam @ApiParam(value="사용자 아이디", required = true) String userId, @RequestParam @ApiParam(value="내용 정보", required = true) String content, @RequestParam(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
 		CommunityWritePostReq writeInfo=new CommunityWritePostReq();
+		//System.out.println("IMAGES: "+images.get(0));
 		writeInfo.setUserId(userId);
 		writeInfo.setContent(content);
 		List<String> urls=new ArrayList<String>();

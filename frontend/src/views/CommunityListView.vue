@@ -1,6 +1,9 @@
 <script setup>
 import CommunityList from '../components/lifecare/CommunityList.vue'
+import CommunityWrite from '../components/lifecare/CommunityWrite.vue'
 import { useCommunityStore } from '@/stores/community'
+import { useAccountStore } from '@/stores/account'
+const account_stores = useAccountStore()
 const stores = useCommunityStore()
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -35,12 +38,15 @@ const router = useRouter()
 const navigateToMain = () => {
   router.push({ name: 'main-home' })
 }
+
+onMounted(async () => {})
 </script>
 
 <template>
   <v-container fluid class="w-50">
     <v-btn @click="navigateToMain" style="margin-bottom: 15px">뒤로</v-btn>
-    <v-btn @click="navigateToWrite" style="margin-left: 10px; margin-bottom: 15px">글 작성</v-btn>
+
+    <CommunityWrite></CommunityWrite>
     <CommunityList v-for="article in articles" :key="article.postId" :article="article">
     </CommunityList>
   </v-container>
