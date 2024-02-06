@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 const videoUrl = computed(() => {
-  return new URL('@/assets/img/video.PNG', import.meta.url).href
+  return new URL('@/assets/img/video.png', import.meta.url).href
 })
 </script>
 
