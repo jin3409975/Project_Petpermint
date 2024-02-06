@@ -20,12 +20,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
-    <!-- OpenVidu -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="src/assets/openvidu/openvidu-webcomponent-2.29.0.js"></script>
-    <link rel="stylesheet" href="src/assets/openvidu/openvidu-webcomponent-2.29.0.css" />
-    <link rel="stylesheet" href="src/assets/openvidu/app.css" />
-    <script src="src/assets/openvidu/app.js"></script>
   </head>
   <body>
     <div id="app"></div>
@@ -38,25 +32,5 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <!-- OpenVidu : Form to connect to a video-session (jaemin)-->
-    <div id="main" style="text-align: center">
-      <h1>Join a video session</h1>
-      <form onsubmit="joinSession(); return false" style="padding: 80px; margin: auto">
-        <p>
-          <label>Session:</label>
-          <input type="text" id="sessionName" value="SessionA" required />
-        </p>
-        <p>
-          <label>User:</label>
-          <input type="text" id="user" value="User1" required />
-        </p>
-        <p>
-          <input type="submit" value="JOIN" />
-        </p>
-      </form>
-    </div>
-
-    <!-- OpenVidu Web Component (jaemin) -->
-    <openvidu-webcomponent style="display: none"></openvidu-webcomponent>
   </body>
 </html>
