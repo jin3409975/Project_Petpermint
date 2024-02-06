@@ -33,7 +33,7 @@ onUnmounted(() => {
   <div class="main-container">
     <Navbar />
     <video class="background-video" width="100%" autoplay muted loop>
-      <source src="../../assets/img/MainVideo.mp4" type="video/mp4" />
+      <source src="/assets/img/MainVideo.mp4" type="video/mp4" />
     </video>
     <div ref="typedElement" class="video-overlay"></div>
   </div>
