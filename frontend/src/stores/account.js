@@ -217,10 +217,13 @@ export const useAccountStore = defineStore(
     }
     const updateNormal = function (userId, userName, password, picture, address, phone) {
       var data = new FormData()
+      console.log(picture)
       data.append('userId', userId)
       data.append('userName', userName)
       data.append('password', password)
-      data.append('picture', picture)
+      if (picture != null) {
+        data.append('picture', picture)
+      }
       data.append('address', address)
       data.append('phone', phone)
       axios({
