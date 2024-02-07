@@ -3002,8 +3002,8 @@ body {
   overflow: hidden; */
 }
 body {
-  margin: 0;
-  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  /* margin: 0; */
+  /* font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; */
 }
 #poster-text {
   padding: 0 !important;
