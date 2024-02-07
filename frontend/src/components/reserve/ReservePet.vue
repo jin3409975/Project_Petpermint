@@ -45,7 +45,7 @@ const navigateToReserveComplete = () => {
   <!-- <button class="button" @click="navigateToReserveComplete">완료</button> -->
 </template>
 
-<style>
+<style scoped>
 .v-container--fluid {
   max-width: 30%;
 }

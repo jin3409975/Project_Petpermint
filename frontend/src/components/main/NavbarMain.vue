@@ -68,7 +68,7 @@ const navigateToUserRegister = () => {
 </script>
 
 <template>
-  <v-app-bar app fixed>
+  <v-app-bar app fixed style="box-shadow: none">
     <div
       style="
         display: flex;

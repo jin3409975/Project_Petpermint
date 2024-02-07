@@ -38,7 +38,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 @import 'qalendar/dist/style.css';
 .calendar-month__weekday[data-v-034f06d8] {
   min-height: 80px;

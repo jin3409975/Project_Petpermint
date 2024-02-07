@@ -70,7 +70,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .hospital-list-card .scrollable-list {
   height: 250px; /* 5개 항목의 높이에 맞춰 조정하세요 */
   overflow-y: auto;
