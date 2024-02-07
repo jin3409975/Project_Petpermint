@@ -249,6 +249,8 @@ public class UserController {
 		String url = null;
 		if(updatePutReq.getPicture() != null) {
 			url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		} else {
+			url = userService.findPicture(updatePutReq.getUserId());
 		}
 		if(userService.userUpdateNormal(updatePutReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));

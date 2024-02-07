@@ -182,9 +182,11 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	void reviewTest() {}
+	@Override
+	public String findPicture(String userId) {
+		String result = userRepository.findPicture(userId);
+		return result;
+	}
 
-	void reviewTest2() {}
 
-	void reviewTest3() {}
 }

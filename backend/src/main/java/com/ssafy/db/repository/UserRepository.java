@@ -26,6 +26,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Long countByUserIdAndUserName(String userId, String UserName);
 
+    @Query(value = "select picture from User where userId = :userId", nativeQuery = true)
+    String findPicture(String userId);
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "update User set password = :password where userId = :userId and userName = :userName", nativeQuery = true )
