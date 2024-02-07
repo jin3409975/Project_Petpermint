@@ -1,14 +1,8 @@
 <script>
-import $ from 'jquery' // Assuming you're using jQuery
-// import '@/assets/openvidu/openvidu-webcomponent-2.29.0.js'
-// import '@/assets/openvidu/openvidu-webcomponent-2.29.0.css'
+import $ from 'jquery'
+import '../../../public/assets/openvidu/openvidu-webcomponent-2.29.0'
+import '../../../public/assets/openvidu/openvidu-webcomponent-2.29.0.css'
 export default {
-  head() {
-    return {
-      script: [{ src: '@/assets/openvidu/openvidu-webcomponent-2.29.0.js' }],
-      link: [{ rel: 'stylesheet', href: '@/assets/openvidu/openvidu-webcomponent-2.29.0.css' }]
-    }
-  },
   data() {
     return {
       sessionName: this.$route.params.clubId,
