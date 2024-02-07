@@ -111,7 +111,7 @@ onMounted(() => {
   </v-app>
 </template>
 
-<style>
+<style scoped>
 .d-flex {
   display: flex;
 }

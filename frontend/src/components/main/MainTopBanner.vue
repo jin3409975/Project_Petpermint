@@ -230,7 +230,7 @@ function toggleCard4() {
   </v-container>
 </template>
 
-<style>
+<style scoped>
 .slide-in-left,
 .slide-in-right {
   opacity: 0;

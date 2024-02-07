@@ -31,7 +31,7 @@ const currentYear = ref(new Date().getFullYear())
   </v-card>
 </template>
 
-<style>
+<style scoped>
 .v-card-text > * {
   color: white !important;
 }
