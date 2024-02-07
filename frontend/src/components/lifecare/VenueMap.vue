@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
-const { VITE_SERVER_URI } = import.meta.env
+const { VITE_APP_SERVER_URI } = import.meta.env
 
 const serviceKey =
   'YmLOCrrmdh8DGzVmGbT0Xu9jfrsXGgdJ6GsHZ%2FDGzKW82R5KrnlJU0dar8fqQ0nYXpb9fjuYjDQx1QuSigbTkw%3D%3D'
@@ -42,14 +42,18 @@ function initializeMap() {
 function sidoCall() {
   axios({
     method: 'get',
-    url: VITE_SERVER_URI + '/venue/init'
-  }).then((r) => (sidoItems.value = r.data.result))
+    url: VITE_APP_SERVER_URI + '/venue/init'
+  }).then((r) => {
+    console.log(r)
+    sidoItems.value = r.data.result
+  })
+  console.log(sidoItems.value)
 }
 
 function getGungu() {
   axios({
     method: 'get',
-    url: VITE_SERVER_URI + '/venue/gungu',
+    url: VITE_APP_SERVER_URI + '/venue/gungu',
     params: {
       sido: sidoValue.value
     }
@@ -59,7 +63,7 @@ function getGungu() {
 function getMyundong() {
   axios({
     method: 'get',
-    url: VITE_SERVER_URI + '/venue/myundong',
+    url: VITE_APP_SERVER_URI + '/venue/myundong',
     params: {
       sido: sidoValue.value,
       gungu: gunguValue.value
@@ -67,8 +71,11 @@ function getMyundong() {
   }).then((r) => (myundongItems.value = r.data.result))
 }
 
-var searchList = []
+var searchList = ref([])
+
 const search = () => {
+  markers.value = []
+  positions.value = []
   var category = []
   categoryValue.value.forEach((v) => {
     category.push(v)
@@ -76,7 +83,7 @@ const search = () => {
   var data = category.join()
   axios({
     method: 'get',
-    url: 'http://localhost:8080/venue/data',
+    url: VITE_APP_SERVER_URI + '/venue/data',
     params: {
       sido: sidoValue.value,
       gungu: gunguValue.value,
@@ -86,7 +93,7 @@ const search = () => {
     }
   }).then((r) => {
     console.log(r)
-    searchList = r.data.result
+    searchList.value = r.data.result
     makeList(searchList)
   })
   // markers.value.forEach((marker) => {
@@ -116,7 +123,7 @@ function makeList(data) {
   console.log(data)
 
   positions = []
-  data.forEach((area) => {
+  data.value.forEach((area) => {
     let markerInfo = {
       title: area.venName,
       latlng: new kakao.maps.LatLng(area.lat, area.lon)
@@ -125,16 +132,18 @@ function makeList(data) {
   })
 
   console.log('asdsadasd', positions)
+
   displayMarker()
 }
 
 function displayMarker() {
   // 마커 이미지의 이미지 주소입니다
-  var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png'
+  var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png'
 
-  for (var i = 0; i < positions.length; i++) {
+  for (let i = 0; i < positions.length; i++) {
     //console.log(positions[i])
     // 마커 이미지의 이미지 크기 입니다
+    console.log(i, positions[i])
     var imageSize = new kakao.maps.Size(24, 35)
 
     // 마커 이미지를 생성합니다
@@ -152,7 +161,7 @@ function displayMarker() {
 
     for (let i = 0; i < markers.value.length; i++) {
       kakao.maps.event.addListener(markers.value[i], 'click', function () {
-        console.log(searchList[i])
+        console.log(i, searchList[i])
         dialog.value = true
         listIndex.value = i
       })
@@ -196,61 +205,108 @@ const categoryValue = ref([])
 const venName = ref('')
 const dialog = ref(false)
 const listIndex = ref()
+
+function highlightMarker(index) {
+  console.log(searchList.value[index])
+  for (let i = 0; i < markers.value.length; i++) {
+    if (i != index) {
+      markers.value[i].setMap(null)
+    }
+    if (i == index) {
+      markers.value[i].setMap(map)
+    }
+  }
+  map.setCenter(new kakao.maps.LatLng(searchList.value[index].lat, searchList.value[index].lon))
+  map.setLevel(1)
+}
 </script>
 
 <template>
   <div>
-    <div>
-      <v-select
-        v-model="sidoValue"
-        :items="sidoItems"
-        label="시도"
-        variant="underlined"
-        clearable
-        @update:model-value="getGungu"
-      ></v-select>
-    </div>
-    <div>
-      <v-select
-        v-model="gunguValue"
-        :items="gunguItems"
-        label="군구"
-        variant="underlined"
-        clearable
-        @update:model-value="getMyundong"
-      ></v-select>
-    </div>
-    <div>
-      <v-select
-        v-model="myundongValue"
-        :items="myundongItems"
-        label="동읍면"
-        variant="underlined"
-        clearable
-      ></v-select>
-    </div>
-    <div>
-      <v-select
-        v-model="categoryValue"
-        :items="categoryItems"
-        chips
-        label="카테고리"
-        variant="underlined"
-        multiple
-        clearable
-      ></v-select>
-    </div>
-    <div>
-      <v-text-field label="이름 검색" v-model="venName"></v-text-field>
-    </div>
-    <div>
-      <v-btn @click="search()">검색</v-btn>
-    </div>
-    <div style="margin: 10px">
-      <div style="width: 80%; height: 80%">
+    <h1 style="text-align: center; padding-top: 110px">반려동물 시설 찾기</h1>
+    <v-row style="padding-top: 30px; padding-left: 150px; padding-right: 150px">
+      <v-col cols="12" md="2">
+        <v-select
+          v-model="sidoValue"
+          :items="sidoItems"
+          label="시/도"
+          density="compact"
+          variant="outlined"
+          clearable
+          @update:model-value="getGungu"
+        ></v-select>
+      </v-col>
+      <v-col cols="12" md="2">
+        <v-select
+          v-model="gunguValue"
+          :items="gunguItems"
+          label="군/구"
+          density="compact"
+          variant="outlined"
+          clearable
+          @update:model-value="getMyundong"
+        ></v-select>
+      </v-col>
+      <v-col cols="12" md="2">
+        <v-select
+          v-model="myundongValue"
+          :items="myundongItems"
+          label="동/읍/면"
+          density="compact"
+          variant="outlined"
+          clearable
+        ></v-select>
+      </v-col>
+
+      <v-col cols="12" md="5">
+        <v-text-field
+          label="시설명 검색"
+          v-model="venName"
+          density="compact"
+          variant="outlined"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="1" class="text-right">
+        <v-btn color="indigo" elevation="0" @click="search()">검색</v-btn>
+      </v-col>
+
+      <v-col cols="12" md="12">
+        <v-select
+          v-model="categoryValue"
+          :items="categoryItems"
+          chips
+          label="카테고리"
+          density="compact"
+          variant="outlined"
+          multiple
+          clearable
+        ></v-select>
+      </v-col>
+    </v-row>
+
+    <v-row style="padding-left: 150px; padding-right: 150px; padding-bottom: 30px">
+      <v-col cols="12" md="8" style="width: 80%; height: 80%">
         <div ref="mapContainer" style="width: 100%; height: 700px"></div>
-      </div>
-    </div>
+      </v-col>
+      <v-col>
+        <v-card
+          elevation="0"
+          variant="outlined"
+          v-for="(data, index) in searchList"
+          :key="data.dataNo"
+        >
+          <v-card-text @click="highlightMarker(index)" style="cursor: pointer">
+            {{ data.venName }}
+            <br />
+            <br />
+            {{ data.roadAddr }}
+            <br />
+            {{ data.lotAddr }}
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <div>
       <v-dialog v-model="dialog" width="auto">
         <v-card>
