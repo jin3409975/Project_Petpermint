@@ -163,6 +163,7 @@ const navigateToUserRegister = () => {
 
 .is-scrolled {
   background-color: white !important;
+  box-shadow: none !important;
   color: rgb(59, 59, 59);
   transition: all 0.3s ease;
 }
