@@ -14,17 +14,26 @@ onBeforeMount(() => {})
       :subtitle="article.registTime"
       :text="article.content"
     >
+    <template v-slot:prepend>
+          <v-avatar size="36">
+            <img v-if="article.picture !== '0'" :src="article.picture" />
+            <v-else>
+              <img  src="/assets/img/default_profile.png"/>
+            </v-else>
+          </v-avatar>
+        </template>
       <v-card-actions>
         <row>
-          <col>
-          <img v-if="article.picture !== '0'" :src="article.picture" style="max-width: 10%"/>
-          <v-else>
-            <img src="@/assets/img/default_profile.png" style="max-width: 10%"/>
-          </v-else>
+          <col class="d-flex justify-content-center">
+          
             
           </col>
-          <col>
-            <img class="mx-auto" :src="article.url" style="max-width: 100%" />
+          <col class="d-flex justify-content-center">
+          <v-layout justify-center align-center>
+            <v-flex shrink>
+            <img class="mx-auto justify-content-center" :src="article.url" style="max-width: 80%" />
+          </v-flex>
+            </v-layout>
           </col> 
           <col>
             <div class="text-right" style="margin-top:10px">

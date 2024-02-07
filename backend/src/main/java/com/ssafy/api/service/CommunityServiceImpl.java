@@ -77,8 +77,8 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public PostComment dataComment(int postId) {
-        PostComment postComment = commentRepositorySupport.findCommentByPostId(postId).get();
+    public List<PostComment> dataComment(int postId) {
+        List<PostComment> postComment = commentRepositorySupport.findCommentByPostId(postId).get();
         return postComment;
     }
 

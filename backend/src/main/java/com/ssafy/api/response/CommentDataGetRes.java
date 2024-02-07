@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * 댓글 조회 API ([GET] /community/comment/data) 요청에 대한 응답값 정의.
  */
@@ -16,19 +18,17 @@ import lombok.Setter;
 @ApiModel("CommentDataGetResponse")
 public class CommentDataGetRes extends BaseResponseBody {
 	@ApiModelProperty(name="Comment ID")
-	int postId;
-	String content;
-	String registTime;
-	String userId;
+//	int postId;
+//	String content;
+//	String registTime;
+//	String userId;
+	List<PostComment> postCommentList;
 
-	public static CommentDataGetRes of(Integer statusCode, String message, PostComment data) {
+	public static CommentDataGetRes of(Integer statusCode, String message, List<PostComment> data) {
 		CommentDataGetRes res = new CommentDataGetRes();
 		res.setStatusCode(statusCode);
-		res.setPostId(data.getPostId());
 		res.setMessage(message);
-		res.setContent(data.getContent());
-		res.setRegistTime(data.getRegistTime());
-		res.setUserId(data.getUserId());
+		res.setPostCommentList(data);
 		return res;
 	}
 }

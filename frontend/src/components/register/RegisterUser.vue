@@ -30,7 +30,7 @@ const gender = ref(['암컷', '수컷'])
 
 // 로고
 const logoUrl = computed(() => {
-  return new URL('@/assets/img/logo.png', import.meta.url).href
+  return new URL('/assets/img/logomain.png', import.meta.url).href
 })
 
 // 탭
@@ -115,7 +115,7 @@ const emailAction = async () => {
   if (emailStatus.value === 'request') {
     console.log('이메일 인증 요청 user')
     let result = await store.emailRequest(email.value)
-    if(result) {
+    if (result) {
       emailStatus.value = 'validate'
     } else {
       return false
@@ -123,7 +123,7 @@ const emailAction = async () => {
   } else if (emailStatus.value === 'validate') {
     console.log('이메일 확인 요청 user')
     let result = await store.emailValidate(email.value, confirm.value)
-    if(result) {
+    if (result) {
       emailStatus.value = 'completed'
     } else {
       return false
@@ -134,11 +134,13 @@ const emailAction = async () => {
 //1페이지 검증 시작
 const checkPage1 = ref(true)
 const emailTest = (e) => {
-  if(e == '' || e == null) {
+  if (e == '' || e == null) {
     checkPage1.value = false
     return false
   }
-  if(!/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(e)) {
+  if (
+    !/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(e)
+  ) {
     checkPage1.value = false
     return false
   }
@@ -148,7 +150,7 @@ const emailTest = (e) => {
 }
 
 const passwordTest = (p) => {
-  if(p != password1.value) {
+  if (p != password1.value) {
     checkPage1.value = false
     return false
   }
@@ -157,11 +159,11 @@ const passwordTest = (p) => {
 }
 
 const page1Test = () => {
-  if(emailStatus.value != 'completed') {
+  if (emailStatus.value != 'completed') {
     alert('이메일 인증을 완료 해주세요')
     return false
   }
-  if(checkPage1.value == false) {
+  if (checkPage1.value == false) {
     alert('기입한 정보를 확인 해주세요')
     return false
   }
@@ -170,10 +172,10 @@ const page1Test = () => {
 //1페이지 검증 완료
 
 //2페이지 검증 시작
-const checkPage2 = ref(true) 
+const checkPage2 = ref(true)
 
 const nameTest = (n) => {
-  if(n == '' || n == null) {
+  if (n == '' || n == null) {
     checkPage2.value = false
     return false
   }
@@ -183,27 +185,27 @@ const nameTest = (n) => {
 }
 
 const phoneTest = (p) => {
-  if(!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(p)) {
+  if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(p)) {
     checkPage2.value = false
     return false
   }
-  
+
   checkPage2.value = true
   return true
 }
 
 const addressTest = (a) => {
-  if(a == '' || a == null) {
+  if (a == '' || a == null) {
     checkPage2.value = false
     return false
   }
-  
+
   checkPage2.value = true
   return true
 }
 
 const page2Test = () => {
-  if(checkPage2.value == false) {
+  if (checkPage2.value == false) {
     alert('기입한 정보를 확인 해주세요')
     return false
   }
@@ -300,105 +302,105 @@ function openKakaoAddressSearch() {
           <!-- 1. 계정정보 -->
           <template v-slot:item.1>
             <v-form ref="form" lazy-validation>
-            <v-card flat>
-              <h4 class="text-h4 mb-2" style="margin-top: 30px">계정 정보</h4>
-              <p class="mb-5">계정 정보를 입력해 주세요.</p>
-              <v-row class="mt-2">
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    dense
-                    v-model="email"
-                    label="이메일"
-                    placeholder="ssafy01@ssafy.com"
-                    density="comfortable"
-                    variant="outlined"
-                    color="#668ba7"
-                    bg-color="transparent"
-                    :readonly="emailStatus === 'validate' || emailStatus === 'completed'"
-                    :rules="[v => emailTest(v)]"
-                  />
-                </v-col>
+              <v-card flat>
+                <h4 class="text-h4 mb-2" style="margin-top: 30px">계정 정보</h4>
+                <p class="mb-5">계정 정보를 입력해 주세요.</p>
+                <v-row class="mt-2">
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      dense
+                      v-model="email"
+                      label="이메일"
+                      placeholder="ssafy01@ssafy.com"
+                      density="comfortable"
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                      :readonly="emailStatus === 'validate' || emailStatus === 'completed'"
+                      :rules="[(v) => emailTest(v)]"
+                    />
+                  </v-col>
 
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="confirm"
-                    label="이메일 인증번호"
-                    density="comfortable"
-                    placeholder="123456"
-                    variant="outlined"
-                    color="#668ba7"
-                    bg-color="transparent"
-                    :readonly="emailStatus === 'completed'"
-                  >
-                    <template v-slot:append>
-                      <v-btn
-                        v-if="emailStatus === 'request'"
-                        small
-                        @click="emailAction"
-                        style="box-shadow: none; color: #668ba7"
-                      >
-                        인증 요청
-                      </v-btn>
-                      <v-btn
-                        v-else-if="emailStatus === 'validate'"
-                        small
-                        @click="emailAction"
-                        style="box-shadow: none; color: #668ba7"
-                      >
-                        인증 확인
-                      </v-btn>
-                      <v-icon
-                        v-else-if="emailStatus === 'completed'"
-                        size="large"
-                        color="#43A047"
-                        icon="mdi-check-circle"
-                      ></v-icon>
-                    </template>
-                  </v-text-field>
-                </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      v-model="confirm"
+                      label="이메일 인증번호"
+                      density="comfortable"
+                      placeholder="123456"
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                      :readonly="emailStatus === 'completed'"
+                    >
+                      <template v-slot:append>
+                        <v-btn
+                          v-if="emailStatus === 'request'"
+                          small
+                          @click="emailAction"
+                          style="box-shadow: none; color: #668ba7"
+                        >
+                          인증 요청
+                        </v-btn>
+                        <v-btn
+                          v-else-if="emailStatus === 'validate'"
+                          small
+                          @click="emailAction"
+                          style="box-shadow: none; color: #668ba7"
+                        >
+                          인증 확인
+                        </v-btn>
+                        <v-icon
+                          v-else-if="emailStatus === 'completed'"
+                          size="large"
+                          color="#43A047"
+                          icon="mdi-check-circle"
+                        ></v-icon>
+                      </template>
+                    </v-text-field>
+                  </v-col>
 
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                    :type="visible ? 'text' : 'password'"
-                    @click:append-inner="visible = !visible"
-                    v-model="password1"
-                    label="비밀번호"
-                    density="comfortable"
-                    placeholder="············"
-                    variant="outlined"
-                    color="#668ba7"
-                    bg-color="transparent"
-                  />
-                </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                      :type="visible ? 'text' : 'password'"
+                      @click:append-inner="visible = !visible"
+                      v-model="password1"
+                      label="비밀번호"
+                      density="comfortable"
+                      placeholder="············"
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                    />
+                  </v-col>
 
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                    :type="visible ? 'text' : 'password'"
-                    @click:append-inner="visible = !visible"
-                    density="comfortable"
-                    v-model="password2"
-                    label="비밀번호 확인"
-                    placeholder="············"
-                    variant="outlined"
-                    color="#668ba7"
-                    bg-color="transparent"
-                    :rules="[(v) => passwordTest(v)]"
-                    hide-details=true
-                  />
-                </v-col>
-              </v-row>
-            </v-card>
-            <div class="d-flex justify-space-between button-row">
-              <v-btn @click="goToType" style="box-shadow: none" variant="outlined" color="#757575"
-                >돌아가기</v-btn
-              >
-              <v-btn @click="page1Test" style="box-shadow: none" variant="flat" color="#668ba7"
-                >다음</v-btn
-              >
-            </div>
-          </v-form>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                      :type="visible ? 'text' : 'password'"
+                      @click:append-inner="visible = !visible"
+                      density="comfortable"
+                      v-model="password2"
+                      label="비밀번호 확인"
+                      placeholder="············"
+                      variant="outlined"
+                      color="#668ba7"
+                      bg-color="transparent"
+                      :rules="[(v) => passwordTest(v)]"
+                      hide-details="true"
+                    />
+                  </v-col>
+                </v-row>
+              </v-card>
+              <div class="d-flex justify-space-between button-row">
+                <v-btn @click="goToType" style="box-shadow: none" variant="outlined" color="#757575"
+                  >돌아가기</v-btn
+                >
+                <v-btn @click="page1Test" style="box-shadow: none" variant="flat" color="#668ba7"
+                  >다음</v-btn
+                >
+              </div>
+            </v-form>
           </template>
           <!-- 2. 개인 정보 -->
           <template v-slot:item.2>
@@ -428,7 +430,7 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
-                    :rules="[v => phoneTest(v)]"
+                    :rules="[(v) => phoneTest(v)]"
                   />
                 </v-col>
                 <v-col cols="12" md="10" style="padding-top: 20px; padding-bottom: 0">
@@ -452,7 +454,7 @@ function openKakaoAddressSearch() {
                     variant="outlined"
                     color="#668ba7"
                     bg-color="transparent"
-                    :rules="[v => addressTest(v)]"
+                    :rules="[(v) => addressTest(v)]"
                   />
                 </v-col>
               </v-row>
@@ -643,7 +645,7 @@ function openKakaoAddressSearch() {
   cursor: pointer;
 }
 .image-container {
-  background-image: url('../../assets/img/owner.PNG');
+  background-image: url('/assets/img/OwnerRegBg.png');
   background-size: cover; /* 이미지가 컨테이너를 완전히 채우도록 조정 */
   background-position: center; /* 이미지 중심이 컨테이너 중심과 일치하도록 조정 */
   width: 100%; /* 컨테이너의 전체 너비를 사용 */

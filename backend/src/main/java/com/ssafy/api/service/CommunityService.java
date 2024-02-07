@@ -18,7 +18,7 @@ public interface CommunityService {
     Long isDeletePost(int postId);
     Long deletePost(int postId);
     PostComment createComment(CommentCreatePostReq createInfo);
-    PostComment dataComment(int postId);
+    List<PostComment> dataComment(int postId);
     Long isDeleteComment(CommentDeleteDeleteReq deleteInfo);
     Long deleteComment(CommentDeleteDeleteReq deleteInfo);
     Long increaseLike(int postId);

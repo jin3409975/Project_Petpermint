@@ -16,6 +16,7 @@ export const useCommunityStore = defineStore(
     const article = ref()
     const hit = ref()
     const likecheck = ref()
+    const comments = ref([])
 
     const communitywrite = function (formData) {
       return new Promise((resolve, reject) => {
@@ -41,14 +42,31 @@ export const useCommunityStore = defineStore(
           method: 'get',
           url: API_URL + 'data',
           params: {
-            postId: postId,
-            userId: 'user'
+            postId: postId
           }
         })
           .then((response) => {
             article.value = response.data
             resolve(article.value)
             console.log(article)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const communityupdate = function (formData) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'put',
+          url: API_URL + 'update',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          data: formData
+        })
+          .then((response) => {
+            console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -133,6 +151,78 @@ export const useCommunityStore = defineStore(
           })
       })
     }
+    const communitydelete = function (postId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'delete',
+          url: API_URL + 'delete',
+          data: {
+            postId: postId
+          }
+        })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const commentlist = function (postId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: API_URL + 'comment/data',
+          params: {
+            postId: postId
+          }
+        })
+          .then((response) => {
+            comments.value = response.data.postCommentList
+            resolve(comments.value)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const commentwrite = function (postId, userId, content) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'post',
+          url: API_URL + 'comment/create',
+          data: {
+            userId: userId,
+            content: content,
+            postId: postId
+          }
+        })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
+    const commentdelete = function (commentNo, postId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'delete',
+          url: API_URL + 'comment/delete',
+          data: {
+            commentNo: commentNo,
+            postId: postId
+          }
+        })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
     return {
       communitylist,
       articles,
@@ -142,7 +232,13 @@ export const useCommunityStore = defineStore(
       communitylikecheck,
       likecheck,
       communitylike,
-      communitywrite
+      communitywrite,
+      communitydelete,
+      communityupdate,
+      commentlist,
+      comments,
+      commentwrite,
+      commentdelete
     }
   },
   { persist: true }

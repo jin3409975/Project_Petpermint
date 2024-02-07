@@ -28,5 +28,3 @@ public interface CommunityRepository extends JpaRepository<UserPost, Long> {
             "GROUP BY u.postId ORDER BY RAND() LIMIT :page", nativeQuery = true)
     List<PostUrlList> findPostUrlJoin(int page,List<Integer> postIds);
 }
-
-//LIMIT :startpg, :endpg

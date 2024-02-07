@@ -13,12 +13,12 @@ const router = useRouter()
 const content = ref('')
 const files = ref()
 
-const write = async () => {
+const update = async () => {
   if (localStorage.useremail == null) {
     alert('로그인 후 진행해 주십시오')
   } else {
     const formData = new FormData()
-    formData.append('userId', localStorage.useremail)
+    formData.append('postId', props.article.postId)
     formData.append('content', content.value)
 
     // Assuming 'images' is an array of File objects
@@ -28,7 +28,7 @@ const write = async () => {
       })
     }
 
-    let writer = community_stores.communitywrite(formData)
+    let updater = community_stores.communityupdate(formData)
     await new Promise((resolve) => setTimeout(resolve, 500))
     location.reload()
   }
@@ -40,6 +40,7 @@ const logincheck = () => {
 
 onMounted(() => {
   userId.value = localStorage.useremail
+  content.value = props.article.content
 })
 </script>
 
@@ -52,14 +53,14 @@ export default {
 </script>
 
 <template>
-  <v-row justify="end" style="margin-top: -63px; margin-bottom: 20px; margin-right: 1px">
+  <v-row justify="center" style="margin-top: 10px; margin-bottom: 20px">
     <v-dialog v-model="dialog" persistent width="1024">
       <template v-slot:activator="{ props }">
-        <v-btn @click="logincheck" v-bind="props" icon="mdi-plus"></v-btn>
+        <v-btn @click="logincheck" v-bind="props"> 수정 </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">작성</span>
+          <span class="text-h5">수정</span>
         </v-card-title>
         <form id="form-register" method="POST" action="">
           <v-container>
@@ -96,7 +97,7 @@ export default {
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue-darken-1" variant="text" @click="dialog = false"> Close </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="write"> Save </v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="update"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

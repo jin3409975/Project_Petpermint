@@ -116,7 +116,7 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<BaseResponseBody> update(@RequestPart @ApiParam(value="게시물 번호", required = true) int postId, @RequestPart @ApiParam(value="내용 정보", required = true) String content, @RequestPart(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
+	public ResponseEntity<BaseResponseBody> update(@RequestParam @ApiParam(value="사용자 아이디", required = true) int postId, @RequestParam @ApiParam(value="내용 정보", required = true) String content, @RequestParam(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
 		CommunityUpdatePutReq updateInfo=new CommunityUpdatePutReq();
 		updateInfo.setPostId(postId);
 		updateInfo.setContent(content);
@@ -216,9 +216,8 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<? extends BaseResponseBody> getComment(int postId) {
-
-		PostComment postComment = communityService.dataComment(postId);
+	public ResponseEntity<? extends BaseResponseBody> getComment(@RequestParam Integer postId) {
+		List<PostComment> postComment = communityService.dataComment(postId);
 		if(postComment!=null)
 			return ResponseEntity.status(200).body(CommentDataGetRes.of(200,"Success",postComment));
 		else

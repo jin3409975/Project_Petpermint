@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useAccountStore } from '@/stores/account.js'
+import { storeToRefs } from 'pinia'
+
 const store = useAccountStore()
+const { result } = storeToRefs(store)
 const email = ref(null)
 const confirm = ref(null)
 const password1 = ref(null)
@@ -17,6 +20,7 @@ const emailRequest = function () {
 const emailValidate = function () {
   console.log('이메일 확인 요청', emailcheck.value)
   store.emailValidate(email.value, confirm.value)
+  result.value = true
   console.log('결과', store.result)
 }
 const updatePassword = function () {
@@ -42,43 +46,122 @@ const password2Rules = ref([
 </script>
 
 <template>
-  <div>
-    <v-text-field
-      label="이름 *"
-      v-model="name"
-      :rules="nameRules"
-      hide-details="auto"
-    ></v-text-field>
-    <v-text-field
-      label="이메일 *"
-      v-model="email"
-      :rules="emailRules"
-      hide-details="auto"
-    ></v-text-field>
-    <v-btn @click="emailRequest()">인증 요청</v-btn>
-    <v-text-field
-      label="인증번호 숫자 6자리 입력  *"
-      v-model="confirm"
-      :rules="confirmRules"
-      hide-details="auto"
-    ></v-text-field>
-    <v-btn @click="emailValidate()">인증 확인</v-btn>
-    <div v-show="store.result == 1">
+  <div style="margin-top: 120px; margin-bottom: 80px">
+    <v-card
+      class="mx-auto pa-12 pb-8"
+      variant="outlined"
+      elevation="0"
+      max-width="448"
+      rounded="lg"
+    >
+      <div class="text-h5 text-center font-weight-bold">비밀번호 찾기</div>
+
+      <div
+        class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between mt-6"
+        style="font-weight: bold"
+      >
+        이름
+      </div>
       <v-text-field
-        label="비밀번호 *"
-        v-model="password1"
-        :rules="password1Rules"
-        hide-details="auto"
+        placeholder="이름을 입력해주세요."
+        v-model="name"
+        density="compact"
+        :rules="nameRules"
+        prepend-inner-icon="mdi-account-outline"
+        variant="outlined"
+        class="mb-5"
       ></v-text-field>
+
+      <div
+        class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        style="font-weight: bold"
+      >
+        이메일
+      </div>
       <v-text-field
-        label="비밀번호 확인 *"
-        v-model="password2"
-        :rules="password2Rules"
-        hide-details="auto"
+        placeholder="이메일을 입력해주세요."
+        v-model="email"
+        :rules="emailRules"
+        density="compact"
+        prepend-inner-icon="mdi-email-outline"
+        variant="outlined"
+        class="mb-5"
       ></v-text-field>
-      <v-btn @click="updatePassword()">비밀번호 변경</v-btn>
-    </div>
+
+      <v-btn block class="mb-8" color="indigo" size="large" variant="tonal" @click="emailRequest()"
+        >인증 요청</v-btn
+      >
+
+      <div
+        class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        style="font-weight: bold"
+      >
+        인증 번호
+      </div>
+      <v-text-field
+        placeholder="인증번호를 입력해주세요."
+        v-model="confirm"
+        :rules="confirmRules"
+        density="compact"
+        prepend-inner-icon="mdi-numeric"
+        variant="outlined"
+        class="mb-5"
+      ></v-text-field>
+
+      <v-btn block class="mb-8" color="indigo" size="large" variant="tonal" @click="emailValidate()"
+        >인증 확인</v-btn
+      >
+
+      <div v-show="store.result == 1">
+        <div
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+          style="font-weight: bold"
+        >
+          비밀번호 변경
+        </div>
+        <v-text-field
+          placeholder="변경할 비밀번호를 입력해주세요."
+          v-model="password1"
+          :rules="password1Rules"
+          density="compact"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          class="mb-5"
+        ></v-text-field>
+
+        <div
+          v-show="store.result == 1"
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+          style="font-weight: bold"
+        >
+          비밀번호 확인
+        </div>
+        <v-text-field
+          placeholder="비밀번호를 한 번 더 입력해주세요."
+          v-model="password2"
+          :rules="password2Rules"
+          density="compact"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          class="mb-5"
+        ></v-text-field>
+
+        <v-btn
+          block
+          class="mb-8"
+          color="indigo"
+          size="large"
+          variant="tonal"
+          @click="updatePassword()"
+          >비밀번호 변경</v-btn
+        >
+      </div>
+    </v-card>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-btn {
+  margin-bottom: 25px !important;
+}
+</style>

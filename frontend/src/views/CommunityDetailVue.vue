@@ -1,9 +1,10 @@
 <script setup>
 import CommunityDetail from '../components/lifecare/CommunityDetail.vue'
+import CommunityComment from '../components/lifecare/CommunityComment.vue'
 import { useCommunityStore } from '@/stores/community'
 import { useAccountStore } from '@/stores/account'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 
 const community_stores = useCommunityStore()
 const account_stores = useAccountStore()
@@ -33,16 +34,18 @@ const increaseHit = async function (postId) {
   }
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await increaseHit(postId)
-  getCommunityDetail(postId)
+  await getCommunityDetail(postId)
   console.log(user)
 })
 </script>
 
 <template>
-  <v-container fluid class="w-80">
+  <v-container fluid class="w-80" style="margin-top: 90px">
     <CommunityDetail :article="article" :user="user"></CommunityDetail>
+    <hr></hr>
+    <CommunityComment :article="article" :user="user"></CommunityComment>
   </v-container>
 </template>
 

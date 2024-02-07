@@ -16,6 +16,9 @@ public class VenueServiceImpl implements VenueService {
 	@Autowired
 	VenueRepositorySupport venueRepositorySupport;
 
+	@Autowired
+	VenueRepository venueRepository;
+
 	@Override
 	public List<VenueData> dataVenue(VenueDataGetReq dataInfo) {
 		String[] category=dataInfo.getCategory();
@@ -26,5 +29,21 @@ public class VenueServiceImpl implements VenueService {
 
 		List<VenueData> dataList = venueRepositorySupport.findVenueDataByCategory(category,sido,gungu,myundong,venName);
 		return dataList;
+	}
+
+	@Override
+	public List<String> getSidoData() {
+		List<String> sido = venueRepository.findSido();
+		return sido;
+	}
+
+	@Override
+	public List<String> getMyundongData(String sido, String gungu) {
+		return venueRepository.findMyundong(sido, gungu);
+	}
+
+	@Override
+	public List<String> getGunguData(String sido) {
+		return venueRepository.findGungu(sido);
 	}
 }

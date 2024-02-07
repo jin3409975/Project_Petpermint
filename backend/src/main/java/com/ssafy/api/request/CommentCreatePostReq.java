@@ -22,3 +22,4 @@ public class CommentCreatePostReq {
     @ApiModelProperty(name="글 번호", example="1")
     int postId;
 }
+

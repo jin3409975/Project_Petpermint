@@ -2,35 +2,17 @@
 import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const defaultLogoUrl = new URL('/assets/img/logo.png', import.meta.url).href
-const scrolledLogoUrl = new URL('/assets/img/logomain.png', import.meta.url).href
+const defaultLogoUrl = new URL('/assets/img/logomain.png', import.meta.url).href
 
 const logoUrl = ref(defaultLogoUrl)
 
 const router = useRouter()
 
-const isScrolled = ref(false)
-
 const logoStyle = ref({
   cursor: 'pointer',
   marginBottom: '8px',
   marginLeft: '5px',
-  height: '70px'
-})
-
-const updateNavBarOnScroll = () => {
-  const scrolled = window.scrollY > 50
-  isScrolled.value = scrolled
-  logoUrl.value = scrolled ? scrolledLogoUrl : defaultLogoUrl
-  logoStyle.value.height = scrolled ? '60px' : '70px'
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', updateNavBarOnScroll)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', updateNavBarOnScroll)
+  height: '60px'
 })
 
 const isLoggedIn = ref(false)
@@ -72,7 +54,7 @@ const navigateToUserRegister = () => {
 </script>
 
 <template>
-  <v-app-bar :class="{ 'is-scrolled': isScrolled }" app fixed id="custom-nav-bar">
+  <v-app-bar app fixed>
     <div
       style="
         display: flex;
@@ -140,7 +122,7 @@ const navigateToUserRegister = () => {
 .home-link {
   font-size: 18px;
   font-weight: bold;
-  color: #ffffff;
+  color: rgb(59, 59, 59);
   text-decoration: none;
   background-image: linear-gradient(to right, transparent, transparent);
   background-repeat: no-repeat;
@@ -153,21 +135,5 @@ const navigateToUserRegister = () => {
 .home-link:hover {
   background-image: linear-gradient(to right, #d2e0fb, #d2e0fb);
   background-size: 100% 3px;
-}
-
-#custom-nav-bar {
-  z-index: 1000 !important;
-  background-color: rgba(0, 0, 0, 0.115);
-  backdrop-filter: blur(10px);
-}
-
-.is-scrolled {
-  background-color: white !important;
-  color: rgb(59, 59, 59);
-  transition: all 0.3s ease;
-}
-
-.is-scrolled .home-link {
-  color: rgb(59, 59, 59);
 }
 </style>
