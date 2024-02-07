@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import NavbarMain from '@/components/main/NavbarMain.vue'
 import Footer from '@/components/main/Footer.vue'
+import MyBook from '@/components/main/MyBook.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -36,6 +37,7 @@ const handleMouseOut = () => {
         <img :src="currentImage" class="img-style" />
         <span>응급예약</span>
       </div>
+      <MyBook />
     </v-app>
   </body>
 </template>
@@ -63,9 +65,9 @@ const handleMouseOut = () => {
 }
 
 .emerg-container:hover {
-  background-color: #ff000099;
+  background-color: #ff2f2f;
   border-radius: 15px;
-  border: #ff000099 2px solid;
+  border: #ff2f2f 2px solid;
 }
 span {
   white-space: nowrap;
@@ -74,6 +76,6 @@ span {
   color: rgb(244, 46, 46);
 }
 .emerg-container:hover span {
-  color: black;
+  color: rgb(255, 255, 255);
 }
 </style>
