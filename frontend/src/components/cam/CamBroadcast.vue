@@ -5,7 +5,8 @@ import '../../../public/assets/openvidu/openvidu-webcomponent-2.29.0.css'
 export default {
   data() {
     return {
-      sessionName: this.$route.params.clubId,
+      // sessionName: this.$route.params.clubId,
+      sessionName: 'test',
       participantName: sessionStorage.getItem('user_id'),
       APPLICATION_SERVER_URL: `https://i10b303.p.ssafy.io:5000/`,
       webComponent: null
