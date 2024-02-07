@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { useAccountStore } from '@/stores/account.js'
 const defaultLogoUrl = new URL('/assets/img/logo.png', import.meta.url).href
 const scrolledLogoUrl = new URL('/assets/img/logomain.png', import.meta.url).href
-
+const store = useAccountStore()
 const logoUrl = ref(defaultLogoUrl)
 
 const router = useRouter()
@@ -40,10 +40,13 @@ const checkLoginStatus = () => {
 const handleLoginLogout = () => {
   if (isLoggedIn.value) {
     // localStorage.removeItem('useremail');
+    store.logout()
     isLoggedIn.value = false
     router.push({ name: 'main-home' })
+    checkLoginStatus()
   } else {
     router.push({ name: 'login-home' })
+    checkLoginStatus()
   }
 }
 
@@ -55,9 +58,17 @@ const navigateToMain = () => {
   router.push({ name: 'main-home' })
 }
 const navigateToInitial = () => {
+  if (!isLoggedIn.value) {
+    alert('로그인 후 이용 가능합니다.')
+    return false
+  }
   router.push({ name: 'reserve-initial' })
 }
 const navigateToAppoint = () => {
+  if (!isLoggedIn.value) {
+    alert('로그인 후 이용 가능합니다.')
+    return false
+  }
   router.push({ name: 'reserve-appoint' })
 }
 const navigateToCommunity = () => {
