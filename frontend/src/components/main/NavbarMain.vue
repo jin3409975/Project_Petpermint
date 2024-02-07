@@ -16,8 +16,11 @@ const logoStyle = ref({
 })
 
 const isLoggedIn = computed(() => {
-  console.log('computed test ', localStorage.getItem('useremail'))
-  return localStorage.getItem('useremail') !== null
+  console.log('computed test ', store.loginStatus)
+  if (store.loginStatus == null) {
+    return false
+  }
+  return store.loginStatus
 })
 // const checkLoginStatus = () => {
 //   isLoggedIn.value = localStorage.getItem('useremail') !== null

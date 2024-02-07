@@ -33,26 +33,22 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', updateNavBarOnScroll)
 })
 
-const isLoggedIn = ref(false)
-const checkLoginStatus = () => {
-  isLoggedIn.value = localStorage.getItem('useremail') !== null
-}
+const isLoggedIn = computed(() => {
+  console.log('computed test ', store.loginStatus)
+  if (store.loginStatus == null) {
+    return false
+  }
+  return store.loginStatus
+})
 const handleLoginLogout = () => {
   if (isLoggedIn.value) {
     // localStorage.removeItem('useremail');
     store.logout()
-    isLoggedIn.value = false
     router.push({ name: 'main-home' })
-    checkLoginStatus()
   } else {
     router.push({ name: 'login-home' })
-    checkLoginStatus()
   }
 }
-
-onMounted(() => {
-  checkLoginStatus()
-})
 
 const navigateToMain = () => {
   router.push({ name: 'main-home' })

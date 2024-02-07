@@ -127,6 +127,8 @@ export const useAccountStore = defineStore(
       })
       return emailcheck
     }
+
+    const loginStatus = ref(false)
     const logIn = function (userdata) {
       console.log('logindatacheck', userdata)
       axios({
@@ -140,6 +142,7 @@ export const useAccountStore = defineStore(
         .then((r) => {
           if (r.data.statusCode == 200) {
             console.log('success login', r)
+            loginStatus.value = true
             localStorage.setItem('useremail', r.data.userId)
             localStorage.setItem('usertype', r.data.type)
             localStorage.setItem('token', r.data.accessToken)
@@ -203,6 +206,7 @@ export const useAccountStore = defineStore(
       localStorage.removeItem('usertype')
       localStorage.removeItem('token')
       localStorage.removeItem('licenseNumber')
+      loginStatus.value = false
     }
     return {
       usersignup,
@@ -214,7 +218,8 @@ export const useAccountStore = defineStore(
       findId,
       updatePassword,
       logout,
-      isLoggedIn
+      isLoggedIn,
+      loginStatus
     }
   },
   { persist: true }
