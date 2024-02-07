@@ -1,7 +1,7 @@
 <script>
 import $ from 'jquery' // Assuming you're using jQuery
-import '@/assets/openvidu/openvidu-webcomponent-2.29.0.js'
-import '@/assets/openvidu/openvidu-webcomponent-2.29.0.css'
+// import '@/assets/openvidu/openvidu-webcomponent-2.29.0.js'
+// import '@/assets/openvidu/openvidu-webcomponent-2.29.0.css'
 export default {
   head() {
     return {
