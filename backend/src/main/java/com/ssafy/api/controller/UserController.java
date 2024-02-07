@@ -245,6 +245,7 @@ public class UserController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateNormal(
 			 @ApiParam(value="수정할 회원 정보") @ModelAttribute NormalUserUpdatePutReq updatePutReq) throws IOException {
+		System.out.println(updatePutReq);
 		String url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
 		if(userService.userUpdateNormal(updatePutReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
@@ -341,8 +342,10 @@ public class UserController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> petUpdate(
 			@ApiParam(value="수정할 반려동물 정보") @RequestBody AnimalReq animalReq) throws IOException {
-		String url=s3service.savePetProfile(animalReq.getPicture(),animalReq);
-		if(animalService.animalUpdate(animalReq,url)) {
+		String url = null;
+		if(animalReq.getPicture() != null) {
+			url=s3service.savePetProfile(animalReq.getPicture(),animalReq);
+		}if(animalService.animalUpdate(animalReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));

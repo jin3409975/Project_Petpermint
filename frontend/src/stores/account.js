@@ -11,11 +11,12 @@ export const useAccountStore = defineStore(
     const router = useRouter()
     const API_URL = `${VITE_APP_SERVER_URI}/user/`
     // const token = ref(null)
-    const userdata = ref({})
+    const userdata = ref([])
     const result = ref(false)
     const vetdata = ref({})
     //로그인 여부 확인 변수
     const isLoggedIn = ref(false)
+    const isUpdated = ref(false)
     const usersignup = async function (userData) {
       console.log(userData)
       var data = new FormData()
@@ -119,6 +120,7 @@ export const useAccountStore = defineStore(
         console.log(r)
         if (r.data.statusCode == 200) {
           alert('이메일 인증에 성공 하셨습니다.')
+          console.log(result, 'result 값 확인')
           return true
         } else {
           alert('이메일 인증에 실패 하셨습니다.')
@@ -195,6 +197,47 @@ export const useAccountStore = defineStore(
       localStorage.removeItem('usertype')
       localStorage.removeItem('token')
     }
+    // 일반 유저 프로필 정보 불러오기
+    const getnormalprofile = function (userId) {
+      axios({
+        method: 'get',
+        url: API_URL + 'me/normal',
+        params: {
+          userId: userId
+        }
+      }).then((r) => {
+        if (r.data.statusCode == 200) {
+          console.log('success get userinfo', r)
+          userdata.value = r.data
+        } else {
+          console.log('failed get userinfo', r)
+          alert('유저 정보를 불러오는데 실패 했습니다.')
+        }
+      })
+    }
+    const updateNormal = function (userId, userName, password, picture) {
+      var data = new FormData()
+      data.append('userId', userId)
+      data.append('userName', userName)
+      data.append('password', password)
+      data.append('picture', picture)
+      axios({
+        method: 'put',
+        url: API_URL + 'update/normal',
+        data,
+        headers: {
+          'Content-Type': 'multipart/formdata'
+        }
+      }).then((r) => {
+        if (r.data.statusCode == 200) {
+          console.log('success update userinfo', r)
+          isUpdated.value = true
+        } else {
+          console.log('failed update password', r)
+          alert('비밀번호가 올바른지 확인해 보세요')
+        }
+      })
+    }
     return {
       usersignup,
       vetsignup,
@@ -205,7 +248,11 @@ export const useAccountStore = defineStore(
       findId,
       updatePassword,
       logout,
-      isLoggedIn
+      isLoggedIn,
+      updateNormal,
+      getnormalprofile,
+      userdata,
+      isUpdated
     }
   },
   { persist: true }
