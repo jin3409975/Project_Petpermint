@@ -4,7 +4,7 @@ import RegisterView from '@/views/account/RegisterView.vue'
 import LoginView from '@/views/account/LoginView.vue'
 import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
-
+import MainVet from '@/components/main/MainVet.vue'
 import Main from '@/components/main/Main.vue'
 import MainUser from '@/components/main/MainUser.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'

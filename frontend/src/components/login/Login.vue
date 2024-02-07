@@ -13,13 +13,13 @@ const logIn = function () {
     password: password.value
   }
   store.logIn(logindata)
-  // 데이터 검증 로직
-  if (useremail.value && password.value) {
-    // 데이터 전송 로직
-    router.push({ name: 'main-home' })
-  } else {
-    alert('로그인 정보를 입력해주세요.')
-  }
+  // // 데이터 검증 로직
+  // if (result) {
+  //   // 데이터 전송 로직
+  //   router.push({ name: 'main-home' })
+  // } else {
+  //   alert('로그인 정보를 입력해주세요.')
+  // }
 }
 const rules = {
   email: [(v) => !!v || '이메일을 입력해주세요.'],
