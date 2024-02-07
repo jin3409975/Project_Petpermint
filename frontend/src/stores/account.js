@@ -127,6 +127,8 @@ export const useAccountStore = defineStore(
       })
       return emailcheck
     }
+
+    const loginStatus = ref(false)
     const logIn = function (userdata) {
       console.log('logindatacheck', userdata)
       axios({
@@ -136,20 +138,29 @@ export const useAccountStore = defineStore(
           userId: userdata.useremail,
           password: userdata.password
         }
-      }).then((r) => {
-        if (r.data.statusCode == 200) {
-          console.log('success login', r)
-          localStorage.setItem('useremail', r.data.userId)
-          localStorage.setItem('usertype', r.data.type)
-          localStorage.setItem('token', r.data.accessToken)
-          if (r.data.type == 2) {
-            console.log('type', r.data.type)
-            localStorage.setItem('licenseNumber', r.data.licenseNumber)
-          }
-        } else {
-          console.log('failed login', r)
-        }
       })
+        .then((r) => {
+          if (r.data.statusCode == 200) {
+            console.log('success login', r)
+            loginStatus.value = true
+            localStorage.setItem('useremail', r.data.userId)
+            localStorage.setItem('usertype', r.data.type)
+            localStorage.setItem('token', r.data.accessToken)
+            if (r.data.type == 2) {
+              console.log('type', r.data.type)
+              localStorage.setItem('licenseNumber', r.data.licenseNumber)
+              router.push({ name: 'main-vet', replace: true })
+            } else {
+              router.push({ name: 'main-home', replace: true })
+            }
+          } else {
+            console.log('failed login', r)
+            alert('로그인에 실패 했습니다.')
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     }
     const findId = function (username, phone) {
       console.log('아이디찾기 실행', username, phone)
@@ -194,6 +205,8 @@ export const useAccountStore = defineStore(
       localStorage.removeItem('useremail')
       localStorage.removeItem('usertype')
       localStorage.removeItem('token')
+      localStorage.removeItem('licenseNumber')
+      loginStatus.value = false
     }
     return {
       usersignup,
@@ -205,7 +218,8 @@ export const useAccountStore = defineStore(
       findId,
       updatePassword,
       logout,
-      isLoggedIn
+      isLoggedIn,
+      loginStatus
     }
   },
   { persist: true }
