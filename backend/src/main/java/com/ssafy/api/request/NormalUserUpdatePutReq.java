@@ -21,6 +21,10 @@ public class NormalUserUpdatePutReq {
 	String password;
 	@ApiModelProperty(name="유저 이름", example="ssafy")
 	String userName;
+	@ApiModelProperty(name="유저 이름", example="ssafy")
+	String phone;
+	@ApiModelProperty(name="유저 이름", example="ssafy")
+	String address;
 	@ApiModelProperty(name="프로필 사진", example="img")
 	MultipartFile picture;
 }

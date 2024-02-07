@@ -246,7 +246,10 @@ public class UserController {
 	public ResponseEntity<? extends BaseResponseBody> updateNormal(
 			 @ApiParam(value="수정할 회원 정보") @ModelAttribute NormalUserUpdatePutReq updatePutReq) throws IOException {
 		System.out.println(updatePutReq);
-		String url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		String url = null;
+		if(updatePutReq.getPicture() != null) {
+			url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		}
 		if(userService.userUpdateNormal(updatePutReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
@@ -262,7 +265,10 @@ public class UserController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateExpert(
 			@ApiParam(value="수정할 회원 정보") @ModelAttribute ExpertUserUpdatePutReq updatePutReq) throws IOException {
-		String url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		String url = null;
+		if(updatePutReq.getPicture() != null) {
+			url=s3service.saveProfile(updatePutReq.getPicture(), updatePutReq.getUserId());
+		}
 		if(userService.userUpdateExpert(updatePutReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {

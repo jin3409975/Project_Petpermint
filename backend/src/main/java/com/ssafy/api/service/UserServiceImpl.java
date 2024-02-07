@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean userUpdateNormal(NormalUserUpdatePutReq updatePutReq, String url) {
 		if(userRepository.countByUserId(updatePutReq.getUserId()) == 1) {
-			userRepository.userUpdateNormal(updatePutReq.getUserId(),updatePutReq.getUserName(),passwordEncoder.encode(updatePutReq.getPassword()),url);
+			userRepository.userUpdateNormal(updatePutReq.getUserId(),updatePutReq.getUserName(),url,updatePutReq.getAddress(), updatePutReq.getPhone());
 			return true;
 		} else {
 			return false;
@@ -165,8 +165,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean userUpdateExpert(ExpertUserUpdatePutReq updatePutReq, String url) {
 		if(userRepository.countByUserId(updatePutReq.getUserId()) == 1) {
-			userRepository.userUpdateNormal(updatePutReq.getUserId(),updatePutReq.getUserName(),passwordEncoder.encode(updatePutReq.getPassword()),url);
-			userRepository.userUpdateExpert(updatePutReq.getUserId(),updatePutReq.getNote(),updatePutReq.getStartTime(),updatePutReq.getEndTime(),updatePutReq.getHospitalNo());
+			userRepository.userUpdateNormal(updatePutReq.getUserId(),updatePutReq.getUserName(),url, updatePutReq.getAddress(), updatePutReq.getPhone());
+			userRepository.userUpdateExpert(updatePutReq.getUserId(),updatePutReq.getNote(),updatePutReq.getStartTime(),updatePutReq.getEndTime());
 			return true;
 		} else {
 			return false;
