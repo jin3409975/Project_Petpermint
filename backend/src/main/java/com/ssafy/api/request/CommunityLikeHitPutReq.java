@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("CommunityLikeHitPutRequest")
 public class CommunityLikeHitPutReq {
-    @ApiModelProperty(name="글 번호", example="1")
+    @ApiModelProperty(name = "글 번호", example = "1")
     int postId;
+    String userId;
 }

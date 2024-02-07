@@ -35,8 +35,9 @@ import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
-
 import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
+import CommunityListVue from '@/views/CommunityListView.vue'
+import CommunityDetailVue from '@/views/CommunityDetailVue.vue'
 
 import LifecareViewVue from '@/views/LifecareView.vue'
 import VenueMapVue from '@/components/lifecare/VenueMap.vue'
@@ -249,12 +250,12 @@ const router = createRouter({
                 {
                   path: 'list',
                   name: 'lifecare-community-list',
-                  component: ''
+                  component: CommunityListVue
                 },
                 {
-                  path: 'detail/:listno',
-                  name: 'lifecare-venue-detail',
-                  component: ''
+                  path: 'detail/:postId',
+                  name: 'lifecare-community-detail',
+                  component: CommunityDetailVue
                 }
               ]
             },

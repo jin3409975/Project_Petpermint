@@ -1,16 +1,15 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
-import com.ssafy.api.response.CommentDataGetRes;
-import com.ssafy.api.response.CommunityDataGetRes;
-import com.ssafy.api.response.UserLoginPostRes;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.CommunityService;
 import com.ssafy.api.service.S3UpDownloadService;
 import com.ssafy.common.model.response.BaseResponseBody;
 
 import com.ssafy.db.entity.PostComment;
-import com.ssafy.db.entity.PostFiles;
+import com.ssafy.db.entity.PostLikes;
 import com.ssafy.db.entity.UserPost;
+import com.ssafy.db.join.PostUrlList;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,17 +31,18 @@ public class CommunityController {
 	CommunityService communityService;
 	@Autowired
 	private S3UpDownloadService s3service;
-	
+
 	@PostMapping("/write")
 	@ApiOperation(value = "글 작성", notes = "<strong>내용과 이미지</strong>를 사용하여 게시물을 작성한다")
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
-        @ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
-        @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
-		@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
-    })
-	public ResponseEntity<BaseResponseBody> write(@RequestPart @ApiParam(value="사용자 아이디", required = true) String userId, @RequestPart @ApiParam(value="내용 정보", required = true) String content, @RequestPart(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+	})
+	public ResponseEntity<BaseResponseBody> write(@RequestParam @ApiParam(value="사용자 아이디", required = true) String userId, @RequestParam @ApiParam(value="내용 정보", required = true) String content, @RequestParam(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
 		CommunityWritePostReq writeInfo=new CommunityWritePostReq();
+		//System.out.println("IMAGES: "+images.get(0));
 		writeInfo.setUserId(userId);
 		writeInfo.setContent(content);
 		List<String> urls=new ArrayList<String>();
@@ -86,6 +86,28 @@ public class CommunityController {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
 	}
 
+	@PatchMapping("/list")
+	@ApiOperation(value = "글 목록 조회", notes = "글 목록을 응답한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+	})
+	public ResponseEntity<? extends BaseResponseBody> list(@RequestBody CommunityListPostReq listPostReq) {
+		int page= listPostReq.getPage();
+		List<Integer>postIds=listPostReq.getPostIds();
+
+		List<PostUrlList> result= communityService.findPostUrlJoin(page,postIds);
+		for(PostUrlList list: result)
+			System.out.println(list.getContent());
+
+		if(result!=null)
+			return ResponseEntity.status(200).body(CommunityListGetRes.of(200, "200", result));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
+	}
+
 	@PutMapping("/update")
 	@ApiOperation(value = "글 수정", notes = "<strong>내용과 이미지</strong>를 사용하여 게시물을 수정한다")
 	@ApiResponses({
@@ -94,7 +116,7 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<BaseResponseBody> update(@RequestPart @ApiParam(value="게시물 번호", required = true) int postId, @RequestPart @ApiParam(value="내용 정보", required = true) String content, @RequestPart(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
+	public ResponseEntity<BaseResponseBody> update(@RequestParam @ApiParam(value="사용자 아이디", required = true) int postId, @RequestParam @ApiParam(value="내용 정보", required = true) String content, @RequestParam(required = false) @ApiParam(value="이미지") List<MultipartFile> images) throws IOException {
 		CommunityUpdatePutReq updateInfo=new CommunityUpdatePutReq();
 		updateInfo.setPostId(postId);
 		updateInfo.setContent(content);
@@ -194,9 +216,8 @@ public class CommunityController {
 			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
-	public ResponseEntity<? extends BaseResponseBody> getComment(int postId) {
-
-		PostComment postComment = communityService.dataComment(postId);
+	public ResponseEntity<? extends BaseResponseBody> getComment(@RequestParam Integer postId) {
+		List<PostComment> postComment = communityService.dataComment(postId);
 		if(postComment!=null)
 			return ResponseEntity.status(200).body(CommentDataGetRes.of(200,"Success",postComment));
 		else
@@ -250,12 +271,32 @@ public class CommunityController {
 	public ResponseEntity<BaseResponseBody> like(@RequestBody @ApiParam(value="좋아요 정보", required = true) CommunityLikeHitPutReq updateInfo) {
 
 		Long result = communityService.increaseLike(updateInfo.getPostId());
+		PostLikes liked=communityService.insertIntoLikeTable(updateInfo.getPostId(),updateInfo.getUserId());
 
 		// 정상적으로 수정되었을 때
-		if(result>0)
+		if(result>0 || liked!=null)
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		else
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+	}
+
+	@GetMapping("/likecheck")
+	@ApiOperation(value = "좋아요 확인", notes = "게시물의 좋아요 수를 확인한다")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+	})
+	public ResponseEntity<BaseResponseBody> likecheck(int postId, String userId) {
+
+		PostLikes liked=communityService.findPostLikesByPostIdUserId(postId,userId);
+
+		// 정상적으로 수정되었을 때
+		if(liked==null)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Fail"));
 	}
 
 	@PutMapping("/hit")

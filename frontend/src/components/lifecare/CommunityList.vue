@@ -1,58 +1,67 @@
-<script setup></script>
+<script setup>
+import { ref, onBeforeMount } from 'vue'
+import axios from 'axios'
+const props = defineProps(['article'])
+const files = ref([{}])
 
-<template>
-  <div></div>
-</template>
-
-<style scoped></style>
-
-<template>
-  <div class="instagram-post">
-    <div class="header level">
-      <div class="level-left">
-        <figure class="image is-32x32">
-          <img :src="post.userImage" />
-        </figure>
-        <span class="username">{{ post.username }}</span>
-      </div>
-    </div>
-    <div
-      class="image-container"
-      :class="post.filter"
-      :style="{ backgroundImage: 'url(' + post.postImage + ')' }"
-      @dblclick="like"
-    ></div>
-    <div class="content">
-      <div class="heart">
-        <i
-          class="far fa-heart fa-lg"
-          :class="{ fas: !this.post.upVoted, fas: this.post.upVoted }"
-          @click="like"
-        >
-        </i>
-      </div>
-      <p class="likes">{{ post.likes }} likes</p>
-      <p class="caption">
-        <span>{{ post.username }}</span> {{ post.caption }}
-      </p>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  props: ['post'],
-  methods: {
-    like() {
-      this.post.upVoted ? this.post.likes-- : this.post.likes++
-      this.post.upVoted = !this.post.upVoted
-    }
-  }
-}
+onBeforeMount(() => {})
 </script>
 
-<style lang="scss" src="../styles/instagram-post.scss">
-.instagram-post {
-  padding-top: 50px;
+<template>
+    <v-card
+      class="card"
+      :title="article.userName"
+      :subtitle="article.registTime"
+      :text="article.content"
+    >
+    <template v-slot:prepend>
+          <v-avatar size="36">
+            <img v-if="article.picture !== '0'" :src="article.picture" />
+            <v-else>
+              <img  src="/assets/img/default_profile.png"/>
+            </v-else>
+          </v-avatar>
+        </template>
+      <v-card-actions>
+        <row>
+          <col class="d-flex justify-content-center">
+          
+            
+          </col>
+          <col class="d-flex justify-content-center">
+          <v-layout justify-center align-center>
+            <v-flex shrink>
+            <img class="mx-auto justify-content-center" :src="article.url" style="max-width: 80%" />
+          </v-flex>
+            </v-layout>
+          </col> 
+          <col>
+            <div class="text-right" style="margin-top:10px">
+                <span style="font-size:12px"> 좋아요 {{ article.likes }}개 &nbsp;</span>
+                <span style="font-size:12px"> 조회수 {{ article.hits }}개 </span>
+              <span> 
+                <router-link :to="{ name: 'lifecare-community-detail', params: { postId: article.postId } }"
+                       class="article-title link-dark">
+                  <v-btn style="margin-left:10px"> 더 알아보기 </v-btn>
+                </router-link>
+              </span>
+            </div>
+          </col>
+        </row>
+      </v-card-actions>
+    </v-card>
+  
+</template>
+
+<style scoped>
+.card {
+  margin-bottom: 30px;
+  border: 1px solid #e0e0e0;
+}
+a {
+  text-decoration: none;
+}
+p {
+  margin: 0px;
 }
 </style>

@@ -91,7 +91,7 @@ const navigateToUserRegister = () => {
             </a>
           </template>
           <v-list>
-            <v-list-item link>
+            <v-list-item link @click="navigateToCommunity">
               <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
             </v-list-item>
             <v-list-item link>
