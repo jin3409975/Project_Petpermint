@@ -3,11 +3,12 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.*;
 import com.ssafy.db.entity.PostComment;
 import com.ssafy.db.entity.PostFiles;
+import com.ssafy.db.entity.PostLikes;
+import com.ssafy.db.join.PostUrlList;
 import com.ssafy.db.repository.*;
 import com.ssafy.db.entity.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Autowired
     PostFilesRepository postFilesRepository;
+    @Autowired
+    PostLikesRepository postLikesRepository;
 
     @Override
     public UserPost writePost(CommunityWritePostReq writeInfo) {
@@ -36,7 +39,6 @@ public class CommunityServiceImpl implements CommunityService {
         userPost.setContent(writeInfo.getContent());
 
 
-        //userPost.setImages(writeInfo.getImages());
         return communityRepository.save(userPost);
 
     }
@@ -75,8 +77,8 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public PostComment dataComment(int postId) {
-        PostComment postComment = commentRepositorySupport.findCommentByPostId(postId).get();
+    public List<PostComment> dataComment(int postId) {
+        List<PostComment> postComment = commentRepositorySupport.findCommentByPostId(postId).get();
         return postComment;
     }
 
@@ -148,6 +150,44 @@ public class CommunityServiceImpl implements CommunityService {
     public int deleteUrl(int postId) {
         int delete_result= postFilesRepository.deleteByPostId(postId);
         return delete_result;
+    }
+
+    @Override
+    public List<UserPost> listPost() {
+        List<UserPost> posts=communityRepository.findByIsDelete(false);
+        return posts;
+    }
+
+    @Override
+    public List<PostFiles> listUrl() {
+        List<PostFiles> urls=postFilesRepository.findAll();
+        return urls;
+    }
+
+    @Override
+    public List<PostUrlList> findPostUrlJoin(int page, List<Integer>postIds) {
+        int startpg=page*2;
+        int endpg=page*2+2;
+
+        List<PostUrlList> result=communityRepository.findPostUrlJoin(page, postIds);
+        return result;
+    }
+
+    @Override
+    public PostLikes insertIntoLikeTable(int postId, String userId) {
+        PostLikes postLikes= new PostLikes();
+        postLikes.setUserId(userId);
+        postLikes.setPostId(postId);
+
+        return postLikesRepository.save(postLikes);
+    }
+
+    @Override
+    public PostLikes findPostLikesByPostIdUserId(int postId, String userId) {
+        PostLikes postLikes= new PostLikes();
+        postLikes.setUserId(userId);
+        postLikes.setPostId(postId);
+        return postLikesRepository.find(userId,postId);
     }
 
 

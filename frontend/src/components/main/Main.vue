@@ -1,7 +1,6 @@
 <script setup>
 import MainFirst from '@/components/main/MainFirst.vue'
 import MainTopBanner from '@/components/main/MainTopBanner.vue'
-import Typed from 'typed.js'
 </script>
 
 <template>
@@ -11,4 +10,4 @@ import Typed from 'typed.js'
   </div>
 </template>
 
-<style></style>
+<style scoped></style>

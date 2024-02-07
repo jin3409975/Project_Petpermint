@@ -16,4 +16,5 @@ public interface PostFilesRepository extends JpaRepository<PostFiles, Long> {
     List<PostFiles> findByPostId(int postId);
 
     int deleteByPostId(int postId);
+
 }

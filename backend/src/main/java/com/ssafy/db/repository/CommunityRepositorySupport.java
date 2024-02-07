@@ -70,9 +70,11 @@ public class CommunityRepositorySupport {
 
 
     public Optional<Integer> findMaxPostId() {
-        int max= jpaQueryFactory.select(quserPost.postId.max()).from(quserPost).fetchOne();
-        if(max == 0) return Optional.empty();
+        Integer max= jpaQueryFactory.select(quserPost.postId.max()).from(quserPost).fetchOne();
+        if(max == null) return Optional.ofNullable(0);
         return Optional.ofNullable(max);
     }
+
+
 
 }

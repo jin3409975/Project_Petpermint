@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { useAccountStore } from '@/stores/account.js'
 const defaultLogoUrl = new URL('/assets/img/logomain.png', import.meta.url).href
-
+const store = useAccountStore()
 const logoUrl = ref(defaultLogoUrl)
 
 const router = useRouter()
@@ -15,31 +15,45 @@ const logoStyle = ref({
   height: '60px'
 })
 
-const isLoggedIn = ref(false)
-const checkLoginStatus = () => {
-  isLoggedIn.value = localStorage.getItem('useremail') !== null
-}
+const isLoggedIn = computed(() => {
+  console.log('computed test ', store.loginStatus)
+  if (store.loginStatus == null) {
+    return false
+  }
+  return store.loginStatus
+})
+// const checkLoginStatus = () => {
+//   isLoggedIn.value = localStorage.getItem('useremail') !== null
+// }
 const handleLoginLogout = () => {
   if (isLoggedIn.value) {
     // localStorage.removeItem('useremail');
-    isLoggedIn.value = false
+    store.logout()
     router.push({ name: 'main-home' })
   } else {
     router.push({ name: 'login-home' })
   }
 }
 
-onMounted(() => {
-  checkLoginStatus()
-})
+// onMounted(() => {
+//   checkLoginStatus()
+// })
 
 const navigateToMain = () => {
   router.push({ name: 'main-home' })
 }
 const navigateToInitial = () => {
+  if (!isLoggedIn.value) {
+    alert('로그인 후 이용 가능합니다.')
+    return false
+  }
   router.push({ name: 'reserve-initial' })
 }
 const navigateToAppoint = () => {
+  if (!isLoggedIn.value) {
+    alert('로그인 후 이용 가능합니다.')
+    return false
+  }
   router.push({ name: 'reserve-appoint' })
 }
 const navigateToCommunity = () => {
@@ -54,7 +68,7 @@ const navigateToUserRegister = () => {
 </script>
 
 <template>
-  <v-app-bar app fixed>
+  <v-app-bar app fixed style="box-shadow: none">
     <div
       style="
         display: flex;
@@ -77,7 +91,7 @@ const navigateToUserRegister = () => {
             </a>
           </template>
           <v-list>
-            <v-list-item link>
+            <v-list-item link @click="navigateToCommunity">
               <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
             </v-list-item>
             <v-list-item link>

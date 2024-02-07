@@ -2,7 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.*;
 import com.ssafy.db.entity.*;
-import org.springframework.web.multipart.MultipartFile;
+import com.ssafy.db.join.PostUrlList;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface CommunityService {
     Long isDeletePost(int postId);
     Long deletePost(int postId);
     PostComment createComment(CommentCreatePostReq createInfo);
-    PostComment dataComment(int postId);
+    List<PostComment> dataComment(int postId);
     Long isDeleteComment(CommentDeleteDeleteReq deleteInfo);
     Long deleteComment(CommentDeleteDeleteReq deleteInfo);
     Long increaseLike(int postId);
@@ -29,5 +29,15 @@ public interface CommunityService {
     int writeUrl(int postId, List<String>urls, List<String> strings);
     List<String> getUrl(int postId);
     int deleteUrl(int postId);
+
+    List<UserPost> listPost();
+    List<PostFiles> listUrl();
+
+
+    List<PostUrlList> findPostUrlJoin(int page,List<Integer>postIds);
+
+    PostLikes insertIntoLikeTable(int postId, String userId);
+
+    PostLikes findPostLikesByPostIdUserId(int postId, String userId);
 }
 

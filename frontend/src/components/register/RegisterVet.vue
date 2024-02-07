@@ -589,7 +589,7 @@ function openKakaoAddressSearch() {
   </v-row>
 </template>
 
-<style>
+<style scoped>
 .custom-padding {
   padding-top: 30px !important;
   padding-left: 130px !important;

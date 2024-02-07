@@ -4,7 +4,7 @@ import RegisterView from '@/views/account/RegisterView.vue'
 import LoginView from '@/views/account/LoginView.vue'
 import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
-
+import MainVet from '@/components/main/MainVet.vue'
 import Main from '@/components/main/Main.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 // import RegisterComplete from '@/components/register/RegisterComplete.vue'
@@ -19,7 +19,6 @@ import ReserveAppointView from '@/views/ReserveAppointView.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
-// import ReserveComplete from '@/components/reserve/ReserveComplete.vue'
 
 import AdminViewVue from '@/views/AdminView.vue'
 import AdminAcountVue from '@/components/admin/AdminAcount.vue'
@@ -29,14 +28,15 @@ import MypageVetView from '@/views/MypageVetView.vue'
 import MypageUserInfo from '@/components/mypage/MypageUserInfo.vue'
 import MypageUserListView from '@/views/MypageUserListView.vue'
 import MypageUserListCurrent from '@/components/mypage/MypageUserListCurrent.vue'
-// import MypageUserListPast from '@/components/mypage/MypageUserListPast.vue'
 import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
 import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
-// import MypageVetListPast from '@/components/mypage/MypageVetListPast.vue'
 
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
+import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
+import CommunityListVue from '@/views/CommunityListView.vue'
+import CommunityDetailVue from '@/views/CommunityDetailVue.vue'
 
 import LifecareViewVue from '@/views/LifecareView.vue'
 import VenueMapVue from '@/components/lifecare/VenueMap.vue'
@@ -58,6 +58,7 @@ const router = createRouter({
           children: [
             {
               path: '',
+              meta: { hideNavbarMain: true },
               name: 'main-home',
               meta: { hideNavbarMain: true },
               component: Main
@@ -65,7 +66,7 @@ const router = createRouter({
             {
               path: 'vet',
               name: 'main-vet',
-              component: ''
+              component: MainVet
             }
           ]
         },
@@ -84,14 +85,14 @@ const router = createRouter({
             {
               path: 'vet',
               name: 'register-vet',
-              meta: { hideNavbar: true, hideNavbarMain: true },
+              meta: { hideNavbarMain: true, hideNavbar: true, hideicon: true },
               component: RegisterVet
             },
             {
               path: 'user',
               name: 'register-user',
+              meta: { hideNavbarMain: true, hideicon: true },
               component: RegisterUserView,
-              meta: { hideNavbarMain: true },
               redirect: { name: 'register-info' },
               children: [
                 {
@@ -99,18 +100,8 @@ const router = createRouter({
                   name: 'register-info',
                   meta: { hideNavbarMain: true },
                   component: RegisterUser
-                },
-                {
-                  path: 'pet',
-                  name: 'register-pet',
-                  component: ''
                 }
               ]
-            },
-            {
-              path: 'complete',
-              name: 'register-complete',
-              component: ''
             }
           ]
         },
@@ -123,6 +114,7 @@ const router = createRouter({
             {
               path: '',
               name: 'login-home',
+              meta: { hideicon: true },
               component: Login
             },
             {
@@ -179,11 +171,11 @@ const router = createRouter({
                 }
               ]
             },
-            // {
-            //   path: 'complete',
-            //   name: 'reserve-initial-complete',
-            //   component: ReserveComplete
-            // },
+            {
+              path: 'complete',
+              name: 'reserve-initial-complete',
+              component: ''
+            },
             {
               path: 'appoint',
               name: 'reserve-appoint',
@@ -205,11 +197,6 @@ const router = createRouter({
                   name: 'reserve-appoint-pet',
                   component: ReservePet
                 }
-                // {
-                //   path: 'complete',
-                //   name: 'reserve-appoint-complete',
-                //   component: ReserveComplete
-                // }
               ]
             },
             {
@@ -227,6 +214,7 @@ const router = createRouter({
         {
           path: '/cam',
           name: 'cam',
+          meta: { hideNavbarMain: true },
           component: '',
           redirect: { name: 'cam-consult' },
           children: [
@@ -238,7 +226,7 @@ const router = createRouter({
             {
               path: 'broadcast',
               name: 'cam-broadcast',
-              component: ''
+              component: CamBroadcastVue
             }
           ]
         },
@@ -257,12 +245,12 @@ const router = createRouter({
                 {
                   path: 'list',
                   name: 'lifecare-community-list',
-                  component: ''
+                  component: CommunityListVue
                 },
                 {
-                  path: 'detail/:listno',
-                  name: 'lifecare-venue-detail',
-                  component: ''
+                  path: 'detail/:postId',
+                  name: 'lifecare-community-detail',
+                  component: CommunityDetailVue
                 }
               ]
             },
@@ -313,11 +301,6 @@ const router = createRouter({
                       name: 'mypage-user-list-current',
                       component: MypageUserListCurrent
                     }
-                    // {
-                    //   path: 'past',
-                    //   name: 'mypage-user-list-past',
-                    //   component: MypageUserListPast
-                    // }
                   ]
                 }
               ]
@@ -344,11 +327,6 @@ const router = createRouter({
                       name: 'mypage-vet-list-current',
                       component: MypageVetListCurrent
                     }
-                    // {
-                    //   path: 'past',
-                    //   name: 'mypage-vet-list-past',
-                    //   component: MypageVetListPast
-                    // }
                   ]
                 }
               ]
@@ -359,6 +337,7 @@ const router = createRouter({
           path: '/admin',
           name: 'admin',
           component: AdminViewVue,
+          meta: { hideNavbarMain: true },
           redirect: { name: 'admin-account' },
           children: [
             {
