@@ -47,7 +47,6 @@ const getFile = function (event) {
       picture.value = e.target.result
     }
     reader.readAsDataURL(file)
-    isfiled.value = true
   } else {
     alert('선택된 파일이 이미지 형식이 아닙니다.')
   }
@@ -86,7 +85,14 @@ function saveinfo() {
 function completeUpdate() {
   console.log('file', file)
 
-  accountstore.updateNormal(email.value, userName.value, password.value, file)
+  accountstore.updateNormal(
+    email.value,
+    userName.value,
+    password.value,
+    file,
+    address.value,
+    phoneNumber.value
+  )
   opendialog.value = false
 }
 </script>

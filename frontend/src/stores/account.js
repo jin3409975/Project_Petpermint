@@ -215,12 +215,14 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const updateNormal = function (userId, userName, password, picture) {
+    const updateNormal = function (userId, userName, password, picture, address, phone) {
       var data = new FormData()
       data.append('userId', userId)
       data.append('userName', userName)
       data.append('password', password)
       data.append('picture', picture)
+      data.append('address', address)
+      data.append('phone', phone)
       axios({
         method: 'put',
         url: API_URL + 'update/normal',
