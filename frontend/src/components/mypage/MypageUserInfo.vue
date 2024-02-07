@@ -73,7 +73,6 @@ function openKakaoAddressSearch() {
 function updateInfo() {
   isreadonly.value = false
   isclicked.value = true
-  console.log(userdata.value)
 }
 // 개인정보 수정 저장
 function saveinfo() {
@@ -113,9 +112,24 @@ function completeUpdate() {
     </v-card>
     <!-- 유저의 기본정보 -->
     <v-card class="profile-info">
-      <v-text-field label="이름" v-model="userName" variant="solo" readonly></v-text-field>
-      <v-text-field v-model="email" label="Email" variant="solo" readonly></v-text-field>
-      <v-text-field v-model="phoneNumber" label="전화번호" variant="solo" readonly></v-text-field>
+      <v-text-field
+        label="이름"
+        v-model="userName"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-text-field
+        v-model="email"
+        label="Email"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-text-field
+        v-model="phoneNumber"
+        label="전화번호"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
       <v-text-field
         v-model="address"
         label="주소"
@@ -135,8 +149,8 @@ function completeUpdate() {
 
         <v-btn @click="saveinfo">저장</v-btn>
       </v-card>
-      <v-btn v-show="isclicked == false" @click="updateInfo">수정</v-btn>
     </v-card>
+    <v-btn v-show="isclicked == false" @click="updateInfo">개인 정보 수정</v-btn>
   </v-container>
 
   <v-container class="profile-container">
@@ -159,7 +173,7 @@ function completeUpdate() {
 <style scoped>
 .profile-container {
   /* max-width: 900px; */
-  margin: 15px auto;
+  margin: 5px auto;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

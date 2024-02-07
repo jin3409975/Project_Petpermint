@@ -13,7 +13,7 @@ export const useAccountStore = defineStore(
     // const token = ref(null)
     const userdata = ref([])
     const result = ref(false)
-    const vetdata = ref({})
+    const vetdata = ref([])
     //로그인 여부 확인 변수
     const isLoggedIn = ref(false)
     const isUpdated = ref(false)
@@ -243,6 +243,23 @@ export const useAccountStore = defineStore(
         }
       })
     }
+    const getexpertprofile = function (userId) {
+      axios({
+        method: 'get',
+        url: API_URL + 'me/expert',
+        params: {
+          userId: userId
+        }
+      }).then((r) => {
+        if (r.data.statusCode == 200) {
+          console.log('success get vet info', r.data)
+          vetdata.value = r.data
+        } else {
+          console.log('failed get userinfo', r)
+          alert('유저 정보를 불러오는데 실패 했습니다.')
+        }
+      })
+    }
     return {
       usersignup,
       vetsignup,
@@ -257,7 +274,9 @@ export const useAccountStore = defineStore(
       updateNormal,
       getnormalprofile,
       userdata,
-      isUpdated
+      isUpdated,
+      getexpertprofile,
+      vetdata
     }
   },
   { persist: true }

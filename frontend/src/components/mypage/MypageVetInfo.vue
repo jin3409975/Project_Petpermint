@@ -1,215 +1,207 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAccountStore } from '@/stores/account'
+import { storeToRefs } from 'pinia'
 
-const router = useRouter()
+const accountstore = useAccountStore()
+// const router = useRouter()
+const { vetdata } = storeToRefs(accountstore)
+const opendialog = ref(false)
 
-// nav 해당 페이지로 이동
-const navigateTo = (path) => {
-  router.push(path)
+onBeforeMount(() => {
+  const userId = localStorage.getItem('useremail')
+  accountstore.getexpertprofile(userId)
+  setTimeout(() => {
+    init()
+  }, 1)
+})
+
+function init() {
+  console.log('pa1515919159119159ge', vetdata)
+  userName.value = vetdata.value.userName
+  email.value = vetdata.value.userId
+  phoneNumber.value = vetdata.value.phone
+  address.value = vetdata.value.address
+  picture.value = vetdata.value.picture
+  note.value = vetdata.value.note
+  console.log('llllll', vetdata.value)
 }
+// 유저 프로필 변수
+const userName = ref('')
+const email = ref('')
+const password = ref('')
+const phoneNumber = ref('')
+const address = ref('')
+const picture = ref('')
+const note = ref('')
+// 폼 출력 여부 변수
+const isreadonly = ref(true)
+const isclicked = ref(false)
+var file = null
 
-const vetName = ref('김재민')
-const email = ref('test@test.com')
-const changPassword = ref(null)
-const confirmPassword = ref(null)
-const phoneNumber = ref('010-0000-0000')
-const hospitalAddress = ref('삼성화재 유성연수원')
-const changeHospitalAddress = ref(null)
-const picture = ref(null)
-
-// 파일 업로드
+// 프로필 사진 파일 업로드
 const getFile = function (event) {
-  console.log(event)
-  picture.value = event.target.files[0]
+  file = event.target.files[0]
+  if (file && file.type.match('image.*')) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      picture.value = e.target.result
+    }
+    reader.readAsDataURL(file)
+  } else {
+    alert('선택된 파일이 이미지 형식이 아닙니다.')
+  }
 }
 
 // 카카오 주소 검색
 function openKakaoAddressSearch() {
   new window.daum.Postcode({
     oncomplete: (data) => {
-      if (changeHospitalAddress.value !== '') {
-        changeHospitalAddress.value = ''
+      if (address.value !== '') {
+        address.value = ''
       }
       if (data.userSelectedType === 'R') {
         // 사용자가 도로명 주소를 선택했을 경우
-        changeHospitalAddress.value = data.roadAddress
+        address.value = data.roadAddress
       } else {
         // 사용자가 지번 주소를 선택했을 경우(J)
-        changeHospitalAddress.value = data.jibunAddress
+        address.value = data.jibunAddress
       }
+      address.value
     }
   }).open()
+}
+function updateInfo() {
+  isreadonly.value = false
+  isclicked.value = true
+}
+// 개인정보 수정 저장
+function saveinfo() {
+  isreadonly.value = true
+  isclicked.value = false
+  // 개인정보 변경 실행
+  opendialog.value = true
+}
+function completeUpdate() {
+  console.log('file', file)
+
+  accountstore.updateNormal(
+    email.value,
+    userName.value,
+    password.value,
+    file,
+    address.value,
+    phoneNumber.value
+  )
+  opendialog.value = false
 }
 </script>
 
 <template>
+  <!-- 유저의 프로필  -->
   <v-container class="profile-container">
-    <v-layout>
-      <v-navigation-drawer class="accent-4 rounded-custom" permanent width="200">
-        <v-list>
-          <v-list-item
-            title="개인 정보 확인"
-            value="개인 정보 확인"
-            @click="navigateTo('/mypage/vet/info')"
-          ></v-list-item>
-          <v-list-item
-            title="예약 내역 확인"
-            value="예약 내역 확인"
-            @click="navigateTo('/mypage/vet/list/current')"
-          ></v-list-item>
-          <v-list-item
-            title="과거 예약 내역"
-            value="과거 예약 내역"
-            @click="navigateTo('/mypage/vet/list/past')"
-          ></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+    <!-- 유저의 프로필 이미지 -->
+    <v-card class="profile-img">
+      <v-avatar size="230" variant="outlined">
+        <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
+        <input
+          type="file"
+          @change="getFile"
+          style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer"
+        />
+      </v-avatar>
+    </v-card>
 
-      <v-main>
-        <v-row justify="center">
-          <v-col cols="12" md="12">
-            <v-card
-              style="
-                border: 1px solid;
-                margin-left: 20px;
-                margin-right: 10px;
-                padding-right: 10px;
-                padding-left: 10px;
-              "
-              elevation="0"
-            >
-              <v-row>
-                <v-col cols="8">
-                  <v-card-title style="font-size: 30px; font-weight: bold; padding: 16px">
-                    Dr. {{ vetName }}님의 정보
-                  </v-card-title>
-                  <v-card-text class="mt-4">
-                    수의사님께서 입력하신 회원정보입니다. <br />
-                    원활한 상담과 예약을 위해 핸드폰 번호와 병원 주소를 반드시 확인해주세요.
-                  </v-card-text>
-                </v-col>
+    <!-- 유저의 기본정보 -->
+    <v-card class="profile-info">
+      <v-text-field
+        label="이름"
+        v-model="userName"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-text-field
+        v-model="email"
+        label="Email"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-text-field
+        v-model="phoneNumber"
+        label="전화번호"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-text-field
+        v-model="address"
+        label="주소"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-text-field
+        label="인삿말"
+        v-model="note"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-btn v-if="isclicked" @click="openKakaoAddressSearch">주소 변경</v-btn>
+      <v-card v-if="isclicked">
+        <a
+          class="text-caption text-decoration-none text-blue"
+          href="/find/password"
+          rel="noopener noreferrer"
+          target="_self"
+        >
+          비밀번호 변경</a
+        >
 
-                <v-col cols="3" class="text-right">
-                  <v-avatar size="100" variant="outlined" class="mt-5 mr-10">
-                    <img
-                      :src="
-                        picture
-                          ? URL.createObjectURL(picture)
-                          : 'https://cdn.vuetifyjs.com/images/john.jpg'
-                      "
-                      alt="프로필 사진"
-                    />
-                    <input
-                      type="file"
-                      @change="getFile"
-                      style="
-                        opacity: 0;
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        cursor: pointer;
-                      "
-                    />
-                  </v-avatar>
-                  <p class="profile-description">프로필 사진을 누르면 수정할 수 있습니다.</p>
-                </v-col>
-
-                <v-row class="profile-text">
-                  <v-col cols="12" md="7">
-                    <p class="title">Email</p>
-                    <p>{{ email }}</p>
-                  </v-col>
-
-                  <v-col cols="12" md="6">
-                    <p class="title">비밀번호 수정</p>
-                    <v-text-field
-                      v-model="changPassword"
-                      placeholder="비밀번호 수정"
-                      type="changePassword"
-                      density="compact"
-                      variant="outlined"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" md="6">
-                    <p class="title">비밀번호 확인</p>
-                    <v-text-field
-                      v-model="confirmPassword"
-                      placeholder="비밀번호 확인"
-                      type="password"
-                      density="compact"
-                      variant="outlined"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" md="6">
-                    <p class="title">핸드폰 번호</p>
-                    <p>{{ phoneNumber }}</p>
-                  </v-col>
-
-                  <v-col cols="12" md="7">
-                    <p class="title">병원 주소</p>
-                    <p>{{ hospitalAddress }}</p>
-                  </v-col>
-
-                  <v-col cols="12" md="6">
-                    <p class="title">병원 주소 변경</p>
-                    <v-text-field
-                      placeholder="주소 선택 후 상세 주소를 입력해주세요."
-                      v-model="changeHospitalAddress"
-                      density="compact"
-                      variant="outlined"
-                      style="padding-bottom: 0px"
-                      @click="openKakaoAddressSearch"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    class="text-right"
-                    style="padding-right: 12px; padding-top: 0px; padding-bottom: 20px"
-                  >
-                    <v-btn type="submit" color="indigo" elevation="0">저장</v-btn>
-                  </v-col>
-                </v-row>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-main>
-    </v-layout>
+        <v-btn @click="saveinfo">저장</v-btn>
+      </v-card>
+    </v-card>
+    <v-btn v-show="isclicked == false" @click="updateInfo">개인 정보 수정</v-btn>
   </v-container>
+
+  <v-container class="profile-container">
+    <!-- <div v-for="pet in petlist">
+      <v-card class="petcard"> </v-card>
+    </div> -->
+  </v-container>
+
+  <v-dialog v-model="opendialog" max-width="600px">
+    <v-card>
+      <v-card-title> 비밀번호 입력 </v-card-title>
+      <v-text-field v-model="password" label="비밀번호" variant="solo"></v-text-field>
+      <v-card-actions>
+        <v-btn color="primary" block @click="completeUpdate">비밀번호확인</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
 .profile-container {
-  max-width: 30000px;
-  margin-left: 5px;
-  margin-right: 5px;
+  /* max-width: 900px; */
+  margin: 5px auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  gap: 20px;
 }
-
-.rounded-custom {
-  border-radius: 4px;
-  border: 1px solid;
-  text-align: center;
+.profile-img {
+  flex: 0.3;
+  height: 250px;
 }
-
-.profile-description {
-  font-size: 10px;
-  margin-top: 10px;
+.profile-info {
+  flex: 0.7; /* Ensure both cards share the available space equally */
 }
-
-.title {
-  font-weight: bold;
-  font-size: 15px;
-  margin-bottom: 5px;
-}
-
-.profile-text {
-  padding-top: 7px;
-  padding-left: 30px;
-  padding-right: 30px;
+.v-text-field {
   margin-bottom: 10px;
+  width: 85%;
+}
+.petcard {
+  width: 20%;
 }
 </style>
