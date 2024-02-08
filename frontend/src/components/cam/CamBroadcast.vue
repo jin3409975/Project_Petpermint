@@ -2,13 +2,16 @@
 import $ from 'jquery'
 import './openvidu/openvidu-webcomponent-2.29.0'
 import './openvidu/openvidu-webcomponent-2.29.0.css'
+
+const { VITE_APP_SERVER_URI } = import.meta.env
+
 export default {
   data() {
     return {
-      // sessionName: this.$route.params.clubId,
+      // sessionName: this.$route.params.paramname,
       sessionName: 'test',
       participantName: localStorage.getItem('useremail'),
-      APPLICATION_SERVER_URL: `https://i10b303.p.ssafy.io:5000/`,
+      APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null
     }
   },
