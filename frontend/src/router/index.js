@@ -6,7 +6,6 @@ import Login from '@/components/login/Login.vue'
 import MainView from '@/views/MainView.vue'
 import MainVet from '@/components/main/MainVet.vue'
 import Main from '@/components/main/Main.vue'
-import MainUser from '@/components/main/MainUser.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 // import RegisterComplete from '@/components/register/RegisterComplete.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
@@ -63,13 +62,8 @@ const router = createRouter({
               path: '',
               meta: { hideNavbarMain: true },
               name: 'main-home',
-              component: Main
-            },
-            {
-              path: 'user',
-              name: 'main-user',
               meta: { hideNavbarMain: true },
-              component: MainUser
+              component: Main
             },
             {
               path: 'vet',
@@ -106,6 +100,7 @@ const router = createRouter({
                 {
                   path: 'info',
                   name: 'register-info',
+                  meta: { hideNavbarMain: true },
                   component: RegisterUser
                 }
               ]
