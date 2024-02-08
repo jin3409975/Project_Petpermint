@@ -1,7 +1,9 @@
 package com.ssafy.db.repository;
 
 import com.ssafy.db.entity.Reservation;
+import com.ssafy.db.entity.VenueData;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +21,6 @@ public interface EmergencyReservationRepository extends JpaRepository<Reservatio
     // 특정 사용자의 응급 예약 개별 조회
     Reservation findByAppointId(int appointId);
 
+    @Query(value = "select address from User where userId = :userId",nativeQuery = true)
+    String findAddress(String userId);
 }

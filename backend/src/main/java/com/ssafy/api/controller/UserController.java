@@ -305,7 +305,10 @@ public class UserController {
 	public ResponseEntity<? extends BaseResponseBody> petCreate(
 			@ModelAttribute @ApiParam(value="반려동물 정보", required = true) AnimalReq animalReq) throws IOException {
 		System.out.println(animalReq.getPicture().toString());
-		String url=s3service.savePetProfile(animalReq.getPicture(), animalReq);
+		String url = null;
+		if(animalReq.getPicture() != null) {
+			url=s3service.savePetProfile(animalReq.getPicture(), animalReq);
+		}
 		if(animalService.animalCreate(animalReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {

@@ -25,4 +25,8 @@ public interface VenueRepository extends JpaRepository<VenueData, Long> {
 
     @Query(value = "select distinct gungu from VenueData where sido = :sido order by gungu", nativeQuery = true )
     List<String> findGungu(String sido);
+
+    @Query(value = "select * from VenueData where category = '동물병원' and " +
+            "lat between :latStart and :latEnd and lon between :lonStart and :lonEnd", nativeQuery = true)
+    List<VenueData> findEmergencyList(double latStart, double latEnd, double lonStart, double lonEnd);
 }

@@ -20,8 +20,8 @@ const selectDoctor = (doctor) => {
 }
 const selectHospital = (hospital) => {
   console.log('hos', hospital)
-  reservehospitalno.value = hospital.hospitalNo
-  hospitalname.value = hospital.name
+  reservehospitalno.value = hospital.dataNo
+  hospitalname.value = hospital.venName
   // 예약에 필요한 병원 번호를 store변수에 저장
 }
 onMounted(() => {
@@ -61,8 +61,8 @@ onMounted(() => {
           @click="selectHospital(hospital)"
         >
           <v-list-item-content>
-            <v-list-item-title v-text="hospital.name"></v-list-item-title>
-            <v-list-item-subtitle v-text="hospital.roadNumberAddress"></v-list-item-subtitle>
+            <v-list-item-title v-text="hospital.venName"></v-list-item-title>
+            <v-list-item-subtitle v-text="hospital.roadAddr"></v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>

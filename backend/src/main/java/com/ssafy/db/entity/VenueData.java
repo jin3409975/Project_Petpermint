@@ -17,6 +17,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @DynamicInsert
+@ToString
 public class VenueData extends BaseEntity{
     @Id
     int dataNo;

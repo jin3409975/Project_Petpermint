@@ -14,8 +14,8 @@ import lombok.ToString;
 @ToString
 @ApiModel("ConsultReservationRegisterPostRequest")
 public class EmergencyReservationRegisterPostReq {
-	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
-	int appointId;
+//	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
+//	int appointId;
 
 //	String diagnosis;
 //	String note;
@@ -25,5 +25,5 @@ public class EmergencyReservationRegisterPostReq {
 	int hospitalNo;
 
 	String userId;
-//	String time;
+	String time;
 }

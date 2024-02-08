@@ -29,8 +29,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "licenseNumber not in (select licenseNumber from Reservation where time = :time and type = 1)", nativeQuery = true)
     List<ReservationExpertUserList> findAllAvailableExpert(String startTime, String endTime, String time);
 
-    @Query(value = "select name, roadNumberAddress, hospitalNo from HospitalData " +
-            "where hospitalNo != 0 and hospitalNo not in " +
+    @Query(value = "select venName, roadAddr, dataNo from VenueData where category = '동물병원' and " +
+            "dataNo != 0 and dataNo not in " +
             "(select hospitalNo from Reservation where time = :time and type = 2) limit 10", nativeQuery = true)
     List<ReservationHospitalList> findAllAvailableHospital(String time);
 }

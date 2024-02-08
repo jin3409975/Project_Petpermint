@@ -15,7 +15,7 @@ import RegisterUser from '@/components/register/RegisterUser.vue'
 import ReserveView from '@/views/ReserveView.vue'
 import ReserveInitialView from '@/views/ReserveInitialView.vue'
 import ReserveAppointView from '@/views/ReserveAppointView.vue'
-
+import ReserveEmergency from '@/components/reserve/ReserveEmergency.vue'
 import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
 import ReserveTime from '@/components/reserve/ReserveTime.vue'
 import ReservePet from '@/components/reserve/ReservePet.vue'
@@ -34,7 +34,7 @@ import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
 import FindId from '@/components/login/FindId.vue'
 import FindPassword from '@/components/login/FindPassword.vue'
 import FindinfoView from '@/views/account/FindinfoView.vue'
-import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
+// import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
 import CommunityListVue from '@/views/CommunityListView.vue'
 import CommunityDetailVue from '@/views/CommunityDetailVue.vue'
 
@@ -209,7 +209,7 @@ const router = createRouter({
             {
               path: 'emergency',
               name: 'reserve-emergency',
-              component: ''
+              component: ReserveEmergency
             }
           ]
         },
@@ -228,7 +228,7 @@ const router = createRouter({
             {
               path: 'broadcast',
               name: 'cam-broadcast',
-              component: CamBroadcastVue
+              component: () => import('@/components/cam/CamBroadcast.vue')
             }
           ]
         },
