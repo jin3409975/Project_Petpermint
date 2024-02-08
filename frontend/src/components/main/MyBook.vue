@@ -222,7 +222,7 @@ const handleMouseLeave = () => {
               </v-col>
             </v-row>
           </div>
-          <v-btn class="fixed-top-right" variant="outlined" color="green">상담 입장하기</v-btn>
+          <v-btn class="fixed-top-right" variant="outlined">상담 입장하기</v-btn>
         </v-carousel-item>
       </v-carousel>
     </v-dialog>
@@ -468,6 +468,7 @@ button {
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: #079c02;
   color: white;
 }
 
