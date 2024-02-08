@@ -35,6 +35,11 @@ const handleLoginLogout = () => {
   }
 }
 
+const gotoMyPage = () => {
+  if (localStorage.usertype == 1) router.push({ name: 'mypage-user-info' })
+  else if (localStorage.usertype == 2) router.push({ name: 'mypage-vet-info' })
+}
+
 // onMounted(() => {
 //   checkLoginStatus()
 // })
@@ -58,6 +63,9 @@ const navigateToAppoint = () => {
 }
 const navigateToCommunity = () => {
   router.push({ name: 'lifecare-community-list' })
+}
+const navigateToBroadcast = () => {
+  router.push({ name: 'lifecare-broadcast' })
 }
 const navigateToVetRegister = () => {
   router.push({ name: 'register-vet' })
@@ -94,7 +102,7 @@ const navigateToUserRegister = () => {
             <v-list-item link @click="navigateToCommunity">
               <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
             </v-list-item>
-            <v-list-item link>
+            <v-list-item link @click="navigateToBroadcast">
               <v-list-item-title>전문가 라이브 방송</v-list-item-title>
             </v-list-item>
             <v-list-item link>
@@ -106,6 +114,7 @@ const navigateToUserRegister = () => {
       <div style="display: flex; align-items: center; column-gap: 25px; margin-right: 15px">
         <!-- @이민지 로그인되었을 때 마이페이지로 갈 수 있게하는 라우터 필요. 자신의 프로필 이미지를 동그랗게 만들고 그걸 클릭하면 마이페지로 바로 보내면 됩니다.
         <img v-if="isLoggedIn" src="" alt=""> -->
+        <a @click="gotoMyPage" v-if="isLoggedIn" class="home-link"> 마이페이지 </a>
         <a @click="handleLoginLogout" class="home-link">{{ isLoggedIn ? '로그아웃' : '로그인' }}</a>
         <v-menu v-if="!isLoggedIn" open-on-hover>
           <template v-slot:activator="{ props }">

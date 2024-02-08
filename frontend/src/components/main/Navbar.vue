@@ -75,6 +75,9 @@ const navigateToAppoint = () => {
 const navigateToCommunity = () => {
   router.push({ name: 'lifecare-community-list' })
 }
+const navigateToBroadcast = () => {
+  router.push({ name: 'lifecare-broadcast' })
+}
 const navigateToVetRegister = () => {
   router.push({ name: 'register-vet' })
 }
@@ -110,7 +113,7 @@ const navigateToUserRegister = () => {
             <v-list-item link @click="navigateToCommunity">
               <v-list-item-title>펫닥 커뮤니티</v-list-item-title>
             </v-list-item>
-            <v-list-item link>
+            <v-list-item link @click="navigateToBroadcast">
               <v-list-item-title>전문가 라이브 방송</v-list-item-title>
             </v-list-item>
             <v-list-item link>
