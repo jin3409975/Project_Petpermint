@@ -2,6 +2,16 @@
 import { ref, reactive, computed } from 'vue'
 
 import dynamics from 'dynamics.js'
+import { useRouter } from 'vue-router'
+
+const appointId = ref('1234')
+const router = useRouter()
+
+const handleEnteringConsultButton = (e) => {
+  dialog.value = false
+  router.push({ name: 'cam-consult', params: { appointId: appointId.value } })
+}
+
 const sideWidth = 60
 
 let isDragging = false
@@ -222,7 +232,9 @@ const handleMouseLeave = () => {
               </v-col>
             </v-row>
           </div>
-          <v-btn class="fixed-top-right" variant="outlined">상담 입장하기</v-btn>
+          <v-btn class="fixed-top-right" variant="outlined" @click="handleEnteringConsultButton"
+            >상담 입장하기</v-btn
+          >
         </v-carousel-item>
       </v-carousel>
     </v-dialog>
