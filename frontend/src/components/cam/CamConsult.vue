@@ -8,8 +8,7 @@ const { VITE_APP_SERVER_URI } = import.meta.env
 export default {
   data() {
     return {
-      // sessionName: this.$route.params.paramname,
-      sessionName: 'test',
+      sessionName: this.$route.params.appointId,
       participantName: localStorage.getItem('useremail'),
       APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null
