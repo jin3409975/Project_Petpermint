@@ -132,7 +132,7 @@ export default {
     </openvidu-webcomponent>
   </div>
 </template>
-<style scoped>
+<style>
 :root {
   --ov-primary-color: #303030;
   --ov-secondary-color: #3e3f3f;
