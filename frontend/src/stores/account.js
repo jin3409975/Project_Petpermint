@@ -17,6 +17,7 @@ export const useAccountStore = defineStore(
     //로그인 여부 확인 변수
     const isLoggedIn = ref(false)
     const isUpdated = ref(false)
+    const mypetlist = ref([])
     const usersignup = async function (userData) {
       console.log(userData)
       var data = new FormData()
@@ -260,6 +261,65 @@ export const useAccountStore = defineStore(
         }
       })
     }
+    const updateExpert = function (
+      userId,
+      userName,
+      password,
+      picture,
+      address,
+      phone,
+      note,
+      starttime,
+      endtime
+    ) {
+      var data = new FormData()
+      console.log(picture)
+      console.log('startend', starttime, endtime)
+      data.append('userId', userId)
+      data.append('userName', userName)
+      data.append('password', password)
+      if (picture != null) {
+        data.append('picture', picture)
+      }
+      data.append('address', address)
+      data.append('phone', phone)
+      data.append('note', note)
+      data.append('startTime', starttime)
+      data.append('endTime', endtime)
+      axios({
+        method: 'put',
+        url: API_URL + 'update/expert',
+        data,
+        headers: {
+          'Content-Type': 'multipart/formdata'
+        }
+      }).then((r) => {
+        if (r.data.statusCode == 200) {
+          console.log('success update expertinfo', r)
+          isUpdated.value = true
+        } else {
+          console.log('failed update password', r)
+          alert('비밀번호가 올바른지 확인해 보세요')
+        }
+      })
+    }
+    const getpetlist = function (userId) {
+      axios({
+        method: 'get',
+        url: API_URL + 'pet/data',
+        params: {
+          userId: userId
+        }
+      }).then((r) => {
+        if (r.data.statusCode == 200) {
+          console.log('success get pet list info', r.data)
+          mypetlist.value = r.data.result
+        } else {
+          console.log('failed get pet list info', r)
+          alert('유저 정보를 불러오는데 실패 했습니다.')
+        }
+      })
+    }
     return {
       usersignup,
       vetsignup,
@@ -276,7 +336,10 @@ export const useAccountStore = defineStore(
       userdata,
       isUpdated,
       getexpertprofile,
-      vetdata
+      vetdata,
+      updateExpert,
+      getpetlist,
+      mypetlist
     }
   },
   { persist: true }

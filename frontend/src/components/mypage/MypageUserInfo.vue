@@ -6,12 +6,14 @@ import { storeToRefs } from 'pinia'
 
 const accountstore = useAccountStore()
 // const router = useRouter()
-const { userdata } = storeToRefs(accountstore)
+const { userdata, mypetlist } = storeToRefs(accountstore)
 const opendialog = ref(false)
-const data = ref()
+const showeditpet = ref(false)
 onBeforeMount(() => {
   const userId = localStorage.getItem('useremail')
   accountstore.getnormalprofile(userId)
+  accountstore.getpetlist(userId)
+  console.log(mypetlist, 'mypetlist')
   setTimeout(() => {
     init()
   }, 1)
@@ -37,7 +39,7 @@ const picture = ref('')
 const isreadonly = ref(true)
 const isclicked = ref(false)
 var file = null
-const isfiled = false
+
 // 프로필 사진 파일 업로드
 const getFile = function (event) {
   file = event.target.files[0]
@@ -51,7 +53,6 @@ const getFile = function (event) {
     alert('선택된 파일이 이미지 형식이 아닙니다.')
   }
 }
-
 // 카카오 주소 검색
 function openKakaoAddressSearch() {
   new window.daum.Postcode({
@@ -93,6 +94,25 @@ function completeUpdate() {
     phoneNumber.value
   )
   opendialog.value = false
+}
+
+const newpetid = ref('')
+const newpetname = ref('')
+const newpetspecie = ref('')
+const newpetgender = ref('')
+const newpetweight = ref('')
+const newpetpicture = ref('')
+
+const editPetprofile = (pet) => {
+  newpetid.value = pet.animalId
+  newpetname.value = pet.name
+  newpetspecie = pet.specie
+
+  newpetgender = pet.gender
+  newpetweight = pet.weight
+  newpetpicture = pet.picture
+
+  showeditpet.value = true
 }
 </script>
 
@@ -153,12 +173,6 @@ function completeUpdate() {
     <v-btn v-show="isclicked == false" @click="updateInfo">개인 정보 수정</v-btn>
   </v-container>
 
-  <v-container class="profile-container">
-    <!-- <div v-for="pet in petlist">
-      <v-card class="petcard"> </v-card>
-    </div> -->
-  </v-container>
-
   <v-dialog v-model="opendialog" max-width="600px">
     <v-card>
       <v-card-title> 비밀번호 입력 </v-card-title>
@@ -168,6 +182,52 @@ function completeUpdate() {
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <!-- 유저 펫리스트 -->
+  <v-sheet class="mx-auto" elevation="8" max-width="1200px">
+    <v-slide-group class="pa-4" show-arrows>
+      <v-slide-group-item v-for="pet in mypetlist" :key="pet.id">
+        <v-card height="200" width="350">
+          <v-row>
+            <v-col cols="4">
+              <v-avatar class="pet-img" size="150" variant="outlined">
+                <img
+                  :src="pet.picture"
+                  alt="펫 프로필 사진"
+                  style="max-width: 100%; height: auto"
+                />
+              </v-avatar>
+            </v-col>
+            <v-col cols="6">
+              <v-card-text>
+                {{ pet.name }} {{ pet.specie }} {{ pet.gender }} {{ pet.weight }}</v-card-text
+              >
+            </v-col>
+          </v-row>
+          <v-btn @click="editPetprofile(pet)">수정</v-btn>
+        </v-card>
+      </v-slide-group-item>
+    </v-slide-group>
+
+    <!-- 펫 수정 폼  -->
+    <v-expand-transition>
+      <v-sheet v-if="showeditpet" height="200">
+        <v-file-input
+          v-model="newpetpicture"
+          label="프로필 사진"
+          prepend-icon="mdi-camera"
+          @change="getFile"
+        ></v-file-input>
+        <v-text-field v-model="newpetname" label="이름"></v-text-field>
+        <v-text-field v-model="newpetspecie" label="종"></v-text-field>
+        <v-text-field v-model="newpetgender" label="성별"></v-text-field>
+        <v-text-field v-model="newpetweight" label="무게"></v-text-field>
+
+        <!-- <div class="d-flex fill-height align-center justify-center"> -->
+        <!-- </div> -->
+      </v-sheet>
+    </v-expand-transition>
+  </v-sheet>
 </template>
 
 <style scoped>

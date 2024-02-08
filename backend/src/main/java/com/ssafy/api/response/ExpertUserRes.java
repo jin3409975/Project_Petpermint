@@ -27,7 +27,7 @@ public class ExpertUserRes extends BaseResponseBody{
 	String note;
 	String startTime;
 	String endTime;
-	int hospitalNo;
+	String hospitalName;
 
 	public static ExpertUserRes of(Integer statusCode, String message, User user, ExpertUser expertUser) {
 		ExpertUserRes res = new ExpertUserRes();
@@ -42,7 +42,7 @@ public class ExpertUserRes extends BaseResponseBody{
 		res.setNote(expertUser.getNote());
 		res.setStartTime(expertUser.getStartTime());
 		res.setEndTime(expertUser.getEndTime());
-		res.setHospitalNo(expertUser.getHospitalNo());
+		res.setHospitalName(expertUser.getHospitalName());
 		return res;
 	}
 }

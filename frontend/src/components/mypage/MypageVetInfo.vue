@@ -25,6 +25,9 @@ function init() {
   address.value = vetdata.value.address
   picture.value = vetdata.value.picture
   note.value = vetdata.value.note
+  hospitalname.value = vetdata.value.hospitalName
+  starttime.value = vetdata.value.startTime
+  endtime.value = vetdata.value.endTime
   console.log('llllll', vetdata.value)
 }
 // 유저 프로필 변수
@@ -35,9 +38,39 @@ const phoneNumber = ref('')
 const address = ref('')
 const picture = ref('')
 const note = ref('')
+const hospitalname = ref('')
+const starttime = ref('')
+const endtime = ref('')
 // 폼 출력 여부 변수
 const isreadonly = ref(true)
 const isclicked = ref(false)
+
+const items = [
+  '00:00',
+  '01:00',
+  '02:00',
+  '03:00',
+  '04:00',
+  '05:00',
+  '06:00',
+  '07:00',
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
+  '20:00',
+  '21:00',
+  '22:00',
+  '23:00'
+]
 var file = null
 
 // 프로필 사진 파일 업로드
@@ -85,14 +118,17 @@ function saveinfo() {
 }
 function completeUpdate() {
   console.log('file', file)
-
-  accountstore.updateNormal(
+  console.log(starttime.value, endtime.value)
+  accountstore.updateExpert(
     email.value,
     userName.value,
     password.value,
     file,
     address.value,
-    phoneNumber.value
+    phoneNumber.value,
+    note.value,
+    starttime.value,
+    endtime.value
   )
   opendialog.value = false
 }
@@ -145,6 +181,24 @@ function completeUpdate() {
         variant="solo"
         :readonly="isreadonly"
       ></v-text-field>
+      <v-text-field
+        label="병원"
+        v-model="hospitalname"
+        variant="solo"
+        :readonly="isreadonly"
+      ></v-text-field>
+      <v-select
+        v-model="starttime"
+        :items="items"
+        :readonly="isreadonly"
+        label="상담 가능 시작시간"
+      ></v-select>
+      <v-select
+        v-model="endtime"
+        :items="items"
+        :readonly="isreadonly"
+        label="상담 가능 종료시간"
+      ></v-select>
       <v-btn v-if="isclicked" @click="openKakaoAddressSearch">주소 변경</v-btn>
       <v-card v-if="isclicked">
         <a
