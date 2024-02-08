@@ -40,11 +40,29 @@ const navigateToCommunity = () => {
   router.push({ name: 'lifecare-community-list' })
 }
 
+function dateConvert(createdAt) {
+  const adjustedCreatedAt = new Date(createdAt.getTime() + 9 * 60 * 60 * 1000)
+
+  const milliSeconds = new Date() - adjustedCreatedAt
+  const seconds = milliSeconds / 1000
+  if (seconds < 60) return `방금 전`
+  const minutes = seconds / 60
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`
+  const hours = minutes / 60
+  if (hours < 24) return `${Math.floor(hours)}시간 전`
+  const days = hours / 24
+  if (days < 7) return `${Math.floor(days)}일 전`
+  const weeks = days / 7
+  if (weeks < 5) return `${Math.floor(weeks)}주 전`
+  const months = days / 30
+  if (months < 12) return `${Math.floor(months)}개월 전`
+  const years = days / 365
+  return `${Math.floor(years)}년 전`
+}
+
 onMounted(() => {
   userId.value = localStorage.useremail
-  console.log(props.article)
   writer.value = community_stores.communitydetail(props.article.postId)
-  console.log(writer.value)
 })
 
 watch(
@@ -53,33 +71,91 @@ watch(
     likes.value = newLikes || 0
   }
 )
+
+const time = ref('0일 전')
+watch(
+  () => props.article.registTime,
+  (newTime) => {
+    console.log(newTime)
+    let temp = new Date(newTime)
+    console.log(temp)
+    time.value = dateConvert(temp)
+    console.log(time)
+  }
+)
 </script>
 
 <template>
-  <v-container fluid class="w-50">
-    <img v-if="article.picture !== '0'" :src="article.picture" style="max-width: 10%" />
-    <v-else>
-      <img src="/assets/img/default_profile.png" style="max-width: 10%" />
-    </v-else>
-    <span>{{ article.registTime }}</span>
-    <div class="mx-auto">{{ article.content }}</div>
-    <img :src="article.url" />
-    <img
-      v-for="(imageUrl, index) in article.urls"
-      :src="imageUrl"
-      :alt="'Image ' + (index + 1)"
-      :key="index"
-      style="max-width: 50%"
-    />
-    좋아요: {{ likes }} 조회수: {{ article.hits }}
-    <v-btn @click="checkLike">좋아요</v-btn>
-    <v-btn @click="navigateToCommunity">돌아가기</v-btn>
-    <CommunityUpdate
-      v-if="article.userId == userId"
-      :article="article"
-      :user="user"
-    ></CommunityUpdate>
-    <v-btn v-if="article.userId == userId" @click="del">삭제</v-btn>
+  <v-container fluid class="w-60">
+    <v-col class="text-center">
+      <v-row>
+        <v-col>
+          <img v-if="article.picture !== '0'" :src="article.picture" style="width: 50px" />
+          <v-else>
+            <img src="/assets/img/default_profile.png" style="width: 50px" />
+          </v-else>
+          <span
+            ><b>&nbsp; {{ time }}</b></span
+          >
+        </v-col>
+        <v-col style="margin-top: 15px">
+          <row>
+            <v-btn
+              @click="checkLike"
+              style="margin-bottom: 5px"
+              density="compact"
+              icon="mdi-heart"
+            ></v-btn>
+            <span>
+              <b> &nbsp; 좋아요 {{ likes }}개</b>
+            </span>
+          </row>
+          <row>
+            &nbsp;
+            <v-btn
+              @click="navigateToCommunity"
+              style="margin-bottom: 5px"
+              icon="mdi-arrow-left-bold"
+            ></v-btn>
+          </row>
+        </v-col>
+      </v-row>
+      <v-row>
+        <div class="mx-auto">{{ article.content }}</div>
+      </v-row>
+
+      <v-row>
+        <v-col class="text-center" style="max-width: 60%; width: 100%; margin: 0 auto">
+          <img
+            v-for="(imageUrl, index) in article.urls"
+            :src="imageUrl"
+            :alt="'Image ' + (index + 1)"
+            :key="index"
+            style="max-width: 50%"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row justify="space-between">
+        <v-col>
+          <b>조회수 {{ article.hits }}개</b>
+        </v-col>
+        <v-col>
+          <CommunityUpdate
+            v-if="article.userId == userId"
+            :article="article"
+            :user="user"
+          ></CommunityUpdate>
+          <v-btn
+            v-if="article.userId == userId"
+            @click="del"
+            style="margin-top: -45px; margin-right: -50px"
+            density="compact"
+            icon="mdi-delete"
+          ></v-btn>
+        </v-col>
+      </v-row>
+    </v-col>
   </v-container>
 </template>
 

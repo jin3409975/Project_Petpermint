@@ -53,14 +53,20 @@ export default {
 </script>
 
 <template>
-  <v-row justify="center" style="margin-top: 10px; margin-bottom: 20px">
+  <v-row justify="center" style="margin-right: 50px; margin-top: 1px">
     <v-dialog v-model="dialog" persistent width="1024">
       <template v-slot:activator="{ props }">
-        <v-btn @click="logincheck" v-bind="props"> 수정 </v-btn>
+        <v-btn
+          @click="logincheck"
+          v-bind="props"
+          style="margin-bottom: 5px"
+          density="compact"
+          icon="mdi-tooltip-edit"
+        ></v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">수정</span>
+          <span class="text-h5"><b>수정</b></span>
         </v-card-title>
         <form id="form-register" method="POST" action="">
           <v-container>

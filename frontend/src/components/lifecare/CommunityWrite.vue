@@ -59,7 +59,7 @@ export default {
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">작성</span>
+          <span class="text-h5"><b>작성</b></span>
         </v-card-title>
         <form id="form-register" method="POST" action="">
           <v-container>
