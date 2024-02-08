@@ -7,7 +7,7 @@ export default {
     return {
       // sessionName: this.$route.params.clubId,
       sessionName: 'test',
-      participantName: sessionStorage.getItem('user_id'),
+      participantName: localStorage.getItem('useremail'),
       APPLICATION_SERVER_URL: `https://i10b303.p.ssafy.io:5000/`,
       webComponent: null
     }
@@ -40,7 +40,7 @@ export default {
       })
     })
 
-    // this.getUserName()
+    this.getUserName()
     this.joinSession()
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
           // Authorization: `Bearer ${access_token}`
         }
       }
-
+      this.webComponent.participantName = localStorage.getItem('useremail')
       const userId = sessionStorage.getItem('user_id')
 
       // await this.$axios.get(`/user-service/user/${userId}/userName`, config).then((res) => {
