@@ -226,7 +226,7 @@ const router = createRouter({
             {
               path: 'consult',
               name: 'cam-consult',
-              component: ''
+              component: () => import('@/components/cam/CamConsult.vue')
             },
             {
               path: 'broadcast',
