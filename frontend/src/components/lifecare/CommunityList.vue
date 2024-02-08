@@ -4,7 +4,19 @@ import axios from 'axios'
 const props = defineProps(['article'])
 const files = ref([{}])
 
-onBeforeMount(() => {})
+onBeforeMount(async () => {
+  await props.article.forEach((article) => {
+    if (article.registTime) {
+      const originalDate = new Date(article.registTime)
+
+      // Subtract 9 hours
+      const adjustedDate = new Date(originalDate.getTime() + 9 * 60 * 60 * 1000)
+
+      // Format the adjusted date as a string
+      article.adjustedDate = adjustedDate.toLocaleString() // Adjust the formatting as needed
+    }
+  })
+})
 </script>
 
 <template>
