@@ -38,7 +38,7 @@ import FindinfoView from '@/views/account/FindinfoView.vue'
 
 import CamBroadcastVue from '@/components/cam/CamBroadcast.vue'
 
-import MainVet from '@/components/main/MainVet.vue'
+// import MainVet from '@/components/main/MainVet.vue'
 
 import LifecareViewVue from '@/views/LifecareView.vue'
 import VenueMapVue from '@/components/lifecare/VenueMap.vue'
