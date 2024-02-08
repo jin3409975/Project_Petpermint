@@ -1,7 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
-import { reactive, computed } from 'vue'
 import dynamics from 'dynamics.js'
 const sideWidth = 60
 
@@ -46,9 +45,7 @@ function onDrag(e) {
     c.x = sideWidth / 2 + dx / dampen
     if (Math.abs(dx) > 40) {
       console.log('Opening dialog')
-      // Ensure stopDrag logic is executed to reset the position
-      stopDrag() // This will also set isDragging to false
-      // Then show the dialog
+      stopDrag()
       dialog.value = true
     }
   }
@@ -104,24 +101,274 @@ const handleMouseLeave = () => {
         <span></span>
       </div>
     </div>
-    <v-dialog v-model="dialog" persistent width="auto">
-      <v-card>
-        <v-card-title class="text-h5"> Use Google's location service? </v-card-title>
-        <v-card-text
-          >Let Google help apps determine location. This means sending anonymous location data to
-          Google, even when no apps are running.</v-card-text
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green-darken-1" text @click="dialog = false"> Disagree </v-btn>
-          <v-btn color="green-darken-1" text @click="dialog = false"> Agree </v-btn>
-        </v-card-actions>
-      </v-card>
+    <v-dialog v-model="dialog" width="450px">
+      <v-carousel height="530" hide-delimiter-background show-arrows="hover" color="#668BA7">
+        <!-- <button class="noselect closed" @click="dialog = false"></button> -->
+        <v-carousel-item>
+          <div
+            class="d-flex fill-height justify-center align-center"
+            style="
+              height: 200px;
+              width: 600px;
+              background-color: rgb(235, 235, 235);
+              border-radius: 20px;
+              padding-left: 60px;
+              padding-right: 60px;
+            "
+          >
+            <v-row>
+              <v-col cols="12" sm="12" style="padding-top: 0px">
+                <v-row align="center" no-gutters>
+                  <v-col cols="auto" style="margin-right: 5px">
+                    <h2 style="margin: 0">예약 상세정보</h2>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-icon color="green">mdi-check-circle</v-icon>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <div class="my-card"><strong>예약자:</strong> 이민지</div>
+                <div class="my-card"><strong>아이 이름:</strong> 금동이</div>
+                <div class="my-card"><strong>예약 유형:</strong> 온라인 초기 상담</div>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <div class="my-card"><strong>상담 수의사 이름:</strong> 김재민</div>
+                <div class="my-card"><strong>이용일시:</strong> 2024.02.28(목) 오후 1:00</div>
+                <div class="my-card">
+                  <strong>요청 사항:</strong> 다이어트를 시켜야 할까요? 다이어트 사료 추천
+                  부탁드립니다.
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+        </v-carousel-item>
+        <v-carousel-item>
+          <div class="card">
+            <div class="card__img">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%">
+                <rect fill="#ffffff" width="540" height="450"></rect>
+                <defs>
+                  <linearGradient
+                    id="a"
+                    gradientUnits="userSpaceOnUse"
+                    x1="0"
+                    x2="0"
+                    y1="0"
+                    y2="100%"
+                    gradientTransform="rotate(222,648,379)"
+                  >
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#668BA7"></stop>
+                  </linearGradient>
+                  <pattern
+                    patternUnits="userSpaceOnUse"
+                    id="b"
+                    width="300"
+                    height="250"
+                    x="0"
+                    y="0"
+                    viewBox="0 0 1080 900"
+                  ></pattern>
+                </defs>
+                <rect x="0" y="0" fill="url(#a)" width="100%" height="50%"></rect>
+                <rect x="0" y="0" fill="url(#b)" width="100%" height="50%"></rect>
+              </svg>
+            </div>
+            <div class="card__avatar">
+              <img
+                src="/assets/img/default_profile.png "
+                style="width: 80%; height: auto; border-radius: 93.75px"
+              />
+            </div>
+            <v-row class="rows">
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">보호자</div>
+                  <div class="card__subtitle">이민지</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">반려동물 이름</div>
+                  <div class="card__subtitle">금동이</div>
+                </div></v-col
+              >
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">예약 유형</div>
+                  <div class="card__subtitle">온라인 초기 상담</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">예약 날짜</div>
+                  <div class="card__subtitle">2024.02.28(목) 오후1:00</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">상담 수의사</div>
+                  <div class="card__subtitle">김재민 병원장</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="3" class="margins">
+                <div class="card__title">메모</div>
+              </v-col>
+              <v-col col="12" md="9" class="margins">
+                <div class="card__subtitle">
+                  다이어트를 시켜야 할까요? 다이어트 사료 추천 부탁드립니다.
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+          <v-btn class="fixed-top-right" variant="outlined" color="green">상담 입장하기</v-btn>
+        </v-carousel-item>
+      </v-carousel>
     </v-dialog>
   </div>
 </template>
 
 <style scoped>
+.fixed-top-right {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+.rows {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-bottom: 10px;
+  margin-top: -40px;
+}
+.margins {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.card__content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.card__title {
+  margin-right: 20px;
+  font-weight: bold;
+  font-size: 17px;
+  color: var(--main-color);
+}
+
+.card__subtitle {
+  font-weight: bold;
+  font-size: 17px;
+  color: var(--submain-color);
+}
+
+.card {
+  --main-color: #000;
+  --submain-color: #78858f;
+  --bg-color: #fff;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
+  position: relative;
+  width: 400px;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background: var(--bg-color);
+}
+
+.card__img {
+  height: 192px;
+  width: 100%;
+}
+
+.card__img svg {
+  height: 100%;
+  border-radius: 20px 20px 0 0;
+}
+
+.card__avatar {
+  position: absolute;
+  width: 114px;
+  height: 114px;
+  background: var(--bg-color);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: calc(18% - 57px);
+}
+
+.card__avatar svg {
+  width: 100px;
+  height: 100px;
+}
+
+.card__btn {
+  margin-top: 15px;
+  width: 76px;
+  height: 31px;
+  border: 2px solid var(--main-color);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--main-color);
+  background: var(--bg-color);
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.card__btn-solid {
+  background: var(--main-color);
+  color: var(--bg-color);
+}
+
+.card__btn:hover {
+  background: var(--main-color);
+  color: var(--bg-color);
+}
+
+.card__btn-solid:hover {
+  background: var(--bg-color);
+  color: var(--main-color);
+}
+.closed {
+  position: absolute;
+  top: 0;
+  height: 40px;
+  left: 83%;
+  transform: translateX(-50%);
+  z-index: 15;
+  border-top-right-radius: 20px;
+}
+.my-card {
+  margin-bottom: 7px;
+  color: #474747;
+}
+
+.div {
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-120%) translateX(20%);
+  width: 30px;
+  height: 50;
+  background-color: rgb(255, 0, 0);
+}
 .text-rot {
   z-index: 1000;
   position: fixed;
@@ -210,5 +457,62 @@ const handleMouseLeave = () => {
     opacity: 0;
     transform: rotate(45deg) translate(20px, 20px);
   }
+}
+
+button {
+  width: 110px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  color: white;
+}
+
+button,
+button span {
+  transition: 200ms;
+}
+
+button .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+button .icon {
+  position: absolute;
+  border-left: 1px solid #ffffff;
+  transform: translateX(110px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button svg {
+  width: 15px;
+  fill: #eee;
+}
+
+button:hover {
+  background: #ff3636;
+}
+
+button:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active .icon svg {
+  transform: scale(0.8);
 }
 </style>
