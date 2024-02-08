@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Getter
 @Setter
+@ToString
 @ApiModel("NormalUserRegisterPostRequest")
 public class NormalUserUpdatePutReq {
 	@ApiModelProperty(name="이메일 형식 유저 ID", example="ssafy_web@gmail.com")
@@ -19,6 +21,10 @@ public class NormalUserUpdatePutReq {
 	String password;
 	@ApiModelProperty(name="유저 이름", example="ssafy")
 	String userName;
+	@ApiModelProperty(name="유저 이름", example="ssafy")
+	String phone;
+	@ApiModelProperty(name="유저 이름", example="ssafy")
+	String address;
 	@ApiModelProperty(name="프로필 사진", example="img")
 	MultipartFile picture;
 }

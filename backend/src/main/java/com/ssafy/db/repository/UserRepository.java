@@ -26,6 +26,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Long countByUserIdAndUserName(String userId, String UserName);
 
+    @Query(value = "select picture from User where userId = :userId", nativeQuery = true)
+    String findPicture(String userId);
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "update User set password = :password where userId = :userId and userName = :userName", nativeQuery = true )
@@ -33,15 +35,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "update User set password = :password, userName = :userName, picture = :picture where userId = :userId", nativeQuery = true )
-    void userUpdateNormal(@Param("userId") String userId, @Param("userName") String userName, @Param("password") String password, @Param("pirture") String picture);
+    @Query(value = "update User set userName = :userName, picture = :picture, address = :address, phone = :phone where userId = :userId", nativeQuery = true )
+    void userUpdateNormal(@Param("userId") String userId, @Param("userName") String userName,
+                          @Param("picture") String picture, @Param("address") String address, @Param("phone") String phone);
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "update ExpertUser set note = :note, startTime = :startTime, endTime = :endTime, hospitalNo = :hospitalNo" +
+    @Query(value = "update ExpertUser set note = :note, startTime = :startTime, endTime = :endTime" +
                     " where userId = :userId", nativeQuery = true )
     void userUpdateExpert(@Param("userId") String userId, @Param("note") String note, @Param("startTime") String startTime,
-                          @Param("endTime") String endTime, @Param("hospitalNo") int hospitalNo);
+                          @Param("endTime") String endTime);
 
     @Transactional
     @Modifying(clearAutomatically = true)
