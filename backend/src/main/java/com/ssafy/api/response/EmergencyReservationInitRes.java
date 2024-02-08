@@ -1,7 +1,6 @@
 package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -12,16 +11,16 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("RecoverResponse")
-public class RecoverRes extends BaseResponseBody{
+@ApiModel("EmergencyReservationInitResponse")
+public class EmergencyReservationInitRes extends BaseResponseBody{
 	@ApiModelProperty(name="User ID")
-	String userId;
+	String address;
 
-	public static RecoverRes of(Integer statusCode, String message, String userId) {
-		RecoverRes res = new RecoverRes();
+	public static EmergencyReservationInitRes of(Integer statusCode, String message, String address) {
+		EmergencyReservationInitRes res = new EmergencyReservationInitRes();
 		res.setMessage(message);
 		res.setStatusCode(statusCode);
-		res.setUserId(userId);
+		res.setAddress(address);
 		return res;
 	}
 }

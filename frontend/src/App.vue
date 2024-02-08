@@ -4,8 +4,9 @@ import NavbarMain from '@/components/main/NavbarMain.vue'
 import Footer from '@/components/main/Footer.vue'
 import MyBook from '@/components/main/MyBook.vue'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
+const router = useRouter()
 const route = useRoute()
 const hideNavbarMain = computed(() => route.meta.hideNavbarMain)
 const hideFooter = computed(() => route.meta.hideFooter)
@@ -20,6 +21,11 @@ const handleMouseOver = () => {
 const handleMouseOut = () => {
   currentImage.value = defaultImage
 }
+
+function goEmergency() {
+  console.log('asdasdasdqefn qejfjoqekbwrh bjw')
+  router.push({ name: 'reserve-emergency' })
+}
 </script>
 
 <template>
@@ -33,6 +39,7 @@ const handleMouseOut = () => {
         class="emerg-container"
         @mouseover="handleMouseOver"
         @mouseout="handleMouseOut"
+        @click="goEmergency"
       >
         <img :src="currentImage" class="img-style" />
         <span>응급예약</span>

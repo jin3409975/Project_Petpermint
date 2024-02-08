@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.EmergencyReservationRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
+import com.ssafy.db.entity.VenueData;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public interface EmergencyReservationService {
 	// 특정 사용자의 응급 예약 개별 조회
 	Reservation getEmergencyReservation(int appointId);
 
+	String getAddress(String userId);
+
+	List<VenueData> getEmergencyList(double lat, double lon);
 }
 
 
