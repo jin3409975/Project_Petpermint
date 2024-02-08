@@ -2,13 +2,16 @@
 import $ from 'jquery'
 import './openvidu/openvidu-webcomponent-2.29.0'
 import './openvidu/openvidu-webcomponent-2.29.0.css'
+
+const { VITE_APP_SERVER_URI } = import.meta.env
+
 export default {
   data() {
     return {
-      // sessionName: this.$route.params.clubId,
+      // sessionName: this.$route.params.paramname,
       sessionName: 'test',
-      participantName: sessionStorage.getItem('user_id'),
-      APPLICATION_SERVER_URL: `https://i10b303.p.ssafy.io:5000/`,
+      participantName: localStorage.getItem('useremail'),
+      APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null
     }
   },
@@ -40,7 +43,7 @@ export default {
       })
     })
 
-    // this.getUserName()
+    this.getUserName()
     this.joinSession()
   },
   methods: {
@@ -52,7 +55,7 @@ export default {
           // Authorization: `Bearer ${access_token}`
         }
       }
-
+      this.webComponent.participantName = localStorage.getItem('useremail')
       const userId = sessionStorage.getItem('user_id')
 
       // await this.$axios.get(`/user-service/user/${userId}/userName`, config).then((res) => {
