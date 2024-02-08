@@ -228,7 +228,7 @@ function register() {
     password: password1.value,
     name: name.value,
     phone: phone.value,
-    address: address1.value + ' ' + address2.value
+    address: address1.value
   }
   store.usersignup(payload)
   // 여기서는 예시로 바로 스낵바를 표시합니다.
