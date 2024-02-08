@@ -7,12 +7,7 @@ const typedElement = ref(null)
 
 onMounted(() => {
   const options = {
-    strings: [
-      '사랑스러운 반려동물의 건강은',
-      '저희 펫퍼민트가',
-      '초기 화상 상담으로',
-      '지켜드리겠습니다.'
-    ],
+    strings: ['사랑스러운 반려동물의 건강', '펫퍼민트가 함께 합니다.'],
     typeSpeed: 60,
     backSpeed: 40,
     fadeOut: true,

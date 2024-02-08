@@ -25,6 +25,12 @@ const rules = {
   email: [(v) => !!v || '이메일을 입력해주세요.'],
   password: [(v) => !!v || '비밀번호를 입력해주세요.']
 }
+
+// nav 해당 페이지로 이동
+const navigateTo = (path) => {
+  router.push(path)
+}
+
 // const items = ref([
 //   {
 //     title: '아이디 찾기',
@@ -107,11 +113,21 @@ const rules = {
       <v-card-text class="text-center">
         <a
           class="text-blue text-decoration-none"
-          href="#"
+          @click="navigateTo('/register/user/info')"
           rel="noopener noreferrer"
           target="_blank"
+          style="margin-right: 35px; cursor: pointer"
         >
-          회원 가입 <v-icon icon="mdi-chevron-right"></v-icon>
+          보호자 회원 가입 <v-icon icon="mdi-chevron-right"></v-icon>
+        </a>
+        <a
+          class="text-blue text-decoration-none"
+          @click="navigateTo('/register/vet')"
+          rel="noopener noreferrer"
+          target="_blank"
+          style="margin-left: 35px; cursor: pointer"
+        >
+          수의사 회원 가입 <v-icon icon="mdi-chevron-right"></v-icon>
         </a>
       </v-card-text>
     </v-card>

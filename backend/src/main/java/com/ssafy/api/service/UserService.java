@@ -25,4 +25,6 @@ public interface UserService {
 	boolean userUpdateNormal(NormalUserUpdatePutReq updatePutReq, String url);
 	boolean userUpdateExpert(ExpertUserUpdatePutReq updatePutReq, String url);
 	boolean deleteUser(String userId);
+
+	String findPicture(String userId);
 }

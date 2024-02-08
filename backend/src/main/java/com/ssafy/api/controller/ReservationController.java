@@ -4,10 +4,12 @@ import com.ssafy.api.request.ConsultReservationUpdatePutReq;
 import com.ssafy.api.request.HospitalReservationUpdatePutReq;
 import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.api.response.*;
+import com.ssafy.api.service.EmergencyReservationService;
 import com.ssafy.api.service.ReservationService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Animal;
 import com.ssafy.db.entity.Reservation;
+import com.ssafy.db.entity.VenueData;
 import com.ssafy.db.join.ReservationExpertUserList;
 import com.ssafy.db.join.ReservationHospitalList;
 import io.swagger.annotations.*;
@@ -28,6 +30,9 @@ public class ReservationController {
 
 	@Autowired
 	ReservationService reservationService;
+
+	@Autowired
+	EmergencyReservationService emergencyReservationService;
 
 	@PostMapping("/consult/create")
 	@ApiOperation(value = "상담 예약 생성", notes = "상담 예약 생성")
@@ -261,4 +266,32 @@ public class ReservationController {
 		ConsultReservationRes reservationResList = ConsultReservationRes.listofConsult(200,"success",result);
 		return ResponseEntity.status(200).body(reservationResList);
 	}
+
+	@GetMapping("/emergency/init")
+	@ApiOperation(value = "사용자 위치기반 가장 가까운 병원 출력", notes = "사용자 위치기반 가장 가까운 병원 출력")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "상담 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<EmergencyReservationInitRes> getEmergencyInit(@ApiIgnore String userId) {
+		String address = emergencyReservationService.getAddress(userId);
+		return ResponseEntity.status(200).body(EmergencyReservationInitRes.of(200,"Success",address));
+	}
+
+	@GetMapping("/emergency/list")
+	@ApiOperation(value = "사용자 위치기반 가장 가까운 병원 출력", notes = "사용자 위치기반 가장 가까운 병원 출력")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "상담 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<VenueDataGetRes> getEmergencyList(@ApiIgnore double lat, double lon) {
+		System.out.println(lat + " " + lon);
+		List<VenueData> result = emergencyReservationService.getEmergencyList(lat,lon);
+		return ResponseEntity.status(200).body(VenueDataGetRes.of(200,"Success",result));
+	}
+
 }

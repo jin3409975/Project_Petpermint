@@ -29,7 +29,7 @@ export const useReserveStore = defineStore('reserve', () => {
   function consultCreate() {
     axios({
       method: 'post',
-      url: VITE_APP_SERVER_URI + '/consult/create',
+      url: VITE_APP_SERVER_URI + '/reserve/consult/create',
       data: {
         userId: useremail,
         type: 1,
@@ -68,6 +68,43 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     })
   }
+  function emergencyCreate(hospitalNo) {
+    var today = new Date()
+    var time = today.getFullYear() + '-'
+    if (today.getMonth() + 1 < 10) {
+      time += '0' + (today.getMonth() + 1)
+    } else {
+      time += today.getMonth() + 1
+    }
+    time += '-'
+    if (today.getDay() + 4 < 10) {
+      time += '0' + (today.getDay() + 4)
+    } else {
+      time += today.getDay() + 4
+    }
+    time += ' '
+    if (today.getHours() < 10) {
+      time += '0' + today.getHours()
+    } else {
+      time += today.getHours()
+    }
+    time += ':00'
+    axios({
+      method: 'post',
+      url: VITE_APP_SERVER_URI + '/emergency/reserve/create',
+      data: {
+        userId: useremail,
+        hospitalNo: hospitalNo,
+        time: time
+      }
+    }).then((r) => {
+      if (r.data.statusCode == 200) {
+        alert('응급 예약이 완료되었습니다.')
+        console.log('qwewqeqweeq123123w')
+        router.push({ name: 'main' })
+      }
+    })
+  }
   // 초기상담 시간 가능한 수의사, 병원 리스트 + 수의사 면허번호도 추가로 넘어왔으면
   function getdoctorList() {
     axios({
@@ -96,6 +133,7 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     })
       .then((res) => {
+        console.log(res)
         hospitalList.value = res.data.result
         // console.log(reservedate.value)
         console.log(res.data)
@@ -137,6 +175,7 @@ export const useReserveStore = defineStore('reserve', () => {
     getpetList,
     petname,
     hospitalname,
-    notetext
+    notetext,
+    emergencyCreate
   }
 })
