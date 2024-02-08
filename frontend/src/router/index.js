@@ -41,6 +41,8 @@ import CommunityDetailVue from '@/views/CommunityDetailVue.vue'
 
 import LifecareViewVue from '@/views/LifecareView.vue'
 import VenueMapVue from '@/components/lifecare/VenueMap.vue'
+import EnterBroadcast from '@/components/lifecare/EnterBroadcast.vue'
+import EnterBroadcastVue from '@/views/EnterBroadcastVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -267,12 +269,12 @@ const router = createRouter({
             {
               path: 'broadcast',
               name: 'lifecare-broadcast',
-              component: '',
+              component: EnterBroadcastVue,
               children: [
                 {
                   path: 'enter',
                   name: 'lifecare-broadcast-enter',
-                  component: ''
+                  component: EnterBroadcast
                 }
               ]
             }
