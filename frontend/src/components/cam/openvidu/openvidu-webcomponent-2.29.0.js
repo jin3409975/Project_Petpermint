@@ -40231,7 +40231,7 @@
             'This feature is part of OpenVidu commercial service. Please contact us through commercial@openvidu.io for more information.',
           CHAT: {
             TITLE: '메시지',
-            YOU: 'You',
+            YOU: '나',
             SUBTITLE: '상담이 끝나면 모든 메시지가 삭제됩니다',
             PLACEHOLDER: '메시지를 입력해주세요...',
             SEND: '보내기'
