@@ -73,6 +73,9 @@ const navigateToVetRegister = () => {
 const navigateToUserRegister = () => {
   router.push({ name: 'register-user' })
 }
+const navigateToVenue = () => {
+  router.push({ name: 'lifecare-venue' })
+}
 </script>
 
 <template>
@@ -106,7 +109,7 @@ const navigateToUserRegister = () => {
               <v-list-item-title>전문가 라이브 방송</v-list-item-title>
             </v-list-item>
             <v-list-item link>
-              <v-list-item-title>반려동물 시설/센터</v-list-item-title>
+              <v-list-item-title @click="navigateToVenue">반려동물 시설/센터</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
