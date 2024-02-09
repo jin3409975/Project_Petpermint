@@ -320,6 +320,45 @@ export const useAccountStore = defineStore(
         }
       })
     }
+    const updatePet = function (
+      userId,
+      petname,
+      animalId,
+      picture,
+      specie,
+      age,
+      note,
+      weight,
+      gender
+    ) {
+      var data = new FormData()
+      data.append('userId', userId)
+      data.append('name', petname)
+      data.append('animalId', animalId)
+      if (picture != null) {
+        data.append('picture', picture)
+      }
+      data.append('specie', specie)
+      data.append('age', age)
+      data.append('note', note)
+      data.append('weight', weight)
+      data.append('gender', gender)
+      axios({
+        method: 'put',
+        url: API_URL + 'pet/update',
+        data,
+        headers: {
+          'Content-Type': 'multipart/formdata'
+        }
+      }).then((r) => {
+        if (r.data.statusCode == 200) {
+          console.log('success update petinfo', r)
+        } else {
+          console.log('failed update password', r)
+          alert('비밀번호가 올바른지 확인해 보세요')
+        }
+      })
+    }
     return {
       usersignup,
       vetsignup,
@@ -339,7 +378,8 @@ export const useAccountStore = defineStore(
       vetdata,
       updateExpert,
       getpetlist,
-      mypetlist
+      mypetlist,
+      updatePet
     }
   },
   { persist: true }

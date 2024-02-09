@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
@@ -39,7 +39,7 @@ const picture = ref('')
 const isreadonly = ref(true)
 const isclicked = ref(false)
 var file = null
-
+var petfile = null
 // 프로필 사진 파일 업로드
 const getFile = function (event) {
   file = event.target.files[0]
@@ -95,24 +95,66 @@ function completeUpdate() {
   )
   opendialog.value = false
 }
-
-const newpetid = ref('')
+// 펫 정보 수정 사항 저장 변수
 const newpetname = ref('')
 const newpetspecie = ref('')
 const newpetgender = ref('')
 const newpetweight = ref('')
 const newpetpicture = ref('')
+const newpetId = ref(0)
+const newpetnote = ref('')
+const newpetage = ref('')
 
+// 수정버튼 클릭 ->동물 정보 편집 textlist 보여짐
 const editPetprofile = (pet) => {
-  newpetid.value = pet.animalId
-  newpetname.value = pet.name
-  newpetspecie = pet.specie
-
-  newpetgender = pet.gender
-  newpetweight = pet.weight
-  newpetpicture = pet.picture
-
   showeditpet.value = true
+  newpetId.value = pet.animalId
+  newpetname.value = pet.name
+  newpetspecie.value = pet.specie
+  newpetgender.value = pet.gender
+  newpetweight.value = pet.weight
+  newpetnote.value = pet.note
+  newpetage.value = pet.age
+}
+// 펫 프로필 사진 파일 업로드
+const getpetFile = function (event) {
+  petfile = event.target.files[0]
+  if (petfile && petfile.type.match('image.*')) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      newpetpicture.value = e.target.result
+    }
+    reader.readAsDataURL(petfile)
+  } else {
+    alert('선택된 파일이 이미지 형식이 아닙니다.')
+  }
+}
+// 펫 정보 수정후 저장 버튼 클릭시 axios 요청 account.js 의 323번줄 updatePet
+const savenewpetInfo = function () {
+  const userId = localStorage.getItem('useremail')
+  console.log(
+    userId,
+    newpetname.value,
+    newpetId.value,
+    petfile,
+    newpetspecie.value,
+    newpetage.value,
+    newpetnote.value,
+    newpetweight.value,
+    newpetgender.value
+  )
+  accountstore.updatePet(
+    userId,
+    newpetname.value,
+    newpetId.value,
+    petfile,
+    newpetspecie.value,
+    newpetage.value,
+    newpetnote.value,
+    newpetweight.value,
+    newpetgender.value
+  )
+  showeditpet.value = false
 }
 </script>
 
@@ -210,19 +252,21 @@ const editPetprofile = (pet) => {
     </v-slide-group>
 
     <!-- 펫 수정 폼  -->
-    <v-expand-transition>
-      <v-sheet v-if="showeditpet" height="200">
+    <v-expand-transition v-if="showeditpet">
+      <v-sheet height="auto">
         <v-file-input
           v-model="newpetpicture"
           label="프로필 사진"
           prepend-icon="mdi-camera"
-          @change="getFile"
+          @change="getpetFile"
         ></v-file-input>
         <v-text-field v-model="newpetname" label="이름"></v-text-field>
         <v-text-field v-model="newpetspecie" label="종"></v-text-field>
         <v-text-field v-model="newpetgender" label="성별"></v-text-field>
         <v-text-field v-model="newpetweight" label="무게"></v-text-field>
-
+        <v-text-field v-model="newpetage" label="무게"></v-text-field>
+        <v-text-field v-model="newpetnote" label="소개"></v-text-field>
+        <v-btn @click="savenewpetInfo">저장</v-btn>
         <!-- <div class="d-flex fill-height align-center justify-center"> -->
         <!-- </div> -->
       </v-sheet>
