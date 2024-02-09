@@ -101,7 +101,7 @@ const handleMouseLeave = () => {
       <svg class="bg" width="100" height="80">
         <path :d="headerPath" fill="#D2E0FB"></path>
       </svg>
-      <div class="header" @mouseenter="handleMouseEnter">My 예약표</div>
+      <div class="header" @mouseenter="handleMouseEnter">My 예약카드</div>
     </div>
     <div v-if="showHoverText && textVisibleOnClick" class="text-rot">
       오른쪽으로 잡아당기세요
