@@ -40183,14 +40183,14 @@
           POWERED_BY: 'Powered by'
         },
         sR = {
-          NICKNAME_SECTION: 'Set your nickname',
+          NICKNAME_SECTION: '이름이 무엇인가요?',
           NICKNAME: 'Nickname',
           DEVICE_SECTION: 'Choose your devices',
           VIDEO_DEVICE: 'Video device',
           AUDIO_DEVICE: 'Audio device',
           NO_VIDEO_DEVICE: 'Video device not found',
           NO_AUDIO_DEVICE: 'Audio device not found',
-          JOIN: 'Join session',
+          JOIN: '상담 참여',
           PREPARING: 'Preparing session...'
         },
         aR = {
