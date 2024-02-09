@@ -40243,7 +40243,7 @@
             VIDEO: 'Video',
             AUDIO: 'Audio',
             LANGUAGE: 'Language',
-            CAPTIONS: 'Captions',
+            CAPTIONS: '자막 효과',
             CAPTIONS_LANG_TEXT:
               'Select the language that the participants of the session will use. The captions will appear in that language.'
           },

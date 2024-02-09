@@ -129,6 +129,12 @@ export default {
   <div id="main" style="text-align: center; width: 100%; height: 100%">
     <openvidu-webcomponent
       ref="webComponent"
+      toolbar-recording-button="false"
+      toolbar-broadcasting-button="false"
+      toolbar-activities-panel-button="false"
+      toolbar-display-logo="false"
+      toolbar-display-session-name="false"
+      stream-resolution="'320x240'"
       style="height: 100vh; width: 100%; display: block !important"
     >
     </openvidu-webcomponent>
