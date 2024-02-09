@@ -176,7 +176,13 @@ const handleMouseLeave = () => {
           <v-btn class="fixed-top-right" variant="flat" color="#C0A0A8" disabled
             >상담 입장하기</v-btn
           > -->
-          <v-btn class="fixed-top-right" variant="flat" color="#C0A0A8" @click="handleEnteringConsultButton">상담 입장하기</v-btn>
+          <v-btn
+            class="fixed-top-right"
+            variant="flat"
+            color="#C0A0A8"
+            @click="handleEnteringConsultButton"
+            >상담 입장하기</v-btn
+          >
 
           <!-- 닫기 버튼 -->
           <button class="closed" @click="dialog = false">
