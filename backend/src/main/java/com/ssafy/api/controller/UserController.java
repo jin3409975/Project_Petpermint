@@ -353,7 +353,11 @@ public class UserController {
 		String url = null;
 		if(animalReq.getPicture() != null) {
 			url=s3service.savePetProfile(animalReq.getPicture(),animalReq);
-		}if(animalService.animalUpdate(animalReq,url)) {
+		} else {
+			url=animalService.findPicture(animalReq.getAnimalId());
+		}
+
+		if(animalService.animalUpdate(animalReq,url)) {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		} else {
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));

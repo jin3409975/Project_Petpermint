@@ -33,4 +33,7 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "update Animal set isDelete = 1 where animalId = :animalId", nativeQuery = true )
     void deleteAnimal(@Param("animalId") int animalId);
+
+    @Query(value = "select * from Animal where animalId = :animalId", nativeQuery = true)
+    Animal findPicture(int animalId);
 }
