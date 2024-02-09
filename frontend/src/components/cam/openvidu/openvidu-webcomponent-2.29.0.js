@@ -40073,7 +40073,7 @@
           SETTINGS: 'Einstellungen',
           LEAVE: 'Die Sitzung verlassen',
           PARTICIPANTS: 'Teilnehmer',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Aktivit\xe4ten'
         },
         nR = {
@@ -40091,7 +40091,7 @@
           PAID_FEATURE:
             'Diese Funktion ist Teil des kommerziellen Dienstes von OpenVidu. Bitte kontaktieren Sie uns \xfcber commercial@openvidu.io f\xfcr weitere Informationen.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Sie',
             SUBTITLE: 'Nachrichten werden am Ende der Sitzung entfernt',
             PLACEHOLDER: 'Eine Nachricht senden...',
@@ -40184,58 +40184,59 @@
         },
         sR = {
           NICKNAME_SECTION: '이름이 무엇인가요?',
-          NICKNAME: 'Nickname',
+          NICKNAME: '이름',
           DEVICE_SECTION: 'Choose your devices',
           VIDEO_DEVICE: 'Video device',
           AUDIO_DEVICE: 'Audio device',
           NO_VIDEO_DEVICE: 'Video device not found',
           NO_AUDIO_DEVICE: 'Audio device not found',
-          JOIN: '상담 참여',
-          PREPARING: 'Preparing session...'
+          JOIN: '지금 상담실 들어가기',
+          PREPARING: '상담실 입장중...'
         },
         aR = {
-          MUTE_AUDIO: 'Mute your audio',
-          UNMUTE_AUDIO: 'Unmute your audio',
-          MUTE_VIDEO: 'Mute your video',
-          UNMUTE_VIDEO: 'Unmute your video',
-          ENABLE_SCREEN: 'Enable screen share',
-          DISABLE_SCREEN: 'Disable screen share',
-          MORE_OPTIONS: 'More options',
-          FULLSCREEN: '전체화면',
-          EXIT_FULLSCREEN: 'Exit fullscreen',
-          ENABLE_CAPTIONS: 'Enable captions',
-          DISABLE_CAPTIONS: 'Disable captions',
-          BACKGROUND: 'Background effects',
-          START_RECORDING: 'Start recording',
-          STOP_RECORDING: 'Stop recording',
-          SETTINGS: 'Settings',
-          LEAVE: 'Leave the session',
-          PARTICIPANTS: 'Participants',
-          CHAT: '대화',
+          MUTE_AUDIO: '마이크 끄기',
+          UNMUTE_AUDIO: '마이크 켜기',
+          MUTE_VIDEO: '카메라 끄기',
+          UNMUTE_VIDEO: '카메라 켜기',
+          ENABLE_SCREEN: '화면 공유',
+          DISABLE_SCREEN: '화면 공유 중지',
+          MORE_OPTIONS: '더보기...',
+          FULLSCREEN: '전체 화면',
+          EXIT_FULLSCREEN: '전체 화면 ',
+          ENABLE_CAPTIONS: '자막 사용',
+          DISABLE_CAPTIONS: '자막 사용 중지',
+          BACKGROUND: '배경 효과',
+          START_RECORDING: '녹화 시작',
+          STOP_RECORDING: '녹화 중지',
+          SETTINGS: '설정',
+          LEAVE: '상담에서 나가기',
+          PARTICIPANTS: '참여자',
+          CHAT: '메시지',
           ACTIVITIES: 'Activities'
         },
         lR = {
-          SETTINGS: 'Settings',
-          MUTE_SOUND: 'Mute sound',
-          UNMUTE_SOUND: 'Unmute sound',
-          ZOOM_IN: 'Zoom in',
-          ZOOM_OUT: 'Zoom out',
+          SETTINGS: '설정',
+          MUTE_SOUND: '음성 끄기',
+          UNMUTE_SOUND: '음성 켜기',
+          ZOOM_IN: '확대',
+          ZOOM_OUT: '축소',
           REPLACE_SCREEN: 'Replace screen'
         },
         cR = {
           CLOSE: 'Close',
           SEE_MORE: 'See more',
-          PRO_FEATURE: 'This feature is part of OpenVidu PRO tier',
+          PRO_FEATURE:
+            '펫퍼민트 프로토타입에서는 지원하지 않는 기능입니다. 앱 런칭을 위해 벤처 그룹사를 찾고 있습니다. ssafyjam@gmail.com ',
           PAID_FEATURE:
             'This feature is part of OpenVidu commercial service. Please contact us through commercial@openvidu.io for more information.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'You',
-            SUBTITLE: 'Messages will be removed at the end of the session',
-            PLACEHOLDER: 'Send a message...',
-            SEND: 'Send'
+            SUBTITLE: '상담이 끝나면 모든 메시지가 삭제됩니다',
+            PLACEHOLDER: '메시지를 입력해주세요...',
+            SEND: '보내기'
           },
-          PARTICIPANTS: { TITLE: 'Participants', CAMERA: 'CAMERA', SCREEN: 'SCREEN' },
+          PARTICIPANTS: { TITLE: '참여자', CAMERA: 'CAMERA', SCREEN: 'SCREEN' },
           SETTINGS: {
             TITLE: 'Settings',
             GENERAL: 'General',
@@ -40247,14 +40248,14 @@
               'Select the language that the participants of the session will use. The captions will appear in that language.'
           },
           BACKGROUND: {
-            TITLE: 'Background effects',
+            TITLE: '배경 효과',
             BLURRED_SECTION: 'No effects and blurred background',
             NO_EFFECTS: 'No background effect',
             BLURRED_EFFECT: 'Blurred background',
             IMAGES_SECTION: 'Background images'
           },
           RECORDING: {
-            TITLE: 'Recording',
+            TITLE: '녹화',
             SUBTITLE: 'Record your meeting for posterity',
             CONTENT_TITLE: 'Record your video call',
             CONTENT_SUBTITLE:
@@ -40271,7 +40272,7 @@
             NO_MODERATOR: 'Only the MODERATOR can start the recording'
           },
           STREAMING: {
-            TITLE: 'Streaming',
+            TITLE: '스트리밍',
             SUBTITLE: 'Stream your meeting to your audience',
             CONTENT_SUBTITLE: 'OpenVidu need the url of the streaming platform.',
             START: 'Start streaming',
@@ -40350,7 +40351,7 @@
           SETTINGS: 'Configuraci\xf3n',
           LEAVE: 'Salir de la sesi\xf3n',
           PARTICIPANTS: 'Participantes',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Actividades'
         },
         pR = {
@@ -40368,7 +40369,7 @@
           PAID_FEATURE:
             'Esta funci\xf3n es parte del servicio comercial de OpenVidu. Cont\xe1ctenos a trav\xe9s de commercial@openvidu.io para obtener m\xe1s informaci\xf3n',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'T\xfa',
             SUBTITLE: 'Los mensajes se borrar\xe1n al finalizar la sesi\xf3n',
             PLACEHOLDER: 'Enviar mensaje...',
@@ -40487,8 +40488,8 @@
           STOP_RECORDING: "Arr\xeater l'enregistrement",
           SETTINGS: 'Param\xe8tres',
           LEAVE: 'Quitter la session',
-          PARTICIPANTS: 'Participants',
-          CHAT: '대화',
+          PARTICIPANTS: '참여자',
+          CHAT: '메시지',
           ACTIVITES: 'Activit\xe9s'
         },
         yR = {
@@ -40506,7 +40507,7 @@
           PAID_FEATURE:
             "Cette fonctionnalit\xe9 fait partie du service commercial d'OpenVidu. Veuillez nous contacter via commercial@openvidu.io pour plus d'informations.",
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Vous',
             SUBTITLE: 'Les messages seront supprim\xe9s \xe0 la fin de la session',
             PLACEHOLDER: 'Envoyer un message...',
@@ -40819,7 +40820,7 @@
           SETTINGS: 'Impostazioni',
           LEAVE: 'Abbandona la sessione',
           PARTICIPANTS: 'Partecipanti',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Attivit\xe0'
         },
         RR = {
@@ -40837,7 +40838,7 @@
           PAID_FEATURE:
             'Questa funzione fa parte del servizio commerciale di OpenVidu. Per ulteriori informazioni, contattaci tramite commercial@openvidu.io.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Tu',
             SUBTITLE: 'I messaggi verranno rimossi alla fine della sessione',
             PLACEHOLDER: 'Invia un messaggio...',
@@ -41122,7 +41123,7 @@
           SETTINGS: 'Instellingen',
           LEAVE: 'Verlaat de sessie',
           PARTICIPANTS: 'Deelnemers',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Activiteiten'
         },
         zR = {
@@ -41140,7 +41141,7 @@
           PAID_FEATURE:
             'Deze functie maakt deel uit van de commerci\xeble service van OpenVidu. Neem voor meer informatie contact met ons op via commercial@openvidu.io.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Jij',
             SUBTITLE: 'Berichten worden aan het einde van de sessie verwijderd',
             PLACEHOLDER: 'Stuur een bericht ...',
@@ -41260,7 +41261,7 @@
           SETTINGS: 'Configura\xe7\xf5es',
           LEAVE: 'Sair da sess\xe3o',
           PARTICIPANTS: 'Participantes',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Actividades'
         },
         QR = {
@@ -41278,7 +41279,7 @@
           PAID_FEATURE:
             'Este recurso faz parte do servi\xe7o comercial OpenVidu. Entre em contato conosco atrav\xe9s de commercial@openvidu.io para obter mais informa\xe7\xf5es.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Voc\xea',
             SUBTITLE: 'As mensagens ser\xe3o removidas no final da sess\xe3o',
             PLACEHOLDER: 'Enviar uma mensagem...',
@@ -44008,7 +44009,7 @@
         })()
       var Wt = (() => {
           return (
-            ((t = Wt || (Wt = {})).CHAT = '대화'),
+            ((t = Wt || (Wt = {})).CHAT = '메시지'),
             (t.PARTICIPANTS = 'participants'),
             (t.BACKGROUND_EFFECTS = 'background-effects'),
             (t.ACTIVITIES = 'activities'),
@@ -44519,7 +44520,7 @@
       var So = (() => {
         return (
           ((t = So || (So = {})).NICKNAME_CHANGED = 'nicknameChanged'),
-          (t.CHAT = '대화'),
+          (t.CHAT = '메시지'),
           (t.RECORDING_DELETED = 'recordingDeleted'),
           So
         )
