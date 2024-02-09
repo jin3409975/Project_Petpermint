@@ -111,86 +111,25 @@ const handleMouseLeave = () => {
         <span></span>
       </div>
     </div>
-    <v-dialog v-model="dialog" width="450px">
-      <v-carousel height="530" hide-delimiter-background show-arrows="hover" color="#668BA7">
-        <!-- <button class="noselect closed" @click="dialog = false"></button> -->
-        <v-carousel-item>
-          <div
-            class="d-flex fill-height justify-center align-center"
-            style="
-              height: 200px;
-              width: 600px;
-              background-color: rgb(235, 235, 235);
-              border-radius: 20px;
-              padding-left: 60px;
-              padding-right: 60px;
-            "
-          >
-            <v-row>
-              <v-col cols="12" sm="12" style="padding-top: 0px">
-                <v-row align="center" no-gutters>
-                  <v-col cols="auto" style="margin-right: 5px">
-                    <h2 style="margin: 0">예약 상세정보</h2>
-                  </v-col>
-                  <v-col cols="auto">
-                    <v-icon color="green">mdi-check-circle</v-icon>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="12">
-                <div class="my-card"><strong>예약자:</strong> 이민지</div>
-                <div class="my-card"><strong>아이 이름:</strong> 금동이</div>
-                <div class="my-card"><strong>예약 유형:</strong> 온라인 초기 상담</div>
-              </v-col>
-              <v-col cols="12" sm="12">
-                <div class="my-card"><strong>상담 수의사 이름:</strong> 김재민</div>
-                <div class="my-card"><strong>이용일시:</strong> 2024.02.28(목) 오후 1:00</div>
-                <div class="my-card">
-                  <strong>요청 사항:</strong> 다이어트를 시켜야 할까요? 다이어트 사료 추천
-                  부탁드립니다.
-                </div>
-              </v-col>
-            </v-row>
-          </div>
-        </v-carousel-item>
+    <v-dialog v-model="dialog" width="400px">
+      <!-- 온라인 초기 상담 -->
+      <v-carousel height="480" hide-delimiter-background show-arrows="hover" color="#668BA7">
         <v-carousel-item>
           <div class="card">
             <div class="card__img">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100%">
-                <rect fill="#ffffff" width="540" height="450"></rect>
-                <defs>
-                  <linearGradient
-                    id="a"
-                    gradientUnits="userSpaceOnUse"
-                    x1="0"
-                    x2="0"
-                    y1="0"
-                    y2="100%"
-                    gradientTransform="rotate(222,648,379)"
-                  >
-                    <stop offset="0" stop-color="#ffffff"></stop>
-                    <stop offset="1" stop-color="#668BA7"></stop>
-                  </linearGradient>
-                  <pattern
-                    patternUnits="userSpaceOnUse"
-                    id="b"
-                    width="300"
-                    height="250"
-                    x="0"
-                    y="0"
-                    viewBox="0 0 1080 900"
-                  ></pattern>
-                </defs>
-                <rect x="0" y="0" fill="url(#a)" width="100%" height="50%"></rect>
-                <rect x="0" y="0" fill="url(#b)" width="100%" height="50%"></rect>
+              <svg width="100%">
+                <rect x="0" y="0" fill="#668BA7" width="100%" height="50%"></rect>
               </svg>
             </div>
+
+            <!-- 강아지 프로필 사진 -->
             <div class="card__avatar">
               <img
                 src="/assets/img/default_profile.png "
                 style="width: 80%; height: auto; border-radius: 93.75px"
               />
             </div>
+
             <v-row class="rows">
               <v-col col="12" md="12" class="margins" style="height: 10px">
                 <div class="card__content">
@@ -223,7 +162,7 @@ const handleMouseLeave = () => {
                 </div>
               </v-col>
               <v-col col="12" md="3" class="margins">
-                <div class="card__title">메모</div>
+                <div class="card__title" style="margin-right: 0">메모</div>
               </v-col>
               <v-col col="12" md="9" class="margins">
                 <div class="card__subtitle">
@@ -232,9 +171,81 @@ const handleMouseLeave = () => {
               </v-col>
             </v-row>
           </div>
-          <v-btn class="fixed-top-right" variant="outlined" @click="handleEnteringConsultButton"
+
+          <!-- 만약 온라인 초기 상담 시간이 안되었다면 disabled를 넣어서 클릭 안되게하기
+          <v-btn class="fixed-top-right" variant="flat" color="#C0A0A8" disabled
             >상담 입장하기</v-btn
-          >
+          > -->
+          <v-btn class="fixed-top-right" variant="flat" color="#C0A0A8" @click="handleEnteringConsultButton">상담 입장하기</v-btn>
+
+          <!-- 닫기 버튼 -->
+          <button class="closed" @click="dialog = false">
+            <v-icon icon="mdi-close-thick"></v-icon>
+          </button>
+        </v-carousel-item>
+        <!-- 병원 상담 -->
+        <v-carousel-item>
+          <div class="card">
+            <div class="card__img">
+              <svg width="100%">
+                <rect x="0" y="0" fill="#668BA7" width="100%" height="50%"></rect>
+              </svg>
+            </div>
+
+            <!-- 강아지 프로필 사진 -->
+            <div class="card__avatar">
+              <img
+                src="/assets/img/default_profile.png "
+                style="width: 80%; height: auto; border-radius: 93.75px"
+              />
+            </div>
+
+            <v-row class="rows">
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">보호자</div>
+                  <div class="card__subtitle">이채은</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">반려동물 이름</div>
+                  <div class="card__subtitle">메이</div>
+                </div></v-col
+              >
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">예약 유형</div>
+                  <div class="card__subtitle">병원 진료</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">예약 날짜</div>
+                  <div class="card__subtitle">2024.02.14(수) 오후4:00</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="12" class="margins" style="height: 10px">
+                <div class="card__content">
+                  <div class="card__title">상담 수의사</div>
+                  <div class="card__subtitle">이수형 부원장</div>
+                </div>
+              </v-col>
+              <v-col col="12" md="2" class="margins">
+                <div class="card__title" style="margin-right: 0">메모</div>
+              </v-col>
+              <v-col col="12" md="10" class="margins">
+                <div class="card__subtitle">
+                  나이가 많은데 산책을 갈 수 있을 까요? 소화도 잘 못하는거 같아요.
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+
+          <!-- 닫기 버튼 -->
+          <button class="closed" @click="dialog = false">
+            <v-icon icon="mdi-close-thick"></v-icon>
+          </button>
         </v-carousel-item>
       </v-carousel>
     </v-dialog>
@@ -242,10 +253,19 @@ const handleMouseLeave = () => {
 </template>
 
 <style scoped>
+.closed {
+  position: absolute;
+  top: 0;
+  height: 40px;
+  left: 105%;
+  transform: translateX(-50%);
+  z-index: 15;
+  border-top-right-radius: 20px;
+}
 .fixed-top-right {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 100px;
+  right: 5px;
   z-index: 1000;
 }
 .rows {
@@ -357,15 +377,7 @@ const handleMouseLeave = () => {
   background: var(--bg-color);
   color: var(--main-color);
 }
-.closed {
-  position: absolute;
-  top: 0;
-  height: 40px;
-  left: 83%;
-  transform: translateX(-50%);
-  z-index: 15;
-  border-top-right-radius: 20px;
-}
+
 .my-card {
   margin-bottom: 7px;
   color: #474747;
@@ -477,55 +489,6 @@ button {
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: none;
   border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-  background: #079c02;
-  color: white;
-}
-
-button,
-button span {
-  transition: 200ms;
-}
-
-button .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-button .icon {
-  position: absolute;
-  border-left: 1px solid #ffffff;
-  transform: translateX(110px);
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button svg {
-  width: 15px;
-  fill: #eee;
-}
-
-button:hover {
-  background: #ff3636;
-}
-
-button:hover .icon {
-  width: 150px;
-  border-left: none;
-  transform: translateX(0);
-}
-
-button:focus {
-  outline: none;
-}
-
-button:active .icon svg {
-  transform: scale(0.8);
 }
 </style>
