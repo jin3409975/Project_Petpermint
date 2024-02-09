@@ -349,7 +349,7 @@ public class UserController {
 			@ApiResponse(code = 400, message = "실패")
 	})
 	public ResponseEntity<? extends BaseResponseBody> petUpdate(
-			@ApiParam(value="수정할 반려동물 정보") @RequestBody AnimalReq animalReq) throws IOException {
+			@ApiParam(value="수정할 반려동물 정보") @ModelAttribute AnimalReq animalReq) throws IOException {
 		String url = null;
 		if(animalReq.getPicture() != null) {
 			url=s3service.savePetProfile(animalReq.getPicture(),animalReq);
