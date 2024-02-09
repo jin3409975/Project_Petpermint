@@ -40223,8 +40223,8 @@
           REPLACE_SCREEN: 'Replace screen'
         },
         cR = {
-          CLOSE: 'Close',
-          SEE_MORE: 'See more',
+          CLOSE: '닫기',
+          SEE_MORE: '더 알아보기',
           PRO_FEATURE:
             '펫퍼민트 프로토타입에서는 지원하지 않는 기능입니다. 앱 런칭을 위해 벤처 그룹사를 찾고 있습니다. ssafyjam@gmail.com ',
           PAID_FEATURE:
