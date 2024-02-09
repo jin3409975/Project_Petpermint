@@ -40202,7 +40202,7 @@
           DISABLE_SCREEN: '화면 공유 중지',
           MORE_OPTIONS: '더보기...',
           FULLSCREEN: '전체 화면',
-          EXIT_FULLSCREEN: '전체 화면 ',
+          EXIT_FULLSCREEN: '전체 화면 종료',
           ENABLE_CAPTIONS: '자막 사용',
           DISABLE_CAPTIONS: '자막 사용 중지',
           BACKGROUND: '배경 효과',
