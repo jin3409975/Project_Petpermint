@@ -40186,10 +40186,10 @@
           NICKNAME_SECTION: '이름이 무엇인가요?',
           NICKNAME: '이름',
           DEVICE_SECTION: 'Choose your devices',
-          VIDEO_DEVICE: 'Video device',
-          AUDIO_DEVICE: 'Audio device',
-          NO_VIDEO_DEVICE: 'Video device not found',
-          NO_AUDIO_DEVICE: 'Audio device not found',
+          VIDEO_DEVICE: '카메라 장치',
+          AUDIO_DEVICE: '마이크 장치',
+          NO_VIDEO_DEVICE: '카메라 장치가 없습니다 😢',
+          NO_AUDIO_DEVICE: '오디오 장치가 없습니다 😢',
           JOIN: '지금 상담실 들어가기',
           PREPARING: '상담실 입장중...'
         },
@@ -40238,11 +40238,11 @@
           },
           PARTICIPANTS: { TITLE: '참여자', CAMERA: 'CAMERA', SCREEN: 'SCREEN' },
           SETTINGS: {
-            TITLE: 'Settings',
-            GENERAL: 'General',
-            VIDEO: 'Video',
-            AUDIO: 'Audio',
-            LANGUAGE: 'Language',
+            TITLE: '설정',
+            GENERAL: '일반',
+            VIDEO: '카메라',
+            AUDIO: '마이크',
+            LANGUAGE: '언어 선택',
             CAPTIONS: '자막 효과',
             CAPTIONS_LANG_TEXT:
               'Select the language that the participants of the session will use. The captions will appear in that language.'
