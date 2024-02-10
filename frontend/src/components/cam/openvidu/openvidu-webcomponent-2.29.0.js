@@ -2946,7 +2946,7 @@
         }
         handleError(n) {
           const e = this._findOriginalError(n)
-          this._console.error('ERROR', n), e && this._console.error('ORIGINAL ERROR', e)
+          // this._console.error('ERROR', n), e && this._console.error('ORIGINAL ERROR', e)
         }
         _findOriginalError(n) {
           let e = n && Rg(n)
@@ -38250,7 +38250,7 @@
         }
       }
       const q1 =
-        '.activities-body-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.activity-icon[_ngcontent-%COMP%]{display:inherit;background-color:var(--ov-light-color);border-radius:var(--ov-panel-radius)}.activity-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{margin:auto}.activity-subtitle[_ngcontent-%COMP%]{font-style:italic;font-size:11px!important}.activity-title[_ngcontent-%COMP%]{font-weight:700!important}.activity-action-buttons[_ngcontent-%COMP%]{font-weight:600;position:absolute;right:15px;top:15px}  .mat-content{display:block!important}  .mat-list-text{padding-left:10px!important}  .mat-expansion-panel-header{padding:0 5px!important;height:65px!important}  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base[_ngcontent-%COMP%]   .mat-list-option[_ngcontent-%COMP%]   .mat-list-item-content[_ngcontent-%COMP%]{padding:0!important}  mat-expansion-panel .mat-expansion-panel-body{padding:0!important;min-height:400px}  .mat-expansion-panel-header-description{flex-grow:0!important}  .mat-expansion-panel{box-shadow:none!important}  .no-body .mat-expansion-panel-content{display:none!important}'
+        '.activities-body-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.activity-icon[_ngcontent-%COMP%]{display:inherit;border-radius:var(--ov-panel-radius)}.activity-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{margin:auto}.activity-subtitle[_ngcontent-%COMP%]{font-style:italic;font-size:11px!important}.activity-title[_ngcontent-%COMP%]{font-weight:700!important}.activity-action-buttons[_ngcontent-%COMP%]{font-weight:600;position:absolute;right:15px;top:15px}  .mat-content{display:block!important}  .mat-list-text{padding-left:10px!important}  .mat-expansion-panel-header{padding:0 5px!important;height:65px!important}  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base[_ngcontent-%COMP%]   .mat-list-option[_ngcontent-%COMP%]   .mat-list-item-content[_ngcontent-%COMP%]{padding:0!important}  mat-expansion-panel .mat-expansion-panel-body{padding:0!important;min-height:400px}  .mat-expansion-panel-header-description{flex-grow:0!important}  .mat-expansion-panel{box-shadow:none!important}  .no-body .mat-expansion-panel-content{display:none!important}'
       function IJ(t, n) {
         if (1 & t) {
           const e = st()
@@ -38514,7 +38514,7 @@
         }
         if (2 & t) {
           const e = ie(3)
-          dt('전체 화면', e.isFullscreen), A(1), j('ngModel', e.nickname)
+          dt('전체화면', e.isFullscreen), A(1), j('ngModel', e.nickname)
         }
       }
       function wee(t, n) {
@@ -38523,7 +38523,7 @@
           2 & t)
         ) {
           const e = ie(2)
-          dt('전체 화면', e.isFullscreen),
+          dt('전체화면', e.isFullscreen),
             A(1),
             j('ngIf', !e.toggleNickname),
             A(1),
@@ -40073,7 +40073,7 @@
           SETTINGS: 'Einstellungen',
           LEAVE: 'Die Sitzung verlassen',
           PARTICIPANTS: 'Teilnehmer',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Aktivit\xe4ten'
         },
         nR = {
@@ -40091,7 +40091,7 @@
           PAID_FEATURE:
             'Diese Funktion ist Teil des kommerziellen Dienstes von OpenVidu. Bitte kontaktieren Sie uns \xfcber commercial@openvidu.io f\xfcr weitere Informationen.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Sie',
             SUBTITLE: 'Nachrichten werden am Ende der Sitzung entfernt',
             PLACEHOLDER: 'Eine Nachricht senden...',
@@ -40183,78 +40183,79 @@
           POWERED_BY: 'Powered by'
         },
         sR = {
-          NICKNAME_SECTION: 'Set your nickname',
-          NICKNAME: 'Nickname',
+          NICKNAME_SECTION: '이름이 무엇인가요?',
+          NICKNAME: '이름',
           DEVICE_SECTION: 'Choose your devices',
-          VIDEO_DEVICE: 'Video device',
-          AUDIO_DEVICE: 'Audio device',
-          NO_VIDEO_DEVICE: 'Video device not found',
-          NO_AUDIO_DEVICE: 'Audio device not found',
-          JOIN: 'Join session',
-          PREPARING: 'Preparing session...'
+          VIDEO_DEVICE: '카메라 장치',
+          AUDIO_DEVICE: '마이크 장치',
+          NO_VIDEO_DEVICE: '카메라 장치가 없습니다 😢',
+          NO_AUDIO_DEVICE: '오디오 장치가 없습니다 😢',
+          JOIN: '지금 상담실 들어가기',
+          PREPARING: '상담실 입장중...'
         },
         aR = {
-          MUTE_AUDIO: 'Mute your audio',
-          UNMUTE_AUDIO: 'Unmute your audio',
-          MUTE_VIDEO: 'Mute your video',
-          UNMUTE_VIDEO: 'Unmute your video',
-          ENABLE_SCREEN: 'Enable screen share',
-          DISABLE_SCREEN: 'Disable screen share',
-          MORE_OPTIONS: 'More options',
+          MUTE_AUDIO: '마이크 끄기',
+          UNMUTE_AUDIO: '마이크 켜기',
+          MUTE_VIDEO: '카메라 끄기',
+          UNMUTE_VIDEO: '카메라 켜기',
+          ENABLE_SCREEN: '화면 공유',
+          DISABLE_SCREEN: '화면 공유 중지',
+          MORE_OPTIONS: '더보기...',
           FULLSCREEN: '전체 화면',
-          EXIT_FULLSCREEN: 'Exit fullscreen',
-          ENABLE_CAPTIONS: 'Enable captions',
-          DISABLE_CAPTIONS: 'Disable captions',
-          BACKGROUND: 'Background effects',
-          START_RECORDING: 'Start recording',
-          STOP_RECORDING: 'Stop recording',
-          SETTINGS: 'Settings',
-          LEAVE: 'Leave the session',
-          PARTICIPANTS: 'Participants',
-          CHAT: '대화',
+          EXIT_FULLSCREEN: '전체 화면 종료',
+          ENABLE_CAPTIONS: '자막 사용',
+          DISABLE_CAPTIONS: '자막 사용 중지',
+          BACKGROUND: '배경 효과',
+          START_RECORDING: '녹화 시작',
+          STOP_RECORDING: '녹화 중지',
+          SETTINGS: '설정',
+          LEAVE: '상담에서 나가기',
+          PARTICIPANTS: '참여자',
+          CHAT: '메시지',
           ACTIVITIES: 'Activities'
         },
         lR = {
-          SETTINGS: 'Settings',
-          MUTE_SOUND: 'Mute sound',
-          UNMUTE_SOUND: 'Unmute sound',
-          ZOOM_IN: 'Zoom in',
-          ZOOM_OUT: 'Zoom out',
+          SETTINGS: '설정',
+          MUTE_SOUND: '음성 끄기',
+          UNMUTE_SOUND: '음성 켜기',
+          ZOOM_IN: '확대',
+          ZOOM_OUT: '축소',
           REPLACE_SCREEN: 'Replace screen'
         },
         cR = {
-          CLOSE: 'Close',
-          SEE_MORE: 'See more',
-          PRO_FEATURE: 'This feature is part of OpenVidu PRO tier',
+          CLOSE: '닫기',
+          SEE_MORE: '더 알아보기',
+          PRO_FEATURE:
+            '펫퍼민트 프로토타입에서는 지원하지 않는 기능입니다. 앱 런칭을 위해 벤처 그룹사를 찾고 있습니다. ssafyjam@gmail.com ',
           PAID_FEATURE:
             'This feature is part of OpenVidu commercial service. Please contact us through commercial@openvidu.io for more information.',
           CHAT: {
-            TITLE: '대화',
-            YOU: 'You',
-            SUBTITLE: 'Messages will be removed at the end of the session',
-            PLACEHOLDER: 'Send a message...',
-            SEND: 'Send'
+            TITLE: '메시지',
+            YOU: '나',
+            SUBTITLE: '상담이 끝나면 모든 메시지가 삭제됩니다',
+            PLACEHOLDER: '메시지를 입력해주세요...',
+            SEND: '보내기'
           },
-          PARTICIPANTS: { TITLE: 'Participants', CAMERA: 'CAMERA', SCREEN: 'SCREEN' },
+          PARTICIPANTS: { TITLE: '참여자', CAMERA: 'CAMERA', SCREEN: 'SCREEN' },
           SETTINGS: {
-            TITLE: 'Settings',
-            GENERAL: 'General',
-            VIDEO: 'Video',
-            AUDIO: 'Audio',
-            LANGUAGE: 'Language',
-            CAPTIONS: 'Captions',
+            TITLE: '설정',
+            GENERAL: '일반',
+            VIDEO: '카메라',
+            AUDIO: '마이크',
+            LANGUAGE: '언어 선택',
+            CAPTIONS: '자막 효과',
             CAPTIONS_LANG_TEXT:
               'Select the language that the participants of the session will use. The captions will appear in that language.'
           },
           BACKGROUND: {
-            TITLE: 'Background effects',
+            TITLE: '배경 효과',
             BLURRED_SECTION: 'No effects and blurred background',
             NO_EFFECTS: 'No background effect',
             BLURRED_EFFECT: 'Blurred background',
             IMAGES_SECTION: 'Background images'
           },
           RECORDING: {
-            TITLE: 'Recording',
+            TITLE: '녹화',
             SUBTITLE: 'Record your meeting for posterity',
             CONTENT_TITLE: 'Record your video call',
             CONTENT_SUBTITLE:
@@ -40271,7 +40272,7 @@
             NO_MODERATOR: 'Only the MODERATOR can start the recording'
           },
           STREAMING: {
-            TITLE: 'Streaming',
+            TITLE: '스트리밍',
             SUBTITLE: 'Stream your meeting to your audience',
             CONTENT_SUBTITLE: 'OpenVidu need the url of the streaming platform.',
             START: 'Start streaming',
@@ -40350,7 +40351,7 @@
           SETTINGS: 'Configuraci\xf3n',
           LEAVE: 'Salir de la sesi\xf3n',
           PARTICIPANTS: 'Participantes',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Actividades'
         },
         pR = {
@@ -40368,7 +40369,7 @@
           PAID_FEATURE:
             'Esta funci\xf3n es parte del servicio comercial de OpenVidu. Cont\xe1ctenos a trav\xe9s de commercial@openvidu.io para obtener m\xe1s informaci\xf3n',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'T\xfa',
             SUBTITLE: 'Los mensajes se borrar\xe1n al finalizar la sesi\xf3n',
             PLACEHOLDER: 'Enviar mensaje...',
@@ -40487,8 +40488,8 @@
           STOP_RECORDING: "Arr\xeater l'enregistrement",
           SETTINGS: 'Param\xe8tres',
           LEAVE: 'Quitter la session',
-          PARTICIPANTS: 'Participants',
-          CHAT: '대화',
+          PARTICIPANTS: '참여자',
+          CHAT: '메시지',
           ACTIVITES: 'Activit\xe9s'
         },
         yR = {
@@ -40506,7 +40507,7 @@
           PAID_FEATURE:
             "Cette fonctionnalit\xe9 fait partie du service commercial d'OpenVidu. Veuillez nous contacter via commercial@openvidu.io pour plus d'informations.",
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Vous',
             SUBTITLE: 'Les messages seront supprim\xe9s \xe0 la fin de la session',
             PLACEHOLDER: 'Envoyer un message...',
@@ -40819,7 +40820,7 @@
           SETTINGS: 'Impostazioni',
           LEAVE: 'Abbandona la sessione',
           PARTICIPANTS: 'Partecipanti',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Attivit\xe0'
         },
         RR = {
@@ -40837,7 +40838,7 @@
           PAID_FEATURE:
             'Questa funzione fa parte del servizio commerciale di OpenVidu. Per ulteriori informazioni, contattaci tramite commercial@openvidu.io.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Tu',
             SUBTITLE: 'I messaggi verranno rimossi alla fine della sessione',
             PLACEHOLDER: 'Invia un messaggio...',
@@ -41122,7 +41123,7 @@
           SETTINGS: 'Instellingen',
           LEAVE: 'Verlaat de sessie',
           PARTICIPANTS: 'Deelnemers',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Activiteiten'
         },
         zR = {
@@ -41140,7 +41141,7 @@
           PAID_FEATURE:
             'Deze functie maakt deel uit van de commerci\xeble service van OpenVidu. Neem voor meer informatie contact met ons op via commercial@openvidu.io.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Jij',
             SUBTITLE: 'Berichten worden aan het einde van de sessie verwijderd',
             PLACEHOLDER: 'Stuur een bericht ...',
@@ -41260,7 +41261,7 @@
           SETTINGS: 'Configura\xe7\xf5es',
           LEAVE: 'Sair da sess\xe3o',
           PARTICIPANTS: 'Participantes',
-          CHAT: '대화',
+          CHAT: '메시지',
           ACTIVITIES: 'Actividades'
         },
         QR = {
@@ -41278,7 +41279,7 @@
           PAID_FEATURE:
             'Este recurso faz parte do servi\xe7o comercial OpenVidu. Entre em contato conosco atrav\xe9s de commercial@openvidu.io para obter mais informa\xe7\xf5es.',
           CHAT: {
-            TITLE: '대화',
+            TITLE: '메시지',
             YOU: 'Voc\xea',
             SUBTITLE: 'As mensagens ser\xe3o removidas no final da sess\xe3o',
             PLACEHOLDER: 'Enviar uma mensagem...',
@@ -41835,7 +41836,10 @@
             seeMore() {
               var e
               null ===
-                (e = window.open('https://docs.openvidu.io/en/stable/openvidu-pro/', '_blank')) ||
+                (e = window.open(
+                  'https://cs.smartraiser.co.kr/api/kidsfuture.or.kr/Gift/Gift?fundID=1328&custompage=true',
+                  '_blank'
+                )) ||
                 void 0 === e ||
                 e.focus()
             }
@@ -44008,7 +44012,7 @@
         })()
       var Wt = (() => {
           return (
-            ((t = Wt || (Wt = {})).CHAT = '대화'),
+            ((t = Wt || (Wt = {})).CHAT = '메시지'),
             (t.PARTICIPANTS = 'participants'),
             (t.BACKGROUND_EFFECTS = 'background-effects'),
             (t.ACTIVITIES = 'activities'),
@@ -44519,7 +44523,7 @@
       var So = (() => {
         return (
           ((t = So || (So = {})).NICKNAME_CHANGED = 'nicknameChanged'),
-          (t.CHAT = '대화'),
+          (t.CHAT = '메시지'),
           (t.RECORDING_DELETED = 'recordingDeleted'),
           So
         )
@@ -44816,8 +44820,8 @@
               Hn
             ],
             styles: [
-              '#recording-status[_ngcontent-%COMP%]{color:var(--ov-text-color);display:inline;padding:3px;font-size:11px;border-radius:var(--ov-panel-radius)}.time-container[_ngcontent-%COMP%]{padding:2px}.recording-icon[_ngcontent-%COMP%]{font-size:32px!important;height:32px!important;width:32px!important}.recording-duration[_ngcontent-%COMP%]{background-color:var(--ov-light-color);padding:4px 8px;border-radius:var(--ov-panel-radius);font-weight:500}.recording-duration[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{font-size:18px;width:18px;height:18px}.started[_ngcontent-%COMP%]{background-color:#3b7430!important;color:var(--ov-text-color)}.activity-icon.started[_ngcontent-%COMP%], .failed[_ngcontent-%COMP%]{background-color:var(--ov-warn-color)!important;color:var(--ov-text-color)}.stopped[_ngcontent-%COMP%]{background-color:var(--ov-light-color);color:var(--ov-panel-text-color)!important}.pending[_ngcontent-%COMP%]{background-color:#ffd79b!important;color:var(--ov-panel-text-color)!important}.panel-body-container[_ngcontent-%COMP%]{padding:10px}.panel-body-container[_ngcontent-%COMP%] > .content[_ngcontent-%COMP%]{align-items:stretch;justify-content:center;display:flex;flex-direction:column;box-flex:1;flex-grow:1;text-align:center}.recording-error[_ngcontent-%COMP%]{color:var(--ov-warn-color);font-weight:600}.recording-name[_ngcontent-%COMP%]{font-size:16px;font-weight:700}.recording-date[_ngcontent-%COMP%]{font-size:12px!important;font-style:italic}.not-allowed-message[_ngcontent-%COMP%]{margin-top:10px;font-weight:700}.recording-action-buttons[_ngcontent-%COMP%]{margin-top:20px;margin-bottom:20px}#start-recording-btn[_ngcontent-%COMP%]{width:100%;background-color:var(--ov-tertiary-color);color:var(--ov-text-color)}#stop-recording-btn[_ngcontent-%COMP%]{width:100%;background-color:var(--ov-warn-color);color:var(--ov-text-color)}.delete-recording-btn[_ngcontent-%COMP%]{color:var(--ov-warn-color)}#reset-recording-status-btn[_ngcontent-%COMP%]{width:100%;background-color:var(--ov-light-color)}mat-expansion-panel[_ngcontent-%COMP%]{margin:0 0 5px}.blink[_ngcontent-%COMP%]{animation:blinker 1.5s linear infinite!important}@keyframes blinker{50%{opacity:.4}}',
-              '.activities-body-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.activity-icon[_ngcontent-%COMP%]{display:inherit;background-color:var(--ov-light-color);border-radius:var(--ov-panel-radius)}.activity-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{margin:auto}.activity-subtitle[_ngcontent-%COMP%]{font-style:italic;font-size:11px!important}.activity-title[_ngcontent-%COMP%]{font-weight:700!important}.activity-action-buttons[_ngcontent-%COMP%]{font-weight:600;position:absolute;right:15px;top:15px}  .mat-content{display:block!important}  .mat-list-text{padding-left:10px!important}  .mat-expansion-panel-header{padding:0 5px!important;height:65px!important}  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base[_ngcontent-%COMP%]   .mat-list-option[_ngcontent-%COMP%]   .mat-list-item-content[_ngcontent-%COMP%]{padding:0!important}  mat-expansion-panel .mat-expansion-panel-body{padding:0!important;min-height:400px}  .mat-expansion-panel-header-description{flex-grow:0!important}  .mat-expansion-panel{box-shadow:none!important}  .no-body .mat-expansion-panel-content{display:none!important}'
+              '#recording-status[_ngcontent-%COMP%]{color:var(--ov-text-color);display:inline;padding:3px;font-size:11px;border-radius:var(--ov-panel-radius)}.time-container[_ngcontent-%COMP%]{padding:2px}.recording-icon[_ngcontent-%COMP%]{font-size:32px!important;height:32px!important;width:32px!important}.recording-duration[_ngcontent-%COMP%]{padding:4px 8px;border-radius:var(--ov-panel-radius);font-weight:500}.recording-duration[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{font-size:18px;width:18px;height:18px}.started[_ngcontent-%COMP%]{background-color:#3b7430!important;color:var(--ov-text-color)}.activity-icon.started[_ngcontent-%COMP%], .failed[_ngcontent-%COMP%]{background-color:var(--ov-warn-color)!important;color:var(--ov-text-color)}.stopped[_ngcontent-%COMP%]{color:var(--ov-panel-text-color)!important}.pending[_ngcontent-%COMP%]{background-color:#ffd79b!important;color:var(--ov-panel-text-color)!important}.panel-body-container[_ngcontent-%COMP%]{padding:10px}.panel-body-container[_ngcontent-%COMP%] > .content[_ngcontent-%COMP%]{align-items:stretch;justify-content:center;display:flex;flex-direction:column;box-flex:1;flex-grow:1;text-align:center}.recording-error[_ngcontent-%COMP%]{color:var(--ov-warn-color);font-weight:600}.recording-name[_ngcontent-%COMP%]{font-size:16px;font-weight:700}.recording-date[_ngcontent-%COMP%]{font-size:12px!important;font-style:italic}.not-allowed-message[_ngcontent-%COMP%]{margin-top:10px;font-weight:700}.recording-action-buttons[_ngcontent-%COMP%]{margin-top:20px;margin-bottom:20px}#start-recording-btn[_ngcontent-%COMP%]{width:100%;background-color:var(--ov-tertiary-color);color:var(--ov-text-color)}#stop-recording-btn[_ngcontent-%COMP%]{width:100%;background-color:var(--ov-warn-color);color:var(--ov-text-color)}.delete-recording-btn[_ngcontent-%COMP%]{color:var(--ov-warn-color)}#reset-recording-status-btn[_ngcontent-%COMP%]{width:100%;}mat-expansion-panel[_ngcontent-%COMP%]{margin:0 0 5px}.blink[_ngcontent-%COMP%]{animation:blinker 1.5s linear infinite!important}@keyframes blinker{50%{opacity:.4}}',
+              '.activities-body-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.activity-icon[_ngcontent-%COMP%]{display:inherit;border-radius:var(--ov-panel-radius)}.activity-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{margin:auto}.activity-subtitle[_ngcontent-%COMP%]{font-style:italic;font-size:11px!important}.activity-title[_ngcontent-%COMP%]{font-weight:700!important}.activity-action-buttons[_ngcontent-%COMP%]{font-weight:600;position:absolute;right:15px;top:15px}  .mat-content{display:block!important}  .mat-list-text{padding-left:10px!important}  .mat-expansion-panel-header{padding:0 5px!important;height:65px!important}  .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base[_ngcontent-%COMP%]   .mat-list-option[_ngcontent-%COMP%]   .mat-list-item-content[_ngcontent-%COMP%]{padding:0!important}  mat-expansion-panel .mat-expansion-panel-body{padding:0!important;min-height:400px}  .mat-expansion-panel-header-description{flex-grow:0!important}  .mat-expansion-panel{box-shadow:none!important}  .no-body .mat-expansion-panel-content{display:none!important}'
             ],
             changeDetection: 0
           })),
@@ -45178,7 +45182,7 @@
                 Hn
               ],
               styles: [
-                '#broadcasting-status[_ngcontent-%COMP%]{color:var(--ov-text-color);display:inline;padding:3px;font-size:11px;border-radius:var(--ov-panel-radius)}.time-container[_ngcontent-%COMP%]{padding:2px}.error-text[_ngcontent-%COMP%]{color:var(--ov-warn-color);font-style:italic;font-size:14px}#broadcasting-icon[_ngcontent-%COMP%]{color:#5903ca}.broadcasting-duration[_ngcontent-%COMP%]{background-color:var(--ov-light-color);padding:4px 8px;border-radius:var(--ov-panel-radius);font-weight:500}.broadcasting-duration[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{font-size:18px;width:18px;height:18px}.started[_ngcontent-%COMP%], .activity-icon.started[_ngcontent-%COMP%]{background-color:#5903ca!important;color:var(--ov-text-color)}.failed[_ngcontent-%COMP%]{background-color:var(--ov-warn-color)!important;color:var(--ov-text-color)}.stopped[_ngcontent-%COMP%]{background-color:var(--ov-light-color);color:var(--ov-panel-text-color)!important}.pending[_ngcontent-%COMP%]{background-color:#ffd79b!important;color:var(--ov-panel-text-color)!important}.panel-body-container[_ngcontent-%COMP%]{padding:10px}.panel-body-container[_ngcontent-%COMP%] > .content[_ngcontent-%COMP%]{align-items:stretch;justify-content:center;display:flex;flex-direction:column;box-flex:1;flex-grow:1;text-align:center}.broadcasting-error[_ngcontent-%COMP%]{color:var(--ov-warn-color);font-weight:600}.broadcasting-name[_ngcontent-%COMP%]{font-size:16px;font-weight:700}.not-allowed-message[_ngcontent-%COMP%]{margin-top:10px;font-weight:700}.broadcasting-action-buttons[_ngcontent-%COMP%]{margin-top:20px;margin-bottom:20px}#stop-broadcasting-btn[_ngcontent-%COMP%]{color:var(--ov-warn-color)}#reset-broadcasting-status-btn[_ngcontent-%COMP%]{width:100%;background-color:var(--ov-light-color)}mat-expansion-panel[_ngcontent-%COMP%]{margin:0 0 5px}.blink[_ngcontent-%COMP%]{animation:blinker 1.5s linear infinite!important}@keyframes blinker{50%{opacity:.4}}.input-container[_ngcontent-%COMP%]{height:25px;display:flex;background-color:var(--ov-light-color);padding:10px;margin:10px;border-radius:var(--ov-panel-radius)}.input-container[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]{width:100%;height:16px;margin:auto;background-color:transparent;display:block;border:none;padding:0;word-wrap:break-word;white-space:pre-wrap;resize:none;outline:none;box-shadow:none;font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif}',
+                '#broadcasting-status[_ngcontent-%COMP%]{color:var(--ov-text-color);display:inline;padding:3px;font-size:11px;border-radius:var(--ov-panel-radius)}.time-container[_ngcontent-%COMP%]{padding:2px}.error-text[_ngcontent-%COMP%]{color:var(--ov-warn-color);font-style:italic;font-size:14px}#broadcasting-icon[_ngcontent-%COMP%]{color:#5903ca}.broadcasting-duration[_ngcontent-%COMP%]{padding:4px 8px;border-radius:var(--ov-panel-radius);font-weight:500}.broadcasting-duration[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]{font-size:18px;width:18px;height:18px}.started[_ngcontent-%COMP%], .activity-icon.started[_ngcontent-%COMP%]{background-color:#5903ca!important;color:var(--ov-text-color)}.failed[_ngcontent-%COMP%]{background-color:var(--ov-warn-color)!important;color:var(--ov-text-color)}.stopped[_ngcontent-%COMP%]{color:var(--ov-panel-text-color)!important}.pending[_ngcontent-%COMP%]{background-color:#ffd79b!important;color:var(--ov-panel-text-color)!important}.panel-body-container[_ngcontent-%COMP%]{padding:10px}.panel-body-container[_ngcontent-%COMP%] > .content[_ngcontent-%COMP%]{align-items:stretch;justify-content:center;display:flex;flex-direction:column;box-flex:1;flex-grow:1;text-align:center}.broadcasting-error[_ngcontent-%COMP%]{color:var(--ov-warn-color);font-weight:600}.broadcasting-name[_ngcontent-%COMP%]{font-size:16px;font-weight:700}.not-allowed-message[_ngcontent-%COMP%]{margin-top:10px;font-weight:700}.broadcasting-action-buttons[_ngcontent-%COMP%]{margin-top:20px;margin-bottom:20px}#stop-broadcasting-btn[_ngcontent-%COMP%]{color:var(--ov-warn-color)}#reset-broadcasting-status-btn[_ngcontent-%COMP%]{width:100%;}mat-expansion-panel[_ngcontent-%COMP%]{margin:0 0 5px}.blink[_ngcontent-%COMP%]{animation:blinker 1.5s linear infinite!important}@keyframes blinker{50%{opacity:.4}}.input-container[_ngcontent-%COMP%]{height:25px;display:flex;padding:10px;margin:10px;border-radius:var(--ov-panel-radius)}.input-container[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]{width:100%;height:16px;margin:auto;background-color:transparent;display:block;border:none;padding:0;word-wrap:break-word;white-space:pre-wrap;resize:none;outline:none;box-shadow:none;font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif}',
                 q1
               ],
               changeDetection: 0
@@ -45593,7 +45597,7 @@
               dependencies: [Ii, Ir, Qt, Wo, la, Fl, bs, xn, oi, Nr, Cs, Ss, Qf, Es, no, gk, Hn],
               styles: [
                 nd,
-                '.text-container[_ngcontent-%COMP%]{background-color:var(--ov-light-color);color:var(--ov-panel-text-color);text-align:center;font-size:12px}.text-info[_ngcontent-%COMP%]{margin:3px}.messages-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.input-container[_ngcontent-%COMP%]{height:25px;display:flex;background-color:var(--ov-light-color);padding:10px;margin:10px;border-radius:var(--ov-panel-radius)}.input-container[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%]{width:100%;height:16px;margin:auto;background-color:transparent;display:block;border:none;padding:0;word-wrap:break-word;white-space:pre-wrap;resize:none;outline:none;box-shadow:none;font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif}.message[_ngcontent-%COMP%]{position:relative;padding:3px 0}.msg-detail[_ngcontent-%COMP%]{width:95%;display:inline-block}.msg-detail[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin:0;font-size:14px}.nickname-container[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:13px;font-weight:700;color:var(--ov-panel-text-color)}.msg-content[_ngcontent-%COMP%]{position:relative;border-radius:var(--ov-panel-radius);padding:8px;color:#000;width:auto;max-width:95%;font-size:13px;word-break:break-all}#send-btn[_ngcontent-%COMP%]{border-radius:var(--ov-buttons-radius)}.message.left[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .nickname-container[_ngcontent-%COMP%]{text-align:left}.message.left[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .msg-content[_ngcontent-%COMP%]{float:left}.message.right[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .nickname-container[_ngcontent-%COMP%]{text-align:right}.message.right[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .msg-content[_ngcontent-%COMP%]{float:right}  a:-webkit-any-link{color:#1a73e8}'
+                '.text-container[_ngcontent-%COMP%]{color:var(--ov-panel-text-color);text-align:center;font-size:12px}.text-info[_ngcontent-%COMP%]{margin:3px}.messages-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.input-container[_ngcontent-%COMP%]{height:25px;display:flex;padding:10px;margin:10px;border-radius:var(--ov-panel-radius)}.input-container[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%]{width:100%;height:16px;margin:auto;background-color:transparent;display:block;border:none;padding:0;word-wrap:break-word;white-space:pre-wrap;resize:none;outline:none;box-shadow:none;font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif}.message[_ngcontent-%COMP%]{position:relative;padding:3px 0}.msg-detail[_ngcontent-%COMP%]{width:95%;display:inline-block}.msg-detail[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin:0;font-size:14px}.nickname-container[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:13px;font-weight:700;color:var(--ov-panel-text-color)}.msg-content[_ngcontent-%COMP%]{position:relative;border-radius:var(--ov-panel-radius);padding:8px;color:#000;width:auto;max-width:95%;font-size:13px;word-break:break-all}#send-btn[_ngcontent-%COMP%]{border-radius:var(--ov-buttons-radius)}.message.left[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .nickname-container[_ngcontent-%COMP%]{text-align:left}.message.left[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .msg-content[_ngcontent-%COMP%]{float:left}.message.right[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .nickname-container[_ngcontent-%COMP%]{text-align:right}.message.right[_ngcontent-%COMP%]   .msg-detail[_ngcontent-%COMP%]   .msg-content[_ngcontent-%COMP%]{float:right}  a:-webkit-any-link{color:#1a73e8}'
               ],
               changeDetection: 0
             })),
@@ -45926,7 +45930,7 @@
               dependencies: [Ir, Qt, us, xn, oi, Nr, Eb, my, Hn],
               styles: [
                 nd,
-                '.local-participant-container[_ngcontent-%COMP%], .remote-participants-container[_ngcontent-%COMP%]{margin:5px 10px}.scrollable[_ngcontent-%COMP%]{height:calc(100% - 60px);max-height:calc(100% - 60px);overflow:auto}.message-container[_ngcontent-%COMP%]{padding:5px;background-color:var(--ov-light-color);color:var(--ov-panel-text-color);text-align:center;margin:5px;font-size:12px}.message-container[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin:0}'
+                '.local-participant-container[_ngcontent-%COMP%], .remote-participants-container[_ngcontent-%COMP%]{margin:5px 10px}.scrollable[_ngcontent-%COMP%]{height:calc(100% - 60px);max-height:calc(100% - 60px);overflow:auto}.message-container[_ngcontent-%COMP%]{padding:5px;color:var(--ov-panel-text-color);text-align:center;margin:5px;font-size:12px}.message-container[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin:0}'
               ],
               changeDetection: 0
             })),
@@ -46327,7 +46331,7 @@
                 ['class', 'OV_stream', 3, 'ngClass', 'id', 4, 'ngIf'],
                 [1, 'OV_stream', 3, 'ngClass', 'id'],
                 ['streamContainer', ''],
-                ['id', 'nickname-container', 'class', 'nickname', 3, '전체 화면', 4, 'ngIf'],
+                ['id', 'nickname-container', 'class', 'nickname', 3, '전체화면', 4, 'ngIf'],
                 ['id', 'audio-wave-container', 4, 'ngIf'],
                 [3, 'name', 'color', 4, 'ngIf'],
                 [3, 'streamManager', 'mutedSound', 'participantId', 'dblclick'],
@@ -46336,7 +46340,7 @@
                 ['id', 'settings-container', 'class', 'videoButtons', 4, 'ngIf'],
                 ['id', 'nickname-container', 1, 'nickname'],
                 ['class', 'nicknameContainer', 'selected', '', 3, 'click', 4, 'ngIf'],
-                ['id', 'nickname-input-container', 3, '전체 화면', 4, 'ngIf'],
+                ['id', 'nickname-input-container', 3, '전체화면', 4, 'ngIf'],
                 ['selected', '', 1, 'nicknameContainer', 3, 'click'],
                 ['id', 'nickname', 4, 'ngIf'],
                 ['id', 'nickname'],
@@ -48270,7 +48274,7 @@
               dependencies: [Ir, xn, oi, Nr, Cs, Ss, Es, Hn],
               styles: [
                 nd,
-                '.effects-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.effect-button[_ngcontent-%COMP%]{margin:5px;border-radius:var(--ov-panel-radius);background-color:var(--ov-light-color);width:60px;height:60px}.effect-button[_ngcontent-%COMP%]:hover{cursor:pointer}.active-effect-btn[_ngcontent-%COMP%]{border:2px solid var(--ov-tertiary-color)}#hard-blur-btn[_ngcontent-%COMP%]   .mat-icon[_ngcontent-%COMP%]{font-weight:700!important}.grid[_ngcontent-%COMP%]{display:grid;grid-template-columns:repeat(auto-fit,70px)}.grid[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:100%;max-height:100%;border-radius:var(--ov-panel-radius)}  .mat-slider-thumb{visibility:hidden}  .mat-slider-vertical .mat-slider-track-fill,   .mat-slider-vertical .mat-slider-track-background,   .mat-slider-vertical .mat-slider-track-wrapper{width:10px!important}'
+                '.effects-container[_ngcontent-%COMP%]{display:block!important;overflow-y:auto;overflow-x:hidden;padding:10px}.effect-button[_ngcontent-%COMP%]{margin:5px;border-radius:var(--ov-panel-radius);width:60px;height:60px}.effect-button[_ngcontent-%COMP%]:hover{cursor:pointer}.active-effect-btn[_ngcontent-%COMP%]{border:2px solid var(--ov-tertiary-color)}#hard-blur-btn[_ngcontent-%COMP%]   .mat-icon[_ngcontent-%COMP%]{font-weight:700!important}.grid[_ngcontent-%COMP%]{display:grid;grid-template-columns:repeat(auto-fit,70px)}.grid[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:100%;max-height:100%;border-radius:var(--ov-panel-radius)}  .mat-slider-thumb{visibility:hidden}  .mat-slider-vertical .mat-slider-track-fill,   .mat-slider-vertical .mat-slider-track-background,   .mat-slider-vertical .mat-slider-track-wrapper{width:10px!important}'
               ],
               changeDetection: 0
             })),
@@ -49046,7 +49050,7 @@
                 Hn
               ],
               styles: [
-                '.container[_ngcontent-%COMP%]{height:calc(100% - 64px);padding:30px 60px;background-color:var(--ov-light-color)}.prejoin-toolbar[_ngcontent-%COMP%]{max-height:40px;height:40px}#toolbar[_ngcontent-%COMP%]{background-color:var(--ov-light-color);height:100%}#toolbar[_ngcontent-%COMP%]     .lang-button{height:25px!important;font-size:14px!important;line-height:0px;align-items:unset!important}.spacer[_ngcontent-%COMP%]{flex:1 1 auto}#branding-logo[_ngcontent-%COMP%]{border-radius:var(--ov-panel-radius);max-width:35px;max-height:35px;height:-webkit-fill-available;height:-moz-available;padding:10px;margin-right:10px}#layout-container[_ngcontent-%COMP%]{display:block!important}h4[_ngcontent-%COMP%]{margin-bottom:1px;font-weight:700}hr[_ngcontent-%COMP%]{margin:0}#prejoin-container[_ngcontent-%COMP%]{height:calc(100% - 40px)}#prejoin-container[_ngcontent-%COMP%]     .sidenav-container{padding-top:0!important}#prejoin-container[_ngcontent-%COMP%]     #background-effects-container{margin:0!important;max-height:100%!important;height:100%!important}#prejoin-container[_ngcontent-%COMP%]     .mat-drawer-container, #prejoin-container[_ngcontent-%COMP%]     .sidenav-menu, #prejoin-container[_ngcontent-%COMP%]     #session-container{background-color:transparent!important}#prejoin-container[_ngcontent-%COMP%]     .sidenav-menu{width:320px}#prejoin-container[_ngcontent-%COMP%]     .layout{min-width:0px!important}#prejoin-container[_ngcontent-%COMP%]     .OT_root{padding:0!important}#background-effects-btn[_ngcontent-%COMP%]{position:absolute;z-index:2;background-color:var(--ov-secondary-color);bottom:5px;right:5px}.media-panel[_ngcontent-%COMP%]{background-color:var(--ov-light-color)}.media-panel-container[_ngcontent-%COMP%]{width:100%;padding:20px 0 20px 20px}.nickname-container[_ngcontent-%COMP%]{display:block!important;margin-bottom:0!important}.mat-form-field-appearance-fill[_ngcontent-%COMP%]   .mat-form-field-flex[_ngcontent-%COMP%]{border-radius:var(--ov-video-radius)}.buttons-container[_ngcontent-%COMP%]{border-radius:5px;padding:10px 0;height:100px;display:block!important}.join-btn-container[_ngcontent-%COMP%]{width:inherit;text-align:center}#join-button[_ngcontent-%COMP%]{width:100%;font-weight:700;color:var(--ov-text-color);background-color:var(--ov-tertiary-color);border-radius:var(--ov-video-radius)}@media only screen and (max-width: 480px){.container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:90%!important;margin:auto}.join-btn-container[_ngcontent-%COMP%]{padding:0 10px}.media-panel[_ngcontent-%COMP%]{align-items:flex-start!important}}@media only screen and (min-width: 480px) and (max-width: 959px){.media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:80%!important;min-width:80%!important;margin:auto}.buttons-container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%]{padding-top:0;max-width:600px}}'
+                '.container[_ngcontent-%COMP%]{height:calc(100% - 64px);padding:30px 60px;}.prejoin-toolbar[_ngcontent-%COMP%]{max-height:40px;height:40px}#toolbar[_ngcontent-%COMP%]{height:100%}#toolbar[_ngcontent-%COMP%]     .lang-button{height:25px!important;font-size:14px!important;line-height:0px;align-items:unset!important}.spacer[_ngcontent-%COMP%]{flex:1 1 auto}#branding-logo[_ngcontent-%COMP%]{border-radius:var(--ov-panel-radius);max-width:35px;max-height:35px;height:-webkit-fill-available;height:-moz-available;padding:10px;margin-right:10px}#layout-container[_ngcontent-%COMP%]{display:block!important}h4[_ngcontent-%COMP%]{margin-bottom:1px;font-weight:700}hr[_ngcontent-%COMP%]{margin:0}#prejoin-container[_ngcontent-%COMP%]{height:calc(100% - 40px)}#prejoin-container[_ngcontent-%COMP%]     .sidenav-container{padding-top:0!important}#prejoin-container[_ngcontent-%COMP%]     #background-effects-container{margin:0!important;max-height:100%!important;height:100%!important}#prejoin-container[_ngcontent-%COMP%]     .mat-drawer-container, #prejoin-container[_ngcontent-%COMP%]     .sidenav-menu, #prejoin-container[_ngcontent-%COMP%]     #session-container{background-color:transparent!important}#prejoin-container[_ngcontent-%COMP%]     .sidenav-menu{width:320px}#prejoin-container[_ngcontent-%COMP%]     .layout{min-width:0px!important}#prejoin-container[_ngcontent-%COMP%]     .OT_root{padding:0!important}#background-effects-btn[_ngcontent-%COMP%]{position:absolute;z-index:2;background-color:var(--ov-secondary-color);bottom:5px;right:5px}.media-panel[_ngcontent-%COMP%]{}.media-panel-container[_ngcontent-%COMP%]{width:100%;padding:20px 0 20px 20px}.nickname-container[_ngcontent-%COMP%]{display:block!important;margin-bottom:0!important}.mat-form-field-appearance-fill[_ngcontent-%COMP%]   .mat-form-field-flex[_ngcontent-%COMP%]{border-radius:var(--ov-video-radius)}.buttons-container[_ngcontent-%COMP%]{border-radius:5px;padding:10px 0;height:100px;display:block!important}.join-btn-container[_ngcontent-%COMP%]{width:inherit;text-align:center}#join-button[_ngcontent-%COMP%]{width:100%;font-weight:700;color:var(--ov-text-color);background-color:var(--ov-tertiary-color);border-radius:var(--ov-video-radius)}@media only screen and (max-width: 480px){.container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:90%!important;margin:auto}.join-btn-container[_ngcontent-%COMP%]{padding:0 10px}.media-panel[_ngcontent-%COMP%]{align-items:flex-start!important}}@media only screen and (min-width: 480px) and (max-width: 959px){.media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:80%!important;min-width:80%!important;margin:auto}.buttons-container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%]{padding-top:0;max-width:600px}}'
               ]
             })),
             t
@@ -49125,7 +49129,7 @@
               },
               dependencies: [Ir, Qt, xn, oi, ra, Nu, As, ws, Lu, Bu, DI, Hn],
               styles: [
-                '#lang-section[_ngcontent-%COMP%]{margin-top:10px}.section-description[_ngcontent-%COMP%]{color:var(--ov-panel-text-color);font-size:12px;padding:0 5px;display:block}.lang-button[_ngcontent-%COMP%]{background-color:var(--ov-logo-background-color);color:var(--ov-text-color)}.pro-feature[_ngcontent-%COMP%]{text-align:center}.pro-feture[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:14px}  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{background-color:var(--ov-tertiary-color)}  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb{background-color:var(--ov-light-color)}'
+                '#lang-section[_ngcontent-%COMP%]{margin-top:10px}.section-description[_ngcontent-%COMP%]{color:var(--ov-panel-text-color);font-size:12px;padding:0 5px;display:block}.lang-button[_ngcontent-%COMP%]{background-color:var(--ov-logo-background-color);color:var(--ov-text-color)}.pro-feature[_ngcontent-%COMP%]{text-align:center}.pro-feture[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:14px}  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{background-color:var(--ov-tertiary-color)}  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb{}'
               ]
             })),
             t

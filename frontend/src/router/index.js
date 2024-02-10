@@ -216,7 +216,7 @@ const router = createRouter({
         {
           path: '/cam',
           name: 'cam',
-          meta: { hideNavbarMain: true },
+          meta: { hideNavbarMain: true, hideNavbar: true, hideicon: true },
           component: '',
           redirect: { name: 'cam-consult' },
           children: [
