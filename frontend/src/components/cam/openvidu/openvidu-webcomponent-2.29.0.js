@@ -41836,7 +41836,10 @@
             seeMore() {
               var e
               null ===
-                (e = window.open('https://docs.openvidu.io/en/stable/openvidu-pro/', '_blank')) ||
+                (e = window.open(
+                  'https://cs.smartraiser.co.kr/api/kidsfuture.or.kr/Gift/Gift?fundID=1328&custompage=true',
+                  '_blank'
+                )) ||
                 void 0 === e ||
                 e.focus()
             }
