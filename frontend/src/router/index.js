@@ -116,7 +116,11 @@ const router = createRouter({
             {
               path: '',
               name: 'login-home',
-              meta: { hideicon: true },
+              meta: {
+                hideicon: true,
+                hideFooter: true,
+                backgroundColor: 'rgba(189, 243, 254, 0.211)'
+              },
               component: Login
             },
             {
@@ -135,11 +139,13 @@ const router = createRouter({
             {
               path: 'id',
               name: 'find-id',
+              meta: { hideFooter: true },
               component: FindId
             },
             {
               path: 'password',
               name: 'find-password',
+              meta: { hideFooter: true },
               component: FindPassword
             }
           ]

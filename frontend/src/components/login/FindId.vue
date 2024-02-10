@@ -10,7 +10,7 @@ const findmyId = function () {
 </script>
 
 <template>
-  <div style="margin-top: 120px; margin-bottom: 80px">
+  <div style="margin-top: 170px; margin-bottom: 80px">
     <v-card
       class="mx-auto pa-12 pb-8"
       variant="outlined"

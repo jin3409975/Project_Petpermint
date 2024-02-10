@@ -286,7 +286,6 @@ const totalPages = computed(() => {
           base-color="#3E6263"
           color="#9DBC98"
           variant="outlined"
-          style="border: 2px solid #3e6263; border-radius: 6px"
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="1" class="text-right">
@@ -351,6 +350,9 @@ const totalPages = computed(() => {
             v-if="searchList.length > 0"
             color="#8D6A14"
           ></v-pagination>
+          <div v-if="searchList.length == 0" class="center-content4">
+            <p style="color: rgb(114, 114, 114)">해당 지역에 반려동물 시설 및 센터가 없습니다.</p>
+          </div>
         </v-row>
       </v-col>
     </v-row>
@@ -373,5 +375,13 @@ const totalPages = computed(() => {
 <style>
 .my-page ul {
   padding-left: 0 !important;
+}
+.center-content4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 500px;
+  text-align: center;
 }
 </style>
