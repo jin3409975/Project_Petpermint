@@ -131,7 +131,8 @@ export const useAccountStore = defineStore(
       return emailcheck
     }
 
-    const loginStatus = ref(false)
+    const loginStatus = ref(localStorage.getItem('useremail') != null ? true : false)
+    //const loginStatus = ref(false)
     const logIn = function (userdata) {
       console.log('logindatacheck', userdata)
       axios({

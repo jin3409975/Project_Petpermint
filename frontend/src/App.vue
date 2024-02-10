@@ -5,9 +5,12 @@ import Footer from '@/components/main/Footer.vue'
 import MyBook from '@/components/main/MyBook.vue'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useAccountStore } from '@/stores/account.js'
 
 const router = useRouter()
 const route = useRoute()
+const store = useAccountStore()
+
 const hideNavbarMain = computed(() => route.meta.hideNavbarMain)
 const hideFooter = computed(() => route.meta.hideFooter)
 const hideicon = computed(() => route.meta.hideicon)
@@ -26,11 +29,14 @@ function goEmergency() {
   console.log('asdasdasdqefn qejfjoqekbwrh bjw')
   router.push({ name: 'reserve-emergency' })
 }
+const backgroundColor = computed(() => {
+  return route.meta.backgroundColor
+})
 </script>
 
 <template>
   <body>
-    <v-app>
+    <v-app :style="{ backgroundColor: backgroundColor }">
       <NavbarMain v-if="!hideNavbarMain" />
       <RouterView />
       <Footer v-if="!hideFooter" />
@@ -44,7 +50,7 @@ function goEmergency() {
         <img :src="currentImage" class="img-style" />
         <span>응급예약</span>
       </div>
-      <MyBook />
+      <MyBook v-if="store.loginStatus" />
     </v-app>
   </body>
 </template>
