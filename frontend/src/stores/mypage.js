@@ -1,8 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+
 export const myPageStore = defineStore('mypage', () => {
-  const { VITE_APP_SERVER_URI } = import.meta.env
+  const { VITE_APP_SERVER_URI, VITE_APP_CLIENT_URI } = import.meta.env
   // const API_URL = `${VITE_SERVER_URI}/reserve/`
   // axios 요청 예정
   const myevents = ref([
@@ -54,7 +55,9 @@ export const myPageStore = defineStore('mypage', () => {
             end: formatDateTime(endTime)
           },
           color: item.type === 1 ? 'blue' : item.type === 2 ? 'green' : 'yellow',
-          description: item.note
+          description: `${VITE_APP_CLIENT_URI}/cam/consult`,
+          isEditable: true
+          // isCustom: true
         }
       })
       .filter((event) => event !== null)

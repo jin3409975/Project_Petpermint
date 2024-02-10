@@ -221,9 +221,9 @@ const router = createRouter({
           redirect: { name: 'cam-consult' },
           children: [
             {
-              path: 'consult',
+              path: 'consult/:appointId',
               name: 'cam-consult',
-              component: ''
+              component: () => import('@/components/cam/CamConsult.vue')
             },
             {
               path: 'broadcast',

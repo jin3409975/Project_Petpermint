@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 const { VITE_APP_SERVER_URI } = import.meta.env
 
 const serviceKey =
@@ -219,11 +219,25 @@ function highlightMarker(index) {
   map.setCenter(new kakao.maps.LatLng(searchList.value[index].lat, searchList.value[index].lon))
   map.setLevel(1)
 }
+
+// 카드 페이지네이션
+const currentPage = ref(1)
+const itemsPerPage = 4
+
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return searchList.value.slice(start, end)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(searchList.value.length / itemsPerPage)
+})
 </script>
 
 <template>
   <div>
-    <h1 style="text-align: center; padding-top: 110px">반려동물 시설 찾기</h1>
+    <h1 style="text-align: center; padding-top: 110px">반려동물 시설 및 센터 찾기</h1>
     <v-row style="padding-top: 30px; padding-left: 150px; padding-right: 150px">
       <v-col cols="12" md="2">
         <v-select
@@ -233,6 +247,8 @@ function highlightMarker(index) {
           density="compact"
           variant="outlined"
           clearable
+          base-color="#3E6263"
+          color="#9DBC98"
           @update:model-value="getGungu"
         ></v-select>
       </v-col>
@@ -243,6 +259,8 @@ function highlightMarker(index) {
           label="군/구"
           density="compact"
           variant="outlined"
+          base-color="#3E6263"
+          color="#9DBC98"
           clearable
           @update:model-value="getMyundong"
         ></v-select>
@@ -253,6 +271,8 @@ function highlightMarker(index) {
           :items="myundongItems"
           label="동/읍/면"
           density="compact"
+          base-color="#3E6263"
+          color="#9DBC98"
           variant="outlined"
           clearable
         ></v-select>
@@ -263,11 +283,14 @@ function highlightMarker(index) {
           label="시설명 검색"
           v-model="venName"
           density="compact"
+          base-color="#3E6263"
+          color="#9DBC98"
           variant="outlined"
+          style="border: 2px solid #3e6263; border-radius: 6px"
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="1" class="text-right">
-        <v-btn color="indigo" elevation="0" @click="search()">검색</v-btn>
+        <v-btn color="#638889" elevation="0" @click="search()">검색</v-btn>
       </v-col>
 
       <v-col cols="12" md="12">
@@ -277,6 +300,8 @@ function highlightMarker(index) {
           chips
           label="카테고리"
           density="compact"
+          base-color="#3E6263"
+          color="#9DBC98"
           variant="outlined"
           multiple
           clearable
@@ -284,26 +309,49 @@ function highlightMarker(index) {
       </v-col>
     </v-row>
 
-    <v-row style="padding-left: 150px; padding-right: 150px; padding-bottom: 30px">
-      <v-col cols="12" md="8" style="width: 80%; height: 80%">
-        <div ref="mapContainer" style="width: 100%; height: 700px"></div>
+    <v-row
+      style="padding-left: 150px; padding-right: 150px; padding-bottom: 60px; margin-top: 25px"
+    >
+      <v-col cols="12" md="8" style="width: 80%; height: 80%; margin-bottom: 50px">
+        <div
+          ref="mapContainer"
+          style="width: 100%; height: 600px; border: 2px solid #638889; border-radius: 5px"
+        ></div>
       </v-col>
-      <v-col>
+      <v-col cols="12" md="4">
         <v-card
-          elevation="0"
-          variant="outlined"
-          v-for="(data, index) in searchList"
+          variant="tonal"
+          color="#638889"
+          v-for="(data, index) in paginatedItems"
           :key="data.dataNo"
+          style="margin-bottom: 10px"
         >
-          <v-card-text @click="highlightMarker(index)" style="cursor: pointer">
-            {{ data.venName }}
-            <br />
-            <br />
+          <v-card-text
+            @click="highlightMarker(index)"
+            style="
+              cursor: pointer;
+              padding-bottom: 27px;
+              border: 2px solid #638889;
+              border-radius: 4px;
+            "
+          >
+            <strong>{{ data.venName }}</strong>
+            <br /><br />
             {{ data.roadAddr }}
             <br />
             {{ data.lotAddr }}
           </v-card-text>
         </v-card>
+        <v-row>
+          <v-pagination
+            :total-visible="4"
+            v-model="currentPage"
+            :length="totalPages"
+            class="my-4 my-page"
+            v-if="searchList.length > 0"
+            color="#8D6A14"
+          ></v-pagination>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -322,4 +370,8 @@ function highlightMarker(index) {
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.my-page ul {
+  padding-left: 0 !important;
+}
+</style>

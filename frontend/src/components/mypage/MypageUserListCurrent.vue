@@ -34,7 +34,21 @@ export default {
 <template>
   <div>
     <p>나의 예약 내역 보기</p>
-    <Qalendar :events="events" :config="config" />
+    <Qalendar :events="events" :config="config">
+      <template>
+        <div>
+          <div :style="{ marginBottom: '8px' }">Edit event</div>
+
+          <input
+            class="flyout-input"
+            type="text"
+            :style="{ width: '90%', padding: '8px', marginBottom: '8px' }"
+          />
+
+          <button>Finished!</button>
+        </div>
+      </template>
+    </Qalendar>
   </div>
 </template>
 
