@@ -165,16 +165,19 @@ const router = createRouter({
                 {
                   path: 'hospital',
                   name: 'reserve-initial-hospital',
+                  meta: { hideFooter: true },
                   component: ReserveHospital
                 },
                 {
                   path: 'time',
                   name: 'reserve-initial-time',
+                  meta: { hideFooter: true },
                   component: ReserveTime
                 },
                 {
                   path: 'pet',
                   name: 'reserve-initial-pet',
+                  meta: { hideFooter: true },
                   component: ReservePet
                 }
               ]
@@ -193,16 +196,19 @@ const router = createRouter({
                 {
                   path: 'hospital',
                   name: 'reserve-appoint-hospital',
+                  meta: { hideFooter: true },
                   component: ReserveHospital
                 },
                 {
                   path: 'time',
                   name: 'reserve-appoint-time',
+                  meta: { hideFooter: true },
                   component: ReserveTime
                 },
                 {
                   path: 'pet',
                   name: 'reserve-appoint-pet',
+                  meta: { hideFooter: true },
                   component: ReservePet
                 }
               ]
@@ -215,6 +221,7 @@ const router = createRouter({
             {
               path: 'emergency',
               name: 'reserve-emergency',
+              meta: { hideFooter: true },
               component: ReserveEmergency
             }
           ]

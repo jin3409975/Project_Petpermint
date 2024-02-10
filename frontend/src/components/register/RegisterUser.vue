@@ -616,10 +616,6 @@ function openKakaoAddressSearch() {
 .v-stepper-content {
   box-shadow: none !important;
 }
-
-.v-stepper-header {
-  padding-bottom: 20px !important;
-}
 .v-input__details {
   display: none !important;
 }
@@ -650,5 +646,11 @@ function openKakaoAddressSearch() {
   background-position: center; /* 이미지 중심이 컨테이너 중심과 일치하도록 조정 */
   width: 100%; /* 컨테이너의 전체 너비를 사용 */
   height: 100%; /* 컨테이너의 전체 높이를 사용 */
+}
+</style>
+
+<style scoped>
+.v-stepper-header {
+  padding-bottom: 20px !important;
 }
 </style>

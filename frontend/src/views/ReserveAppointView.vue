@@ -42,21 +42,35 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-app>
+  <v-app class="my-custom-reserve">
     <v-container>
       <v-stepper
         :items="['예약 시간 선택', '예약 병원 선택', '예약 자녀 선택', '특이 사항 입력']"
         :hide-actions="true"
-        alt-labels
         v-model="step"
       >
         <template v-slot:item.1>
-          <v-card v-if="step == 1" class="card" title="예약 시간 선택" flat>
+          <v-card
+            v-if="step == 1"
+            class="card"
+            flat
+            title="예약 시간 선택"
+            subtitle="예약을 원하시는 날짜와 시간을 선택하고 다음 버튼을 눌러주세요."
+          >
             <div class="d-flex justify-center">
               <ReserveTime />
             </div>
-            <v-card-actions class="d-flex justify-center">
-              <v-btn class="custom-btn btn-2" @click="selectDate">시간 선택 완료</v-btn>
+            <v-card-actions
+              class="d-flex justify-center"
+              style="position: absolute; top: 485px; left: 685px"
+            >
+              <!-- 예약을 원하시는 날짜와 시간을 선택하고 다음 버튼을 눌러주세요. -->
+              <v-btn size="large" variant="flat" color="white" @click="selectDate"
+                >선택 완료
+                <v-tooltip activator="parent" location="top"
+                  >예약을 원하시는 날짜와 시간을 선택하고 다음 버튼을 눌러주세요.</v-tooltip
+                ></v-btn
+              >
             </v-card-actions>
           </v-card>
         </template>
@@ -100,7 +114,7 @@ onMounted(() => {
                 병원 예약이 완료되었습니다. <br />
                 마이 페이지에서 예약 내역을 확인할 수 있습니다.
               </v-card-text>
-              <v-card-actions>
+              <v-card-actions style="position: absolute; top: 20px">
                 <v-btn color="primary" block @click="navigateToMain">Close</v-btn>
               </v-card-actions>
             </v-card>
@@ -112,6 +126,40 @@ onMounted(() => {
 </template>
 
 <style scoped>
+:deep(.v-card-title) {
+  margin-bottom: 0px;
+}
+:deep(.v-card-subtitle) {
+  padding-bottom: 30px;
+}
+:deep(.v-card-item) {
+  padding-top: 0px;
+}
+:deep(.v-application__wrap) {
+  min-height: 60vh !important;
+}
+
+:deep(.v-stepper .v-stepper-item--selected .v-stepper-item__avatar.v-avatar),
+:deep(.v-stepper .v-stepper-item--complete .v-stepper-item__avatar.v-avatar) {
+  background: #6588b2 !important;
+}
+:deep(.v-stepper-item__avatar.v-avatar) {
+  background: #abaaaa;
+  font-size: 0.9rem;
+}
+:deep(.v-stepper-item) {
+  padding: 0.3rem;
+}
+:deep(.v-avatar) {
+  width: 28px !important;
+  height: 28px !important;
+}
+:deep(.v-stepper-header .v-divider) {
+  margin: -2px 0px 0;
+}
+:deep(.v-container) {
+  padding: 0;
+}
 .d-flex {
   display: flex;
 }
@@ -123,7 +171,7 @@ onMounted(() => {
   text-align: center;
 }
 .custom-btn {
-  width: 130px;
+  width: 100px;
   height: 40px;
   color: #fff;
   border-radius: 5px;
