@@ -32,9 +32,9 @@ export default {
         console.log('streamCreated', e)
       })
 
-      session.on('sessionDisconnected', (event) => {
-        console.warn('sessionDisconnected event')
-        this.joinSession()
+      session.on('sessionDisconnected', (e) => {
+        console.log('sessionDisconnected', e)
+        this.$router.push({ name: 'main-home' })
       })
 
       session.on('exception', (exception) => {
