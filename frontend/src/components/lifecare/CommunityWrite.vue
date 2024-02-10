@@ -13,6 +13,8 @@ const router = useRouter()
 const content = ref('')
 const files = ref()
 
+const dialog = ref(false)
+
 const write = async () => {
   if (localStorage.useremail == null) {
     alert('로그인 후 진행해 주십시오')
@@ -28,10 +30,17 @@ const write = async () => {
       })
     }
 
-    let writer = community_stores.communitywrite(formData)
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    location.reload()
+    await community_stores.communitywrite(formData)
+    onAfterSaved()
   }
+}
+
+const onAfterSaved = () => {
+  content.value = ''
+  files.value = undefined
+  dialog.value = false
+
+  router.push({ name: 'lifecare-community-list' })
 }
 
 const logincheck = () => {
