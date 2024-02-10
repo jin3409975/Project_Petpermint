@@ -14,6 +14,8 @@ const writer = ref()
 
 const likes = ref(0)
 
+const picture = ref('/assets/img/default_profile.png')
+
 const router = useRouter()
 const checkLike = async () => {
   if (userId.value == null) {
@@ -72,6 +74,23 @@ watch(
   }
 )
 
+watch(
+  () => props.article.userId,
+  (newId) => {
+    fetchData(newId)
+  }
+)
+
+const fetchData = async (newId) => {
+  console.log(newId)
+  await account_stores.getnormalprofile(newId)
+  writer.value = await account_stores.userdata
+  console.log(writer.value)
+  console.log(writer.value.picture)
+  if (writer.value.picture != 0 && writer.value.picture != null)
+    picture.value = writer.value.picture
+}
+
 const time = ref('0일 전')
 watch(
   () => props.article.registTime,
@@ -90,10 +109,7 @@ watch(
     <v-col class="text-center">
       <v-row>
         <v-col>
-          <img v-if="article.picture !== '0'" :src="article.picture" style="width: 50px" />
-          <v-else>
-            <img src="/assets/img/default_profile.png" style="width: 50px" />
-          </v-else>
+          <img :src="picture" style="width: 50px; height: 50px; border-radius: 50%" />
           <span
             ><b>&nbsp; {{ time }}</b></span
           >

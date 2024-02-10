@@ -212,21 +212,30 @@ export const useAccountStore = defineStore(
       loginStatus.value = false
     }
     // 일반 유저 프로필 정보 불러오기
+
     const getnormalprofile = function (userId) {
-      axios({
-        method: 'get',
-        url: API_URL + 'me/normal',
-        params: {
-          userId: userId
-        }
-      }).then((r) => {
-        if (r.data.statusCode == 200) {
-          console.log('success get userinfo', r)
-          userdata.value = r.data
-        } else {
-          console.log('failed get userinfo', r)
-          alert('유저 정보를 불러오는데 실패 했습니다.')
-        }
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: API_URL + 'me/normal',
+          params: {
+            userId: userId
+          }
+        })
+          .then((response) => {
+            if (response.data.statusCode === 200) {
+              console.log('success get userinfo', response)
+              resolve(response.data)
+              userdata.value = response.data
+            } else {
+              console.log('failed get userinfo', response)
+              reject(new Error('유저 정보를 불러오는데 실패 했습니다.'))
+            }
+          })
+          .catch((error) => {
+            console.error('Error in getnormalprofile:', error)
+            reject(error)
+          })
       })
     }
     const updateNormal = function (userId, userName, password, picture, address, phone) {
