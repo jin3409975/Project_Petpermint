@@ -286,7 +286,6 @@ const totalPages = computed(() => {
           base-color="#3E6263"
           color="#9DBC98"
           variant="outlined"
-          style="border: 2px solid #3e6263; border-radius: 6px"
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="1" class="text-right">
