@@ -1,15 +1,18 @@
 package com.ssafy.db.repository;
 
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.CommunityUpdatePutReq;
-import com.ssafy.db.entity.QPostFiles;
-import com.ssafy.db.entity.QUserPost;
+import com.ssafy.db.entity.*;
 
-import com.ssafy.db.entity.UserPost;
+import javax.persistence.EntityManager;
+
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +26,7 @@ public class CommunityRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QUserPost quserPost= QUserPost.userPost;
     QPostFiles qpostFiles= QPostFiles.postFiles;
+    QVideoRoom qVideoRoom= QVideoRoom.videoRoom;
 
     public Optional<UserPost> findDataByPostId(int postId) {
         UserPost userPost = jpaQueryFactory.select(quserPost).from(quserPost)
@@ -73,6 +77,19 @@ public class CommunityRepositorySupport {
         Integer max= jpaQueryFactory.select(quserPost.postId.max()).from(quserPost).fetchOne();
         if(max == null) return Optional.ofNullable(0);
         return Optional.ofNullable(max);
+    }
+
+    public List<VideoRoom> findVideos() {
+        LocalDateTime nineHoursLater = LocalDateTime.now();
+
+        List<VideoRoom> videoRoom = jpaQueryFactory.select(qVideoRoom).from(qVideoRoom)
+                .where(
+                        qVideoRoom.startTime.goe(String.valueOf(nineHoursLater)),
+                        qVideoRoom.isDelete.ne(true)
+                )
+                .orderBy(qVideoRoom.startTime.asc())
+                .fetch();
+        return videoRoom;
     }
 
 

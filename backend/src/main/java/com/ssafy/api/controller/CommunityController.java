@@ -9,6 +9,7 @@ import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.PostComment;
 import com.ssafy.db.entity.PostLikes;
 import com.ssafy.db.entity.UserPost;
+import com.ssafy.db.entity.VideoRoom;
 import com.ssafy.db.join.PostUrlList;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -316,5 +317,23 @@ public class CommunityController {
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		else
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+	}
+
+	@GetMapping("/video/list")
+	@ApiOperation(value = "방송 목록 조회", notes = "방송 목록을 응답한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+	})
+	public ResponseEntity<? extends BaseResponseBody> videoList() {
+		List<VideoRoom>videos=communityService.videoList();
+
+
+		if(videos!=null)
+			return ResponseEntity.status(200).body(VideoListGetRes.of(200, "200", videos));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(200,"fail"));
 	}
 }

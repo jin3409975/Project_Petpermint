@@ -17,6 +17,7 @@ export const useCommunityStore = defineStore(
     const hit = ref()
     const likecheck = ref()
     const comments = ref([])
+    const videos = ref([])
 
     const communitywrite = function (formData) {
       return new Promise((resolve, reject) => {
@@ -223,6 +224,22 @@ export const useCommunityStore = defineStore(
           })
       })
     }
+    const videolist = function () {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: API_URL + 'video/list'
+        })
+          .then((response) => {
+            videos.value = response.data
+            resolve(articles.value)
+            console.log(articles.value)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
     return {
       communitylist,
       articles,
@@ -238,7 +255,9 @@ export const useCommunityStore = defineStore(
       commentlist,
       comments,
       commentwrite,
-      commentdelete
+      commentdelete,
+      videolist,
+      videos
     }
   },
   { persist: true }
