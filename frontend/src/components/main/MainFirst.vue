@@ -8,7 +8,7 @@ const typedElement = ref(null)
 onMounted(() => {
   const options = {
     strings: ['사랑스러운 반려동물의 건강', '펫퍼민트가 함께 합니다.'],
-    typeSpeed: 60,
+    typeSpeed: 90,
     backSpeed: 40,
     fadeOut: true,
     loop: true
