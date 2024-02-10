@@ -406,7 +406,7 @@ const handleMouseLeave = () => {
   left: 0;
   transform: translateY(-120%) translateX(20%);
   font-weight: bold;
-  color: #fcfcfca5;
+  color: #868484;
 }
 
 .draggable {
@@ -441,7 +441,7 @@ const handleMouseLeave = () => {
 }
 .header {
   width: 120px;
-  color: #474747;
+  color: #373737;
   height: 30px;
   font-size: 13px;
   font-weight: bold;
@@ -460,8 +460,8 @@ const handleMouseLeave = () => {
   display: block;
   width: 1.1vw;
   height: 1.1vw;
-  border-bottom: 4px solid #fcfcfca5;
-  border-right: 4px solid #fcfcfca5;
+  border-bottom: 4px solid #868484;
+  border-right: 4px solid #868484;
   transform: rotate(45deg);
   margin: -10px;
   animation: animate 2s infinite;
