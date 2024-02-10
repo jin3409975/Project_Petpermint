@@ -1,6 +1,7 @@
 package com.ssafy.db.repository;
 
 import com.ssafy.db.entity.UserPost;
+import com.ssafy.db.entity.VideoRoom;
 import com.ssafy.db.join.PostUrlList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +28,11 @@ public interface CommunityRepository extends JpaRepository<UserPost, Long> {
             "AND u.postId NOT IN (:postIds)"+
             "GROUP BY u.postId ORDER BY RAND() LIMIT :page", nativeQuery = true)
     List<PostUrlList> findPostUrlJoin(int page,List<Integer> postIds);
+
+    @Query(value = "SELECT * " +
+            "FROM VideoRoom " +
+            "WHERE startTime >= NOW() " +
+            "AND isDelete != 1 " +
+            "ORDER BY startTime ASC", nativeQuery = true)
+    List<VideoRoom> findVideos();
 }

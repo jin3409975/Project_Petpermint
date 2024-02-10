@@ -39,5 +39,7 @@ public interface CommunityService {
     PostLikes insertIntoLikeTable(int postId, String userId);
 
     PostLikes findPostLikesByPostIdUserId(int postId, String userId);
+
+    List<VideoRoom> videoList();
 }
 

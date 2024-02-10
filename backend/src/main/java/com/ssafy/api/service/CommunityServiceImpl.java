@@ -1,12 +1,9 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.*;
-import com.ssafy.db.entity.PostComment;
-import com.ssafy.db.entity.PostFiles;
-import com.ssafy.db.entity.PostLikes;
+import com.ssafy.db.entity.*;
 import com.ssafy.db.join.PostUrlList;
 import com.ssafy.db.repository.*;
-import com.ssafy.db.entity.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -188,6 +185,12 @@ public class CommunityServiceImpl implements CommunityService {
         postLikes.setUserId(userId);
         postLikes.setPostId(postId);
         return postLikesRepository.find(userId,postId);
+    }
+
+    @Override
+    public List<VideoRoom> videoList() {
+        List<VideoRoom> videos=communityRepositorySupport.findVideos();
+        return videos;
     }
 
 
