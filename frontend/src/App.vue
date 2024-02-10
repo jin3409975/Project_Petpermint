@@ -26,11 +26,14 @@ function goEmergency() {
   console.log('asdasdasdqefn qejfjoqekbwrh bjw')
   router.push({ name: 'reserve-emergency' })
 }
+const backgroundColor = computed(() => {
+  return route.meta.backgroundColor
+})
 </script>
 
 <template>
   <body>
-    <v-app>
+    <v-app :style="{ backgroundColor: backgroundColor }">
       <NavbarMain v-if="!hideNavbarMain" />
       <RouterView />
       <Footer v-if="!hideFooter" />
