@@ -22,4 +22,6 @@ public interface AnimalService {
 	boolean animalUpdate(AnimalReq animalReq, String url);
 
 	boolean animalDelete(int animalId);
+
+	String findPicture(int animalId);
 }

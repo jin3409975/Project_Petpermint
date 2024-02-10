@@ -3,7 +3,7 @@ import { Qalendar } from 'qalendar'
 import { myPageStore } from '@/stores/mypage.js'
 import { onBeforeMount, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-
+import { useRouter } from 'vue-router'
 export default {
   components: {
     Qalendar
@@ -11,44 +11,48 @@ export default {
   setup() {
     const mypagestore = myPageStore()
     const { myevents } = storeToRefs(mypagestore)
-
+    const router = useRouter()
     // Initialize config as a reactive reference
     const config = ref({
       // Configuration details go here
+      defaultMode: 'month',
+      style: {
+        colorSchemes: {
+          meetings: {
+            //일정 css
+            color: '#fff',
+            backgroundColor: '#131313'
+          },
+          sports: {
+            color: '#fff',
+            backgroundColor: '#ff4081'
+          }
+        }
+      }
     })
 
     onBeforeMount(() => {
       console.log('Component is about to be mounted')
       mypagestore.getmyevents()
     })
-
+    const navigationToinfo = function () {
+      router.push({ name: 'mypage-user-info' })
+    }
     // Return all reactive references and methods you want to use in the template
     return {
       events: myevents,
-      config
+      config: config,
+      navigationToinfo
     }
   }
 }
 </script>
 
 <template>
-  <div>
-    <p>나의 예약 내역 보기</p>
-    <Qalendar :events="events" :config="config">
-      <template>
-        <div>
-          <div :style="{ marginBottom: '8px' }">Edit event</div>
-
-          <input
-            class="flyout-input"
-            type="text"
-            :style="{ width: '90%', padding: '8px', marginBottom: '8px' }"
-          />
-
-          <button>Finished!</button>
-        </div>
-      </template>
-    </Qalendar>
+  <p>나의 예약 내역 보기</p>
+  <v-btn @click="navigationToinfo" icon="mdi-account" size="x-large"></v-btn>
+  <div class="mycalendar">
+    <Qalendar :events="events" :config="config" />
   </div>
 </template>
 
@@ -56,5 +60,13 @@ export default {
 @import 'qalendar/dist/style.css';
 .calendar-month__weekday[data-v-034f06d8] {
   min-height: 80px;
+}
+.mycalendar {
+  height: auto;
+  width: 80%;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 100px;
+  margin: auto;
 }
 </style>

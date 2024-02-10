@@ -247,6 +247,8 @@ function completeUpdate() {
 .profile-img {
   flex: 0.3;
   height: 250px;
+  display: flex;
+  justify-content: center;
 }
 .profile-info {
   flex: 0.7; /* Ensure both cards share the available space equally */
