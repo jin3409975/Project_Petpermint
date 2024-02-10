@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
 
+const router = useRouter()
 const accountstore = useAccountStore()
-// const router = useRouter()
 const { userdata, mypetlist } = storeToRefs(accountstore)
 const opendialog = ref(false)
 const showeditpet = ref(false)
@@ -155,51 +155,67 @@ const savenewpetInfo = function () {
     newpetgender.value
   )
   showeditpet.value = false
+  router.push({ name: 'mypage-user-info' })
+}
+
+function navigateTocurrentlist() {
+  router.push({ name: 'mypage-user-list-current' })
 }
 </script>
 
 <template>
   <!-- 유저의 프로필  -->
-  <v-container class="profile-container">
-    <!-- 유저의 프로필 이미지 -->
-    <v-card class="profile-img">
-      <v-avatar size="230" variant="outlined">
-        <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
-        <input
-          type="file"
-          @change="getFile"
-          style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer"
-        />
-      </v-avatar>
-    </v-card>
-    <!-- 유저의 기본정보 -->
-    <v-card class="profile-info">
-      <v-text-field
-        label="이름"
-        v-model="userName"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        v-model="email"
-        label="Email"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        v-model="phoneNumber"
-        label="전화번호"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        v-model="address"
-        label="주소"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field
-      ><v-btn v-if="isclicked" @click="openKakaoAddressSearch">주소 변경</v-btn>
-      <v-card v-if="isclicked">
+  <v-container class="profile-container mx-auto" elevation="8" width="auto">
+    <v-row>
+      <v-col cols="12" class="text-center">
+        <!-- 유저의 프로필 이미지 -->
+        <v-card class="profile-img">
+          <v-avatar size="230" variant="inlined">
+            <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
+            <input
+              type="file"
+              @change="getFile"
+              style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer"
+              :disabled="!isclicked"
+            />
+          </v-avatar>
+          <v-btn v-show="isclicked == false" @click="updateInfo">수정</v-btn>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12">
+        <!-- 유저의 기본정보 -->
+        <v-card class="profile-info">
+          <v-text-field
+            label="이름"
+            v-model="userName"
+            variant="solo"
+            :readonly="isreadonly"
+          ></v-text-field>
+          <v-text-field
+            v-model="email"
+            label="Email"
+            variant="solo"
+            :readonly="isreadonly"
+          ></v-text-field>
+          <v-text-field
+            v-model="phoneNumber"
+            label="전화번호"
+            variant="solo"
+            :readonly="isreadonly"
+          ></v-text-field>
+
+          <v-text-field
+            v-model="address"
+            label="주소"
+            variant="solo"
+            :readonly="isreadonly"
+          ></v-text-field>
+
+          <v-card v-if="isclicked">
+            <v-btn @click="openKakaoAddressSearch">주소 변경</v-btn>
+          </v-card>
+        </v-card>
         <a
           class="text-caption text-decoration-none text-blue"
           href="/find/password"
@@ -208,11 +224,67 @@ const savenewpetInfo = function () {
         >
           비밀번호 변경</a
         >
+      </v-col>
+      <v-btn v-if="isclicked" @click="saveinfo">저장</v-btn>
+    </v-row>
 
-        <v-btn @click="saveinfo">저장</v-btn>
-      </v-card>
-    </v-card>
-    <v-btn v-show="isclicked == false" @click="updateInfo">개인 정보 수정</v-btn>
+    <!-- 유저 펫리스트 -->
+    <v-sheet class="mx-auto" elevation="3" max-width="450px" height="auto">
+      <v-slide-group class="pa-4" show-arrows>
+        <v-slide-group-item v-for="pet in mypetlist" :key="pet.id">
+          <v-card width="350">
+            <v-row>
+              <v-col cols="4">
+                <v-avatar class="pet-img" size="150" variant="outlined">
+                  <img
+                    :src="pet.picture"
+                    alt="펫 프로필 사진"
+                    style="max-width: 100%; height: auto"
+                  />
+                </v-avatar>
+              </v-col>
+              <v-col cols="6" style="text-align: center">
+                <p>{{ pet.name }}</p>
+                <p>{{ pet.specie }}</p>
+                <p>{{ pet.gender }}</p>
+                <p>{{ pet.weight }}</p>
+                <p>{{ pet.note }}</p>
+              </v-col>
+            </v-row>
+            <v-btn @click="editPetprofile(pet)">수정</v-btn>
+          </v-card>
+        </v-slide-group-item>
+      </v-slide-group>
+
+      <!-- 펫 수정 폼  -->
+      <v-expand-transition v-if="showeditpet">
+        <v-sheet
+          width="300px"
+          height="auto"
+          class="d-flex flex-column align-center justify-center mx-auto"
+        >
+          <v-file-input
+            v-model="newpetpicture"
+            label="프로필 사진 업로드"
+            prepend-icon="mdi-camera"
+            @change="getpetFile"
+            style="width: 100%"
+            variant="underlined"
+          ></v-file-input>
+          <v-text-field variant="underlined" v-model="newpetname" label="이름"></v-text-field>
+          <v-text-field variant="underlined" v-model="newpetspecie" label="종"></v-text-field>
+          <v-text-field variant="underlined" v-model="newpetgender" label="성별"></v-text-field>
+          <v-text-field variant="underlined" v-model="newpetweight" label="무게"></v-text-field>
+          <v-text-field variant="underlined" v-model="newpetage" label="무게"></v-text-field>
+          <v-text-field variant="underlined" v-model="newpetnote" label="소개"></v-text-field>
+          <v-btn @click="savenewpetInfo">저장</v-btn>
+          <!-- <div class="d-flex fill-height align-center justify-center"> -->
+          <!-- </div> -->
+        </v-sheet>
+      </v-expand-transition>
+    </v-sheet>
+    <!-- 나의 예약 일정 보기로 이동  -->
+    <v-btn @click="navigateTocurrentlist" icon="mdi-calendar" size="x-large"></v-btn>
   </v-container>
 
   <v-dialog v-model="opendialog" max-width="600px">
@@ -224,54 +296,6 @@ const savenewpetInfo = function () {
       </v-card-actions>
     </v-card>
   </v-dialog>
-
-  <!-- 유저 펫리스트 -->
-  <v-sheet class="mx-auto" elevation="8" max-width="1200px">
-    <v-slide-group class="pa-4" show-arrows>
-      <v-slide-group-item v-for="pet in mypetlist" :key="pet.id">
-        <v-card height="200" width="350">
-          <v-row>
-            <v-col cols="4">
-              <v-avatar class="pet-img" size="150" variant="outlined">
-                <img
-                  :src="pet.picture"
-                  alt="펫 프로필 사진"
-                  style="max-width: 100%; height: auto"
-                />
-              </v-avatar>
-            </v-col>
-            <v-col cols="6">
-              <v-card-text>
-                {{ pet.name }} {{ pet.specie }} {{ pet.gender }} {{ pet.weight }}</v-card-text
-              >
-            </v-col>
-          </v-row>
-          <v-btn @click="editPetprofile(pet)">수정</v-btn>
-        </v-card>
-      </v-slide-group-item>
-    </v-slide-group>
-
-    <!-- 펫 수정 폼  -->
-    <v-expand-transition v-if="showeditpet">
-      <v-sheet height="auto">
-        <v-file-input
-          v-model="newpetpicture"
-          label="프로필 사진"
-          prepend-icon="mdi-camera"
-          @change="getpetFile"
-        ></v-file-input>
-        <v-text-field v-model="newpetname" label="이름"></v-text-field>
-        <v-text-field v-model="newpetspecie" label="종"></v-text-field>
-        <v-text-field v-model="newpetgender" label="성별"></v-text-field>
-        <v-text-field v-model="newpetweight" label="무게"></v-text-field>
-        <v-text-field v-model="newpetage" label="무게"></v-text-field>
-        <v-text-field v-model="newpetnote" label="소개"></v-text-field>
-        <v-btn @click="savenewpetInfo">저장</v-btn>
-        <!-- <div class="d-flex fill-height align-center justify-center"> -->
-        <!-- </div> -->
-      </v-sheet>
-    </v-expand-transition>
-  </v-sheet>
 </template>
 
 <style scoped>
@@ -284,19 +308,29 @@ const savenewpetInfo = function () {
   padding: 20px;
   display: flex;
   gap: 20px;
+  margin: 0 auto;
 }
 .profile-img {
-  flex: 0.3;
-  height: 250px;
+  height: 50%px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
 }
 .profile-info {
-  flex: 0.7; /* Ensure both cards share the available space equally */
+  width: 500px;
+  margin-left: 0;
 }
+
 .v-text-field {
   margin-bottom: 10px;
-  width: 85%;
+  width: 100%;
 }
 .petcard {
   width: 20%;
+}
+.v-expand-transition {
+  display: flex;
+}
+.v-expand-transition v-sheet {
 }
 </style>
