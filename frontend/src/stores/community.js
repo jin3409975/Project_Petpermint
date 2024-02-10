@@ -17,6 +17,7 @@ export const useCommunityStore = defineStore(
     const hit = ref()
     const likecheck = ref()
     const comments = ref([])
+    const isSaved = ref(false)
 
     const communitywrite = function (formData) {
       return new Promise((resolve, reject) => {
@@ -29,6 +30,8 @@ export const useCommunityStore = defineStore(
           data: formData
         })
           .then((response) => {
+            isSaved.value = response.data
+            resolve(isSaved.value)
             console.log(response)
           })
           .catch((error) => {
