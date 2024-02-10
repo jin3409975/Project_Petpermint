@@ -43,9 +43,9 @@ onMounted(() => {
 
 <template>
   <v-app class="my-custom-reserve">
-    <v-container>
+    <v-container style="width: 800px">
       <v-stepper
-        :items="['예약 시간 선택', '예약 병원 선택', '예약 자녀 선택', '특이 사항 입력']"
+        :items="['예약 시간 선택', '예약 병원 선택', '예약 자녀 선택']"
         :hide-actions="true"
         v-model="step"
       >
@@ -62,14 +62,17 @@ onMounted(() => {
             </div>
             <v-card-actions
               class="d-flex justify-center"
-              style="position: absolute; top: 485px; left: 685px"
+              style="margin-top: 10px; width: 415px; margin-left: 170px"
             >
               <!-- 예약을 원하시는 날짜와 시간을 선택하고 다음 버튼을 눌러주세요. -->
-              <v-btn size="large" variant="flat" color="white" @click="selectDate"
-                >선택 완료
-                <v-tooltip activator="parent" location="top"
-                  >예약을 원하시는 날짜와 시간을 선택하고 다음 버튼을 눌러주세요.</v-tooltip
-                ></v-btn
+              <v-btn
+                style="border: 2px solid"
+                variant="outlined"
+                block
+                color="#6096b4"
+                size="large"
+                @click="selectDate"
+                >선택 완료</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -79,42 +82,71 @@ onMounted(() => {
           <v-card v-if="step == 2" class="card" title="예약 병원 선택" flat>
             <ReserveHospital />
           </v-card>
-          <v-card-actions class="d-flex justify-center">
-            <v-btn class="custom-btn btn-2" @click="step = 1">이전 단계</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn class="custom-btn btn-2" @click="step = 3">다음 단계</v-btn>
+          <v-card-actions class="d-flex justify-center" style="margin-top: 7px">
+            <v-btn
+              variant="outlined"
+              color="#6096b4"
+              @click="step = 1"
+              style="margin-right: 290px; border: 1.7px solid"
+              >이전 단계</v-btn
+            >
+            <v-btn style="border: 1.7px solid" variant="outlined" color="#6096b4" @click="step = 3"
+              >다음 단계</v-btn
+            >
           </v-card-actions>
         </template>
 
         <template v-slot:item.3>
-          <v-card v-if="step == 3" class="card" title="예약 자녀 선택" flat>
+          <v-card
+            v-if="step == 3"
+            class="card"
+            title="예약 자녀 선택/특이 사항 입력"
+            subtitle="진료를 받을 자녀를 선택하고 수의사님이 사전에 알면 좋을 특이 사항을 입력해 주세요."
+            flat
+            style="margin-top: 20px"
+          >
             <ReservePet />
           </v-card>
-          <v-card-actions class="d-flex justify-center">
-            <v-btn class="custom-btn btn-2" @click="step = 2">이전 단계</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn class="custom-btn btn-2" @click="step = 4">다음 단계</v-btn>
-          </v-card-actions>
-        </template>
-
-        <template v-slot:item.4>
-          <v-card v-if="step == 4" class="card" title="특이 사항 입력" flat>
-            <v-container>
-              <v-textarea v-model="note" variant="outlined" @change="onChange"> </v-textarea>
-            </v-container>
-          </v-card>
-          <v-card-actions class="d-flex justify-center">
-            <v-btn class="custom-btn btn-2" @click="step = 3">이전 단계</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn class="custom-btn btn-2" @click="navigateToReserveComplete">예약 완료</v-btn>
+          <v-container style="width: 600px; margin-top: 60px">
+            <v-textarea
+              label="특이 사항 및 진료 목적"
+              v-model="note"
+              auto-grow
+              variant="outlined"
+              rows="6"
+              shaped
+              @change="onChange"
+            >
+            </v-textarea>
+          </v-container>
+          <v-card-actions class="d-flex justify-center" style="margin-top: 20px">
+            <v-btn
+              variant="outlined"
+              color="#6096b4"
+              @click="step = 2"
+              style="margin-right: 375px; border: 1.7px solid"
+              >이전 단계</v-btn
+            >
+            <v-btn
+              min-width="140px"
+              style="border: 1.7px solid"
+              variant="flat"
+              size="large"
+              prepend-icon="mdi-check-bold"
+              color="green-darken-1"
+              @click="navigateToReserveComplete"
+              >예약 완료</v-btn
+            >
           </v-card-actions>
           <v-dialog v-model="dialog" width="auto" persistent>
             <v-card>
-              <v-card-text>
+              <v-card-text style="height: 110px">
                 병원 예약이 완료되었습니다. <br />
                 마이 페이지에서 예약 내역을 확인할 수 있습니다.
               </v-card-text>
-              <v-card-actions style="position: absolute; top: 20px">
+              <v-card-actions
+                style="position: absolute; top: 58px; right: 150px; padding-bottom: 0px"
+              >
                 <v-btn color="primary" block @click="navigateToMain">Close</v-btn>
               </v-card-actions>
             </v-card>
