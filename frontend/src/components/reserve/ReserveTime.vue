@@ -104,19 +104,18 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
   --dp-common-transition: all 0.1s ease-in; /*Generic transition applied on buttons and calendar cells*/
 
   /*Sizing*/
-  --dp-button-height: 45px; /*Size for buttons in overlays*/
-  --dp-month-year-row-height: 45px; /*Height of the month-year select row*/
+  --dp-button-height: 35px; /*Size for buttons in overlays*/
+  --dp-month-year-row-height: 35px; /*Height of the month-year select row*/
   --dp-month-year-row-button-size: 30px; /*Specific height for the next/previous buttons*/
-  --dp-cell-size: 55px; /*Width and height of calendar cell*/
+  --dp-cell-size: 45px; /*Width and height of calendar cell*/
   --dp-cell-padding: 5px; /*Padding in the cell*/
   --dp-common-padding: 10px; /*Common padding used*/
   --dp-menu-min-width: 400px; /*Adjust the min width of the menu*/
   --dp-overlay-col-padding: 3px; /*Padding in the overlay column*/
-  --dp-time-inc-dec-button-size: 202px; /*Sizing for arrow buttons in the time picker*/
-  --dp-menu-padding: 6px 30px; /*Menu padding*/
+  --dp-menu-padding: 6px 20px; /*Menu padding*/
 
   /*Font sizes*/
-  --dp-font-size: 1.2rem; /*Default font-size*/
+  --dp-font-size: 1.1rem; /*Default font-size*/
   --dp-preview-font-size: 0.8rem; /*Font size of the date preview in the action row*/
   --dp-time-font-size: 0.8rem; /*Font size in the time picker*/
 
@@ -133,20 +132,26 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
 </style>
 
 <style scoped>
+:deep(.dp__calendar_header_separator) {
+  height: 1.8px;
+}
+:deep(.dp__today) {
+  border: 1.8px solid #6096b4;
+}
 :deep(.dp__time_input) {
   margin-bottom: 20px;
 }
 :deep(.dp__theme_light) {
-  --dp-background-color: #36577e;
-  --dp-text-color: #ffffff;
+  --dp-background-color: #d2e0fb;
+  --dp-text-color: #565656;
   --dp-hover-color: #f9f7f7;
   --dp-hover-text-color: #212121;
-  --dp-primary-color: #f9f7f7;
+  --dp-primary-color: #6096b4;
   --dp-primary-disabled-color: #6bacea;
   --dp-primary-text-color: #000000;
-  --dp-secondary-color: #b7becb;
+  --dp-secondary-color: rgb(192, 196, 202);
   --dp-border-color: #6096b4;
-  --dp-disabled-color: rgb(187, 187, 187);
+  --dp-disabled-color: #565656;
   --dp-scroll-bar-background: #f3f3f3;
   --dp-tooltip-color: #fafafa;
   --dp-disabled-color-text: #3f72af;
