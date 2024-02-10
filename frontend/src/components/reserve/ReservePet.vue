@@ -30,24 +30,20 @@ const navigateToReserveComplete = () => {
 </script>
 
 <template>
-  <div>
-    <v-container fluid class="d-flex justify-center">
-      <v-radio-group v-model="reservepetindex" @change="selectPet()">
-        <v-radio
-          v-for="(pet, index) in petList"
-          :key="pet.id"
-          :label="pet.name"
-          :value="index"
-        ></v-radio>
-      </v-radio-group>
-    </v-container>
-  </div>
-  <!-- <button class="button" @click="navigateToReserveComplete">완료</button> -->
+  <v-container fluid class="d-flex justify-center" style="margin-top: 15px">
+    <v-radio-group v-model="reservepetindex" row @change="selectPet()">
+      <v-row>
+        <v-col cols="12" sm="4" v-for="(pet, index) in petList" :key="pet.id">
+          <v-radio :label="pet.name" :value="index"></v-radio>
+        </v-col>
+      </v-row>
+    </v-radio-group>
+  </v-container>
 </template>
 
 <style scoped>
 .v-container--fluid {
-  max-width: 30%;
+  max-width: 70%;
 }
 .v-selection-control {
   align-items: center;
