@@ -6,7 +6,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const reserveStore = useReserveStore()
-const { reservedate, doctorList, starttime, endtime } = storeToRefs(reserveStore)
+const { reservedate, starttime, endtime } = storeToRefs(reserveStore)
 
 const date = ref()
 const startTime = ref({ hours: 0, minutes: 0 })
@@ -16,16 +16,7 @@ watchEffect(() => {
   starttime.value = formatstart(date.value)
   endtime.value = formatend(date.value)
 })
-// const selectDate = () => {
-//   if (reserveStore.type == 1) {
-//     reserveStore.getdoctorList()
-//   } else {
-//     reserveStore.gethospitalList()
-//   }
-//   reserveStore.getpetList()
-//   // starttime , endtime 에 저장 .... 선택한 시간에서 20분 더한 시간을 추출하는 법을 모르겟습니다
-//   console.log(doctorList)
-// }
+
 function formatDate(selected) {
   if (selected) {
     const date = new Date(selected)
@@ -74,6 +65,19 @@ function generateDisabledTimes() {
 }
 
 const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생성
+
+const disabledDates = (date) => {
+  // 오늘 날짜의 시작 부분을 구합니다 (시간을 00:00:00으로 설정)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  // 비교할 날짜도 같은 방식으로 시간을 00:00:00으로 설정
+  const compareDate = new Date(date)
+  compareDate.setHours(0, 0, 0, 0)
+
+  // 비교할 날짜가 오늘 이전이면 true, 그렇지 않으면 false 반환
+  return compareDate < today
+}
 </script>
 
 <template>
@@ -86,11 +90,9 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
       time-picker-inline
       auto-apply
       :disabled-times="disabledTimes"
+      :disabled-dates="disabledDates"
     >
     </VueDatePicker>
-
-    <!-- <button class="button" @click="selectDate">시간 선택 완료</button> -->
-    <!-- {{ starttime }} {{ endtime }} -->
   </div>
 </template>
 
