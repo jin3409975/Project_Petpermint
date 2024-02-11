@@ -70,25 +70,12 @@ export const useReserveStore = defineStore('reserve', () => {
   }
   function emergencyCreate(hospitalNo) {
     var today = new Date()
-    var time = today.getFullYear() + '-'
-    if (today.getMonth() + 1 < 10) {
-      time += '0' + (today.getMonth() + 1)
-    } else {
-      time += today.getMonth() + 1
-    }
-    time += '-'
-    if (today.getDay() + 4 < 10) {
-      time += '0' + (today.getDay() + 4)
-    } else {
-      time += today.getDay() + 4
-    }
-    time += ' '
-    if (today.getHours() < 10) {
-      time += '0' + today.getHours()
-    } else {
-      time += today.getHours()
-    }
-    time += ':00'
+    const year = today.getFullYear()
+    const month = ('0' + (1 + today.getMonth())).slice(-2)
+    const day = ('0' + today.getDate()).slice(-2)
+    const hour = ('0' + today.getHours()).slice(-2)
+    const min = ('0' + today.getMinutes()).slice(-2)
+    const time = `${year}-${month}-${day} ${hour}:${min}`
     axios({
       method: 'post',
       url: VITE_APP_SERVER_URI + '/emergency/reserve/create',
@@ -100,7 +87,7 @@ export const useReserveStore = defineStore('reserve', () => {
     }).then((r) => {
       if (r.data.statusCode == 200) {
         alert('응급 예약이 완료되었습니다.')
-        console.log('qwewqeqweeq123123w')
+        console.log('asdsd응급예약', time)
         router.push({ name: 'main' })
       }
     })

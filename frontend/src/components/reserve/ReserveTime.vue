@@ -6,7 +6,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const reserveStore = useReserveStore()
-const { reservedate, doctorList, starttime, endtime } = storeToRefs(reserveStore)
+const { reservedate, starttime, endtime } = storeToRefs(reserveStore)
 
 const date = ref()
 const startTime = ref({ hours: 0, minutes: 0 })
@@ -16,16 +16,7 @@ watchEffect(() => {
   starttime.value = formatstart(date.value)
   endtime.value = formatend(date.value)
 })
-// const selectDate = () => {
-//   if (reserveStore.type == 1) {
-//     reserveStore.getdoctorList()
-//   } else {
-//     reserveStore.gethospitalList()
-//   }
-//   reserveStore.getpetList()
-//   // starttime , endtime 에 저장 .... 선택한 시간에서 20분 더한 시간을 추출하는 법을 모르겟습니다
-//   console.log(doctorList)
-// }
+
 function formatDate(selected) {
   if (selected) {
     const date = new Date(selected)
@@ -74,6 +65,19 @@ function generateDisabledTimes() {
 }
 
 const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생성
+
+const disabledDates = (date) => {
+  // 오늘 날짜의 시작 부분을 구합니다 (시간을 00:00:00으로 설정)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  // 비교할 날짜도 같은 방식으로 시간을 00:00:00으로 설정
+  const compareDate = new Date(date)
+  compareDate.setHours(0, 0, 0, 0)
+
+  // 비교할 날짜가 오늘 이전이면 true, 그렇지 않으면 false 반환
+  return compareDate < today
+}
 </script>
 
 <template>
@@ -83,45 +87,82 @@ const disabledTimes = ref(generateDisabledTimes()) // 함수 호출로 ref 생�
       :start-time="startTime"
       minutes-increment="20"
       inline
+      time-picker-inline
       auto-apply
       :disabled-times="disabledTimes"
+      :disabled-dates="disabledDates"
     >
     </VueDatePicker>
-
-    <!-- <button class="button" @click="selectDate">시간 선택 완료</button> -->
-    <!-- {{ starttime }} {{ endtime }} -->
   </div>
 </template>
 
+<style>
+:root {
+  /*General*/
+  --dp-font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen, ubuntu, cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  --dp-border-radius: 8px; /*Configurable border-radius*/
+  --dp-cell-border-radius: 8px; /*Specific border radius for the calendar cell*/
+  --dp-common-transition: all 0.1s ease-in; /*Generic transition applied on buttons and calendar cells*/
+
+  /*Sizing*/
+  --dp-button-height: 35px; /*Size for buttons in overlays*/
+  --dp-month-year-row-height: 35px; /*Height of the month-year select row*/
+  --dp-month-year-row-button-size: 30px; /*Specific height for the next/previous buttons*/
+  --dp-cell-size: 45px; /*Width and height of calendar cell*/
+  --dp-cell-padding: 5px; /*Padding in the cell*/
+  --dp-common-padding: 10px; /*Common padding used*/
+  --dp-menu-min-width: 400px; /*Adjust the min width of the menu*/
+  --dp-overlay-col-padding: 3px; /*Padding in the overlay column*/
+  --dp-menu-padding: 6px 20px; /*Menu padding*/
+
+  /*Font sizes*/
+  --dp-font-size: 1.1rem; /*Default font-size*/
+  --dp-preview-font-size: 0.8rem; /*Font size of the date preview in the action row*/
+  --dp-time-font-size: 0.8rem; /*Font size in the time picker*/
+
+  /*Transitions*/
+  --dp-animation-duration: 0.1s; /*Transition duration*/
+  --dp-menu-appear-transition-timing: cubic-bezier(
+    0.4,
+    0,
+    1,
+    1
+  ); /*Timing on menu appear animation*/
+  --dp-transition-timing: ease-out; /*Timing on slide animations*/
+}
+</style>
+
 <style scoped>
-.dp__theme_light {
-  --dp-background-color: #fff;
-  --dp-text-color: #212121;
-  --dp-hover-color: #f3f3f3;
+:deep(.dp__calendar_header_separator) {
+  height: 1.8px;
+}
+:deep(.dp__today) {
+  border: 1.8px solid #6096b4;
+}
+:deep(.dp__time_input) {
+  margin-bottom: 20px;
+}
+:deep(.dp__theme_light) {
+  --dp-background-color: #d2e0fb;
+  --dp-text-color: #565656;
+  --dp-hover-color: #f9f7f7;
   --dp-hover-text-color: #212121;
-  --dp-hover-icon-color: #7c98cc;
-  --dp-primary-color: #1976d2;
+  --dp-primary-color: #6096b4;
   --dp-primary-disabled-color: #6bacea;
-  --dp-primary-text-color: #f8f5f5;
-  --dp-secondary-color: #c0c4cc;
-  --dp-border-color: #ddd;
-  --dp-menu-border-color: #ddd;
-  --dp-border-color-hover: #aaaeb7;
-  --dp-disabled-color: #f6f6f6;
+  --dp-primary-text-color: #000000;
+  --dp-secondary-color: rgb(192, 196, 202);
+  --dp-border-color: #6096b4;
+  --dp-disabled-color: #565656;
   --dp-scroll-bar-background: #f3f3f3;
-  --dp-scroll-bar-color: #959595;
-  --dp-success-color: #76d275;
-  --dp-success-color-disabled: #a3d9b1;
-  --dp-icon-color: #959595;
-  --dp-danger-color: #ff6f60;
-  --dp-marker-color: #ff6f60;
   --dp-tooltip-color: #fafafa;
-  --dp-disabled-color-text: #8e8e8e;
+  --dp-disabled-color-text: #3f72af;
   --dp-highlight-color: rgb(25 118 210 / 10%);
   --dp-range-between-dates-background-color: var(--dp-hover-color, #f3f3f3);
   --dp-range-between-dates-text-color: var(--dp-hover-text-color, #212121);
   --dp-range-between-border-color: var(--dp-hover-color, #f3f3f3);
 }
+
 /* Button base styles */
 .button {
   padding: 10px 20px; /* Adjust padding as needed */

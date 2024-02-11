@@ -34,8 +34,8 @@ onMounted(() => {
 <template>
   <div v-if="type == 1">
     <p>{{ reservedate }}에 상담 가능 수의사는 다음과 같습니다</p>
-    <v-card class="mx-auto hospital-list-card" max-width="300">
-      <v-list three-line class="scrollable-list">
+    <v-card class="mx-auto hospital-list-card" max-width="450" style="border: 1px solid #36577e">
+      <v-list base-color="#36577e" three-line class="scrollable-list">
         <v-list-item
           v-for="(doctor, i) in doctorList"
           :key="i"
@@ -52,13 +52,14 @@ onMounted(() => {
   </div>
   <div v-else-if="type == 2">
     <p>{{ reservedate }}에 진료 가능 병원은 다음과 같습니다</p>
-    <v-card class="mx-auto hospital-list-card" max-width="300">
-      <v-list three-line class="scrollable-list">
+    <v-card class="mx-auto hospital-list-card" max-width="450" style="border: 1px solid #36577e">
+      <v-list base-color="#36577e" three-line class="scrollable-list">
         <v-list-item
           v-for="(hospital, i) in hospitalList"
           :key="i"
           :value="hospital"
           @click="selectHospital(hospital)"
+          style="margin-top: 0px; margin-bottom: 5px"
         >
           <v-list-item-content>
             <v-list-item-title v-text="hospital.venName"></v-list-item-title>
@@ -72,13 +73,13 @@ onMounted(() => {
 
 <style scoped>
 .hospital-list-card .scrollable-list {
-  height: 250px; /* 5개 항목의 높이에 맞춰 조정하세요 */
+  height: 420px; /* 5개 항목의 높이에 맞춰 조정하세요 */
   overflow-y: auto;
 }
 
 /* 리스트 항목의 높이를 조정하세요. 예시로 80px를 사용했습니다. */
 .v-list-item {
-  height: 50px;
+  height: 70px;
 }
 
 /* 반응형 디자인을 위해 뷰포트에 따라 높이 조정 */

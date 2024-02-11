@@ -183,17 +183,19 @@ function doReserve() {
       <v-col>
         <v-card
           elevation="0"
-          variant="outlined"
+          variant="elevated"
           v-for="(data, index) in searchList"
           :key="data.dataNo"
+          class="emergency-hospital"
+          height="100px"
         >
           <v-card-text @click="highlightMarker(index)" style="cursor: pointer">
-            {{ data.venName }}
-            <br />
-            <br />
-            {{ data.roadAddr }}
-            <br />
-            {{ data.lotAddr }}
+            <v-card-tile>
+              {{ data.venName }}
+            </v-card-tile>
+            <v-card-subtitle>
+              {{ data.roadAddr }}
+            </v-card-subtitle>
           </v-card-text>
         </v-card>
       </v-col>
@@ -201,9 +203,18 @@ function doReserve() {
 
     <div>
       <v-dialog v-model="dialog" width="auto">
-        <v-card>
+        <v-card style="text-align: center">
+          <v-card-title>
+            {{ searchList[listIndex].venName }}
+          </v-card-title>
+          <v-card-subtitle>
+            주소 : {{ searchList[listIndex].roadAddr }} <br />주차 :
+            {{ searchList[listIndex].parkAvail }}
+          </v-card-subtitle>
+
           <v-card-text>
-            {{ searchList[listIndex] }}
+            {{ new Date().toISOString().split('T')[0] }}<br />
+            응급 예약을 하시겠습니까?
           </v-card-text>
           <v-card-actions style="justify-content: center">
             <v-btn color="primary" @click="doReserve">예약 하기</v-btn>
@@ -215,4 +226,11 @@ function doReserve() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.emergency-hospital {
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+  background-color: #238cfa;
+}
+</style>

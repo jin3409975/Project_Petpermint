@@ -60,4 +60,9 @@ public class AnimalServiceImpl implements AnimalService {
         animalRepository.deleteAnimal(animalId);
         return true;
     }
+
+    @Override
+    public String findPicture(int animalId) {
+        return animalRepository.findPicture(animalId).getPicture();
+    }
 }

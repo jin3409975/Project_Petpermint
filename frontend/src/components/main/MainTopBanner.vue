@@ -142,6 +142,7 @@ const navigateTo = (path) => {
                     @click="navigateTo('/reserve/initial/time')"
                     elevation="0"
                     color="indigo-darken-3"
+                    
                   >
                     초기 상담 예약 바로가기
                   </v-btn>
@@ -219,7 +220,7 @@ const navigateTo = (path) => {
                 {{ card4.front }}
               </div>
               <div class="back1">
-                <p>전문가 라이브 방송<br /><br />다양한 주제<br /><br />다양한 정보</p>
+                <p>펫닥 커뮤니티<br /><br />전문가 라이브 방송<br /><br />반려동물 시설 찾기</p>
                 <div class="btn-div">
                   <v-btn
                     class="btn"
@@ -289,7 +290,7 @@ const navigateTo = (path) => {
                 {{ card7.front }}
               </div>
               <div class="back">
-                <p>전문가 라이브 방송<br /><br />다양한 주제<br /><br />다양한 정보</p>
+                <p>펫닥 커뮤니티<br /><br />전문가 라이브 방송<br /><br />반려동물 시설 찾기</p>
                 <div class="btn-div">
                   <v-btn
                     class="btn"
@@ -446,5 +447,8 @@ const navigateTo = (path) => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+}
+.v-btn--size-default {
+  max-width: 500px;
 }
 </style>
