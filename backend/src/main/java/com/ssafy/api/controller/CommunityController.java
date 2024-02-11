@@ -11,6 +11,8 @@ import com.ssafy.db.entity.PostLikes;
 import com.ssafy.db.entity.UserPost;
 import com.ssafy.db.entity.VideoRoom;
 import com.ssafy.db.join.PostUrlList;
+import io.openvidu.java.client.Session;
+import io.openvidu.java.client.SessionProperties;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 /**
  * 커뮤니티 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -309,11 +315,36 @@ public class CommunityController {
 			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
 	})
 	public ResponseEntity<BaseResponseBody> hit(@RequestBody @ApiParam(value="방문 정보", required = true) CommunityLikeHitPutReq updateInfo) {
-
 		Long result = communityService.increaseHit(updateInfo.getPostId());
-
 		// 정상적으로 수정되었을 때
 		if(result>0)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		else
+			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+	}
+
+	private OpenVidu openvidu;
+	@PostMapping("video/create")
+	@ApiOperation(value = " 작성", notes = "<strong>내용과 이미지</strong>를 사용하여 게시물을 작성한다")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+			@ApiResponse(code = 400, message = "데이터 유효성 검사 실패", response = BaseResponseBody.class),
+			@ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class),
+			@ApiResponse(code = 502, message = "DB 연결 실패", response = BaseResponseBody.class)
+	})
+	public ResponseEntity<BaseResponseBody> videoCreate(@RequestParam @ApiParam(value="시작 시간", required = true) String startTime, @RequestParam @ApiParam(value="방 제목", required = true) String roomName,@RequestParam @ApiParam(value="방 설명", required = false) String note,@RequestParam @ApiParam(value="방장", required = true) String userId, @RequestParam @ApiParam(value="sessionId", required = true) String sessionId) throws IOException, OpenViduJavaClientException, OpenViduHttpException {
+		VideoRoom videoInfo= new VideoRoom();
+
+		videoInfo.setUserId(userId);
+		videoInfo.setNote(note);
+		videoInfo.setRoomName(roomName);
+		videoInfo.setStartTime(startTime);
+		videoInfo.setSessionId(sessionId);
+
+		VideoRoom videoRoom = communityService.createVideo(videoInfo);
+
+		// 정상적으로 등록되었을 때
+		if(videoRoom !=null)
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		else
 			return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));

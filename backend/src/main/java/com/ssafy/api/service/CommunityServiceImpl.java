@@ -28,6 +28,9 @@ public class CommunityServiceImpl implements CommunityService {
     @Autowired
     PostLikesRepository postLikesRepository;
 
+    @Autowired
+    VideoRepository videoRepository;
+
     @Override
     public UserPost writePost(CommunityWritePostReq writeInfo) {
 
@@ -191,6 +194,12 @@ public class CommunityServiceImpl implements CommunityService {
     public List<VideoRoom> videoList() {
         List<VideoRoom> videos=communityRepositorySupport.findVideos();
         return videos;
+    }
+
+    @Override
+    public VideoRoom createVideo(VideoRoom videoInfo) {
+        VideoRoom video= videoRepository.save(videoInfo);
+        return video;
     }
 
 
