@@ -28,4 +28,5 @@ public class VideoRoom extends BaseEntity{
     @Type(type = "org.hibernate.type.BooleanType")
     boolean isDelete;
     String userId;
+    String sessionId;
 }

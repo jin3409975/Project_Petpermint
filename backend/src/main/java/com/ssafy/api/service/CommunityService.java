@@ -41,5 +41,7 @@ public interface CommunityService {
     PostLikes findPostLikesByPostIdUserId(int postId, String userId);
 
     List<VideoRoom> videoList();
+
+    VideoRoom createVideo(VideoRoom videoInfo);
 }
 
