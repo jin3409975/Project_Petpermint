@@ -183,17 +183,19 @@ function doReserve() {
       <v-col>
         <v-card
           elevation="0"
-          variant="outlined"
+          variant="elevated"
           v-for="(data, index) in searchList"
           :key="data.dataNo"
+          class="emergency-hospital"
+          height="100px"
         >
           <v-card-text @click="highlightMarker(index)" style="cursor: pointer">
-            {{ data.venName }}
-            <br />
-            <br />
-            {{ data.roadAddr }}
-            <br />
-            {{ data.lotAddr }}
+            <v-card-tile>
+              {{ data.venName }}
+            </v-card-tile>
+            <v-card-subtitle>
+              {{ data.roadAddr }}
+            </v-card-subtitle>
           </v-card-text>
         </v-card>
       </v-col>
@@ -224,4 +226,11 @@ function doReserve() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.emergency-hospital {
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+  background-color: #238cfa;
+}
+</style>
