@@ -361,10 +361,20 @@ const totalPages = computed(() => {
       <v-dialog v-model="dialog" width="auto">
         <v-card>
           <v-card-text>
-            {{ searchList[listIndex] }}
+            <!-- {{ searchList[listIndex] }} -->
+            <div v-if="searchList[listIndex]">
+              <p><strong>장소명 :</strong> {{ searchList[listIndex].venName }}</p>
+              <p><strong>카테고리 :</strong> {{ searchList[listIndex].category }}</p>
+              <p><strong>도로 주소 :</strong> {{ searchList[listIndex].roadAddr }}</p>
+              <p><strong>지번 주소 :</strong> {{ searchList[listIndex].lotAddr }}</p>
+              <p><strong>전화번호 :</strong> {{ searchList[listIndex].phone }}</p>
+              <p><strong>영업시간 :</strong> {{ searchList[listIndex].workTime }}</p>
+              <p><strong>휴무일 :</strong> {{ searchList[listIndex].offTime }}</p>
+              <p><strong>주차 :</strong> {{ searchList[listIndex].parkAvail }}</p>
+            </div>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+            <v-btn color="primary" block @click="dialog = false">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
