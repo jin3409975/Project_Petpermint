@@ -6,7 +6,7 @@ import { useCommunityStore } from '@/stores/community'
 const props = defineProps(['article', 'user'])
 const community_stores = useCommunityStore()
 
-const userId = ref()
+const userId = ref(localStorage.useremail)
 const likes = ref(0)
 const router = useRouter()
 
@@ -52,55 +52,69 @@ export default {
 </script>
 
 <template>
-  <v-row justify="end" style="margin-top: -63px; margin-bottom: 20px; margin-right: 1px">
-    <v-dialog v-model="dialog" persistent width="1024">
+  <v-row
+    justify="center"
+    style="
+      margin-top: -63px;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: 0px;
+      margin-right: 0px;
+    "
+  >
+    <v-form v-model="dialog">
       <template v-slot:activator="{ props }">
         <v-btn @click="logincheck" v-bind="props" icon="mdi-plus"></v-btn>
       </template>
-      <v-card>
-        <v-card-title>
-          <span class="text-h5"><b>작성</b></span>
+      <v-card style="border-radius: 30px; box-shadow: none">
+        <v-card-title style="margin-top: 20px; margin-left: 20px">
+          <span style="font-size: 25px"><strong>펫닥 게시글</strong></span>
         </v-card-title>
-        <form id="form-register" method="POST" action="">
+        <form id="form-register" method="POST" action="" style="margin-left: 20px">
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  readonly
-                  label="사용자 Email"
-                  v-model="userId"
-                  required
-                ></v-text-field>
+              <v-col cols="12" sm="6" md="8" style="padding-bottom: 0px">
+                <span>{{ userId }}</span>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" sm="12" style="padding-right: 35px; padding-bottom: 0px">
                 <v-textarea
                   clearable
-                  variant="outlined"
+                  auto-grow
+                  variant="solo-filled"
                   label="내용*"
                   required
+                  rows="4"
                   v-model="content"
                 ></v-textarea>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-file-input
-                  variant="outlined"
+                  variant="underlined"
                   multiple
                   label="첨부 이미지"
                   v-model="files"
                 ></v-file-input>
               </v-col>
+              <v-btn
+                prepend-icon="mdi-send-circle-outline"
+                size="large"
+                color="blue-darken-1"
+                variant="tonal"
+                @click="write"
+                style="margin-top: 25px; margin-left: 200px; margin-bottom: 20px"
+              >
+                Save
+              </v-btn>
             </v-row>
-            <small>*은 필수적으로 기입해야 합니다.</small>
           </v-container>
         </form>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false"> Close </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="write"> Save </v-btn>
-        </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-form>
   </v-row>
 </template>
 
-<style scoped></style>
+<style scoped>
+:deep(.v-field) {
+  border-radius: 20px;
+}
+</style>
