@@ -83,60 +83,84 @@ watch(
 </script>
 
 <template>
-  <v-container fluid class="d-flex justify-center align-center" style="max-width: 50%">
+  <v-container
+    fluid
+    class="d-flex justify-center align-center"
+    style="max-width: 92%; margin-left: 27px"
+  >
     <!-- 댓글 목록 -->
     <v-col>
       <v-row>
         <div id="comment-area" class="col-lg-12 col-md-6 col-sm-12">
-          <h5>댓글 {{ commentcount }}개</h5>
-          <v-card v-for="com in comment" :key="com.commentNo" class="mb-2">
-            <v-card-title>
-              <div class="d-flex justify-space-between align-center">
-                <h5 class="mr-2">{{ com.userId }}</h5>
+          <div style="margin-bottom: 30px">
+            <span style="font-size: 19px"
+              ><strong>댓글 {{ commentcount }}개</strong></span
+            >
+          </div>
+
+          <v-card
+            variant="tonal"
+            color="indigo-lighten-4"
+            v-for="com in comment"
+            :key="com.commentNo"
+            class="mb-2"
+          >
+            <v-card-title style="padding-bottom: 0px">
+              <div class="d-flex align-center">
+                <span style="font-size: 16px; color: black">
+                  <strong>{{ com.userId }}</strong>
+                </span>
+                <span
+                  class="mb-0"
+                  style="margin-left: 10px; font-size: 14px; color: rgb(117, 117, 117)"
+                  >{{ com.registTime }}</span
+                >
+
                 <v-btn
                   v-if="userId == com.userId && !com.delete"
                   @click="deleteComment(com.commentNo)"
-                  icon
                   color="red"
-                >
-                  <v-icon>mdi-delete-forever</v-icon>
+                  style="margin-left: 270px"
+                  >댓글 삭제
                 </v-btn>
               </div>
             </v-card-title>
 
             <template v-if="com.delete">
-              <p style="margin-left: 20px">삭제된 댓글입니다.</p>
+              <p style="margin-left: 20px; color: black">삭제된 댓글입니다.</p>
             </template>
             <template v-else>
-              <p style="margin-left: 20px">{{ com.content }}</p>
+              <p style="margin-left: 20px; color: black">{{ com.content }}</p>
             </template>
-
-            <v-card-actions>
-              <p class="mb-0" style="margin-left: 10px">{{ com.registTime }}</p>
-            </v-card-actions>
           </v-card>
         </div>
       </v-row>
-      <v-row>
+      <v-row style="margin-top: 30px; margin-bottom: 1px">
         <template v-if="userId != null">
           <form id="comment" class="col-lg-12 col-md-10 col-sm-12">
             <div class="input-group mb-3">
               <input type="hidden" id="articleno" :value="article.postId" />
               <input type="hidden" id="nowid" :value="userId" />
-              <span class="input-group-text">{{ userId }}</span>
-              <div class="form-floating">
-                <textarea
-                  class="form-control"
-                  placeholder="Leave a comment here"
-                  id="floatingTextarea"
-                  style="height: 150px"
-                  v-model="com_temp"
-                ></textarea>
-                <label for="floatingInputGroup1">댓글</label>
+              <div class="comment-input-container">
+                <div class="form-floating">
+                  <textarea
+                    class="form-control"
+                    auto-grow
+                    id="floatingTextarea"
+                    v-model="com_temp"
+                    style="border-radius: 10px"
+                    @keydown.enter.exact.prevent="writeComments"
+                  ></textarea>
+                  <label for="floatingTextarea">댓글</label>
+                </div>
+                <v-btn
+                  @click="writeComments"
+                  variant="text"
+                  color="blue"
+                  prepend-icon="mdi-reply"
+                  class="comment-submit-btn"
+                ></v-btn>
               </div>
-              <button type="button" class="btn btn-outline-dark" @click="writeComments">
-                작성
-              </button>
             </div>
           </form>
         </template>
@@ -145,4 +169,32 @@ watch(
   </v-container>
 </template>
 
-<style scoped></style>
+<style scoped>
+:deep(.v-btn .v-icon) {
+  --v-icon-size-multiplier: 1.3;
+}
+:deep(.input-group) {
+  display: inline;
+}
+.comment-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-floating {
+  flex-grow: 1; /* Ensure textarea takes up available space */
+}
+
+.comment-submit-btn {
+  position: absolute;
+  right: 0; /* Adjust as necessary */
+  top: 40%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust button's center to match the form's center */
+  box-shadow: none;
+  padding-right: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px; /* Optional: if you want the button to have rounded corners */
+}
+</style>
