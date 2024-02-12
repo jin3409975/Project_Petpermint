@@ -1,7 +1,14 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import CommunityUpdate from '../lifecare/CommunityUpdate.vue'
+import CommunityComment from '../lifecare/CommunityComment.vue'
+import { ref, onBeforeMount, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCommunityStore } from '@/stores/community'
+import { useAccountStore } from '@/stores/account'
 import axios from 'axios'
-const props = defineProps(['article'])
+const props = defineProps(['article', 'user'])
+const community_stores = useCommunityStore()
+const account_stores = useAccountStore()
 const files = ref([{}])
 
 onBeforeMount(async () => {
@@ -17,6 +24,105 @@ onBeforeMount(async () => {
     }
   })
 })
+
+const userId = ref()
+const writer = ref()
+
+const likes = ref(0)
+
+const picture = ref('/assets/img/default_profile.png')
+
+const router = useRouter()
+const checkLike = async () => {
+  if (userId.value == null) {
+    alert('로그인 후 이용해주세요')
+  } else {
+    let checker = await community_stores.communitylikecheck(props.article.postId, userId.value)
+    let ch = await community_stores.likecheck
+    console.log(ch)
+    if (ch == 'Fail') alert('이미 좋아요 하셨습니다')
+    else {
+      await community_stores.communitylike(props.article.postId, userId.value)
+      likes.value++
+    }
+  }
+}
+
+const del = () => {
+  let deleted = community_stores.communitydelete(props.article.postId)
+  alert('게시물을 삭제합니다')
+  router.push({ name: 'lifecare-community-list' })
+}
+
+const navigateToCommunity = () => {
+  router.push({ name: 'lifecare-community-list' })
+}
+
+function dateConvert(createdAt) {
+  const adjustedCreatedAt = new Date(createdAt.getTime() + 9 * 60 * 60 * 1000)
+
+  const milliSeconds = new Date() - adjustedCreatedAt
+  const seconds = milliSeconds / 1000
+  if (seconds < 60) return `방금 전`
+  const minutes = seconds / 60
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`
+  const hours = minutes / 60
+  if (hours < 24) return `${Math.floor(hours)}시간 전`
+  const days = hours / 24
+  if (days < 7) return `${Math.floor(days)}일 전`
+  const weeks = days / 7
+  if (weeks < 5) return `${Math.floor(weeks)}주 전`
+  const months = days / 30
+  if (months < 12) return `${Math.floor(months)}개월 전`
+  const years = days / 365
+  return `${Math.floor(years)}년 전`
+}
+
+onMounted(() => {
+  userId.value = localStorage.useremail
+  writer.value = community_stores.communitydetail(props.article.postId)
+})
+
+watch(
+  () => props.article.likes,
+  (newLikes) => {
+    likes.value = newLikes || 0
+  }
+)
+
+watch(
+  () => props.article.userId,
+  (newId) => {
+    fetchData(newId)
+  }
+)
+
+const fetchData = async (newId) => {
+  console.log(newId)
+  await account_stores.getnormalprofile(newId)
+  writer.value = await account_stores.userdata
+  console.log(writer.value)
+  console.log(writer.value.picture)
+  if (writer.value.picture != 0 && writer.value.picture != null)
+    picture.value = writer.value.picture
+}
+
+const time = ref('0일 전')
+watch(
+  () => props.article.registTime,
+  (newTime) => {
+    console.log(newTime)
+    let temp = new Date(newTime)
+    console.log(temp)
+    time.value = dateConvert(temp)
+    console.log(time)
+  }
+)
+
+const showComments = ref(false)
+const toggleComments = () => {
+  showComments.value = !showComments.value
+}
 </script>
 
 <template>
@@ -24,10 +130,10 @@ onBeforeMount(async () => {
     class="card"
     :title="article.userName"
     :subtitle="article.registTime"
-    :text="article.content"
+    style="border-radius: 30px"
   >
     <template v-slot:prepend>
-      <v-avatar size="30">
+      <v-avatar size="50" style="margin-left: 15px; margin-top: 10px; margin-right: 5px">
         <img v-if="article.picture !== '0'" :src="article.picture" style="max-width: 100%" />
         <v-else>
           <img src="/assets/img/default_profile.png" style="max-width: 100%" />
@@ -37,29 +143,46 @@ onBeforeMount(async () => {
     <template v-slot:append>
       <v-icon icon="mdi-format-align-justify" color="white"></v-icon>
     </template>
-    <v-card-actions>
+    <v-card-actions style="padding-right: 35px">
       <v-col>
-        <v-row class="d-flex justify-content-center">
-          <img class="mx-auto" :src="article.url" style="max-width: 60%" />
-        </v-row>
         <v-row>
-          <v-col class="text-right">
-            <div class="text-right" style="margin-top: 10px">
-              <span style="font-size: 12px"> 좋아요 {{ article.likes }}개 &nbsp;</span>
-              <span style="font-size: 12px"> 조회수 {{ article.hits }}개 </span>
+          <div style="margin-left: 25px; margin-right: 25px">
+            <span style="font-size: 17px">{{ article.content }}</span>
+          </div>
+        </v-row>
+        <v-row class="d-flex justify-content-center" style="margin-top: 20px">
+          <img class="mx-auto" :src="article.url" style="max-width: 60%; border-radius: 10px" />
+        </v-row>
+        <v-row style="margin-top: 40px">
+          <v-col class="text-left" style="margin-left: 10px">
+            <row style="border: 1px solid black; padding: 8px; border-radius: 5px">
+              <v-btn
+                @click="checkLike"
+                style="margin-bottom: 5px"
+                density="compact"
+                icon="mdi-heart"
+              ></v-btn>
               <span>
-                <router-link
-                  :to="{ name: 'lifecare-community-detail', params: { postId: article.postId } }"
-                  class="article-title link-dark"
-                >
-                  <v-btn style="margin-left: 10px"> 더 알아보기 </v-btn>
-                </router-link>
+                <b> &nbsp;{{ likes }}</b>
               </span>
-            </div>
+            </row>
+            <row
+              style="border: 1px solid black; padding: 8px; border-radius: 5px; margin-left: 20px"
+            >
+              <v-btn
+                @click="toggleComments"
+                style="margin-bottom: 5px"
+                density="compact"
+                prepend-icon="mdi-message-reply-text"
+                size="large"
+                >댓글 {{ commentcount }}개</v-btn
+              >
+            </row>
           </v-col>
         </v-row>
       </v-col>
     </v-card-actions>
+    <CommunityComment v-if="showComments" :article="article" :user="user"></CommunityComment>
   </v-card>
 </template>
 
@@ -73,5 +196,12 @@ a {
 }
 p {
   margin: 0px;
+}
+:deep(.v-card-item .v-card-title) {
+  padding-top: 13px;
+}
+:deep(.v-card-title) {
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>
