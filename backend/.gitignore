@@ -40,3 +40,6 @@ out/
 
 ### FrontEnd build files ###
 /src/main/resources/dist/
+
+## BackEnd log files ##
+*.gz
