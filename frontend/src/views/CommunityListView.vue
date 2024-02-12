@@ -40,11 +40,53 @@ const navigateToMain = () => {
 }
 
 onMounted(async () => {})
+
+const isThoughtVisible = ref(true)
 </script>
 
 <template>
-  <v-container fluid class="w-50" style="margin-top: 140px">
-    <CommunityWrite style="border-radius: 50px !important"></CommunityWrite>
+  <div v-if="isThoughtVisible" class="thought">
+    <div>
+      <span><strong>펫닥 커뮤니티에 오신걸 환영합니다!</strong></span>
+    </div>
+    <br />
+    <span>
+      여러분의 반려동물 이야기나 유용한 정보를 여러 사람들과 공유해 보세요. 댓글로 의사소통도
+      가능하답니다!</span
+    >
+    <br />
+    <v-btn @click="isThoughtVisible = false" variant="text" style="margin-top: 10px"> close </v-btn>
+  </div>
+  <div class="dog3">
+    <div class="heart heart--1"></div>
+    <div class="heart heart--2"></div>
+    <div class="heart heart--3"></div>
+    <div class="heart heart--4"></div>
+    <div class="head">
+      <div class="year year--left"></div>
+      <div class="year year--right"></div>
+      <div class="nose"></div>
+      <div class="face">
+        <div class="eye eye--left"></div>
+        <div class="eye eye--right"></div>
+        <div class="mouth"></div>
+      </div>
+    </div>
+    <div class="body3">
+      <div class="cheast"></div>
+      <div class="back"></div>
+      <div class="legs">
+        <div class="legs__front legs__front--left"></div>
+        <div class="legs__front legs__front--right"></div>
+        <div class="legs__back legs__back--left"></div>
+        <div class="legs__back legs__back--right"></div>
+      </div>
+      <div class="tail"></div>
+    </div>
+  </div>
+  <v-container fluid class="w-50" style="margin-top: 80px">
+    <v-btn @click="navigateToMain" style="margin-bottom: 15px" icon="mdi-home"></v-btn>
+    <CommunityWrite></CommunityWrite>
     <CommunityList v-for="article in articles" :key="article.postId" :article="article">
     </CommunityList>
   </v-container>
