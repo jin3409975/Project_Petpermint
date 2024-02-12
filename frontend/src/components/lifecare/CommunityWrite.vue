@@ -66,7 +66,7 @@ export default {
       <template v-slot:activator="{ props }">
         <v-btn @click="logincheck" v-bind="props" icon="mdi-plus"></v-btn>
       </template>
-      <v-card style="border-radius: 30px; box-shadow: none">
+      <v-card style="border-radius: 30px">
         <v-card-title style="margin-top: 20px; margin-left: 20px">
           <span style="font-size: 25px"><strong>펫닥 게시글</strong></span>
         </v-card-title>
@@ -85,6 +85,7 @@ export default {
                   required
                   rows="4"
                   v-model="content"
+                  flat
                 ></v-textarea>
               </v-col>
               <v-col cols="12" sm="6">
