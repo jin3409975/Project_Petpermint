@@ -105,23 +105,31 @@ watch(
             :key="com.commentNo"
             class="mb-2"
           >
-            <v-card-title style="padding-bottom: 0px">
-              <div class="d-flex align-center">
-                <span style="font-size: 16px; color: black">
-                  <strong>{{ com.userId }}</strong>
-                </span>
-                <span
-                  class="mb-0"
-                  style="margin-left: 10px; font-size: 14px; color: rgb(117, 117, 117)"
-                  >{{ com.registTime }}</span
-                >
+            <v-card-title style="padding-bottom: 0px; padding-right: 0px">
+              <div class="d-flex align-center justify-content-between">
+                <!-- User ID and Registration Time on the left -->
+                <div>
+                  <span style="font-size: 16px; color: black">
+                    <strong>{{ com.userId }}</strong>
+                  </span>
+                  <span
+                    class="mb-0"
+                    style="margin-left: 10px; font-size: 14px; color: rgb(117, 117, 117)"
+                  >
+                    {{ com.registTime }}
+                  </span>
+                </div>
 
+                <!-- Delete Comment Button on the right -->
                 <v-btn
                   v-if="userId == com.userId && !com.delete"
                   @click="deleteComment(com.commentNo)"
                   color="red"
-                  style="margin-left: 270px"
-                  >댓글 삭제
+                  variant="text"
+                  class="ml-auto delete-btn"
+                  style="padding-right: 0px; padding-left: 0px"
+                >
+                  삭제
                 </v-btn>
               </div>
             </v-card-title>
@@ -170,6 +178,9 @@ watch(
 </template>
 
 <style scoped>
+:deep(.delete-btn .v-btn--size-default) {
+  padding-right: 0px !important;
+}
 :deep(.v-btn .v-icon) {
   --v-icon-size-multiplier: 1.3;
 }
