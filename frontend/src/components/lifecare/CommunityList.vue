@@ -37,21 +37,16 @@ const checkLike = async () => {
   if (userId.value == null) {
     alert('로그인 후 이용해주세요')
   } else {
-    let checker = await community_stores.communitylikecheck(props.article.postId, userId.value)
-    let ch = await community_stores.likecheck
-    console.log(ch)
-    if (ch == 'Fail') alert('이미 좋아요 하셨습니다')
-    else {
+    const checker = await community_stores.communitylikecheck(props.article.postId, userId.value)
+    if (checker === 'Fail') {
+      alert('이미 좋아요 하셨습니다')
+      isLiked.value = false
+    } else {
       await community_stores.communitylike(props.article.postId, userId.value)
       likes.value++
+      isLiked.value = true
     }
   }
-}
-
-const del = () => {
-  let deleted = community_stores.communitydelete(props.article.postId)
-  alert('게시물을 삭제합니다')
-  router.push({ name: 'lifecare-community-list' })
 }
 
 const navigateToCommunity = () => {
@@ -123,6 +118,12 @@ const showComments = ref(false)
 const toggleComments = () => {
   showComments.value = !showComments.value
 }
+
+const del = () => {
+  let deleted = community_stores.communitydelete(props.article.postId)
+  alert('게시물을 삭제합니다')
+  location.reload()
+}
 </script>
 
 <template>
@@ -130,7 +131,7 @@ const toggleComments = () => {
     class="card"
     :title="article.userName"
     :subtitle="article.registTime"
-    style="border-radius: 30px"
+    style="border-radius: 20px"
   >
     <template v-slot:prepend>
       <v-avatar size="50" style="margin-left: 15px; margin-top: 10px; margin-right: 5px">
@@ -143,7 +144,8 @@ const toggleComments = () => {
     <template v-slot:append>
       <v-icon icon="mdi-format-align-justify" color="white"></v-icon>
     </template>
-    <v-card-actions style="padding-right: 35px">
+
+    <v-card-actions style="padding-right: 10px">
       <v-col>
         <v-row>
           <div style="margin-left: 25px; margin-right: 25px">
@@ -153,31 +155,62 @@ const toggleComments = () => {
         <v-row class="d-flex justify-content-center" style="margin-top: 20px">
           <img class="mx-auto" :src="article.url" style="max-width: 60%; border-radius: 10px" />
         </v-row>
-        <v-row style="margin-top: 40px">
-          <v-col class="text-left" style="margin-left: 10px">
-            <row style="border: 1px solid black; padding: 8px; border-radius: 5px">
-              <v-btn
-                @click="checkLike"
-                style="margin-bottom: 5px"
-                density="compact"
-                icon="mdi-heart"
-              ></v-btn>
-              <span>
-                <b> &nbsp;{{ likes }}</b>
-              </span>
-            </row>
-            <row
-              style="border: 1px solid black; padding: 8px; border-radius: 5px; margin-left: 20px"
+        <v-row>
+          <v-col>
+            <div
+              class="button-group"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between; /* Adjusted */
+                margin-top: 20px;
+              "
             >
-              <v-btn
-                @click="toggleComments"
-                style="margin-bottom: 5px"
-                density="compact"
-                prepend-icon="mdi-message-reply-text"
-                size="large"
-                >댓글 {{ commentcount }}개</v-btn
-              >
-            </row>
+              <!-- Left Aligned Buttons: Like Button and Comments Toggle -->
+              <div style="display: flex; gap: 20px">
+                <div>
+                  <v-btn
+                    variant="outlined"
+                    @click="checkLike"
+                    density="comfortable"
+                    height="43px"
+                    color="grey"
+                    prepend-icon="mdi-heart"
+                    class="heart5"
+                    ><span style="color: black">{{ likes }}</span></v-btn
+                  >
+                </div>
+                <div>
+                  <v-btn
+                    variant="outlined"
+                    class="comment"
+                    color="grey"
+                    @click="toggleComments"
+                    density="comfortable"
+                    height="43px"
+                    prepend-icon="mdi-message-reply-text"
+                    size="large"
+                    ><span style="color: black">{{ commentcount }}33</span></v-btn
+                  >
+                </div>
+              </div>
+
+              <!-- Right Aligned Buttons: Update and Delete -->
+              <div style="display: flex; gap: 10px">
+                <CommunityUpdate
+                  v-if="article.userId == userId"
+                  :article="article"
+                  :user="user"
+                ></CommunityUpdate>
+                <v-btn
+                  v-if="article.userId == userId"
+                  @click="del"
+                  color="grey"
+                  density="comfortable"
+                  icon="mdi-delete"
+                ></v-btn>
+              </div>
+            </div>
           </v-col>
         </v-row>
       </v-col>
@@ -187,6 +220,15 @@ const toggleComments = () => {
 </template>
 
 <style scoped>
+:deep(.comment .mdi:before) {
+  color: rgb(137, 186, 247);
+}
+:deep(.heart5 .mdi:before) {
+  color: red;
+}
+:deep(.v-btn .v-icon) {
+  --v-icon-size-multiplier: 1.15;
+}
 .card {
   margin-bottom: 30px;
   border: 1px solid #e0e0e0;
