@@ -43,9 +43,8 @@ onMounted(async () => {})
 </script>
 
 <template>
-  <v-container fluid class="w-50" style="margin-top: 80px">
-    <v-btn @click="navigateToMain" style="margin-bottom: 15px" icon="mdi-home"></v-btn>
-    <CommunityWrite></CommunityWrite>
+  <v-container fluid class="w-50" style="margin-top: 140px">
+    <CommunityWrite style="border-radius: 50px !important"></CommunityWrite>
     <CommunityList v-for="article in articles" :key="article.postId" :article="article">
     </CommunityList>
   </v-container>
