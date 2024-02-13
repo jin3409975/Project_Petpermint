@@ -35,5 +35,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<ReservationHospitalList> findAllAvailableHospital(String time);
 
     @Query(value = "select * from Reservation where userId = :userId and type != 3 and time >= :time order by time limit 1", nativeQuery = true)
-    Reservation findMyBook(String userId, String time);
+    Reservation findMyBookNormal(String userId, String time);
+
+    @Query(value = "select * from Reservation where licenseNumber = :licenseNumber and " +
+            "type = 1 and isDelete = 0 and time between :startTime and :endTime order by time", nativeQuery = true)
+    List<Reservation> findMyBookExpert(String licenseNumber, String startTime, String endTime);
 }

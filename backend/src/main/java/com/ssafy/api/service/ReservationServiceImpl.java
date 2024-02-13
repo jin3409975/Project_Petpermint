@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,8 +180,8 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public Map<String, Object> getMyBook(String userId, String time) {
-		Reservation data = reservationRepository.findMyBook(userId, time);
+	public Map<String, Object> getMyBookNormal(String userId, String time) {
+		Reservation data = reservationRepository.findMyBookNormal(userId, time);
 		String doctorName;
 		if(data == null) {
 			return null;
@@ -194,6 +195,28 @@ public class ReservationServiceImpl implements ReservationService {
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", data);
 		result.put("doctorName", doctorName);
+		result.put("animalName", animalName);
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getMyBookExpert(String licenseNumber, String startTime, String endTime) {
+		List<Reservation> data = reservationRepository.findMyBookExpert(licenseNumber, startTime, endTime);
+		List<String> userName = new ArrayList<>();
+		List<String> animalName = new ArrayList<>();
+
+		if(data == null) {
+			return null;
+		}
+
+		for (Reservation datum : data) {
+			userName.add(userRepository.findByUserIdAndIsDelete(datum.getUserId(),0).getUserName());
+			animalName.add(animalRepository.findByAnimalIdAndIsDelete(datum.getAnimalId(),0).getName());
+		}
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", data);
+		result.put("userName", userName);
 		result.put("animalName", animalName);
 		return result;
 	}
