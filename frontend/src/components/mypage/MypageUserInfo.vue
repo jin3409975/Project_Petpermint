@@ -21,13 +21,11 @@ onBeforeMount(() => {
 })
 
 function init() {
-  console.log('pa1515919159119159ge', userdata)
   userName.value = userdata.value.userName
   email.value = userdata.value.userId
   phoneNumber.value = userdata.value.phone
   address.value = userdata.value.address
   picture.value = userdata.value.picture
-  console.log('llllll', userdata.value)
 }
 // 유저 프로필 변수
 const userName = ref(userdata.value.userName)
