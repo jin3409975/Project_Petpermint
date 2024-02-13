@@ -55,7 +55,7 @@ export const myPageStore = defineStore('mypage', () => {
             end: formatDateTime(endTime)
           },
           color: item.type === 1 ? 'blue' : item.type === 2 ? 'green' : 'yellow',
-          description: `${VITE_APP_CLIENT_URI}/cam/consult`,
+          description: item.note,
           isEditable: true
           // isCustom: true
         }
