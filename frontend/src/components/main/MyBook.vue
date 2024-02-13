@@ -4,10 +4,10 @@ import { ref, reactive, computed, onBeforeMount } from 'vue'
 import dynamics from 'dynamics.js'
 import { useRouter } from 'vue-router'
 import { useReserveStore } from '@/stores/reserve'
-// import { storeToRefs } from 'pinia'
-// const { myevents } = storeToRefs(mypagestore)
-const reservestore = useReserveStore()
+import { storeToRefs } from 'pinia'
 
+const reservestore = useReserveStore()
+const { mybook } = storeToRefs(reservestore)
 const appointId = ref('1234')
 const router = useRouter()
 
@@ -121,7 +121,7 @@ onBeforeMount(() => {
     <v-dialog v-model="dialog" width="400px">
       <!-- 온라인 초기 상담 -->
       <v-carousel height="480" hide-delimiter-background show-arrows="hover" color="#668BA7">
-        <v-carousel-item>
+        <v-carousel-item v-if="mybook.message == 'Success'">
           <div class="card">
             <div class="card__img">
               <svg width="100%">
@@ -136,18 +136,17 @@ onBeforeMount(() => {
                 style="width: 80%; height: auto; border-radius: 93.75px"
               />
             </div>
-
             <v-row class="rows">
               <v-col col="12" md="12" class="margins" style="height: 10px">
                 <div class="card__content">
                   <div class="card__title">보호자</div>
-                  <div class="card__subtitle">이민지</div>
+                  <div class="card__subtitle">{{ mybook.userId }}</div>
                 </div>
               </v-col>
               <v-col col="12" md="12" class="margins" style="height: 10px">
                 <div class="card__content">
                   <div class="card__title">반려동물 이름</div>
-                  <div class="card__subtitle">금동이</div>
+                  <div class="card__subtitle">{{ mybook.animalName }}</div>
                 </div></v-col
               >
               <v-col col="12" md="12" class="margins" style="height: 10px">
@@ -159,13 +158,13 @@ onBeforeMount(() => {
               <v-col col="12" md="12" class="margins" style="height: 10px">
                 <div class="card__content">
                   <div class="card__title">예약 날짜</div>
-                  <div class="card__subtitle">2024.02.28(목) 오후1:00</div>
+                  <div class="card__subtitle">{{ mybook.time }}</div>
                 </div>
               </v-col>
               <v-col col="12" md="12" class="margins" style="height: 10px">
                 <div class="card__content">
-                  <div class="card__title">상담 수의사</div>
-                  <div class="card__subtitle">김재민 병원장</div>
+                  <div class="card__title">수의사 / 병원</div>
+                  <div class="card__subtitle">{{ mybook.doctorName }}</div>
                 </div>
               </v-col>
               <v-col col="12" md="3" class="margins">
@@ -173,7 +172,7 @@ onBeforeMount(() => {
               </v-col>
               <v-col col="12" md="9" class="margins">
                 <div class="card__subtitle">
-                  다이어트를 시켜야 할까요? 다이어트 사료 추천 부탁드립니다.
+                  {{ mybook.note }}
                 </div>
               </v-col>
             </v-row>
@@ -197,7 +196,7 @@ onBeforeMount(() => {
           </button>
         </v-carousel-item>
         <!-- 병원 상담 -->
-        <v-carousel-item>
+        <v-carousel-item v-else>
           <div class="card">
             <div class="card__img">
               <svg width="100%">
@@ -214,44 +213,7 @@ onBeforeMount(() => {
             </div>
 
             <v-row class="rows">
-              <v-col col="12" md="12" class="margins" style="height: 10px">
-                <div class="card__content">
-                  <div class="card__title">보호자</div>
-                  <div class="card__subtitle">이채은</div>
-                </div>
-              </v-col>
-              <v-col col="12" md="12" class="margins" style="height: 10px">
-                <div class="card__content">
-                  <div class="card__title">반려동물 이름</div>
-                  <div class="card__subtitle">메이</div>
-                </div></v-col
-              >
-              <v-col col="12" md="12" class="margins" style="height: 10px">
-                <div class="card__content">
-                  <div class="card__title">예약 유형</div>
-                  <div class="card__subtitle">병원 진료</div>
-                </div>
-              </v-col>
-              <v-col col="12" md="12" class="margins" style="height: 10px">
-                <div class="card__content">
-                  <div class="card__title">예약 날짜</div>
-                  <div class="card__subtitle">2024.02.14(수) 오후4:00</div>
-                </div>
-              </v-col>
-              <v-col col="12" md="12" class="margins" style="height: 10px">
-                <div class="card__content">
-                  <div class="card__title">상담 수의사</div>
-                  <div class="card__subtitle">이수형 부원장</div>
-                </div>
-              </v-col>
-              <v-col col="12" md="2" class="margins">
-                <div class="card__title" style="margin-right: 0">메모</div>
-              </v-col>
-              <v-col col="12" md="10" class="margins">
-                <div class="card__subtitle">
-                  나이가 많은데 산책을 갈 수 있을 까요? 소화도 잘 못하는거 같아요.
-                </div>
-              </v-col>
+              <p>예약 내역이 존재하지 않습니다.</p>
             </v-row>
           </div>
 

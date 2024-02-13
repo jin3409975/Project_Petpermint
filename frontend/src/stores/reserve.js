@@ -157,13 +157,13 @@ export const useReserveStore = defineStore('reserve', () => {
       url: API_URL + 'mybook',
       params: {
         userId: useremail,
-        time: '2029-01-01 00:00'
+        time: time
+      }
+    }).then((r) => {
+      if (r.data.statusCode == 200) {
+        mybook.value = r.data
       }
     })
-      .then((res) => {
-        console.log('mybook 불러오기 성공', res)
-      })
-      .catch((err) => console.log(err))
   }
   return {
     reservedate, //yyyy-mm-dd
