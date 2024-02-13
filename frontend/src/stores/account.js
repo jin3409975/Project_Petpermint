@@ -79,18 +79,30 @@ export const useAccountStore = defineStore(
       return result
     }
 
-    const emailRequest = async function (email) {
+    const emailRequest = async function (email, type) {
+      var url = ''
+      if (type == 'regist') {
+        url = API_URL + 'email/request/regist'
+      } else {
+        url = API_URL + 'email/request/find'
+      }
       let emailcheck = await axios({
         method: 'post',
-        url: API_URL + 'email/request',
+        url: url,
         data: {
           userId: email
         }
       }).then((r) => {
         console.log(r)
-        if (r.data.statusCode == 200) {
+        if (r.data.message == 'Success') {
           alert('이메일 인증 요청이 완료되었습니다. 5분 이내에 입력해 주세요.')
           return true
+        } else if (r.data.message == 'Duplication') {
+          alert('이미 가입된 이메일 주소 입니다.')
+          return false
+        } else if (r.data.message == 'Not Found') {
+          alert('회원 정보를 찾을 수 없습니다.')
+          return false
         } else {
           alert('이메일 인증 요청이 실패 했습니다. 입력한 이메일 주소를 확인해 주세요.')
           return false
@@ -108,17 +120,22 @@ export const useAccountStore = defineStore(
           userId: email,
           verificationCode: code
         }
-      }).then((r) => {
-        console.log(r)
-        if (r.data.statusCode == 200) {
-          alert('이메일 인증에 성공 하셨습니다.')
-          // console.log(result, 'result 값 확인')
-          return true
-        } else {
+      })
+        .then((r) => {
+          console.log(r)
+          if (r.data.statusCode == 200) {
+            alert('이메일 인증에 성공 하셨습니다.')
+            // console.log(result, 'result 값 확인')
+            return true
+          } else {
+            alert('이메일 인증에 실패 하셨습니다.')
+            return false
+          }
+        })
+        .catch((error) => {
           alert('이메일 인증에 실패 하셨습니다.')
           return false
-        }
-      })
+        })
       return emailcheck
     }
 

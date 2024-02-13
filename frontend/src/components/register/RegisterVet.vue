@@ -45,7 +45,7 @@ const emailStatus = ref('request')
 const emailAction = async () => {
   if (emailStatus.value === 'request') {
     console.log('이메일 인증 요청 user')
-    let result = await store.emailRequest(email.value)
+    let result = await store.emailRequest(email.value, 'regist')
     if (result) {
       emailStatus.value = 'validate'
     } else {

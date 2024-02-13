@@ -114,7 +114,7 @@ const emailStatus = ref('request')
 const emailAction = async () => {
   if (emailStatus.value === 'request') {
     console.log('이메일 인증 요청 user')
-    let result = await store.emailRequest(email.value)
+    let result = await store.emailRequest(email.value, 'regist')
     if (result) {
       emailStatus.value = 'validate'
     } else {
@@ -132,29 +132,40 @@ const emailAction = async () => {
 }
 
 //1페이지 검증 시작
-const checkPage1 = ref(true)
+const checkPage11 = ref(false)
+const checkPage12 = ref(false)
+const checkPage13 = ref(false)
 const emailTest = (e) => {
   if (e == '' || e == null) {
-    checkPage1.value = false
+    checkPage11.value = false
     return false
   }
   if (
     !/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(e)
   ) {
-    checkPage1.value = false
+    checkPage11.value = false
     return false
   }
 
-  checkPage1.value = true
+  checkPage11.value = true
   return true
 }
 
-const passwordTest = (p) => {
-  if (p != password1.value) {
-    checkPage1.value = false
+const passwordTest1 = (p) => {
+  if (p == null) {
+    checkPage12.value = false
     return false
   }
-  checkPage1.value = true
+  checkPage12.value = true
+  return true
+}
+
+const passwordTest2 = (p) => {
+  if (p != password1.value || p == null) {
+    checkPage13.value = false
+    return false
+  }
+  checkPage13.value = true
   return true
 }
 
@@ -163,7 +174,7 @@ const page1Test = () => {
     alert('이메일 인증을 완료 해주세요')
     return false
   }
-  if (checkPage1.value == false) {
+  if (checkPage11.value == false || checkPage12.value == false || checkPage13.value == false) {
     alert('기입한 정보를 확인 해주세요')
     return false
   }
@@ -371,6 +382,7 @@ function openKakaoAddressSearch() {
                       variant="outlined"
                       color="#668ba7"
                       bg-color="transparent"
+                      :rules="[(v) => passwordTest1(v)]"
                     />
                   </v-col>
 
@@ -386,7 +398,7 @@ function openKakaoAddressSearch() {
                       variant="outlined"
                       color="#668ba7"
                       bg-color="transparent"
-                      :rules="[(v) => passwordTest(v)]"
+                      :rules="[(v) => passwordTest2(v)]"
                       hide-details="true"
                     />
                   </v-col>
