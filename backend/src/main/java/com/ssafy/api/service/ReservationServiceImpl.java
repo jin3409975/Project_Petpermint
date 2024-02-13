@@ -182,6 +182,9 @@ public class ReservationServiceImpl implements ReservationService {
 	public Map<String, Object> getMyBook(String userId, String time) {
 		Reservation data = reservationRepository.findMyBook(userId, time);
 		String doctorName;
+		if(data == null) {
+			return null;
+		}
 		if(data.getType() == 1) {
 			doctorName = userRepository.findByUserIdAndIsDelete(expertUserRepository.findByLicenseNumber(data.getLicenseNumber()).getUserId(),0).getUserName();
 		} else {
