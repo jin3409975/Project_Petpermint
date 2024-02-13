@@ -33,6 +33,8 @@ const commentcount = ref(0)
 const picture = ref('/assets/img/default_profile.png')
 
 const router = useRouter()
+const isNew = ref()
+
 const checkLike = async () => {
   if (userId.value == null) {
     alert('로그인 후 이용해주세요')
@@ -51,6 +53,7 @@ const checkLike = async () => {
 onMounted(async () => {
   userId.value = localStorage.useremail
   writer.value = community_stores.communitydetail(props.article.postId)
+  isNew.value = props.article.new
 
   time.value = dateConvert(
     props.article.registTime.substring(0, props.article.registTime.length - 2)
@@ -160,7 +163,8 @@ const del = () => {
               "
             >
               <!-- Left Aligned Buttons: Like Button and Comments Toggle -->
-              <div style="display: flex; gap: 20px">
+
+              <div v-if="isNew == null" style="display: flex; gap: 20px">
                 <div>
                   <v-btn
                     variant="outlined"
