@@ -143,7 +143,7 @@ export default {
       toolbar-activities-panel-button="false"
       toolbar-display-logo="false"
       toolbar-display-session-name="false"
-      stream-resolution="'320x240'"
+      stream-resolution="'1280x720'"
       style="height: 100vh; width: 100%; display: block !important"
     >
     </openvidu-webcomponent>
