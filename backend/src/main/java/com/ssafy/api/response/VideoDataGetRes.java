@@ -21,6 +21,7 @@ public class VideoDataGetRes extends BaseResponseBody {
 	String startTime;
 	String roomName;
 	String note;
+	String sessionId;
 
 	public static VideoDataGetRes of(Integer statusCode, String message, VideoRoom data) {
 		VideoDataGetRes res = new VideoDataGetRes();
@@ -31,6 +32,7 @@ public class VideoDataGetRes extends BaseResponseBody {
 		res.setStartTime(data.getStartTime());
 		res.setRoomName(data.getRoomName());
 		res.setNote(data.getNote());
+		res.setSessionId(data.getSessionId());
 		return res;
 	}
 }

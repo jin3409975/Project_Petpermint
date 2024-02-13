@@ -101,6 +101,12 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
+    public Long decreaseLike(int postId) {
+        Long result=communityRepositorySupport.decreaseLikeByPostId(postId).get();
+        return result;
+    }
+
+    @Override
     public Long increaseHit(int postId) {
         Long result=communityRepositorySupport.updateHitByPostId(postId).get();
         return result;
@@ -183,6 +189,11 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
+    public long deleteFromLikeTable(int postId, String userId) {
+        return postLikesRepository.deleteByPostIdAndUserId(postId,userId);
+    }
+
+    @Override
     public PostLikes findPostLikesByPostIdUserId(int postId, String userId) {
         PostLikes postLikes= new PostLikes();
         postLikes.setUserId(userId);
@@ -194,6 +205,12 @@ public class CommunityServiceImpl implements CommunityService {
     public List<VideoRoom> videoList() {
         List<VideoRoom> videos=communityRepositorySupport.findVideos();
         return videos;
+    }
+
+    @Override
+    public VideoRoom videoCurrent() {
+        VideoRoom video=communityRepositorySupport.findCurrentVideo();
+        return video;
     }
 
     @Override

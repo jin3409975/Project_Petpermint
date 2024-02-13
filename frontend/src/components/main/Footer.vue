@@ -1,22 +1,25 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const footerBgColor = computed(() => route.meta.footerBgColor || '#668ba7')
 
 const currentYear = ref(new Date().getFullYear())
 </script>
 
 <template>
   <v-card height="160px">
-    <v-footer style="background-color: #668ba7 !important">
+    <v-footer :style="{ backgroundColor: footerBgColor }">
       <v-card flat tile width="100%" class="red lighten-1 text-center">
         <v-card-text
           class="white--text strong-text pt-2"
-          style="background-color: #668ba7 !important"
+          :style="{ backgroundColor: footerBgColor }"
         >
           <span class="white--text">{{ currentYear }} — </span><strong>PetPermint</strong>
           <br />
           <strong class="white--text strong-text">We love pets, you love pets.</strong><br />
-          <strong class="white--text strong-text"
-            >반려동물의 건강, 펫퍼민트가 함께 합니다.</strong
+          <strong class="white--text strong-text">반려동물의 건강, 펫퍼민트가 함께 합니다.</strong
           ><br />
           <div class="white--text small-text">사업자등록번호: 2024-02-19 | 대표: 팀명은3조</div>
           <div class="white--text small-text">

@@ -9,6 +9,7 @@ const accountstore = useAccountStore()
 const { userdata, mypetlist } = storeToRefs(accountstore)
 const opendialog = ref(false)
 const showeditpet = ref(false)
+
 onBeforeMount(() => {
   const userId = localStorage.getItem('useremail')
   accountstore.getnormalprofile(userId)
@@ -164,12 +165,23 @@ function navigateTocurrentlist() {
 </script>
 
 <template>
-  <!-- 유저의 프로필  -->
-  <v-container class="profile-container mx-auto" elevation="8" width="auto">
-    <v-row>
-      <v-col cols="12" class="text-center">
-        <!-- 유저의 프로필 이미지 -->
-        <v-card class="profile-img">
+  <div class="info">
+    <!-- 나의 예약 일정 보기로 이동  -->
+    <v-btn
+      width="200px"
+      style="margin-left: 250px; margin-bottom: 10px"
+      @click="navigateTocurrentlist"
+      >나의 예약 보기</v-btn
+    >
+    <!-- 유저의 프로필  -->
+    <v-container
+      class="profile-container"
+      elevation="8"
+      width="auto"
+      style="margin-top: 5px; margin-bottom: 100px"
+    >
+      <v-row>
+        <div class="profile-img">
           <v-avatar size="230" variant="inlined">
             <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
             <input
@@ -179,113 +191,119 @@ function navigateTocurrentlist() {
               :disabled="!isclicked"
             />
           </v-avatar>
-          <v-btn v-show="isclicked == false" @click="updateInfo">수정</v-btn>
-        </v-card>
-      </v-col>
+          <v-btn v-show="isclicked == false" style="margin: 10px" @click="updateInfo"
+            >개인정보수정</v-btn
+          >
+          <a
+            class="text-caption text-decoration-none text-blue"
+            href="/find/password"
+            rel="noopener noreferrer"
+            target="_self"
+          >
+            비밀번호 변경</a
+          >
+        </div>
 
-      <v-col cols="12">
-        <!-- 유저의 기본정보 -->
-        <v-card class="profile-info">
-          <v-text-field
-            label="이름"
-            v-model="userName"
-            variant="solo"
-            :readonly="isreadonly"
-          ></v-text-field>
-          <v-text-field
-            v-model="email"
-            label="Email"
-            variant="solo"
-            :readonly="isreadonly"
-          ></v-text-field>
-          <v-text-field
-            v-model="phoneNumber"
-            label="전화번호"
-            variant="solo"
-            :readonly="isreadonly"
-          ></v-text-field>
+        <v-col cols="12" class="text-center">
+          <!-- 유저의 기본정보 -->
+          <v-card class="profile-info">
+            <v-text-field
+              label="이름"
+              v-model="userName"
+              variant="solo"
+              :readonly="isreadonly"
+            ></v-text-field>
+            <v-text-field
+              v-model="email"
+              label="Email"
+              variant="solo"
+              :readonly="isreadonly"
+            ></v-text-field>
+            <v-text-field
+              v-model="phoneNumber"
+              label="전화번호"
+              variant="solo"
+              :readonly="isreadonly"
+            ></v-text-field>
 
-          <v-text-field
-            v-model="address"
-            label="주소"
-            variant="solo"
-            :readonly="isreadonly"
-          ></v-text-field>
+            <v-text-field
+              v-model="address"
+              label="주소"
+              variant="solo"
+              :readonly="isreadonly"
+            ></v-text-field>
 
-          <v-card v-if="isclicked">
-            <v-btn @click="openKakaoAddressSearch">주소 변경</v-btn>
+            <v-card v-if="isclicked">
+              <v-btn @click="openKakaoAddressSearch">주소 변경</v-btn>
+            </v-card>
           </v-card>
-        </v-card>
-        <a
-          class="text-caption text-decoration-none text-blue"
-          href="/find/password"
-          rel="noopener noreferrer"
-          target="_self"
-        >
-          비밀번호 변경</a
-        >
-      </v-col>
-      <v-btn v-if="isclicked" @click="saveinfo">저장</v-btn>
-    </v-row>
+        </v-col>
+        <v-btn v-if="isclicked" @click="saveinfo">저장</v-btn>
+      </v-row>
 
-    <!-- 유저 펫리스트 -->
-    <v-sheet class="mx-auto" elevation="3" max-width="450px" height="auto">
-      <v-slide-group class="pa-4" show-arrows>
-        <v-slide-group-item v-for="pet in mypetlist" :key="pet.id">
-          <v-card width="350">
-            <v-row>
-              <v-col cols="4">
-                <v-avatar class="pet-img" size="150" variant="outlined">
-                  <img
-                    :src="pet.picture"
-                    alt="펫 프로필 사진"
-                    style="max-width: 100%; height: auto"
-                  />
-                </v-avatar>
-              </v-col>
-              <v-col cols="6" style="text-align: center">
-                <p>{{ pet.name }}</p>
-                <p>{{ pet.specie }}</p>
-                <p>{{ pet.gender }}</p>
-                <p>{{ pet.weight }}</p>
-                <p>{{ pet.note }}</p>
-              </v-col>
-            </v-row>
-            <v-btn @click="editPetprofile(pet)">수정</v-btn>
-          </v-card>
-        </v-slide-group-item>
-      </v-slide-group>
+      <!-- 유저 펫리스트 -->
+      <v-sheet
+        class="mx-auto"
+        elevation="2"
+        width="400px"
+        height="350px"
+        style="background-color: #ffebeb"
+      >
+        <v-slide-group class="pa-4" show-arrows>
+          <v-slide-group-item v-for="pet in mypetlist" :key="pet.id">
+            <v-card width="265px" style="background-color: #ffebeb; max-width: 450px">
+              <v-row style="margin-top: 5px">
+                <v-col cols="4">
+                  <v-avatar class="pet-img" size="120" variant="inlined">
+                    <img
+                      :src="pet.picture"
+                      alt="펫 프로필 사진"
+                      style="max-width: 100%; height: auto"
+                    />
+                  </v-avatar>
+                </v-col>
+                <v-col cols="6" class="petinfo">
+                  <p>{{ pet.name }}</p>
+                  <p>{{ pet.specie }}</p>
+                  <p>{{ pet.gender }}</p>
+                  <p>{{ pet.weight }}</p>
+                  <p>{{ pet.note }}</p>
+                  <v-btn @click="editPetprofile(pet)">수정</v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-slide-group-item>
+        </v-slide-group>
 
-      <!-- 펫 수정 폼  -->
-      <v-expand-transition v-if="showeditpet">
-        <v-sheet
-          width="300px"
-          height="auto"
-          class="d-flex flex-column align-center justify-center mx-auto"
-        >
-          <v-file-input
-            v-model="newpetpicture"
-            label="프로필 사진 업로드"
-            prepend-icon="mdi-camera"
-            @change="getpetFile"
-            style="width: 100%"
-            variant="underlined"
-          ></v-file-input>
-          <v-text-field variant="underlined" v-model="newpetname" label="이름"></v-text-field>
-          <v-text-field variant="underlined" v-model="newpetspecie" label="종"></v-text-field>
-          <v-text-field variant="underlined" v-model="newpetgender" label="성별"></v-text-field>
-          <v-text-field variant="underlined" v-model="newpetweight" label="무게"></v-text-field>
-          <v-text-field variant="underlined" v-model="newpetage" label="무게"></v-text-field>
-          <v-text-field variant="underlined" v-model="newpetnote" label="소개"></v-text-field>
-          <v-btn @click="savenewpetInfo">저장</v-btn>
-          <!-- <div class="d-flex fill-height align-center justify-center"> -->
-          <!-- </div> -->
-        </v-sheet>
-      </v-expand-transition>
-    </v-sheet>
-    <!-- 나의 예약 일정 보기로 이동  -->
-    <v-btn @click="navigateTocurrentlist" icon="mdi-calendar" size="x-large"></v-btn>
-  </v-container>
+        <!-- 펫 수정 폼  -->
+        <v-expand-transition v-if="showeditpet" style="height: auto">
+          <v-sheet
+            width="300px"
+            height="auto"
+            class="d-flex flex-column align-center justify-center mx-auto"
+          >
+            <v-file-input
+              v-model="newpetpicture"
+              label="프로필 사진 업로드"
+              prepend-icon="mdi-camera"
+              @change="getpetFile"
+              style="width: 100%"
+              variant="underlined"
+            ></v-file-input>
+            <v-text-field variant="underlined" v-model="newpetname" label="이름"></v-text-field>
+            <v-text-field variant="underlined" v-model="newpetspecie" label="종"></v-text-field>
+            <v-text-field variant="underlined" v-model="newpetgender" label="성별"></v-text-field>
+            <v-text-field variant="underlined" v-model="newpetweight" label="무게"></v-text-field>
+            <v-text-field variant="underlined" v-model="newpetage" label="무게"></v-text-field>
+            <v-text-field variant="underlined" v-model="newpetnote" label="소개"></v-text-field>
+            <v-btn @click="savenewpetInfo">저장</v-btn>
+            <!-- <div class="d-flex fill-height align-center justify-center"> -->
+            <!-- </div> -->
+          </v-sheet>
+        </v-expand-transition>
+      </v-sheet>
+    </v-container>
+  </div>
 
   <v-dialog v-model="opendialog" max-width="600px">
     <v-card>
@@ -299,10 +317,21 @@ function navigateTocurrentlist() {
 </template>
 
 <style scoped>
+.info {
+  height: auto;
+  justify-content: left;
+  flex-direction: column;
+  display: flex;
+  margin-bottom: 100px;
+  margin-top: 100px;
+}
+.slide-item {
+  width: 300px;
+}
 .profile-container {
   /* max-width: 900px; */
-  margin: 5px auto;
-  background-color: #fff;
+  margin: 200px auto;
+  background-color: #eef5ff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -311,16 +340,22 @@ function navigateTocurrentlist() {
   margin: 0 auto;
 }
 .profile-img {
-  height: 50%px;
-  width: 500px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  width: 500px;
+  margin-bottom: 10px;
+}
+.v-btn {
+  background-color: #ffd0d0;
 }
 .profile-info {
   width: 500px;
   margin-left: 0;
+  background-color: #eef5ff;
+  box-shadow: none;
 }
-
 .v-text-field {
   margin-bottom: 10px;
   width: 100%;
@@ -329,8 +364,17 @@ function navigateTocurrentlist() {
   width: 20%;
 }
 .v-expand-transition {
+  border: black;
   display: flex;
 }
-.v-expand-transition v-sheet {
+:deep(.v-field--variant-solo, .v-field--variant-solo-filled) {
+  background-color: #ffebeb;
+  box-shadow: none;
+}
+.petinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

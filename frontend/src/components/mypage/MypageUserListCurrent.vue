@@ -50,8 +50,9 @@ export default {
 
 <template>
   <p>나의 예약 내역 보기</p>
-  <v-btn @click="navigationToinfo" icon="mdi-account" size="x-large"></v-btn>
+
   <div class="mycalendar">
+    <button class="pinkbutton" @click="navigationToinfo">나의 정보 보기</button>
     <Qalendar :events="events" :config="config" />
   </div>
 </template>
@@ -64,9 +65,17 @@ export default {
 .mycalendar {
   height: auto;
   width: 80%;
-  justify-content: center;
+  justify-content: left;
+  flex-direction: column;
   display: flex;
   margin-bottom: 100px;
   margin: auto;
+}
+.pinkbutton {
+  background-color: #ffd0d0;
+  width: 200px;
+  margin-bottom: 10px;
+  height: 50px;
+  float: left;
 }
 </style>

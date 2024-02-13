@@ -5,11 +5,10 @@ import { ref, onBeforeMount, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCommunityStore } from '@/stores/community'
 import { useAccountStore } from '@/stores/account'
-import axios from 'axios'
+
 const props = defineProps(['article', 'user'])
 const community_stores = useCommunityStore()
 const account_stores = useAccountStore()
-const files = ref([{}])
 
 onBeforeMount(async () => {
   await props.article.forEach((article) => {
@@ -29,32 +28,45 @@ const userId = ref()
 const writer = ref()
 
 const likes = ref(0)
+const commentcount = ref(0)
 
 const picture = ref('/assets/img/default_profile.png')
 
 const router = useRouter()
+const isNew = ref()
+
 const checkLike = async () => {
   if (userId.value == null) {
     alert('로그인 후 이용해주세요')
   } else {
     const checker = await community_stores.communitylikecheck(props.article.postId, userId.value)
     if (checker === 'Fail') {
-      alert('이미 좋아요 하셨습니다')
-      isLiked.value = false
+      await community_stores.communitylikecancel(props.article.postId, userId.value)
+      likes.value--
     } else {
       await community_stores.communitylike(props.article.postId, userId.value)
       likes.value++
-      isLiked.value = true
     }
   }
 }
 
-const navigateToCommunity = () => {
-  router.push({ name: 'lifecare-community-list' })
-}
+onMounted(async () => {
+  userId.value = localStorage.useremail
+  writer.value = community_stores.communitydetail(props.article.postId)
+  isNew.value = props.article.new
+
+  time.value = dateConvert(
+    props.article.registTime.substring(0, props.article.registTime.length - 2)
+  )
+  likes.value = props.article.likes
+  await community_stores.commentlist(props.article.postId)
+
+  commentcount.value = community_stores.comments.length
+})
 
 function dateConvert(createdAt) {
-  const adjustedCreatedAt = new Date(createdAt.getTime() + 9 * 60 * 60 * 1000)
+  var date = new Date(createdAt)
+  const adjustedCreatedAt = new Date(date.getTime() + 9 * 60 * 60 * 1000)
 
   const milliSeconds = new Date() - adjustedCreatedAt
   const seconds = milliSeconds / 1000
@@ -73,11 +85,6 @@ function dateConvert(createdAt) {
   return `${Math.floor(years)}년 전`
 }
 
-onMounted(() => {
-  userId.value = localStorage.useremail
-  writer.value = community_stores.communitydetail(props.article.postId)
-})
-
 watch(
   () => props.article.likes,
   (newLikes) => {
@@ -93,11 +100,8 @@ watch(
 )
 
 const fetchData = async (newId) => {
-  console.log(newId)
   await account_stores.getnormalprofile(newId)
   writer.value = await account_stores.userdata
-  console.log(writer.value)
-  console.log(writer.value.picture)
   if (writer.value.picture != 0 && writer.value.picture != null)
     picture.value = writer.value.picture
 }
@@ -106,11 +110,8 @@ const time = ref('0일 전')
 watch(
   () => props.article.registTime,
   (newTime) => {
-    console.log(newTime)
     let temp = new Date(newTime)
-    console.log(temp)
     time.value = dateConvert(temp)
-    console.log(time)
   }
 )
 
@@ -127,12 +128,7 @@ const del = () => {
 </script>
 
 <template>
-  <v-card
-    class="card"
-    :title="article.userName"
-    :subtitle="article.registTime"
-    style="border-radius: 20px"
-  >
+  <v-card class="card" :title="article.userName" :subtitle="time" style="border-radius: 20px">
     <template v-slot:prepend>
       <v-avatar size="50" style="margin-left: 15px; margin-top: 10px; margin-right: 5px">
         <img v-if="article.picture !== '0'" :src="article.picture" style="max-width: 100%" />
@@ -167,7 +163,8 @@ const del = () => {
               "
             >
               <!-- Left Aligned Buttons: Like Button and Comments Toggle -->
-              <div style="display: flex; gap: 20px">
+
+              <div v-if="isNew == null" style="display: flex; gap: 20px">
                 <div>
                   <v-btn
                     variant="outlined"
@@ -190,7 +187,7 @@ const del = () => {
                     height="43px"
                     prepend-icon="mdi-message-reply-text"
                     size="large"
-                    ><span style="color: black">{{ commentcount }}33</span></v-btn
+                    ><span style="color: black">{{ commentcount }}</span></v-btn
                   >
                 </div>
               </div>
