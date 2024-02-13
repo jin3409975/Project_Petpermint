@@ -1,15 +1,23 @@
 <script setup>
 import { ref, onBeforeMount, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 import { useCommunityStore } from '@/stores/community'
 
 const community_stores = useCommunityStore()
+const router = useRouter()
+
+const appointId = ref('4321')
 const videos = ref([])
 onMounted(async () => {
   await community_stores.videolist()
   videos.value = community_stores.videos.videoList
   console.log(videos.value)
 })
+
+const handleEnteringBroadcastButton = () => {
+  router.push({ name: 'cam-broadcast', params: { appointId: appointId.value } })
+}
 </script>
 
 <template>
@@ -68,7 +76,7 @@ onMounted(async () => {
               >생방송 중
             </div>
             <v-btn size="medium" variant="outlined" color="red" style="width: 80px; height: 35px">
-              <span style="color: white">입장하기</span>
+              <span style="color: white" @click="handleEnteringBroadcastButton">입장하기</span>
             </v-btn>
           </v-card>
         </v-col>
