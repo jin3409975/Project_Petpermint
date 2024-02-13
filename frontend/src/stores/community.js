@@ -113,6 +113,25 @@ export const useCommunityStore = defineStore(
           })
       })
     }
+    const communitylikecancel = function (postId, userId) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'put',
+          url: API_URL + 'likecancel',
+          data: {
+            postId: postId,
+            userId: userId
+          }
+        })
+          .then((response) => {
+            resolve(likecheck.value)
+            console.log(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    }
     const communitylikecheck = function (postId, userId) {
       return new Promise((resolve, reject) => {
         axios({
@@ -249,6 +268,7 @@ export const useCommunityStore = defineStore(
       communitylikecheck,
       likecheck,
       communitylike,
+      communitylikecancel,
       communitywrite,
       communitydelete,
       communityupdate,
