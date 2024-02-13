@@ -1,7 +1,7 @@
-import RegisterView from '@/views/account/RegisterView.vue'
+import RegisterView from '@/views/register/RegisterView.vue'
 import RegisterVet from '@/components/register/RegisterVet.vue'
 // import RegisterComplete from '@/components/register/RegisterComplete.vue'
-import RegisterUserView from '@/views/RegisterUserView.vue'
+import RegisterUserView from '@/views/register/RegisterUserView.vue'
 import RegisterUser from '@/components/register/RegisterUser.vue'
 // import RegisterPet from '@/components/register/RegisterPet.vue'
 

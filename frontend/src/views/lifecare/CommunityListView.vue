@@ -1,6 +1,6 @@
 <script setup>
-import CommunityList from '../components/lifecare/CommunityList.vue'
-import CommunityWrite from '../components/lifecare/CommunityWrite.vue'
+import CommunityList from '../../components/lifecare/CommunityList.vue'
+import CommunityWrite from '../../components/lifecare/CommunityWrite.vue'
 import { useCommunityStore } from '@/stores/community'
 import { useAccountStore } from '@/stores/account'
 const account_stores = useAccountStore()

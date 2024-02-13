@@ -1,12 +1,12 @@
-import LifecareViewVue from '@/views/LifecareView.vue'
+import LifecareViewVue from '@/views/lifecare/LifecareView.vue'
 
-import CommunityListVue from '@/views/CommunityListView.vue'
-import CommunityDetailVue from '@/views/CommunityDetailVue.vue'
+import CommunityListVue from '@/views/lifecare/CommunityListView.vue'
+import CommunityDetailVue from '@/views/lifecare/CommunityDetailVue.vue'
 
 import VenueMapVue from '@/components/lifecare/VenueMap.vue'
 
 import EnterBroadcast from '@/components/lifecare/EnterBroadcast.vue'
-import EnterBroadcastVue from '@/views/EnterBroadcastVue.vue'
+import EnterBroadcastVue from '@/views/lifecare/EnterBroadcastVue.vue'
 
 const lifecare = [
   {

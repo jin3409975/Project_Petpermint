@@ -1,5 +1,5 @@
 <script setup>
-import EnterBroadcast from '../components/lifecare/EnterBroadcast.vue'
+import EnterBroadcast from '../../components/lifecare/EnterBroadcast.vue'
 </script>
 
 <template>

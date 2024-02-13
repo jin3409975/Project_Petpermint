@@ -1,6 +1,6 @@
 <script setup>
-import CommunityDetail from '../components/lifecare/CommunityDetail.vue'
-import CommunityComment from '../components/lifecare/CommunityComment.vue'
+import CommunityDetail from '../../components/lifecare/CommunityDetail.vue'
+import CommunityComment from '../../components/lifecare/CommunityComment.vue'
 import { useCommunityStore } from '@/stores/community'
 import { useAccountStore } from '@/stores/account'
 import { useRoute, useRouter } from 'vue-router'

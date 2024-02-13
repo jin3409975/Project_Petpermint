@@ -1,6 +1,6 @@
-import FindinfoView from '@/views/account/FindinfoView.vue'
-import FindId from '@/components/login/FindId.vue'
-import FindPassword from '@/components/login/FindPassword.vue'
+import FindinfoView from '@/views/find/FindinfoView.vue'
+import FindId from '@/components/find/FindId.vue'
+import FindPassword from '@/components/find/FindPassword.vue'
 
 const find = [
   {

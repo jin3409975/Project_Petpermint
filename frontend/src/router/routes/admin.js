@@ -1,4 +1,4 @@
-import AdminViewVue from '@/views/AdminView.vue'
+import AdminViewVue from '@/views/admin/AdminView.vue'
 import AdminAcountVue from '@/components/admin/AdminAcount.vue'
 
 const admin = [

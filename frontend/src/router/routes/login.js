@@ -1,4 +1,4 @@
-import LoginView from '@/views/account/LoginView.vue'
+import LoginView from '@/views/login/LoginView.vue'
 import Login from '@/components/login/Login.vue'
 
 const login = [

@@ -1,4 +1,4 @@
-import MainView from '@/views/MainView.vue'
+import MainView from '@/views/main/MainView.vue'
 import Main from '@/components/main/Main.vue'
 import MainVet from '@/components/main/MainVet.vue'
 
