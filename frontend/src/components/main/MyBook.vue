@@ -1,8 +1,12 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onBeforeMount } from 'vue'
 
 import dynamics from 'dynamics.js'
 import { useRouter } from 'vue-router'
+import { useReserveStore } from '@/stores/reserve'
+// import { storeToRefs } from 'pinia'
+// const { myevents } = storeToRefs(mypagestore)
+const reservestore = useReserveStore()
 
 const appointId = ref('1234')
 const router = useRouter()
@@ -84,6 +88,9 @@ const handleMouseLeave = () => {
   stopDrag()
   showHoverText.value = false
 }
+onBeforeMount(() => {
+  reservestore.getmybook()
+})
 </script>
 
 <template>
