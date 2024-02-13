@@ -154,7 +154,7 @@ export const useReserveStore = defineStore('reserve', () => {
     const time = `${year}-${month}-${day} ${hour}:${min}`
     axios({
       method: 'get',
-      url: API_URL + 'mybook',
+      url: API_URL + 'mybook/normal',
       params: {
         userId: useremail,
         time: time

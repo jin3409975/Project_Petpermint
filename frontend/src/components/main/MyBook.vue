@@ -8,7 +8,7 @@ import { storeToRefs } from 'pinia'
 
 const reservestore = useReserveStore()
 const { mybook } = storeToRefs(reservestore)
-const appointId = ref('1234')
+const appointId = ref('182')
 const router = useRouter()
 
 const handleEnteringConsultButton = (e) => {
