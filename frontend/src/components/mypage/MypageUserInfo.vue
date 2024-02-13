@@ -17,7 +17,7 @@ onBeforeMount(() => {
   console.log(mypetlist, 'mypetlist')
   setTimeout(() => {
     init()
-  }, 1)
+  }, 50)
 })
 
 function init() {
@@ -212,20 +212,25 @@ function navigateTocurrentlist() {
               variant="solo"
               :readonly="isreadonly"
             ></v-text-field>
+            <div style="position: relative">
+              <v-text-field
+                v-model="address"
+                label="주소"
+                variant="solo"
+                :readonly="isreadonly"
+              ></v-text-field>
 
-            <v-text-field
-              v-model="address"
-              label="주소"
-              variant="solo"
-              :readonly="isreadonly"
-            ></v-text-field>
+              <v-btn
+                v-if="isclicked"
+                @click="openKakaoAddressSearch"
+                style="position: absolute; top: 10px; right: 0; z-index: 10"
+                >주소 변경</v-btn
+              >
+            </div>
 
-            <v-card v-if="isclicked">
-              <v-btn @click="openKakaoAddressSearch">주소 변경</v-btn>
-            </v-card>
+            <v-btn v-if="isclicked" style="margin-bottom: 10px" @click="saveinfo">저장</v-btn>
           </v-card>
         </v-col>
-        <v-btn v-if="isclicked" @click="saveinfo">저장</v-btn>
       </v-row>
 
       <!-- 유저 펫리스트 -->

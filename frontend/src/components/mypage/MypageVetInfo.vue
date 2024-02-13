@@ -14,11 +14,11 @@ onBeforeMount(() => {
   accountstore.getexpertprofile(userId)
   setTimeout(() => {
     init()
-  }, 1)
+  }, 50)
 })
 
 function init() {
-  console.log('pa1515919159119159ge', vetdata)
+  // console.log('pa1515919159119159ge', vetdata)
   userName.value = vetdata.value.userName
   email.value = vetdata.value.userId
   phoneNumber.value = vetdata.value.phone
@@ -28,7 +28,7 @@ function init() {
   hospitalname.value = vetdata.value.hospitalName
   starttime.value = vetdata.value.startTime
   endtime.value = vetdata.value.endTime
-  console.log('llllll', vetdata.value)
+  // console.log('llllll', vetdata.value)
 }
 // 유저 프로필 변수
 const userName = ref('')
@@ -195,12 +195,21 @@ function navigateTocurrentlist() {
           variant="solo"
           :readonly="isreadonly"
         ></v-text-field>
-        <v-text-field
-          v-model="address"
-          label="주소"
-          variant="solo"
-          :readonly="isreadonly"
-        ></v-text-field>
+        <div style="position: relative">
+          <v-text-field
+            v-model="address"
+            label="주소"
+            variant="solo"
+            :readonly="isreadonly"
+          ></v-text-field>
+
+          <v-btn
+            v-if="isclicked"
+            @click="openKakaoAddressSearch"
+            style="position: absolute; top: 10px; right: 80px; z-index: 10"
+            >주소 변경</v-btn
+          >
+        </div>
         <v-text-field
           label="인삿말"
           v-model="note"
@@ -225,19 +234,8 @@ function navigateTocurrentlist() {
           :readonly="isreadonly"
           label="상담 가능 종료시간"
         ></v-select>
-        <v-btn v-if="isclicked" @click="openKakaoAddressSearch">주소 변경</v-btn>
-        <v-card v-if="isclicked">
-          <a
-            class="text-caption text-decoration-none text-blue"
-            href="/find/password"
-            rel="noopener noreferrer"
-            target="_self"
-          >
-            비밀번호 변경</a
-          >
 
-          <v-btn @click="saveinfo">저장</v-btn>
-        </v-card>
+        <v-btn v-if="isclicked" @click="saveinfo">저장</v-btn>
       </v-card>
     </v-container>
   </div>
