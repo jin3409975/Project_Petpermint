@@ -32,7 +32,8 @@ const getComments = async () => {
   commentcount.value = comment.value.length
 }
 
-function dateConvert(createdAt) {
+function dateConvert(date) {
+  var createdAt = new Date(date)
   const adjustedCreatedAt = new Date(createdAt.getTime() + 9 * 60 * 60 * 1000)
 
   const milliSeconds = new Date() - adjustedCreatedAt
@@ -58,15 +59,17 @@ const writeComments = () => {
   var writtenComment = new Object()
   writtenComment.postId = postId
   writtenComment.userId = userId.value
-  writtenComment.registTime = com_temp.value
-  comment.value.append(writtenComment)
+  writtenComment.registTime = '방금 전'
+  writtenComment.content = com_temp.value
+  comment.value.push(writtenComment)
+  commentcount.value++
 }
 
-const deleteComment = (commentNo) => {
+const deleteComment = (comment) => {
+  let commentNo = comment.commentNo
   let postId = props.article.postId
+  comment.content = '삭제된 댓글입니다.'
   let result = community_stores.commentdelete(commentNo, postId)
-
-  location.reload()
 }
 
 onMounted(async (article) => {
@@ -125,7 +128,7 @@ watch(
                 <!-- Delete Comment Button on the right -->
                 <v-btn
                   v-if="userId == com.userId && !com.delete"
-                  @click="deleteComment(com.commentNo)"
+                  @click="deleteComment(com)"
                   color="red"
                   variant="text"
                   class="ml-auto delete-btn"
