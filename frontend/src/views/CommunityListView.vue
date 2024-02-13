@@ -42,6 +42,39 @@ const navigateToMain = () => {
 onMounted(async () => {})
 
 const isThoughtVisible = ref(true)
+
+document.addEventListener('dataEmitted', (event) => {
+  // Access the data from the event detail
+  const { userId, content, files } = event.detail
+
+  // Do something with the received data
+  console.log('Received data:', userId, content, files)
+})
+
+const write = (content) => {
+  var card = Object()
+  card.userName = '추가 됨'
+  console.log(getCurrentDateTimeString())
+  card.registTime = getCurrentDateTimeString()
+  card.content = content
+  card.new = 1
+  articles.value.unshift(card)
+}
+
+function getCurrentDateTimeString() {
+  const currentDate = new Date()
+
+  const year = currentDate.getFullYear()
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+  const day = String(currentDate.getDate()).padStart(2, '0')
+  const hours = String(currentDate.getHours()).padStart(2, '0')
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0')
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0')
+
+  const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+
+  return formattedDateTime
+}
 </script>
 
 <template>
@@ -86,7 +119,7 @@ const isThoughtVisible = ref(true)
   </div>
   <v-container fluid class="w-50" style="margin-top: 80px">
     <v-btn @click="navigateToMain" style="margin-bottom: 15px" icon="mdi-home"></v-btn>
-    <CommunityWrite></CommunityWrite>
+    <CommunityWrite @data-send="write"></CommunityWrite>
     <CommunityList v-for="article in articles" :key="article.postId" :article="article">
     </CommunityList>
   </v-container>

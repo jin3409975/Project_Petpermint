@@ -128,8 +128,17 @@ const del = () => {
 </script>
 
 <template>
-  <v-card class="card" :title="article.userName" :subtitle="time" style="border-radius: 20px">
-    <template v-slot:prepend>
+  <v-card
+    class="card"
+    :title="article.userName"
+    :subtitle="time"
+    :style="{
+      borderRadius: '20px',
+      height: isNew == null ? '' : '200px',
+      background: isNew == null ? 'white' : '#c0d0c0'
+    }"
+  >
+    <template v-if="isNew == null" v-slot:prepend>
       <v-avatar size="50" style="margin-left: 15px; margin-top: 10px; margin-right: 5px">
         <img v-if="article.picture !== '0'" :src="article.picture" style="max-width: 100%" />
         <v-else>
@@ -137,8 +146,9 @@ const del = () => {
         </v-else>
       </v-avatar>
     </template>
+    <template v-if="isNew != null" v-slot:prepend> &nbsp;&nbsp;&nbsp;</template>
     <template v-slot:append>
-      <v-icon icon="mdi-format-align-justify" color="white"></v-icon>
+      <v-icon icon="mdi-new-box" color="white"></v-icon>
     </template>
 
     <v-card-actions style="padding-right: 10px">
