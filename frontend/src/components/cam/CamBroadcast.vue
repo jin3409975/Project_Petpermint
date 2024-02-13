@@ -11,7 +11,7 @@ const adminAccount = ref('ssafyjam@gmail.com')
 export default {
   data() {
     return {
-      sessionName: this.$route.params.appointId,
+      sessionName: this.$route.params.sessionId,
       participantName: localStorage.getItem('useremail'),
       APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null,
