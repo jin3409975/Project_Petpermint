@@ -142,7 +142,6 @@ const navigateTo = (path) => {
                     @click="navigateTo('/reserve/initial/time')"
                     elevation="0"
                     color="indigo-darken-3"
-                    
                   >
                     초기 상담 예약 바로가기
                   </v-btn>
@@ -224,7 +223,7 @@ const navigateTo = (path) => {
                 <div class="btn-div">
                   <v-btn
                     class="btn"
-                    @click="navigateTo('/lifecare/community')"
+                    @click="navigateTo('/lifecare/community/list')"
                     elevation="0"
                     color="indigo-darken-3"
                   >
@@ -294,7 +293,7 @@ const navigateTo = (path) => {
                 <div class="btn-div">
                   <v-btn
                     class="btn"
-                    @click="navigateTo('/lifecare/community')"
+                    @click="navigateTo('/lifecare/community/list')"
                     elevation="0"
                     color="indigo-darken-3"
                   >

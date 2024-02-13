@@ -6,12 +6,14 @@ import com.ssafy.api.request.ReservationRegisterPostReq;
 import com.ssafy.db.entity.Reservation;
 import com.ssafy.db.join.ReservationExpertUserList;
 import com.ssafy.db.join.ReservationHospitalList;
-import com.ssafy.db.repository.ReservationRepository;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 /**
  *	예약 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -21,12 +23,22 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	ReservationRepository reservationRepository;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	AnimalRepository animalRepository;
+	@Autowired
+	ExpertUserRepository expertUserRepository;
+	@Autowired
+	VenueRepository venueRepository;
+
 	@Override
 //	상담 예약 생성
 	public boolean createConsultReservation(ReservationRegisterPostReq reservationRegisterPostReq) {
 		Reservation reservation = new Reservation();
 		reservation.setTime(reservationRegisterPostReq.getTime());
 		reservation.setType(1);
+		reservation.setHospitalNo(0);
 		reservation.setUserId(reservationRegisterPostReq.getUserId());
 		reservation.setLicenseNumber(reservationRegisterPostReq.getLicenseNumber());
 		reservation.setNote(reservationRegisterPostReq.getNote());
@@ -164,5 +176,25 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<Reservation> getAllExpertReservations(String licenseNumber) {
 		List<Reservation> expertList = reservationRepository.findAllByLicenseNumber(licenseNumber);
 		return expertList;
+	}
+
+	@Override
+	public Map<String, Object> getMyBook(String userId, String time) {
+		Reservation data = reservationRepository.findMyBook(userId, time);
+		String doctorName;
+		if(data == null) {
+			return null;
+		}
+		if(data.getType() == 1) {
+			doctorName = userRepository.findByUserIdAndIsDelete(expertUserRepository.findByLicenseNumber(data.getLicenseNumber()).getUserId(),0).getUserName();
+		} else {
+			doctorName = venueRepository.findByDataNo(data.getHospitalNo()).getVenName();
+		}
+		String animalName = animalRepository.findByAnimalIdAndIsDelete(data.getAnimalId(),0).getName();
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", data);
+		result.put("doctorName", doctorName);
+		result.put("animalName", animalName);
+		return result;
 	}
 }
