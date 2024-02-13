@@ -1,18 +1,21 @@
 <script setup>
-import { ref, onBeforeMount, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCommunityStore } from '@/stores/community'
 
 const community_stores = useCommunityStore()
 const router = useRouter()
 
-const appointId = ref('4321')
+const appointId = ref()
 const videos = ref([])
+const video = ref()
 onMounted(async () => {
   await community_stores.videolist()
   videos.value = community_stores.videos.videoList
-  console.log(videos.value)
+  await community_stores.videocurrent()
+  video.value = community_stores.video
+  appointId.value = community_stores.video.sessionId
+  console.log(video.value)
 })
 
 const handleEnteringBroadcastButton = () => {
@@ -55,6 +58,7 @@ const handleEnteringBroadcastButton = () => {
 
         <v-col cols="12" md="6">
           <v-card
+            v-if="video"
             class="black-square"
             color="black"
             style="
@@ -65,8 +69,11 @@ const handleEnteringBroadcastButton = () => {
               align-items: center;
             "
           >
-            <div style="padding-bottom: 30px">NOW ON - AIR</div>
-            <div style="padding-bottom: 30px">
+            <div style="padding-bottom: 20px">NOW ON - AIR</div>
+            <div>
+              <b>{{ video.roomName }}</b>
+            </div>
+            <div style="padding-bottom: 20px">
               <v-icon
                 size="large"
                 color="red-darken-2"
@@ -75,6 +82,7 @@ const handleEnteringBroadcastButton = () => {
               ></v-icon
               >생방송 중
             </div>
+
             <v-btn size="medium" variant="outlined" color="red" style="width: 80px; height: 35px">
               <span style="color: white" @click="handleEnteringBroadcastButton">입장하기</span>
             </v-btn>
@@ -91,7 +99,7 @@ const handleEnteringBroadcastButton = () => {
             <v-list>
               <v-list-item v-for="item in videos" :key="item">
                 <v-list-item-content>
-                  <v-row>
+                  <v-row class="text-center">
                     <v-col>{{ item.startTime }} </v-col>
                     <v-col
                       ><b>{{ item.roomName }}</b> </v-col

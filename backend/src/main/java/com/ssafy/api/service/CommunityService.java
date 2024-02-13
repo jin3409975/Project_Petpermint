@@ -45,6 +45,8 @@ public interface CommunityService {
 
     List<VideoRoom> videoList();
 
+    VideoRoom videoCurrent();
+
     VideoRoom createVideo(VideoRoom videoInfo);
 }
 

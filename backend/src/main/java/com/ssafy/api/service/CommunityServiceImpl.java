@@ -208,6 +208,12 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
+    public VideoRoom videoCurrent() {
+        VideoRoom video=communityRepositorySupport.findCurrentVideo();
+        return video;
+    }
+
+    @Override
     public VideoRoom createVideo(VideoRoom videoInfo) {
         VideoRoom video= videoRepository.save(videoInfo);
         return video;

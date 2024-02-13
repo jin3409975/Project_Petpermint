@@ -99,6 +99,21 @@ public class CommunityRepositorySupport {
         return videoRoom;
     }
 
+    public VideoRoom findCurrentVideo() {
+        LocalDateTime nineHoursLater = LocalDateTime.now();
+        nineHoursLater=nineHoursLater.plusHours(9);
+
+        VideoRoom videoRoom = jpaQueryFactory.select(qVideoRoom).from(qVideoRoom)
+                .where(
+                        qVideoRoom.startTime.loe(String.valueOf(nineHoursLater)),
+                        qVideoRoom.isDelete.ne(true)
+                )
+                .orderBy(qVideoRoom.startTime.desc())
+                .limit(1)
+                .fetchOne();
+        return videoRoom;
+    }
+
 
 
 }
