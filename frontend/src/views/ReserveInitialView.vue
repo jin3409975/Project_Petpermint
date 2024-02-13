@@ -24,7 +24,8 @@ const navigateToReserveComplete = () => {
   notetext.value = note.value
   dialog.value = true
   console.log(notetext.value, note.value)
-  if (type == 1) {
+  console.log('tetatetfaefagasdg', type)
+  if (type.value == 1) {
     reserveStore.consultCreate()
   } else {
     reserveStore.hospitalCreate()
@@ -114,7 +115,6 @@ onMounted(() => {
               variant="outlined"
               rows="6"
               shaped
-              @change="onChange"
             >
             </v-textarea>
           </v-container>

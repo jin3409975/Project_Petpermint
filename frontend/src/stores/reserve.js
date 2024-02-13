@@ -26,6 +26,7 @@ export const useReserveStore = defineStore('reserve', () => {
   const hospitalname = ref('')
   const useremail = localStorage.getItem('useremail')
   const notetext = ref('')
+  const mybook = ref([])
   function consultCreate() {
     axios({
       method: 'post',
@@ -133,7 +134,7 @@ export const useReserveStore = defineStore('reserve', () => {
       method: 'get',
       url: VITE_APP_SERVER_URI + '/user/pet/data/',
       params: {
-        userId: useremail
+        userId: localStorage.getItem('useremail')
       }
     })
       .then((res) => {
@@ -142,6 +143,27 @@ export const useReserveStore = defineStore('reserve', () => {
         console.log(res.data)
       })
       .catch((err) => console.log(err))
+  }
+  function getmybook() {
+    var today = new Date()
+    const year = today.getFullYear()
+    const month = ('0' + (1 + today.getMonth())).slice(-2)
+    const day = ('0' + today.getDate()).slice(-2)
+    const hour = ('0' + today.getHours()).slice(-2)
+    const min = ('0' + today.getMinutes()).slice(-2)
+    const time = `${year}-${month}-${day} ${hour}:${min}`
+    axios({
+      method: 'get',
+      url: API_URL + 'mybook',
+      params: {
+        userId: useremail,
+        time: time
+      }
+    }).then((r) => {
+      if (r.data.statusCode == 200) {
+        mybook.value = r.data
+      }
+    })
   }
   return {
     reservedate, //yyyy-mm-dd
@@ -163,6 +185,8 @@ export const useReserveStore = defineStore('reserve', () => {
     petname,
     hospitalname,
     notetext,
-    emergencyCreate
+    emergencyCreate,
+    mybook,
+    getmybook
   }
 })

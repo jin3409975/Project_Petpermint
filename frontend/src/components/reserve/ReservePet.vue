@@ -21,6 +21,7 @@ const selectPet = () => {
   petname.value = petList.value[reservepetindex.value].name
 }
 const navigateToReserveComplete = () => {
+  console.log(type)
   if (type == 1) {
     reserveStore.consultCreate()
   } else {
