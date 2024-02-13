@@ -7,9 +7,7 @@ import { useReserveStore } from '@/stores/reserve'
 import { storeToRefs } from 'pinia'
 
 const reservestore = useReserveStore()
-const { mybook } = storeToRefs(reservestore)
-console.log(mybook)
-const appointId = ref('182')
+const { mybook, appointId } = storeToRefs(reservestore)
 const router = useRouter()
 
 const handleEnteringConsultButton = (e) => {
@@ -100,6 +98,7 @@ const showHoverText = ref(false)
 // }
 onBeforeMount(() => {
   reservestore.getmybook()
+  console.log(mybook.value.appointId)
 })
 </script>
 

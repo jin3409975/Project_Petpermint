@@ -27,6 +27,8 @@ export const useReserveStore = defineStore('reserve', () => {
   const useremail = localStorage.getItem('useremail')
   const notetext = ref('')
   const mybook = ref([])
+  const appointId = ref('')
+
   function consultCreate() {
     axios({
       method: 'post',
@@ -162,6 +164,7 @@ export const useReserveStore = defineStore('reserve', () => {
     }).then((r) => {
       if (r.data.statusCode == 200) {
         mybook.value = r.data
+        appointId.value = r.data.appointId
       }
     })
   }
@@ -187,6 +190,7 @@ export const useReserveStore = defineStore('reserve', () => {
     notetext,
     emergencyCreate,
     mybook,
-    getmybook
+    getmybook,
+    appointId
   }
 })
