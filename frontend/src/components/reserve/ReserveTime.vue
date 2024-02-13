@@ -144,11 +144,11 @@ const disabledDates = (date) => {
   margin-bottom: 20px;
 }
 :deep(.dp__theme_light) {
-  --dp-background-color: #d2e0fb;
-  --dp-text-color: #565656;
-  --dp-hover-color: #f9f7f7;
-  --dp-hover-text-color: #212121;
-  --dp-primary-color: #6096b4;
+  --dp-background-color: #668ba7;
+  --dp-text-color: #ffffff;
+  --dp-hover-color: #ffffff;
+  --dp-hover-text-color: #000000;
+  --dp-primary-color: #ffffff;
   --dp-primary-disabled-color: #6bacea;
   --dp-primary-text-color: #000000;
   --dp-secondary-color: rgb(192, 196, 202);

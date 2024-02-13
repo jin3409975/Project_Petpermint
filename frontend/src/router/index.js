@@ -260,6 +260,7 @@ const router = createRouter({
                 {
                   path: 'list',
                   name: 'lifecare-community-list',
+                  meta: { backgroundColor: 'rgba(99, 136, 137, 0.3)' },
                   component: CommunityListVue
                 },
                 {

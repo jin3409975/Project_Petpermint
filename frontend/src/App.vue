@@ -30,6 +30,7 @@ function goEmergency() {
   router.push({ name: 'reserve-emergency' })
 }
 const backgroundColor = computed(() => {
+  console.log(route.meta.backgroundColor) // Check the value
   return route.meta.backgroundColor
 })
 </script>
