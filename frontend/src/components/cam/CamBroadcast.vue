@@ -39,7 +39,7 @@ export default {
 
       session.on('sessionDisconnected', (e) => {
         console.log('sessionDisconnected', e)
-        this.$router.push({ name: 'main-home' })
+        this.$router.push({ name: 'lifecare-broadcast-enter' })
       })
 
       session.on('exception', (exception) => {
