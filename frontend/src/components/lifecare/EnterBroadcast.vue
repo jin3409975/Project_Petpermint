@@ -117,6 +117,9 @@ const sheet = ref(false)
               ></v-icon
               >On-Air
             </div>
+            <div style="margin: -20px">
+              <b>{{ video.roomName }}</b>
+            </div>
             <div style="display: flex; justify-content: center; gap: 10px; margin-top: 30px">
               <button class="enter2" @click="sheet = !sheet">방송 일정 확인하기</button>
 

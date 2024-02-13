@@ -63,6 +63,7 @@ const writeComments = () => {
   writtenComment.content = com_temp.value
   comment.value.push(writtenComment)
   commentcount.value++
+  com_temp.value = ''
 }
 
 const deleteComment = (comment) => {

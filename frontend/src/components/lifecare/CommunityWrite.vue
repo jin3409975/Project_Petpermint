@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, defineEmits } from 'vue'
 import { useCommunityStore } from '@/stores/community'
 
 const props = defineProps(['article', 'user'])
@@ -12,6 +12,7 @@ const router = useRouter()
 
 const content = ref('')
 const files = ref()
+const emit = defineEmits(['dataSend', 'content'])
 
 const write = async () => {
   if (localStorage.useremail == null) {
@@ -21,16 +22,17 @@ const write = async () => {
     formData.append('userId', localStorage.useremail)
     formData.append('content', content.value)
 
-    // Assuming 'images' is an array of File objects
     if (files.value != undefined) {
       files.value.forEach((image) => {
         formData.append('images', image)
       })
     }
 
-    let writer = community_stores.communitywrite(formData)
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    location.reload()
+    community_stores.communitywrite(formData)
+    alert('게시물 등록이 완료되었습니다.')
+    emit('dataSend', content.value)
+    content.value = ''
+    files.value = ''
   }
 }
 
