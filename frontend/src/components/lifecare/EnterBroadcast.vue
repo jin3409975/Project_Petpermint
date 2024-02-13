@@ -23,7 +23,9 @@ onMounted(async () => {
   sessionId.value = community_stores.video.sessionId
 })
 const handleEnteringBroadcastButton = () => {
-  router.push({ name: 'cam-broadcast', params: { sessionId: sessionId.value } })
+  if (localStorage.userId != null)
+    router.push({ name: 'cam-broadcast', params: { sessionId: sessionId.value } })
+  else alert('로그인 후 이용해주세요.')
 }
 const sheet = ref(false)
 </script>
@@ -116,6 +118,9 @@ const sheet = ref(false)
                 style="margin-right: 2px; font-size: 20px; margin-bottom: 2px"
               ></v-icon
               >On-Air
+            </div>
+            <div style="margin: -20px">
+              {{ video.roomName }}
             </div>
             <div style="display: flex; justify-content: center; gap: 10px; margin-top: 30px">
               <button class="enter2" @click="sheet = !sheet">방송 일정 확인하기</button>
