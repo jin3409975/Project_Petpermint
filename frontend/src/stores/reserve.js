@@ -134,7 +134,7 @@ export const useReserveStore = defineStore('reserve', () => {
       method: 'get',
       url: VITE_APP_SERVER_URI + '/user/pet/data/',
       params: {
-        userId: useremail
+        userId: localStorage.getItem('useremail')
       }
     })
       .then((res) => {

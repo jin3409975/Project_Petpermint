@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 예약 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -303,7 +304,7 @@ public class ReservationController {
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	public ResponseEntity<ReservationRes> getMyBook(@ApiIgnore String userId, String time) {
-		Reservation result = reservationService.getMyBook(userId, time);
+		Map<String, Object> result = reservationService.getMyBook(userId, time);
 		if(result != null) {
 			return ResponseEntity.status(200).body(ReservationRes.ofConsult(200,"Success",result));
 		} else {

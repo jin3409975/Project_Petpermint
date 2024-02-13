@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 예약 정보 전체 조회 API ([GET] /api/v1/reserve/consult/data) 요청에 대한 응답값 정의.
@@ -28,10 +29,12 @@ public class ReservationRes extends BaseResponseBody{
     String licenseNumber;
     int hospitalNo;
     String userId;
-    List<Reservation> result;
+    String doctorName;
+    String animalName;
 
-    public static ReservationRes ofConsult(Integer statusCode, String message, Reservation reservation) {
+    public static ReservationRes ofConsult(Integer statusCode, String message, Map<String, Object> data) {
         ReservationRes res = new ReservationRes();
+        Reservation reservation = (Reservation) data.get("result");
         res.setStatusCode(statusCode);
         res.setMessage(message);
         res.setAppointId(reservation.getAppointId());
@@ -43,20 +46,8 @@ public class ReservationRes extends BaseResponseBody{
         res.setHospitalNo(reservation.getHospitalNo());
         res.setType(reservation.getType());
         res.setUserId(reservation.getUserId());
-
+        res.setAnimalName((String)data.get("animalName"));
+        res.setDoctorName((String)data.get("doctorName"));
         return res;
     }
-
-    public static ReservationRes listofConsult(Integer statusCode, String message, List<Reservation> reservation) {
-        ReservationRes res = new ReservationRes();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
-        res.result = reservation;
-        return res;
-    }
-
-
-//    public static List<ConsultReservationRes> listOfConsult(List<Reservation> reservations) {
-//        return reservations.stream().map(ConsultReservationRes::ofConsult).collect(Collectors.toList());
-//    }
 }
