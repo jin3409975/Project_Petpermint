@@ -6,20 +6,20 @@ import { useCommunityStore } from '@/stores/community'
 const community_stores = useCommunityStore()
 const router = useRouter()
 
-const appointId = ref()
+const sessionId = ref('')
 const videos = ref([])
 const video = ref()
+
 onMounted(async () => {
   await community_stores.videolist()
   videos.value = community_stores.videos.videoList
   await community_stores.videocurrent()
   video.value = community_stores.video
-  appointId.value = community_stores.video.sessionId
-  console.log(video.value)
+  sessionId.value = community_stores.video.sessionId
 })
 
 const handleEnteringBroadcastButton = () => {
-  router.push({ name: 'cam-broadcast', params: { appointId: appointId.value } })
+  router.push({ name: 'cam-broadcast', params: { sessionId: sessionId.value } })
 }
 </script>
 

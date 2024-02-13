@@ -239,7 +239,7 @@ const router = createRouter({
               component: () => import('@/components/cam/CamConsult.vue')
             },
             {
-              path: 'broadcast/:appointId',
+              path: 'broadcast/:sessionId',
               name: 'cam-broadcast',
               component: () => import('@/components/cam/CamBroadcast.vue')
             }
