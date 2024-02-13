@@ -1,18 +1,22 @@
 <script>
+import { ref, onMounted } from 'vue'
 import $ from 'jquery'
 import './openvidu/openvidu-webcomponent-2.29.0'
 import './openvidu/openvidu-webcomponent-2.29.0.css'
 
 const { VITE_APP_SERVER_URI } = import.meta.env
-
+const adminAccount = ref('ssafyjam@gmail.com')
+// const isMuted = ref(true)
+// console.log(isMuted.value)
 export default {
   data() {
     return {
-      // sessionName: this.$route.params.paramname,
-      sessionName: 'test',
+      sessionName: this.$route.params.appointId,
       participantName: localStorage.getItem('useremail'),
       APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
-      webComponent: null
+      webComponent: null,
+      adminAccount: 'ssafyjam@gmail.com',
+      isMuted: false
     }
   },
   mounted() {
@@ -33,9 +37,9 @@ export default {
         console.log('streamCreated', e)
       })
 
-      session.on('sessionDisconnected', (event) => {
-        console.warn('sessionDisconnected event')
-        this.joinSession()
+      session.on('sessionDisconnected', (e) => {
+        console.log('sessionDisconnected', e)
+        this.$router.push({ name: 'main-home' })
       })
 
       session.on('exception', (exception) => {
@@ -130,6 +134,15 @@ export default {
   <div id="main" style="text-align: center; width: 100%; height: 100%">
     <openvidu-webcomponent
       ref="webComponent"
+      :audio-muted="participantName === adminAccount ? false : true"
+      :video-muted="participantName === adminAccount ? false : true"
+      toolbar-screenshare-button="false"
+      toolbar-recording-button="false"
+      toolbar-broadcasting-button="false"
+      toolbar-activities-panel-button="false"
+      toolbar-display-logo="false"
+      toolbar-display-session-name="false"
+      stream-resolution="'320x240'"
       style="height: 100vh; width: 100%; display: block !important"
     >
     </openvidu-webcomponent>
