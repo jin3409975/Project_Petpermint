@@ -40209,7 +40209,7 @@
           START_RECORDING: '녹화 시작',
           STOP_RECORDING: '녹화 중지',
           SETTINGS: '설정',
-          LEAVE: '상담에서 나가기',
+          LEAVE: '방송에서 나가기',
           PARTICIPANTS: '참여자',
           CHAT: '메시지',
           ACTIVITIES: 'Activities'
@@ -40232,7 +40232,7 @@
           CHAT: {
             TITLE: '메시지',
             YOU: '나',
-            SUBTITLE: '상담이 끝나면 모든 메시지가 삭제됩니다',
+            SUBTITLE: '방송이 끝나면 모든 메시지가 삭제됩니다',
             PLACEHOLDER: '메시지를 입력해주세요...',
             SEND: '보내기'
           },
