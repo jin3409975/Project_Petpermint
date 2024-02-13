@@ -134,6 +134,7 @@ export default {
   <div id="main" style="text-align: center; width: 100%; height: 100%">
     <openvidu-webcomponent
       ref="webComponent"
+      prejoin="false"
       :audio-muted="participantName === adminAccount ? false : true"
       :video-muted="participantName === adminAccount ? false : true"
       toolbar-screenshare-button="false"
