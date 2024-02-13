@@ -208,18 +208,19 @@ const listIndex = ref()
 
 function highlightMarker(index) {
   console.log(searchList.value[index])
+  // 현재 페이지에 따라 인덱스 조정
+  const adjustedIndex = (currentPage.value - 1) * itemsPerPage + index
+
   for (let i = 0; i < markers.value.length; i++) {
-    if (i != index) {
+    if (i !== adjustedIndex) {
       markers.value[i].setMap(null)
-    }
-    if (i == index) {
+    } else {
       markers.value[i].setMap(map)
+      map.setCenter(markers.value[i].getPosition())
+      map.setLevel(1)
     }
   }
-  map.setCenter(new kakao.maps.LatLng(searchList.value[index].lat, searchList.value[index].lon))
-  map.setLevel(1)
 }
-
 // 카드 페이지네이션
 const currentPage = ref(1)
 const itemsPerPage = 4
