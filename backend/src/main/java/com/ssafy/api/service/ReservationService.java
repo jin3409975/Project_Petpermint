@@ -44,6 +44,8 @@ public interface ReservationService {
 
 	//수의사 예약 조회
 	List<Reservation> getAllExpertReservations(String licenseNumber);
+
+	Reservation getMyBook(String userId, String time);
 }
 
 

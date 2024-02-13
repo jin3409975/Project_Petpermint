@@ -294,4 +294,21 @@ public class ReservationController {
 		return ResponseEntity.status(200).body(VenueDataGetRes.of(200,"Success",result));
 	}
 
+	@GetMapping("/mybook")
+	@ApiOperation(value = "특정 사용자의 예약 전체 조회", notes = "특정 사용자의 예약 전체 조회")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "상담 예약 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<ReservationRes> getMyBook(@ApiIgnore String userId, String time) {
+		Reservation result = reservationService.getMyBook(userId, time);
+		if(result != null) {
+			return ResponseEntity.status(200).body(ReservationRes.ofConsult(200,"Success",result));
+		} else {
+			return ResponseEntity.status(200).body(ReservationRes.ofConsult(200,"Fail",null));
+		}
+	}
+
 }

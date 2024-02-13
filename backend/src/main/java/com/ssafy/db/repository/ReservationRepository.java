@@ -33,4 +33,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "dataNo != 0 and dataNo not in " +
             "(select hospitalNo from Reservation where time = :time and type = 2) limit 10", nativeQuery = true)
     List<ReservationHospitalList> findAllAvailableHospital(String time);
+
+    @Query(value = "select * from Reservation where userId = :userId and type != 3 and time > :time order by time limit 1", nativeQuery = true)
+    Reservation findMyBook(String userId, String time);
 }
