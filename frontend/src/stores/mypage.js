@@ -21,12 +21,12 @@ export const myPageStore = defineStore('mypage', () => {
         userId: useremail
       }
     }).then((r) => {
-      console.log(r)
+      // console.log(r)
       if (r.data.statusCode == 200) {
-        console.log(r.data.result)
+        // console.log(r.data.result)
         extractEvents(r.data.result)
         myevents.value = extractEvents(r.data.result)
-        console.log('myevents', myevents.value)
+        // console.log('myevents', myevents.value)
       }
     })
   }
@@ -71,11 +71,11 @@ export const myPageStore = defineStore('mypage', () => {
       url: VITE_APP_SERVER_URI + '/reserve/all/expert',
       params: { licenseNumber: licenseNumber }
     }).then((r) => {
-      console.log(r)
+      // console.log(r)
       if (r.data.statusCode == 200) {
         extractEvents(r.data.result)
         vetevents.value = extractEvents(r.data.result)
-        console.log('vetevents', vetevents.value)
+        // console.log('vetevents', vetevents.value)
       }
     })
   }

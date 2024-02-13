@@ -21,13 +21,11 @@ onBeforeMount(() => {
 })
 
 function init() {
-  console.log('pa1515919159119159ge', userdata)
   userName.value = userdata.value.userName
   email.value = userdata.value.userId
   phoneNumber.value = userdata.value.phone
   address.value = userdata.value.address
   picture.value = userdata.value.picture
-  console.log('llllll', userdata.value)
 }
 // 유저 프로필 변수
 const userName = ref(userdata.value.userName)
@@ -133,17 +131,6 @@ const getpetFile = function (event) {
 // 펫 정보 수정후 저장 버튼 클릭시 axios 요청 account.js 의 323번줄 updatePet
 const savenewpetInfo = function () {
   const userId = localStorage.getItem('useremail')
-  console.log(
-    userId,
-    newpetname.value,
-    newpetId.value,
-    petfile,
-    newpetspecie.value,
-    newpetage.value,
-    newpetnote.value,
-    newpetweight.value,
-    newpetgender.value
-  )
   accountstore.updatePet(
     userId,
     newpetname.value,
