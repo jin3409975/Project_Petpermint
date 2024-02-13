@@ -23,7 +23,9 @@ onMounted(async () => {
   sessionId.value = community_stores.video.sessionId
 })
 const handleEnteringBroadcastButton = () => {
-  router.push({ name: 'cam-broadcast', params: { sessionId: sessionId.value } })
+  if (localStorage.userId != null)
+    router.push({ name: 'cam-broadcast', params: { sessionId: sessionId.value } })
+  else alert('로그인 후 이용해주세요.')
 }
 const sheet = ref(false)
 </script>

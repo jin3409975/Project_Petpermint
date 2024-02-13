@@ -50,6 +50,16 @@ const checkLike = async () => {
   }
 }
 
+const convertUrls = (content) => {
+  // Regular expression to match URLs
+  const urlRegex = /(https?:\/\/[^\s]+)/g
+
+  // Replace URLs with clickable links
+  const contentWithLinks = content.replace(urlRegex, '<a href="$1" target="_blank">$1</a>')
+
+  return contentWithLinks
+}
+
 onMounted(async () => {
   userId.value = localStorage.useremail
   writer.value = community_stores.communitydetail(props.article.postId)
@@ -155,7 +165,7 @@ const del = () => {
       <v-col>
         <v-row>
           <div style="margin-left: 25px; margin-right: 25px">
-            <span style="font-size: 17px">{{ article.content }}</span>
+            <span style="font-size: 17px" v-html="convertUrls(article.content)"></span>
           </div>
         </v-row>
         <v-row class="d-flex justify-content-center" style="margin-top: 20px">
