@@ -1,8 +1,8 @@
 <script>
 import { ref, onMounted } from 'vue'
 import $ from 'jquery'
-import './openvidu/openvidu-webcomponent-2.29.0'
-import './openvidu/openvidu-webcomponent-2.29.0.css'
+import './openviduBroadcast/openvidu-webcomponent-2.29.0'
+import './openviduBroadcast/openvidu-webcomponent-2.29.0.css'
 
 const { VITE_APP_SERVER_URI } = import.meta.env
 const adminAccount = ref('ssafyjam@gmail.com')
@@ -169,3 +169,4 @@ export default {
   --ov-panel-radius: 5px;
 }
 </style>
+./openviduConsult/openvidu-webcomponent-2.29.0./openviduConsult/openvidu-webcomponent-2.29.0.css
