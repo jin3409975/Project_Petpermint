@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
 
 const accountstore = useAccountStore()
-// const router = useRouter()
+const router = useRouter()
 const { vetdata } = storeToRefs(accountstore)
 const opendialog = ref(false)
 
@@ -132,75 +132,39 @@ function completeUpdate() {
   )
   opendialog.value = false
 }
+function navigateTocurrentlist() {
+  router.push({ name: 'mypage-vet-list-current' })
+}
 </script>
 
 <template>
-  <!-- 유저의 프로필  -->
-  <v-container class="profile-container">
-    <!-- 유저의 프로필 이미지 -->
-    <v-card class="profile-img">
-      <v-avatar size="230" variant="outlined">
-        <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
-        <input
-          type="file"
-          @change="getFile"
-          style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer"
-        />
-      </v-avatar>
-    </v-card>
-
-    <!-- 유저의 기본정보 -->
-    <v-card class="profile-info">
-      <v-text-field
-        label="이름"
-        v-model="userName"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        v-model="email"
-        label="Email"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        v-model="phoneNumber"
-        label="전화번호"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        v-model="address"
-        label="주소"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        label="인삿말"
-        v-model="note"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-text-field
-        label="병원"
-        v-model="hospitalname"
-        variant="solo"
-        :readonly="isreadonly"
-      ></v-text-field>
-      <v-select
-        v-model="starttime"
-        :items="items"
-        :readonly="isreadonly"
-        label="상담 가능 시작시간"
-      ></v-select>
-      <v-select
-        v-model="endtime"
-        :items="items"
-        :readonly="isreadonly"
-        label="상담 가능 종료시간"
-      ></v-select>
-      <v-btn v-if="isclicked" @click="openKakaoAddressSearch">주소 변경</v-btn>
-      <v-card v-if="isclicked">
+  <div class="info">
+    <v-btn
+      width="200px"
+      style="margin-left: 250px; margin-bottom: 10px"
+      @click="navigateTocurrentlist"
+      >나의 예약 보기</v-btn
+    >
+    <!-- 유저의 프로필  -->
+    <v-container
+      class="profile-container"
+      elevation="8"
+      width="auto"
+      style="margin-top: 5px; margin-bottom: 100px"
+    >
+      <div class="profile-img">
+        <v-avatar size="230" variant="inlined">
+          <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
+          <input
+            type="file"
+            @change="getFile"
+            style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer"
+            :disabled="!isclicked"
+          />
+        </v-avatar>
+        <v-btn v-show="isclicked == false" style="margin: 10px" @click="updateInfo"
+          >개인정보수정</v-btn
+        >
         <a
           class="text-caption text-decoration-none text-blue"
           href="/find/password"
@@ -209,18 +173,74 @@ function completeUpdate() {
         >
           비밀번호 변경</a
         >
+      </div>
 
-        <v-btn @click="saveinfo">저장</v-btn>
+      <!-- 유저의 기본정보 -->
+      <v-card class="profile-info">
+        <v-text-field
+          label="이름"
+          v-model="userName"
+          variant="solo"
+          :readonly="isreadonly"
+        ></v-text-field>
+        <v-text-field
+          v-model="email"
+          label="Email"
+          variant="solo"
+          :readonly="isreadonly"
+        ></v-text-field>
+        <v-text-field
+          v-model="phoneNumber"
+          label="전화번호"
+          variant="solo"
+          :readonly="isreadonly"
+        ></v-text-field>
+        <v-text-field
+          v-model="address"
+          label="주소"
+          variant="solo"
+          :readonly="isreadonly"
+        ></v-text-field>
+        <v-text-field
+          label="인삿말"
+          v-model="note"
+          variant="solo"
+          :readonly="isreadonly"
+        ></v-text-field>
+        <v-text-field
+          label="병원"
+          v-model="hospitalname"
+          variant="solo"
+          :readonly="isreadonly"
+        ></v-text-field>
+        <v-select
+          v-model="starttime"
+          :items="items"
+          :readonly="isreadonly"
+          label="상담 가능 시작시간"
+        ></v-select>
+        <v-select
+          v-model="endtime"
+          :items="items"
+          :readonly="isreadonly"
+          label="상담 가능 종료시간"
+        ></v-select>
+        <v-btn v-if="isclicked" @click="openKakaoAddressSearch">주소 변경</v-btn>
+        <v-card v-if="isclicked">
+          <a
+            class="text-caption text-decoration-none text-blue"
+            href="/find/password"
+            rel="noopener noreferrer"
+            target="_self"
+          >
+            비밀번호 변경</a
+          >
+
+          <v-btn @click="saveinfo">저장</v-btn>
+        </v-card>
       </v-card>
-    </v-card>
-    <v-btn v-show="isclicked == false" @click="updateInfo">개인 정보 수정</v-btn>
-  </v-container>
-
-  <v-container class="profile-container">
-    <!-- <div v-for="pet in petlist">
-      <v-card class="petcard"> </v-card>
-    </div> -->
-  </v-container>
+    </v-container>
+  </div>
 
   <v-dialog v-model="opendialog" max-width="600px">
     <v-card>
@@ -234,30 +254,49 @@ function completeUpdate() {
 </template>
 
 <style scoped>
+.info {
+  height: auto;
+  justify-content: left;
+  flex-direction: column;
+  display: flex;
+  margin-bottom: 100px;
+  margin-top: 100px;
+}
 .profile-container {
   /* max-width: 900px; */
-  margin: 5px auto;
-  background-color: #fff;
+  margin: 200px auto;
+  background-color: #eef5ff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   gap: 20px;
+  margin: 0 auto;
+}
+
+.profile-info {
+  width: 500px;
+  margin-left: 0;
+  background-color: #eef5ff;
+  box-shadow: none;
 }
 .profile-img {
-  flex: 0.3;
-  height: 250px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  width: 500px;
+  margin-bottom: 10px;
 }
-.profile-info {
-  flex: 0.7; /* Ensure both cards share the available space equally */
+.v-btn {
+  background-color: #ffd0d0;
 }
 .v-text-field {
   margin-bottom: 10px;
   width: 85%;
 }
-.petcard {
-  width: 20%;
+:deep(.v-field--variant-solo, .v-field--variant-solo-filled) {
+  background-color: #ffebeb;
+  box-shadow: none;
 }
 </style>
