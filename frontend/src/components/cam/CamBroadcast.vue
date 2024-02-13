@@ -1,8 +1,8 @@
 <script>
 import { ref, onMounted } from 'vue'
 import $ from 'jquery'
-import './openvidu/openvidu-webcomponent-2.29.0'
-import './openvidu/openvidu-webcomponent-2.29.0.css'
+import './openviduBroadcast/openvidu-webcomponent-2.29.0'
+import './openviduBroadcast/openvidu-webcomponent-2.29.0.css'
 
 const { VITE_APP_SERVER_URI } = import.meta.env
 const adminAccount = ref('ssafyjam@gmail.com')
@@ -11,7 +11,7 @@ const adminAccount = ref('ssafyjam@gmail.com')
 export default {
   data() {
     return {
-      sessionName: this.$route.params.appointId,
+      sessionName: this.$route.params.sessionId,
       participantName: localStorage.getItem('useremail'),
       APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null,
@@ -39,7 +39,7 @@ export default {
 
       session.on('sessionDisconnected', (e) => {
         console.log('sessionDisconnected', e)
-        this.$router.push({ name: 'main-home' })
+        this.$router.push({ name: 'lifecare-broadcast-enter' })
       })
 
       session.on('exception', (exception) => {
@@ -134,6 +134,7 @@ export default {
   <div id="main" style="text-align: center; width: 100%; height: 100%">
     <openvidu-webcomponent
       ref="webComponent"
+      prejoin="false"
       :audio-muted="participantName === adminAccount ? false : true"
       :video-muted="participantName === adminAccount ? false : true"
       toolbar-screenshare-button="false"
@@ -169,3 +170,4 @@ export default {
   --ov-panel-radius: 5px;
 }
 </style>
+./openviduConsult/openvidu-webcomponent-2.29.0./openviduConsult/openvidu-webcomponent-2.29.0.css
