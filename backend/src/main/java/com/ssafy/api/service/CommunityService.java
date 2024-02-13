@@ -22,6 +22,8 @@ public interface CommunityService {
     Long isDeleteComment(CommentDeleteDeleteReq deleteInfo);
     Long deleteComment(CommentDeleteDeleteReq deleteInfo);
     Long increaseLike(int postId);
+
+    Long decreaseLike(int postId);
     Long increaseHit(int postId);
 
     int findPostCount();
@@ -37,6 +39,7 @@ public interface CommunityService {
     List<PostUrlList> findPostUrlJoin(int page,List<Integer>postIds);
 
     PostLikes insertIntoLikeTable(int postId, String userId);
+    long deleteFromLikeTable(int postId,String userId);
 
     PostLikes findPostLikesByPostIdUserId(int postId, String userId);
 

@@ -44,6 +44,13 @@ public class CommunityRepositorySupport {
         return Optional.ofNullable(result);
     }
 
+    public Optional<Long> decreaseLikeByPostId(int postId) {
+        Long result = jpaQueryFactory.update(quserPost).set(quserPost.likes,quserPost.likes.castToNum(Integer.class).subtract(1))
+                .where(quserPost.postId.eq(postId)).execute();
+        if(result == 0) return Optional.empty();
+        return Optional.ofNullable(result);
+    }
+
     public Optional<Long> isDeletePostByPostId(int postId) {
         Long result = jpaQueryFactory.update(quserPost).set(quserPost.isDelete,true)
                 .where(quserPost.postId.eq(postId)).execute();

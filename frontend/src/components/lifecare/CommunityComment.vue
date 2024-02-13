@@ -54,10 +54,12 @@ function dateConvert(createdAt) {
 
 const writeComments = () => {
   let postId = props.article.postId
-
   let result = community_stores.commentwrite(postId, userId.value, com_temp.value)
-
-  location.reload()
+  var writtenComment = new Object()
+  writtenComment.postId = postId
+  writtenComment.userId = userId.value
+  writtenComment.registTime = com_temp.value
+  comment.value.append(writtenComment)
 }
 
 const deleteComment = (commentNo) => {
