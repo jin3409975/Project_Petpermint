@@ -82,9 +82,15 @@ onMounted(async () => {
           <v-sheet style="width: 100%; height: 150px; overflow: auto; border: 1px solid #ccc">
             <v-list>
               <v-list-item v-for="item in videos" :key="item">
-                <v-list-item-content
-                  >{{ item.startTime }} &nbsp; &nbsp; &nbsp; &nbsp;
-                  <b>{{ item.roomName }}</b> &nbsp; &nbsp; &nbsp; &nbsp;<i>{{ item.note }} </i>
+                <v-list-item-content>
+                  <v-row>
+                    <v-col>{{ item.startTime }} </v-col>
+                    <v-col
+                      ><b>{{ item.roomName }}</b> </v-col
+                    ><v-col
+                      ><i>{{ item.note }}</i></v-col
+                    >
+                  </v-row>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
