@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia'
 
 const reservestore = useReserveStore()
 const { mybook } = storeToRefs(reservestore)
+console.log(mybook)
 const appointId = ref('182')
 const router = useRouter()
 
@@ -97,6 +98,9 @@ const showHoverText = ref(false)
 //   stopDrag()
 //   showHoverText.value = false
 // }
+onBeforeMount(() => {
+  reservestore.getmybook()
+})
 </script>
 
 <template>
