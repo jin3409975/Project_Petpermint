@@ -77,5 +77,6 @@ export default {
   margin-bottom: 10px;
   height: 50px;
   float: left;
+  margin-top: 50px;
 }
 </style>

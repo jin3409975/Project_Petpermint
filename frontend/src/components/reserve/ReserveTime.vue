@@ -91,6 +91,7 @@ const disabledDates = (date) => {
       auto-apply
       :disabled-times="disabledTimes"
       :disabled-dates="disabledDates"
+      locale="ko"
     >
     </VueDatePicker>
   </div>

@@ -69,7 +69,7 @@ export default {
   flex-direction: column;
   display: flex;
   margin-bottom: 100px;
-  margin: auto;
+  margin-top: 200px;
 }
 .pinkbutton {
   background-color: #ffd0d0;
@@ -77,5 +77,6 @@ export default {
   margin-bottom: 10px;
   height: 50px;
   float: left;
+  margin-top: 50px;
 }
 </style>
