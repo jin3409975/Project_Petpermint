@@ -182,7 +182,7 @@ function doReserve() {
       <v-col cols="12" md="8" style="width: 80%; height: 80%; margin-bottom: 50px">
         <div
           ref="mapContainer"
-          style="width: 700px; height: 600px; border: 2px solid #aa5656; border-radius: 5px"
+          style="width: 600px; height: 500px; border: 2px solid #aa5656; border-radius: 5px"
         ></div>
       </v-col>
       <v-col cols="12" md="4">
@@ -191,15 +191,13 @@ function doReserve() {
           color="#AA5656"
           v-for="(data, index) in searchList"
           :key="data.dataNo"
-          height="auto"
-          style="margin-bottom: 20px; border: 2px solid #aa5656"
+          height="92px"
+          style="margin-bottom: 10px; border: 2px solid #aa5656"
         >
           <v-card-text @click="highlightMarker(index)" style="cursor: pointer; border-radius: 4px">
             <strong style="font-size: 20px">{{ data.venName }}</strong>
             <br /><br />
             {{ data.roadAddr }}
-            <br />
-            {{ data.lotAddr }}
           </v-card-text>
         </v-card>
         <v-row>
@@ -256,7 +254,7 @@ function doReserve() {
 .v-card-text {
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 9px;
-  padding-bottom: 9px;
+  padding-top: 15px;
+  padding-bottom: 5px;
 }
 </style>
