@@ -159,6 +159,7 @@ public class UserController {
 		}
 	}
 
+
 	@PostMapping("/email/request/find")
 	@ApiOperation(value = "이메일 인증 신청", notes = "사용자가 작성한 이메일 주소로 랜덤한 6자리 숫자를 보내는 이메일 인증을 신청한다.")
 	@ApiResponses({
@@ -329,7 +330,7 @@ public class UserController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> petCreate(
 			@ModelAttribute @ApiParam(value="반려동물 정보", required = true) AnimalReq animalReq) throws IOException {
-		System.out.println(animalReq.getPicture().toString());
+		System.out.println(animalReq);
 		String url = null;
 		if(animalReq.getPicture() != null) {
 			url=s3service.savePetProfile(animalReq.getPicture(), animalReq);

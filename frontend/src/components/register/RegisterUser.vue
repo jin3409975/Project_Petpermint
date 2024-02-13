@@ -22,7 +22,16 @@ const address2 = ref(null)
 const picture = ref(null)
 
 const pets = ref([
-  { id: 1, petspecies: '', petname: '', petage: '', petweight: '', more: '', name: 'Pet 1' }
+  {
+    id: 1,
+    petspecies: '',
+    petname: '',
+    petage: '',
+    petweight: '',
+    more: '',
+    name: 'Pet 1',
+    picture: null
+  }
 ])
 const visible = ref(false)
 
@@ -183,40 +192,30 @@ const page1Test = () => {
 //1페이지 검증 완료
 
 //2페이지 검증 시작
-const checkPage2 = ref(true)
-
+const checkPage21 = ref(false)
+const checkPage22 = ref(false)
 const nameTest = (n) => {
   if (n == '' || n == null) {
-    checkPage2.value = false
+    checkPage21.value = false
     return false
   }
 
-  checkPage2.value = true
+  checkPage21.value = true
   return true
 }
 
 const phoneTest = (p) => {
   if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(p)) {
-    checkPage2.value = false
+    checkPage22.value = false
     return false
   }
 
-  checkPage2.value = true
-  return true
-}
-
-const addressTest = (a) => {
-  if (a == '' || a == null) {
-    checkPage2.value = false
-    return false
-  }
-
-  checkPage2.value = true
+  checkPage22.value = true
   return true
 }
 
 const page2Test = () => {
-  if (checkPage2.value == false) {
+  if (checkPage21.value == false || checkPage22.value == false || address1.value == null) {
     alert('기입한 정보를 확인 해주세요')
     return false
   }
@@ -230,10 +229,18 @@ const getFile = function (event) {
   picture.value = event.target.files[0]
 }
 
+const petindex = ref(0)
+
+const getPetFile = function (event) {
+  console.log(pets.value[petindex.value])
+  pets.value[petindex.value].picture = event.target.files[0]
+}
+
 const showSnackbar = ref(false)
 
 function register() {
   // 회원가입 처리 로직 여기에 추가
+  console.log(pets.value)
   const payload = {
     email: email.value,
     password: password1.value,
@@ -241,14 +248,14 @@ function register() {
     phone: phone.value,
     address: address1.value
   }
-  store.usersignup(payload)
+  store.usersignup(payload, pets.value)
   // 여기서는 예시로 바로 스낵바를 표시합니다.
-  showSnackbar.value = true
+  //showSnackbar.value = true
 
   // 스낵바가 표시되고 2000ms 후에 메인 페이지로 이동
-  setTimeout(() => {
-    router.push({ name: 'main-home' })
-  }, 2000)
+  // setTimeout(() => {
+  //   router.push({ name: 'main-home' })
+  // }, 2000)
 }
 
 // 카카오 주소 검색
@@ -459,7 +466,7 @@ function openKakaoAddressSearch() {
                   />
                 </v-col>
                 <v-col cols="12" md="10">
-                  <v-text-field
+                  <!-- <v-text-field
                     label="자택 상세주소"
                     density="comfortable"
                     v-model="address2"
@@ -467,7 +474,7 @@ function openKakaoAddressSearch() {
                     color="#668ba7"
                     bg-color="transparent"
                     :rules="[(v) => addressTest(v)]"
-                  />
+                  /> -->
                 </v-col>
               </v-row>
             </v-card>
@@ -492,13 +499,19 @@ function openKakaoAddressSearch() {
               <p>내 반려동물의 정보를 입력해 주세요. (최대 5마리)</p>
               <!-- Tabs -->
               <v-tabs v-model="tab">
-                <v-tab v-for="pet in pets" :key="pet.id" :value="pet.id">{{ pet.name }}</v-tab>
+                <v-tab
+                  v-for="(pet, i) in pets"
+                  :key="pet.id"
+                  :value="pet.id"
+                  @click="petindex = i"
+                  >{{ pet.name }}</v-tab
+                >
                 <v-tab v-if="pets.length < 5" @click="addPetForm">+</v-tab>
               </v-tabs>
               <!-- Tabs 내용 -->
               <v-card-text>
                 <v-window v-model="tab">
-                  <v-window-item v-for="pet in pets" :key="pet.id" :value="pet.id">
+                  <v-window-item v-for="(pet, i) in pets" :key="pet.id" :value="pet.id">
                     <!-- 반려동물 정보 입력 폼 -->
                     <div class="pet-form">
                       <v-row class="mt-2">
@@ -570,7 +583,7 @@ function openKakaoAddressSearch() {
                           <v-file-input
                             label="반려동물 사진"
                             variant="underlined"
-                            v-on:change="getFile"
+                            v-on:change="getPetFile"
                           ></v-file-input>
                         </v-col>
 

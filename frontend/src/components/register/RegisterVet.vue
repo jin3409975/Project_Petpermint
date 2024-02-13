@@ -63,29 +63,40 @@ const emailAction = async () => {
 }
 
 //1페이지 검증 시작
-const checkPage1 = ref(true)
+const checkPage11 = ref(false)
+const checkPage12 = ref(false)
+const checkPage13 = ref(false)
 const emailTest = (e) => {
   if (e == '' || e == null) {
-    checkPage1.value = false
+    checkPage11.value = false
     return false
   }
   if (
     !/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(e)
   ) {
-    checkPage1.value = false
+    checkPage11.value = false
     return false
   }
 
-  checkPage1.value = true
+  checkPage11.value = true
   return true
 }
 
-const passwordTest = (p) => {
-  if (p != password1.value) {
-    checkPage1.value = false
+const passwordTest1 = (p) => {
+  if (p == null) {
+    checkPage12.value = false
     return false
   }
-  checkPage1.value = true
+  checkPage12.value = true
+  return true
+}
+
+const passwordTest2 = (p) => {
+  if (p != password1.value || p == null) {
+    checkPage13.value = false
+    return false
+  }
+  checkPage13.value = true
   return true
 }
 
@@ -94,7 +105,7 @@ const page1Test = () => {
     alert('이메일 인증을 완료 해주세요')
     return false
   }
-  if (checkPage1.value == false) {
+  if (checkPage11.value == false || checkPage12.value == false || checkPage13.value == false) {
     alert('기입한 정보를 확인 해주세요')
     return false
   }
@@ -103,40 +114,41 @@ const page1Test = () => {
 //1페이지 검증 완료
 
 //2페이지 검증 시작
-const checkPage2 = ref(true)
-
+const checkPage21 = ref(false)
+const checkPage22 = ref(false)
+const checkPage23 = ref(false)
 const nameTest = (n) => {
   if (n == '' || n == null) {
-    checkPage2.value = false
+    checkPage21.value = false
     return false
   }
 
-  checkPage2.value = true
+  checkPage21.value = true
   return true
 }
 
 const phoneTest = (p) => {
   if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(p)) {
-    checkPage2.value = false
+    checkPage22.value = false
     return false
   }
 
-  checkPage2.value = true
+  checkPage22.value = true
   return true
 }
 
 const licenseTest = (l) => {
   if (l == null || l.length != 5 || !/^[0-9]*$/.test(l)) {
-    checkPage2.value = false
+    checkPage23.value = false
     return false
   }
 
-  checkPage2.value = true
+  checkPage23.value = true
   return true
 }
 
 const page2Test = () => {
-  if (checkPage2.value == false) {
+  if (checkPage21.value == false || checkPage22.value == false || checkPage23.value == false) {
     alert('기입한 정보를 확인 해주세요.')
     return false
   }
@@ -145,49 +157,46 @@ const page2Test = () => {
 //2페이지 검증 완료
 
 //3페이지 검증 시작
-const checkPage3 = ref(true)
+const checkPage31 = ref(false)
+const checkPage32 = ref(false)
+const checkPage33 = ref(false)
 const hospitalNameTest = (n) => {
   if (n == '' || n == null) {
-    checkPage3.value = false
+    checkPage31.value = false
     return false
   }
 
-  checkPage3.value = true
+  checkPage31.value = true
   return true
 }
 
 const startTest = (p) => {
   if (!/^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(p)) {
-    checkPage3.value = false
+    checkPage32.value = false
     return false
   }
 
-  checkPage3.value = true
+  checkPage32.value = true
   return true
 }
 
 const endTest = (l) => {
   if (!/^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(l)) {
-    checkPage3.value = false
+    checkPage33.value = false
     return false
   }
 
-  checkPage3.value = true
-  return true
-}
-
-const addressTest = (n) => {
-  if (n == '' || n == null) {
-    checkPage3.value = false
-    return false
-  }
-
-  checkPage3.value = true
+  checkPage33.value = true
   return true
 }
 
 const page3Test = () => {
-  if (checkPage3.value == false) {
+  if (
+    checkPage31.value == false ||
+    checkPage32.value == false ||
+    checkPage33.value == false ||
+    address1.value == null
+  ) {
     alert('기입한 정보를 확인 해주세요.')
     return false
   }
@@ -228,7 +237,7 @@ const register = function () {
     hospitalname: hospitalname.value,
     start: start.value,
     end: end.value,
-    address: address1.value + ' ' + address2.value,
+    address: address1.value,
     note: more.value
   }
   console.log(payload)
@@ -381,6 +390,7 @@ function openKakaoAddressSearch() {
                       variant="outlined"
                       color="#668ba7"
                       bg-color="transparent"
+                      :rules="[(v) => passwordTest1(v)]"
                     />
                   </v-col>
 
@@ -396,7 +406,7 @@ function openKakaoAddressSearch() {
                       variant="outlined"
                       color="#668ba7"
                       bg-color="transparent"
-                      :rules="[(v) => passwordTest(v)]"
+                      :rules="[(v) => passwordTest2(v)]"
                       hide-details="true"
                     />
                   </v-col>
@@ -536,7 +546,7 @@ function openKakaoAddressSearch() {
                   />
                 </v-col>
                 <v-col cols="12" md="12">
-                  <v-text-field
+                  <!-- <v-text-field
                     label="병원 상세주소(필수)"
                     v-model="address2"
                     density="comfortable"
@@ -544,7 +554,7 @@ function openKakaoAddressSearch() {
                     color="#668ba7"
                     bg-color="transparent"
                     :rules="[(v) => addressTest(v)]"
-                  />
+                  /> -->
                 </v-col>
                 <v-col cols="12" md="12" style="margin-top: 8px">
                   <v-textarea
