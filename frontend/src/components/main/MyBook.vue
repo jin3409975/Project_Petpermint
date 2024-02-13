@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, computed, onBeforeMount } from 'vue'
 
-import dynamics from 'dynamics.js'
+// import dynamics from 'dynamics.js'
 import { useRouter } from 'vue-router'
 import { useReserveStore } from '@/stores/reserve'
 import { storeToRefs } from 'pinia'
@@ -16,7 +16,7 @@ const handleEnteringConsultButton = (e) => {
   router.push({ name: 'cam-consult', params: { appointId: appointId.value } })
 }
 
-const sideWidth = 60
+const sideWidth = 110
 
 let isDragging = false
 const start = { x: 0, y: 0 }
@@ -25,7 +25,7 @@ const c = reactive({ x: sideWidth / 2, y: 0 })
 const headerPath = computed(() => {
   const radius = 20
   const width = c.x
-  const height = 80
+  const height = 130
   return `M0,0 
           H${width - radius} Q${width},${0} ${width},${radius} 
           V${height - radius} Q${width},${height} ${width - radius},${height} 
@@ -34,90 +34,87 @@ const headerPath = computed(() => {
 
 const textVisibleOnClick = ref(true)
 
-const contentPosition = computed(() => {
-  const dx = c.x - sideWidth / 2
-  const dampen = dx > 0 ? 2 : 4
-  return {
-    transform: `translate(${dx / dampen}px, 0)`
-  }
-})
+// const contentPosition = computed(() => {
+//   const dx = c.x - sideWidth / 2
+//   const dampen = dx > 0 ? 2 : 4
+//   return {
+//     transform: `translate(${dx / dampen}px, 0)`
+//   }
+// })
 
-function startDrag(e) {
-  e = e.changedTouches ? e.changedTouches[0] : e
-  isDragging = true
-  start.x = e.pageX
-  start.y = e.pageY
-  textVisibleOnClick.value = false
-}
+// function startDrag(e) {
+//   e = e.changedTouches ? e.changedTouches[0] : e
+//   isDragging = true
+//   start.x = e.pageX
+//   start.y = e.pageY
+//   textVisibleOnClick.value = false
+// }
 const dialog = ref(false)
-function onDrag(e) {
-  console.log('Dragging')
-  e = e.changedTouches ? e.changedTouches[0] : e
-  if (isDragging) {
-    const dx = e.pageX - start.x
-    const dampen = dx > 0 ? 1.5 : 4
-    c.x = sideWidth / 2 + dx / dampen
-    if (Math.abs(dx) > 40) {
-      console.log('Opening dialog')
-      stopDrag()
-      dialog.value = true
-    }
-  }
+// Open dialog method
+function openDialog() {
+  dialog.value = true
 }
 
-function stopDrag() {
-  if (isDragging) {
-    isDragging = false
-    textVisibleOnClick.value = true
-    dynamics.animate(
-      c,
-      { x: sideWidth / 2, y: 0 },
-      { type: dynamics.spring, duration: 700, friction: 280 }
-    )
-  }
+// Close dialog method
+function closeDialog() {
+  dialog.value = false
 }
-function toggleTextVisibility() {
-  textVisibleOnClick.value = !textVisibleOnClick.value
-}
+// function onDrag(e) {
+//   console.log('Dragging')
+//   e = e.changedTouches ? e.changedTouches[0] : e
+//   if (isDragging) {
+//     const dx = e.pageX - start.x
+//     const dampen = dx > 0 ? 1.5 : 4
+//     c.x = sideWidth / 2 + dx / dampen
+//     if (Math.abs(dx) > 40) {
+//       console.log('Opening dialog')
+//       stopDrag()
+//       dialog.value = true
+//     }
+//   }
+// }
+
+// function stopDrag() {
+//   if (isDragging) {
+//     isDragging = false
+//     textVisibleOnClick.value = true
+//     dynamics.animate(
+//       c,
+//       { x: sideWidth / 2, y: 0 },
+//       { type: dynamics.spring, duration: 700, friction: 280 }
+//     )
+//   }
+// }
+// function toggleTextVisibility() {
+//   textVisibleOnClick.value = !textVisibleOnClick.value
+// }
 
 const showHoverText = ref(false)
-const handleMouseEnter = () => {
-  showHoverText.value = true
-}
-const handleMouseLeave = () => {
-  stopDrag()
-  showHoverText.value = false
-}
-onBeforeMount(() => {
-  reservestore.getmybook()
-})
+// const handleMouseEnter = () => {
+//   showHoverText.value = true
+// }
+// const handleMouseLeave = () => {
+//   stopDrag()
+//   showHoverText.value = false
+// }
 </script>
 
 <template>
   <div>
-    <div
-      class="draggable"
-      @mousedown="startDrag"
-      @touchstart="startDrag"
-      @mousemove="onDrag"
-      @touchmove="onDrag"
-      @mouseup="stopDrag"
-      @touchend="stopDrag"
-      @mouseleave="handleMouseLeave"
-    >
-      <svg class="bg" width="100" height="80">
+    <div class="draggable" @click="openDialog">
+      <svg class="bg" width="100" height="200">
         <path :d="headerPath" fill="#D2E0FB"></path>
       </svg>
-      <div class="header" @mouseenter="handleMouseEnter">My 예약카드</div>
+      <div class="header">My 예약카드</div>
     </div>
-    <div v-if="showHoverText && textVisibleOnClick" class="text-rot">
+    <!-- <div v-if="showHoverText && textVisibleOnClick" class="text-rot">
       오른쪽으로 잡아당기세요
       <div class="arrow">
         <span></span>
         <span></span>
         <span></span>
       </div>
-    </div>
+    </div> -->
     <v-dialog v-model="dialog" width="400px">
       <!-- 온라인 초기 상담 -->
       <v-carousel height="480" hide-delimiter-background show-arrows="hover" color="#668BA7">
@@ -191,7 +188,7 @@ onBeforeMount(() => {
           >
 
           <!-- 닫기 버튼 -->
-          <button class="closed" @click="dialog = false">
+          <button class="closed" @click="closeDialog">
             <v-icon icon="mdi-close-thick"></v-icon>
           </button>
         </v-carousel-item>
@@ -216,9 +213,8 @@ onBeforeMount(() => {
               <p>예약 내역이 존재하지 않습니다.</p>
             </v-row>
           </div>
-
           <!-- 닫기 버튼 -->
-          <button class="closed" @click="dialog = false">
+          <button class="closed" @click="closeDialog">
             <v-icon icon="mdi-close-thick"></v-icon>
           </button>
         </v-carousel-item>
@@ -382,7 +378,7 @@ onBeforeMount(() => {
   background-color: transparent;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   width: 60px;
-  height: 80px;
+  height: 130px;
   overflow: hidden;
   text-align: center;
   font-size: 14px;
@@ -409,10 +405,10 @@ onBeforeMount(() => {
   box-sizing: border-box;
 }
 .header {
-  width: 120px;
-  color: #373737;
-  height: 30px;
-  font-size: 13px;
+  width: 200px;
+  color: #4c4c4c;
+  height: 50px;
+  font-size: 19px;
   font-weight: bold;
   transform: rotate(90deg) translateY(170%) translateX(20%);
 }

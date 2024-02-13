@@ -62,12 +62,12 @@ const router = createRouter({
               path: '',
               meta: { hideNavbarMain: true },
               name: 'main-home',
-              meta: { hideNavbarMain: true },
               component: Main
             },
             {
               path: 'vet',
               name: 'main-vet',
+              meta: { hideNavbarMain: true },
               component: MainVet
             }
           ]
@@ -139,13 +139,13 @@ const router = createRouter({
             {
               path: 'id',
               name: 'find-id',
-              meta: { hideFooter: true },
+              meta: { hideFooter: true, hideicon: true },
               component: FindId
             },
             {
               path: 'password',
               name: 'find-password',
-              meta: { hideFooter: true },
+              meta: { hideFooter: true, hideicon: true },
               component: FindPassword
             }
           ]
@@ -260,7 +260,7 @@ const router = createRouter({
                 {
                   path: 'list',
                   name: 'lifecare-community-list',
-                  meta: { backgroundColor: 'rgba(99, 136, 137, 0.3)' },
+                  meta: { backgroundColor: 'rgba(99, 136, 137, 0.3)', hideFooter: true },
                   component: CommunityListVue
                 },
                 {
@@ -273,17 +273,20 @@ const router = createRouter({
             {
               path: 'venue',
               name: 'lifecare-venue',
+              meta: { footerBgColor: '#3e6263' },
               component: VenueMapVue
             },
             {
               path: 'broadcast',
               name: 'lifecare-broadcast',
+              meta: { footerBgColor: '#3e6263' },
               component: EnterBroadcastVue,
               children: [
                 {
                   path: 'enter',
                   name: 'lifecare-broadcast-enter',
-                  component: EnterBroadcast
+                  component: EnterBroadcast,
+                  meta: { hideFooter: true }
                 }
               ]
             }
@@ -326,6 +329,7 @@ const router = createRouter({
               name: 'mypage-vet',
               component: MypageVetView,
               redirect: { name: 'mypage-vet-info' },
+              meta: { hideicon: true },
               children: [
                 {
                   path: 'info',
