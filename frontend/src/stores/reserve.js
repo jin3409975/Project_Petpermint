@@ -157,7 +157,7 @@ export const useReserveStore = defineStore('reserve', () => {
       url: API_URL + 'mybook',
       params: {
         userId: useremail,
-        time: '2024-02-13 10:00'
+        time: '2029-01-01 00:00'
       }
     })
       .then((res) => {
