@@ -34,20 +34,24 @@ public class ReservationRes extends BaseResponseBody{
 
     public static ReservationRes ofConsult(Integer statusCode, String message, Map<String, Object> data) {
         ReservationRes res = new ReservationRes();
-        Reservation reservation = (Reservation) data.get("result");
+
         res.setStatusCode(statusCode);
         res.setMessage(message);
-        res.setAppointId(reservation.getAppointId());
-        res.setTime(reservation.getTime());
-        res.setLicenseNumber(reservation.getLicenseNumber());
-        res.setNote(reservation.getNote());
-        res.setDiagnosis(reservation.getDiagnosis());
-        res.setType(reservation.getType());
-        res.setHospitalNo(reservation.getHospitalNo());
-        res.setType(reservation.getType());
-        res.setUserId(reservation.getUserId());
-        res.setAnimalName((String)data.get("animalName"));
-        res.setDoctorName((String)data.get("doctorName"));
+
+        if(data != null) {
+            Reservation reservation = (Reservation) data.get("result");
+            res.setAppointId(reservation.getAppointId());
+            res.setTime(reservation.getTime());
+            res.setLicenseNumber(reservation.getLicenseNumber());
+            res.setNote(reservation.getNote());
+            res.setDiagnosis(reservation.getDiagnosis());
+            res.setType(reservation.getType());
+            res.setHospitalNo(reservation.getHospitalNo());
+            res.setType(reservation.getType());
+            res.setUserId(reservation.getUserId());
+            res.setAnimalName((String)data.get("animalName"));
+            res.setDoctorName((String)data.get("doctorName"));
+        }
         return res;
     }
 }
