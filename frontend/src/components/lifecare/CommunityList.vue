@@ -165,7 +165,10 @@ const del = () => {
       <v-col>
         <v-row>
           <div style="margin-left: 25px; margin-right: 25px">
-            <span style="font-size: 17px" v-html="convertUrls(article.content)"></span>
+            <span
+              style="font-size: 17px; line-height: 35px"
+              v-html="convertUrls(article.content)"
+            ></span>
           </div>
         </v-row>
         <v-row class="d-flex justify-content-center" style="margin-top: 20px">

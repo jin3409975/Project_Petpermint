@@ -96,9 +96,11 @@ const showHoverText = ref(false)
 //   stopDrag()
 //   showHoverText.value = false
 // }
+const type = ref()
 onBeforeMount(() => {
   reservestore.getmybook()
   console.log(mybook.value.appointId)
+  type.value = localStorage.usertype
 })
 const isUser = ref(localStorage.getItem('usertype') == 1 ? true : false)
 </script>

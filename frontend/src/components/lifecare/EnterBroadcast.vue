@@ -23,7 +23,7 @@ onMounted(async () => {
   sessionId.value = community_stores.video.sessionId
 })
 const handleEnteringBroadcastButton = () => {
-  if (localStorage.userId != null)
+  if (localStorage.useremail != null)
     router.push({ name: 'cam-broadcast', params: { sessionId: sessionId.value } })
   else alert('로그인 후 이용해주세요.')
 }
