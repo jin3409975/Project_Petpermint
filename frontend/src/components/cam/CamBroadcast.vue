@@ -1,18 +1,16 @@
 <script>
-import { ref, onMounted } from 'vue'
 import $ from 'jquery'
 import './openviduBroadcast/openvidu-webcomponent-2.29.0'
 import './openviduBroadcast/openvidu-webcomponent-2.29.0.css'
+import { useAccountStore } from '@/stores/account'
 
 const { VITE_APP_SERVER_URI } = import.meta.env
-const adminAccount = ref('ssafyjam@gmail.com')
-// const isMuted = ref(true)
-// console.log(isMuted.value)
+
 export default {
   data() {
     return {
       sessionName: this.$route.params.sessionId,
-      participantName: localStorage.getItem('useremail'),
+      participantName: '',
       APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null,
       adminAccount: 'ssafyjam@gmail.com',
@@ -52,19 +50,11 @@ export default {
   },
   methods: {
     async getUserName() {
-      // const access_token = this.$store.state.access_token
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-          // Authorization: `Bearer ${access_token}`
-        }
-      }
-      this.webComponent.participantName = localStorage.getItem('useremail')
-      const userId = sessionStorage.getItem('user_id')
-
-      // await this.$axios.get(`/user-service/user/${userId}/userName`, config).then((res) => {
-      //   this.webComponent.participantName = res.data
-      // })
+      const accountStores = useAccountStore()
+      const userEmail = localStorage.getItem('useremail')
+      await accountStores.getnormalprofile(userEmail)
+      this.participantName = accountStores.userdata.userName
+      this.webComponent.participantName = this.participantName
     },
     async joinSession() {
       const tokens = await Promise.all([
