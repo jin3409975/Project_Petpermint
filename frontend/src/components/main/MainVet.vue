@@ -130,6 +130,11 @@ const handleEnteringConsultButton = () => {
   })
 }
 
+const scrollDwn = () => {
+  console.log('here')
+  window.scrollTo({ top: 822, left: 0 })
+}
+
 onMounted(() => {})
 </script>
 
@@ -139,10 +144,16 @@ onMounted(() => {})
     <video class="background-video" width="100%" autoplay muted loop>
       <source src="/assets/img/MainVideo.mp4" type="video/mp4" />
     </video>
-    <div ref="typedElement" class="video-overlay"></div>
+    <div class="overlay" style="position: absolute; top: 300px; z-index: 2">
+      <span style="color: white; font-size: 50px; font-family: Malgun Gothic"
+        ><b>사용자들과 예약을 진행해보세요</b></span
+      >
+      <v-btn @click="scrollDwn" style="margin-left: 320px">예약확인</v-btn>
+    </div>
+
     <v-row>
-      <v-col style="margin-top: 900px" md="12">
-        <h1>예약 확인</h1>
+      <v-col style="margin-top: 950px" md="12">
+        <h1>상담 예약</h1>
       </v-col>
 
       <v-col style="margin-top: 100px" md="6">
@@ -439,23 +450,14 @@ button {
   top: 0;
   left: 0;
   width: 100%;
-  height: 800px;
+  height: 53%;
   object-fit: cover; /* 비디오가 컨테이너를 꽉 채우도록 */
 }
 
-.video-overlay {
+.overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
+  top: 800px;
+  left: 400px;
+  z-index: 10;
 }
 </style>
