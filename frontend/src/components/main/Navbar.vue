@@ -56,7 +56,8 @@ const gotoMyPage = () => {
 }
 
 const navigateToMain = () => {
-  router.push({ name: 'main-home' })
+  if (localStorage.usertype == 2) router.push({ name: 'main-vet' })
+  else router.push({ name: 'main-home' })
 }
 const navigateToInitial = () => {
   if (!isLoggedIn.value) {
