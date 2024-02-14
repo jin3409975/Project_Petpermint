@@ -6,13 +6,13 @@ const router = useRouter()
 const store = useAccountStore()
 const useremail = ref(null)
 const password = ref(null)
-const logIn = () => {
+const logIn = async () => {
   // 로그인 데이터 준비
   const logindata = {
     useremail: useremail.value,
     password: password.value
   }
-  store.logIn(logindata)
+  await store.logIn(logindata)
   // // 데이터 검증 로직
   // if (result) {
   //   // 데이터 전송 로직

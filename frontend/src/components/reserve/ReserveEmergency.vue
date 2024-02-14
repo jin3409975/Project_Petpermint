@@ -167,10 +167,10 @@ function highlightMarker(index) {
   map.setLevel(1)
 }
 
-function doReserve() {
+async function doReserve() {
   console.log(searchList.value[listIndex.value].dataNo)
   dialog.value = false
-  store.emergencyCreate(searchList.value[listIndex.value].dataNo)
+  await store.emergencyCreate(searchList.value[listIndex.value].dataNo)
 }
 </script>
 

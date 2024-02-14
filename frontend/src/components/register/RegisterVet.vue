@@ -227,7 +227,7 @@ const goToType = () => {
 
 const showSnackbar = ref(false)
 
-const register = () => {
+const register = async () => {
   const payload = {
     email: email.value,
     password: password1.value,
@@ -241,7 +241,7 @@ const register = () => {
     note: more.value
   }
   console.log(payload)
-  var result = store.vetsignup(payload)
+  var result = await store.vetsignup(payload)
   if (result) {
     showSnackbar.value = true // 회원가입 완료 시 스낵바 표시
 

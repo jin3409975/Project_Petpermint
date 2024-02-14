@@ -28,7 +28,7 @@ const write = async () => {
       })
     }
 
-    community_stores.communitywrite(formData)
+    await community_stores.communitywrite(formData)
     alert('게시물 등록이 완료되었습니다.')
     emit('dataSend', content.value)
     content.value = ''

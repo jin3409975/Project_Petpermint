@@ -53,9 +53,9 @@ function dateConvert(date) {
   return `${Math.floor(years)}년 전`
 }
 
-const writeComments = () => {
+const writeComments = async () => {
   let postId = props.article.postId
-  let result = community_stores.commentwrite(postId, userId.value, com_temp.value)
+  let result = await community_stores.commentwrite(postId, userId.value, com_temp.value)
   var writtenComment = new Object()
   writtenComment.postId = postId
   writtenComment.userId = userId.value
@@ -66,11 +66,11 @@ const writeComments = () => {
   com_temp.value = ''
 }
 
-const deleteComment = (comment) => {
+const deleteComment = async (comment) => {
   let commentNo = comment.commentNo
   let postId = props.article.postId
   comment.content = '삭제된 댓글입니다.'
-  let result = community_stores.commentdelete(commentNo, postId)
+  let result = await community_stores.commentdelete(commentNo, postId)
 }
 
 onMounted(async (article) => {

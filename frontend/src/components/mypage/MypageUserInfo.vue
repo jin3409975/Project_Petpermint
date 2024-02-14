@@ -10,10 +10,10 @@ const { userdata, mypetlist } = storeToRefs(accountstore)
 const opendialog = ref(false)
 const showeditpet = ref(false)
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   const userId = localStorage.getItem('useremail')
-  accountstore.getnormalprofile(userId)
-  accountstore.getpetlist(userId)
+  await accountstore.getnormalprofile(userId)
+  await accountstore.getpetlist(userId)
   console.log(mypetlist, 'mypetlist')
   setTimeout(() => {
     init()
@@ -86,10 +86,10 @@ function saveinfo() {
   // 개인정보 변경 실행
   opendialog.value = true
 }
-function completeUpdate() {
+async function completeUpdate() {
   console.log('file', file)
 
-  accountstore.updateNormal(
+  await accountstore.updateNormal(
     email.value,
     userName.value,
     password.value,
@@ -134,9 +134,9 @@ const getpetFile = function (event) {
   }
 }
 // 펫 정보 수정후 저장 버튼 클릭시 axios 요청 account.js 의 323번줄 updatePet
-const savenewpetInfo = () => {
+const savenewpetInfo = async () => {
   const userId = localStorage.getItem('useremail')
-  accountstore.updatePet(
+  await accountstore.updatePet(
     userId,
     newpetname.value,
     newpetId.value,

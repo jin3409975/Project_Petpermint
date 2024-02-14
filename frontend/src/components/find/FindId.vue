@@ -4,8 +4,8 @@ import { useAccountStore } from '@/stores/account'
 const store = useAccountStore()
 const username = ref(null)
 const phone = ref(null)
-const findmyId = () => {
-  store.findId(username.value, phone.value)
+const findmyId = async () => {
+  await store.findId(username.value, phone.value)
 }
 </script>
 
