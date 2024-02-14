@@ -25,9 +25,9 @@ const headerPath = computed(() => {
   const radius = 20
   const width = c.x
   const height = 130
-  return `M0,0 
-          H${width - radius} Q${width},${0} ${width},${radius} 
-          V${height - radius} Q${width},${height} ${width - radius},${height} 
+  return `M0,0
+          H${width - radius} Q${width},${0} ${width},${radius}
+          V${height - radius} Q${width},${height} ${width - radius},${height}
           H0 Z`
 })
 
@@ -97,8 +97,8 @@ const showHoverText = ref(false)
 //   showHoverText.value = false
 // }
 const type = ref()
-onBeforeMount(() => {
-  reservestore.getmybook()
+onBeforeMount(async () => {
+  await reservestore.getmybook()
   console.log(mybook.value.appointId)
   type.value = localStorage.usertype
 })
