@@ -1,18 +1,15 @@
-import AdminViewVue from '@/views/admin/AdminView.vue'
-import AdminAcountVue from '@/components/admin/AdminAcount.vue'
-
 const admin = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminViewVue,
+    component: '@/views/admin/AdminView.vue',
     meta: { hideNavbarMain: true },
     redirect: { name: 'admin-account' },
     children: [
       {
         path: 'account',
         name: 'admin-account',
-        component: AdminAcountVue
+        component: '@/components/admin/AdminAcount.vue'
       },
       {
         path: 'reserve',

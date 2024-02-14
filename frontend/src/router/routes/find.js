@@ -1,25 +1,21 @@
-import FindinfoView from '@/views/find/FindinfoView.vue'
-import FindId from '@/components/find/FindId.vue'
-import FindPassword from '@/components/find/FindPassword.vue'
-
 const find = [
   {
     path: '/find',
     name: 'find',
-    component: FindinfoView,
+    component: '@/views/find/FindinfoView.vue',
     redirect: { name: 'find-id' },
     children: [
       {
         path: 'id',
         name: 'find-id',
         meta: { hideFooter: true, hideicon: true },
-        component: FindId
+        component: '@/components/find/FindId.vue'
       },
       {
         path: 'password',
         name: 'find-password',
         meta: { hideFooter: true, hideicon: true },
-        component: FindPassword
+        component: '@/components/find/FindPassword.vue'
       }
     ]
   }

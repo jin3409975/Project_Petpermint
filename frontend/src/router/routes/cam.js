@@ -1,4 +1,3 @@
-
 const cam = [
   {
     path: '/cam',

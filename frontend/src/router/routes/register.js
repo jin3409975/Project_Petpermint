@@ -1,15 +1,8 @@
-import RegisterView from '@/views/register/RegisterView.vue'
-import RegisterVet from '@/components/register/RegisterVet.vue'
-// import RegisterComplete from '@/components/register/RegisterComplete.vue'
-import RegisterUserView from '@/views/register/RegisterUserView.vue'
-import RegisterUser from '@/components/register/RegisterUser.vue'
-// import RegisterPet from '@/components/register/RegisterPet.vue'
-
 const register = [
   {
     path: '/register',
     name: 'register',
-    component: RegisterView,
+    component: '@/views/register/RegisterView.vue',
     meta: { hideFooter: true },
     redirect: { name: 'register-home' },
     children: [
@@ -22,20 +15,20 @@ const register = [
         path: 'vet',
         name: 'register-vet',
         meta: { hideNavbarMain: true, hideNavbar: true, hideicon: true },
-        component: RegisterVet
+        component: '@/components/register/RegisterVet.vue'
       },
       {
         path: 'user',
         name: 'register-user',
         meta: { hideNavbarMain: true, hideicon: true },
-        component: RegisterUserView,
+        component: '@/views/register/RegisterUserView.vue',
         redirect: { name: 'register-info' },
         children: [
           {
             path: 'info',
             name: 'register-info',
             meta: { hideNavbarMain: true },
-            component: RegisterUser
+            component: '@/components/register/RegisterUser.vue'
           }
         ]
       }

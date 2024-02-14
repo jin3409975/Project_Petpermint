@@ -1,40 +1,31 @@
-import MypageView from '@/views/mypage/MypageView.vue'
-import MypageUserView from '@/views/mypage/MypageUserView.vue'
-import MypageVetView from '@/views/mypage/MypageVetView.vue'
-import MypageUserInfo from '@/components/mypage/MypageUserInfo.vue'
-import MypageUserListView from '@/views/mypage/MypageUserListView.vue'
-import MypageUserListCurrent from '@/components/mypage/MypageUserListCurrent.vue'
-import MypageVetInfo from '@/components/mypage/MypageVetInfo.vue'
-import MypageVetListCurrent from '@/components/mypage/MypageVetListCurrent.vue'
-
 const mypage = [
   {
     path: '/mypage',
     name: 'mypage',
-    component: MypageView,
+    component: '@/views/mypage/MypageView.vue',
     redirect: { name: 'mypage-user' },
     children: [
       {
         path: 'user',
         name: 'mypage-user',
-        component: MypageUserView,
+        component: '@/views/mypage/MypageUserView.vue',
         redirect: { name: 'mypage-user-info' },
         children: [
           {
             path: 'info',
             name: 'mypage-user-info',
-            component: MypageUserInfo
+            component: '@/components/mypage/MypageUserInfo.vue'
           },
           {
             path: 'list',
             name: 'mypage-user-list',
-            component: MypageUserListView,
+            component: '@/views/mypage/MypageUserListView.vue',
             redirect: { name: 'mypage-user-list-current' },
             children: [
               {
                 path: 'current',
                 name: 'mypage-user-list-current',
-                component: MypageUserListCurrent
+                component: '@/components/mypage/MypageUserListCurrent.vue'
               }
             ]
           }
@@ -43,14 +34,14 @@ const mypage = [
       {
         path: 'vet',
         name: 'mypage-vet',
-        component: MypageVetView,
+        component: '@/views/mypage/MypageVetView.vue',
         redirect: { name: 'mypage-vet-info' },
         meta: { hideicon: true },
         children: [
           {
             path: 'info',
             name: 'mypage-vet-info',
-            component: MypageVetInfo
+            component: '@/components/mypage/MypageVetInfo.vue'
           },
           {
             path: 'list',
@@ -61,7 +52,7 @@ const mypage = [
               {
                 path: 'current',
                 name: 'mypage-vet-list-current',
-                component: MypageVetListCurrent
+                component: '@/components/mypage/MypageVetListCurrent.vue'
               }
             ]
           }

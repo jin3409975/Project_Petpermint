@@ -1,25 +1,21 @@
-import MainView from '@/views/main/MainView.vue'
-import Main from '@/components/main/Main.vue'
-import MainVet from '@/components/main/MainVet.vue'
-
 const main = [
   {
     path: '',
     name: 'main',
-    component: MainView,
+    component: '@/views/main/MainView.vue',
     redirect: { name: 'main-home' },
     children: [
       {
         path: '',
         meta: { hideNavbarMain: true },
         name: 'main-home',
-        component: Main
+        component: '@/components/main/Main.vue'
       },
       {
         path: 'vet',
         name: 'main-vet',
         meta: { hideNavbarMain: true },
-        component: MainVet
+        component: '@/components/main/MainVet.vue'
       }
     ]
   }
