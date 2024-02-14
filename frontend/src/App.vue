@@ -27,7 +27,11 @@ const handleMouseOut = () => {
 
 function goEmergency() {
   console.log('asdasdasdqefn qejfjoqekbwrh bjw')
-  router.push({ name: 'reserve-emergency' })
+  if (localStorage.getItem('useremail') != null) {
+    router.push({ name: 'reserve-emergency' })
+  } else {
+    alert('로그인이 필요한 서비스 입니다.')
+  }
 }
 const backgroundColor = computed(() => {
   console.log(route.meta.backgroundColor) // Check the value

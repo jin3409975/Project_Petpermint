@@ -18,8 +18,9 @@ export const useAccountStore = defineStore(
     const isLoggedIn = ref(false)
     const isUpdated = ref(false)
     const mypetlist = ref([])
-    const usersignup = async function (userData) {
-      console.log(userData)
+
+    const usersignup = async function (userData, pets) {
+      console.log('pets', pets)
       var data = new FormData()
       data.append('userId', userData.email)
       data.append('userName', userData.name)
@@ -44,6 +45,34 @@ export const useAccountStore = defineStore(
           return true
         }
       })
+
+      for (let i = 0; i < pets.length; i++) {
+        data = new FormData()
+        data.append('name', pets[i].name)
+        console.log(pets[i].name)
+        data.append('picture', pets[i].picture)
+        console.log(pets[i].picture)
+        data.append('specie', pets[i].petspecies)
+        console.log(pets[i].petspecies)
+        data.append('age', pets[i].petage)
+        console.log(pets[i].petage)
+        data.append('note', pets[i].more)
+        console.log(pets[i].more)
+        data.append('weight', pets[i].petweight)
+        console.log(pets[i].petweight)
+        data.append('gender', pets[i].gender)
+        console.log(pets[i].gender)
+        data.append('userId', userData.email)
+        console.log(userData.email)
+        axios({
+          method: 'post',
+          url: API_URL + 'pet/create',
+          data,
+          headers: {
+            'Content-Type': 'multipart/formdata'
+          }
+        }).then((r) => console.log(r))
+      }
       return result
     }
 
@@ -79,18 +108,30 @@ export const useAccountStore = defineStore(
       return result
     }
 
-    const emailRequest = async function (email) {
+    const emailRequest = async function (email, type) {
+      var url = ''
+      if (type == 'regist') {
+        url = API_URL + 'email/request/regist'
+      } else {
+        url = API_URL + 'email/request/find'
+      }
       let emailcheck = await axios({
         method: 'post',
-        url: API_URL + 'email/request',
+        url: url,
         data: {
           userId: email
         }
       }).then((r) => {
         console.log(r)
-        if (r.data.statusCode == 200) {
+        if (r.data.message == 'Success') {
           alert('이메일 인증 요청이 완료되었습니다. 5분 이내에 입력해 주세요.')
           return true
+        } else if (r.data.message == 'Duplication') {
+          alert('이미 가입된 이메일 주소 입니다.')
+          return false
+        } else if (r.data.message == 'Not Found') {
+          alert('회원 정보를 찾을 수 없습니다.')
+          return false
         } else {
           alert('이메일 인증 요청이 실패 했습니다. 입력한 이메일 주소를 확인해 주세요.')
           return false
@@ -108,17 +149,22 @@ export const useAccountStore = defineStore(
           userId: email,
           verificationCode: code
         }
-      }).then((r) => {
-        console.log(r)
-        if (r.data.statusCode == 200) {
-          alert('이메일 인증에 성공 하셨습니다.')
-          // console.log(result, 'result 값 확인')
-          return true
-        } else {
+      })
+        .then((r) => {
+          console.log(r)
+          if (r.data.statusCode == 200) {
+            alert('이메일 인증에 성공 하셨습니다.')
+            // console.log(result, 'result 값 확인')
+            return true
+          } else {
+            alert('이메일 인증에 실패 하셨습니다.')
+            return false
+          }
+        })
+        .catch((error) => {
           alert('이메일 인증에 실패 하셨습니다.')
           return false
-        }
-      })
+        })
       return emailcheck
     }
 

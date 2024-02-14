@@ -14,13 +14,23 @@ const emailcheck = ref(false)
 
 const emailRequest = function () {
   console.log('이메일 인증 요청', emailcheck.value)
-  store.emailRequest(email.value)
+  store.emailRequest(email.value, 'find')
   console.log('결과', store.result)
 }
+
+const validateResult = ref(0)
 const emailValidate = function () {
   console.log('이메일 확인 요청', emailcheck.value)
-  store.emailValidate(email.value, confirm.value)
-  result.value = true
+  var data = false
+  data = store.emailValidate(email.value, confirm.value)
+  console.log('asddasads', data)
+  if (data == true) {
+    validateResult.value = 1
+  } else {
+    alert('인증 정보가 올바르지 않습니다.')
+    return false
+  }
+
   console.log('결과', store.result)
 }
 const updatePassword = function () {
@@ -112,7 +122,7 @@ const password2Rules = ref([
         >인증 확인</v-btn
       >
 
-      <div v-show="store.result == 1">
+      <div v-show="validateResult == 1">
         <div
           class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
           style="font-weight: bold"
@@ -130,7 +140,7 @@ const password2Rules = ref([
         ></v-text-field>
 
         <div
-          v-show="store.result == 1"
+          v-show="validateResult == 1"
           class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
           style="font-weight: bold"
         >
