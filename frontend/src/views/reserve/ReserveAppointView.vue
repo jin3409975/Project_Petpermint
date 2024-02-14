@@ -45,7 +45,7 @@ onMounted(() => {
   <v-app class="my-custom-reserve">
     <v-container style="width: 800px">
       <v-stepper
-        :items="['예약 시간 선택', '예약 병원 선택', '예약 자녀 선택']"
+        :items="['시간 선택', '병원 선택', '반려동물 선택']"
         :hide-actions="true"
         v-model="step"
       >
@@ -100,8 +100,8 @@ onMounted(() => {
           <v-card
             v-if="step == 3"
             class="card"
-            title="예약 자녀 선택/특이 사항 입력"
-            subtitle="진료를 받을 자녀를 선택하고 수의사님이 사전에 알면 좋을 특이 사항을 입력해 주세요."
+            title="반려동물 선택 및 특이사항"
+            subtitle="진료 받을 반려동물을 선택하고 수의사님이 사전에 알면 좋을 특이 사항을 입력해 주세요."
             flat
             style="margin-top: 20px"
           >
