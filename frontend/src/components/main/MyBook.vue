@@ -101,6 +101,7 @@ const showHoverText = ref(false)
 const type = ref()
 onBeforeMount(async () => {
   await reservestore.getmybook()
+  await accountstore.getnormalprofile(localStorage.getItem('useremail'))
   console.log(mybook.value.appointId)
   type.value = localStorage.usertype
 })
