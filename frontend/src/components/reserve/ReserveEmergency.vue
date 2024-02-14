@@ -107,10 +107,10 @@ function displayMarker() {
     //console.log(positions[i])
     // 마커 이미지의 이미지 크기 입니다
     console.log(i, positions[i])
-    var imageSize = new kakao.maps.Size(24, 35)
+    var imageSize = new kakao.maps.Size(64, 64)
 
     // 마커 이미지를 생성합니다
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+    var markerImage = new kakao.maps.MarkerImage('/assets/img/marker.png', imageSize)
 
     // 마커를 생성합니다
     markers.value.push(
