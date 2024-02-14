@@ -80,13 +80,13 @@ const sheet = ref(false)
               ></v-expansion-panel>
 
               <v-expansion-panel
-                title="5. 행동 문제 해결"
+                title="5. 전문가와 Q&A"
                 text="실시간 채팅을 통해 전문가의 직접적인 피드백을 받아 보세요."
               ></v-expansion-panel>
 
               <v-expansion-panel
-                title="6. 행동 문제 해결"
-                text="반려동물을 키우는 사람들과 서로 소통하고 지식과 경험을 공유해 보세요."
+                title="6. 여러 반려인들과 소통"
+                text="반려동물을 키우는 사람들과 채팅을 통해 서로 소통하고 지식과 경험을 공유해 보세요."
               ></v-expansion-panel>
             </v-expansion-panels>
             <div style="font-size: 17px; font-weight: 450; color: rgb(60, 60, 60)">

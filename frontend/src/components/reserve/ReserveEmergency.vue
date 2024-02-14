@@ -176,28 +176,65 @@ function doReserve() {
 
 <template>
   <div>
-    <v-row
-      style="padding-left: 250px; padding-right: 250px; padding-bottom: 60px; margin-top: 25px"
-    >
-      <v-col cols="12" md="8" style="width: 80%; height: 80%; margin-bottom: 50px">
+    <v-row style="padding-left: 200px; padding-right: 170px">
+      <v-col cols="12" md="12" class="d-flex justify-center" style="height: 16vh">
+        <div
+          style="
+            font-size: 45px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          응급 예약
+          <v-btn
+            density="compact"
+            icon
+            style="box-shadow: none; padding-bottom: 40px; margin-left: 20px"
+          >
+            <v-icon style="color: rgb(233, 0, 0); font-size: 45px">mdi-map-marker-question</v-icon>
+            <v-tooltip activator="parent" location="right" color="#E5E5E5"
+              >자택 주소 기반 가까운 병원 5곳입니다. <br />
+              원하시는 병원 카드를 선택하고 해당 마커를 선택해서 예약하실 수 있습니다.</v-tooltip
+            >
+          </v-btn>
+        </div>
+      </v-col>
+      <v-col cols="12" md="7" style="width: 100%; height: 100%">
         <div
           ref="mapContainer"
-          style="width: 600px; height: 500px; border: 2px solid #aa5656; border-radius: 5px"
+          style="
+            max-width: 630px;
+            height: 500px;
+            border: 2px solid #228b22;
+            border-radius: 5px;
+            margin-left: 10px;
+          "
         ></div>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="5">
         <v-card
-          variant="tonal"
-          color="#AA5656"
+          variant="text"
           v-for="(data, index) in searchList"
           :key="data.dataNo"
-          height="92px"
-          style="margin-bottom: 10px; border: 2px solid #aa5656"
+          height="98px"
+          style="margin-bottom: 3px; background-color: #228b2227; width: 90%"
         >
-          <v-card-text @click="highlightMarker(index)" style="cursor: pointer; border-radius: 4px">
-            <strong style="font-size: 20px">{{ data.venName }}</strong>
-            <br /><br />
-            {{ data.roadAddr }}
+          <v-card-text
+            @click="highlightMarker(index)"
+            style="
+              cursor: pointer;
+              border-radius: 4px;
+              font-size: 15px;
+              padding-left: 25px;
+              padding-right: 25px;
+            "
+          >
+            <p style="font-size: 17px; margin-bottom: 10px; margin-top: 4px; font-weight: bold">
+              {{ data.venName }}
+            </p>
+            <p style="margin-top: 15px">{{ data.roadAddr }}</p>
           </v-card-text>
         </v-card>
         <v-row>

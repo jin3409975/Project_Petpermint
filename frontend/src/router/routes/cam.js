@@ -1,9 +1,8 @@
-
 const cam = [
   {
     path: '/cam',
     name: 'cam',
-    meta: { hideNavbarMain: true, hideNavbar: true, hideicon: true },
+    meta: { hideNavbarMain: true, hideNavbar: true, hideicon: true, hideFooter: true },
     component: '',
     redirect: { name: 'cam-consult' },
     children: [
