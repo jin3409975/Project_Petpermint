@@ -100,11 +100,12 @@ onBeforeMount(() => {
   reservestore.getmybook()
   console.log(mybook.value.appointId)
 })
+const isUser = ref(localStorage.getItem('usertype') == 1 ? true : false)
 </script>
 
 <template>
   <div>
-    <div class="draggable" @click="openDialog">
+    <div class="draggable" @click="openDialog" v-if="isUser == true">
       <svg class="bg" width="100" height="200">
         <path :d="headerPath" fill="#D2E0FB"></path>
       </svg>

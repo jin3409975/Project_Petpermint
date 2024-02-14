@@ -137,15 +137,41 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/email/request")
+	@PostMapping("/email/request/regist")
 	@ApiOperation(value = "이메일 인증 신청", notes = "사용자가 작성한 이메일 주소로 랜덤한 6자리 숫자를 보내는 이메일 인증을 신청한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
 			@ApiResponse(code = 400, message = "실패")
 	})
-	public ResponseEntity<? extends BaseResponseBody> emailRequest(
+	public ResponseEntity<? extends BaseResponseBody> emailRequestRegist(
 			@RequestBody @ApiParam(value="이메일 인증에 사용 할 이메일 주소", required = true) EmailValidateReq emailValidateReq) {
 		System.out.println(emailValidateReq.getUserId());
+		if(userService.getUserByUserId(emailValidateReq.getUserId()) != null) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Duplication"));
+		}
+		String result = emailValidateService.emailContent(emailValidateReq.getUserId());
+		System.out.println("이메일 인증 이메일 asdasd : "+emailValidateReq.getUserId());
+		System.out.println("이메일 인증 번호 : "+result);
+		if(result != null) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		} else {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(400, "Fail"));
+		}
+	}
+
+
+	@PostMapping("/email/request/find")
+	@ApiOperation(value = "이메일 인증 신청", notes = "사용자가 작성한 이메일 주소로 랜덤한 6자리 숫자를 보내는 이메일 인증을 신청한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 400, message = "실패")
+	})
+	public ResponseEntity<? extends BaseResponseBody> emailRequestFind(
+			@RequestBody @ApiParam(value="이메일 인증에 사용 할 이메일 주소", required = true) EmailValidateReq emailValidateReq) {
+		System.out.println(emailValidateReq.getUserId());
+		if(userService.getUserByUserId(emailValidateReq.getUserId()) == null) {
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Not Found"));
+		}
 		String result = emailValidateService.emailContent(emailValidateReq.getUserId());
 		System.out.println("이메일 인증 이메일 : "+emailValidateReq.getUserId());
 		System.out.println("이메일 인증 번호 : "+result);
@@ -304,7 +330,7 @@ public class UserController {
 	})
 	public ResponseEntity<? extends BaseResponseBody> petCreate(
 			@ModelAttribute @ApiParam(value="반려동물 정보", required = true) AnimalReq animalReq) throws IOException {
-		System.out.println(animalReq.getPicture().toString());
+		System.out.println(animalReq);
 		String url = null;
 		if(animalReq.getPicture() != null) {
 			url=s3service.savePetProfile(animalReq.getPicture(), animalReq);
