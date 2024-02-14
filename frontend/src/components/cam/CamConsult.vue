@@ -35,7 +35,7 @@ export default {
 
       session.on('sessionDisconnected', (e) => {
         console.log('sessionDisconnected', e)
-        this.$router.push({ name: 'main-home' })
+        this.redirectByUserTypeAfterleave()
       })
 
       session.on('exception', (exception) => {
@@ -109,6 +109,18 @@ export default {
           error: (error) => reject(error)
         })
       })
+    },
+    redirectByUserTypeAfterleave() {
+      const userType = localStorage.getItem('usertype')
+      const isNormalUser = userType === '1' ? true : false
+      const isVet = userType === '2' ? true : false
+
+      if (isNormalUser) {
+        this.$router.push({ name: 'main-home' })
+      }
+      if (isVet) {
+        this.$router.push({ name: 'main-vet' })
+      }
     }
   },
   beforeDestroy() {
