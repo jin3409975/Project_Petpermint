@@ -25,8 +25,13 @@ function init() {
   email.value = userdata.value.userId
   phoneNumber.value = userdata.value.phone
   address.value = userdata.value.address
-  picture.value = userdata.value.picture
+  if (userdata.value.picture == 0) {
+    picture.value = 'https://i.pinimg.com/474x/3b/73/a1/3b73a13983f88f8b84e130bb3fb29e17.jpg'
+  } else {
+    picture.value = userdata.value.picture
+  }
 }
+
 // 유저 프로필 변수
 const userName = ref(userdata.value.userName)
 const email = ref('')
@@ -255,11 +260,15 @@ function navigateTocurrentlist() {
                   </v-avatar>
                 </v-col>
                 <v-col cols="6" class="petinfo">
-                  <p>{{ pet.name }}</p>
-                  <p>{{ pet.specie }}</p>
-                  <p>{{ pet.gender }}</p>
-                  <p>{{ pet.weight }}</p>
-                  <p>{{ pet.note }}</p>
+                  <div style="text-align: center">
+                    {{ pet.name }}<br />
+                    {{ pet.age }}<br />
+                    {{ pet.specie }}<br />
+                    {{ pet.gender }}<br />
+                    {{ pet.weight }}<br />
+                    {{ pet.note }}
+                  </div>
+
                   <v-btn @click="editPetprofile(pet)">수정</v-btn>
                 </v-col>
               </v-row>
@@ -283,10 +292,10 @@ function navigateTocurrentlist() {
               variant="underlined"
             ></v-file-input>
             <v-text-field variant="underlined" v-model="newpetname" label="이름"></v-text-field>
+            <v-text-field variant="underlined" v-model="newpetage" label="나이"></v-text-field>
             <v-text-field variant="underlined" v-model="newpetspecie" label="종"></v-text-field>
             <v-text-field variant="underlined" v-model="newpetgender" label="성별"></v-text-field>
             <v-text-field variant="underlined" v-model="newpetweight" label="무게"></v-text-field>
-            <v-text-field variant="underlined" v-model="newpetage" label="무게"></v-text-field>
             <v-text-field variant="underlined" v-model="newpetnote" label="소개"></v-text-field>
             <v-btn @click="savenewpetInfo">저장</v-btn>
             <!-- <div class="d-flex fill-height align-center justify-center"> -->
@@ -347,6 +356,7 @@ function navigateTocurrentlist() {
   margin-left: 0;
   background-color: #eef5ff;
   box-shadow: none;
+  text-align: center;
 }
 .v-text-field {
   margin-bottom: 10px;
