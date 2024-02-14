@@ -78,7 +78,7 @@ const reserve = [
       {
         path: 'emergency',
         name: 'reserve-emergency',
-        meta: { hideFooter: true },
+        meta: { hideicon: true, hideFooter: true },
         component: ReserveEmergency
       }
     ]
