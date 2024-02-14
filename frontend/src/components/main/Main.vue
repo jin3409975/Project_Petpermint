@@ -12,9 +12,10 @@ import MainBottomBanner from '@/components/main/MainBottomBanner.vue'
     <MainTopBanner style="height: 100vh" />
     <!-- 문구 -->
     <v-row class="blue-bg text-center">
-      <v-col class="text-botx" cols="12">
-        <p class="banner-text">"반려동물과 함께하는 행복하고 건강한 동반,</p>
-        <p class="banner-text">펫퍼민트가 함께 하겠습니다."</p>
+      <v-col class="text-box" cols="12">
+        <p class="banner-text" style="word-break: keep-all">
+          "반려동물과 함께하는 행복하고 건강한 동반, 펫퍼민트가 함께 하겠습니다."
+        </p>
       </v-col>
     </v-row>
     <MainBottomBanner style="height: 100vh" />
@@ -41,8 +42,8 @@ import MainBottomBanner from '@/components/main/MainBottomBanner.vue'
   font-weight: bold;
 }
 
-.text-botx {
-  padding-left: 200px;
-  padding-right: 200px;
+.text-box {
+  padding-left: 300px;
+  padding-right: 300px;
 }
 </style>
