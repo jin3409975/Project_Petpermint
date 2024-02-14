@@ -4,10 +4,12 @@ import { ref, reactive, computed, onBeforeMount } from 'vue'
 // import dynamics from 'dynamics.js'
 import { useRouter } from 'vue-router'
 import { useReserveStore } from '@/stores/reserve'
+import { useAccountStore } from '@/stores/account'
 import { storeToRefs } from 'pinia'
-
+const accountstore = useAccountStore()
 const reservestore = useReserveStore()
 const { mybook, appointId } = storeToRefs(reservestore)
+const { userdata } = storeToRefs(accountstore)
 const router = useRouter()
 
 const handleEnteringConsultButton = (e) => {
@@ -140,7 +142,7 @@ onBeforeMount(() => {
               <v-col col="12" md="12" class="margins" style="height: 10px">
                 <div class="card__content">
                   <div class="card__title">보호자</div>
-                  <div class="card__subtitle">{{ mybook.userId }}</div>
+                  <div class="card__subtitle">{{ userdata.userName }}</div>
                 </div>
               </v-col>
               <v-col col="12" md="12" class="margins" style="height: 10px">

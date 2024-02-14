@@ -23,7 +23,11 @@ function init() {
   email.value = vetdata.value.userId
   phoneNumber.value = vetdata.value.phone
   address.value = vetdata.value.address
-  picture.value = vetdata.value.picture
+  if (vetdata.value.picture == null) {
+    picture.value = 'https://i.pinimg.com/474x/3b/73/a1/3b73a13983f88f8b84e130bb3fb29e17.jpg'
+  } else {
+    picture.value = vetdata.value.picture
+  }
   note.value = vetdata.value.note
   hospitalname.value = vetdata.value.hospitalName
   starttime.value = vetdata.value.startTime

@@ -23,7 +23,7 @@ export const myPageStore = defineStore('mypage', () => {
     }).then((r) => {
       // console.log(r)
       if (r.data.statusCode == 200) {
-        // console.log(r.data.result)
+        console.log('이벤트 불러와', r.data.result)
         extractEvents(r.data.result)
         myevents.value = extractEvents(r.data.result)
         // console.log('myevents', myevents.value)
@@ -37,22 +37,18 @@ export const myPageStore = defineStore('mypage', () => {
           // time이 빈 값인지 확인
           return null
         }
+        //예약 날짜
+        const date = item.time.split(' ')[0]
         // 시작 시간을 Date 객체로 파싱
-        const startTime = new Date(item.time)
-
-        // 끝나는 시간을 계산하기 위해 20분을 추가
-        const endTime = new Date(startTime.getTime())
-        endTime.setMinutes(startTime.getMinutes() + 20)
-
-        // Date 객체를 원하는 형태의 문자열로 변환
-        const formatDateTime = (date) => date.toISOString().replace('T', ' ').substring(0, 16)
-
+        const startTime = item.time
+        const endTime = date + ' ' + addMinutes(item.time.split(' ')[1], 20) // 끝나는 시간을 계산하기 위해 20분을 추가
+        // const endTime = setMinutes(startTime.getMinutes() + 20)
         return {
           id: item.appointId,
           title: item.type === 1 ? '온라인 상담' : item.type === 2 ? '병원 진료' : '알 수 없음',
           time: {
-            start: formatDateTime(startTime),
-            end: formatDateTime(endTime)
+            start: startTime,
+            end: endTime
           },
           color: item.type === 1 ? 'blue' : item.type === 2 ? 'green' : 'yellow',
           description: item.note,
@@ -61,6 +57,21 @@ export const myPageStore = defineStore('mypage', () => {
         }
       })
       .filter((event) => event !== null)
+  }
+  function addMinutes(timeStr, minsToAdd) {
+    // 문자열 시간을 Date 객체로 변환
+    const timeParts = timeStr.split(':')
+    const date = new Date()
+    date.setHours(parseInt(timeParts[0], 10), parseInt(timeParts[1], 10) + minsToAdd, 0)
+
+    // 시간과 분을 가져와서 필요시 0을 추가하여 두 자리 수로 만듦
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    hours = hours < 10 ? '0' + hours : hours
+    minutes = minutes < 10 ? '0' + minutes : minutes
+
+    // 수정된 시간을 문자열 형태로 반환
+    return hours + ':' + minutes
   }
 
   //수의사 메인페이지 예약 조회
@@ -74,10 +85,11 @@ export const myPageStore = defineStore('mypage', () => {
       // console.log(r)
       if (r.data.statusCode == 200) {
         extractEvents(r.data.result)
+        console.log('vetdataa', r.data.result)
         vetevents.value = extractEvents(r.data.result)
         // console.log('vetevents', vetevents.value)
       }
     })
   }
-  return { myevents, vetevents, getmyevents, getvetevents, extractEvents }
+  return { myevents, vetevents, getmyevents, getvetevents, extractEvents, addMinutes }
 })

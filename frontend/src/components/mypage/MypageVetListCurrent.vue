@@ -10,7 +10,7 @@ export default {
   },
   setup() {
     const mypagestore = myPageStore()
-    const { myevents } = storeToRefs(mypagestore)
+    const { vetevents } = storeToRefs(mypagestore)
     const router = useRouter()
     // Initialize config as a reactive reference
     const config = ref({
@@ -33,14 +33,14 @@ export default {
 
     onBeforeMount(() => {
       console.log('Component is about to be mounted')
-      mypagestore.getmyevents()
+      mypagestore.getvetevents()
     })
     const navigationToinfo = function () {
       router.push({ name: 'mypage-vet-info' })
     }
     // Return all reactive references and methods you want to use in the template
     return {
-      events: myevents,
+      events: vetevents,
       config: config,
       navigationToinfo
     }
