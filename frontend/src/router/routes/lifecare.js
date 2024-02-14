@@ -1,8 +1,18 @@
+import LifecareViewVue from '@/views/lifecare/LifecareView.vue'
+
+import CommunityListVue from '@/views/lifecare/CommunityListView.vue'
+import CommunityDetailVue from '@/views/lifecare/CommunityDetailVue.vue'
+
+import VenueMapVue from '@/components/lifecare/VenueMap.vue'
+
+import EnterBroadcast from '@/components/lifecare/EnterBroadcast.vue'
+import EnterBroadcastVue from '@/views/lifecare/EnterBroadcastVue.vue'
+
 const lifecare = [
   {
     path: '/lifecare',
     name: 'lifecare',
-    component: '@/views/lifecare/LifecareView.vue',
+    component: LifecareViewVue,
     redirect: { name: 'lifecare-venue' },
     children: [
       {
@@ -15,12 +25,12 @@ const lifecare = [
             path: 'list',
             name: 'lifecare-community-list',
             meta: { backgroundColor: 'rgba(99, 136, 137, 0.3)', hideFooter: true },
-            component: '@/views/lifecare/CommunityListView.vue'
+            component: CommunityListVue
           },
           {
             path: 'detail/:postId',
             name: 'lifecare-community-detail',
-            component: '@/views/lifecare/CommunityDetailVue.vue'
+            component: CommunityDetailVue
           }
         ]
       },
@@ -28,18 +38,18 @@ const lifecare = [
         path: 'venue',
         name: 'lifecare-venue',
         meta: { footerBgColor: '#3e6263' },
-        component: '@/components/lifecare/VenueMap.vue'
+        component: VenueMapVue
       },
       {
         path: 'broadcast',
         name: 'lifecare-broadcast',
         meta: { footerBgColor: '#3e6263' },
-        component: '@/views/lifecare/EnterBroadcastVue.vue',
+        component: EnterBroadcastVue,
         children: [
           {
             path: 'enter',
             name: 'lifecare-broadcast-enter',
-            component: '@/components/lifecare/EnterBroadcast.vue',
+            component: EnterBroadcast,
             meta: { hideFooter: true }
           }
         ]

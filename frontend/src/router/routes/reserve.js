@@ -1,33 +1,41 @@
+import ReserveView from '@/views/reserve/ReserveView.vue'
+import ReserveInitialView from '@/views/reserve/ReserveInitialView.vue'
+import ReserveAppointView from '@/views/reserve/ReserveAppointView.vue'
+import ReserveEmergency from '@/components/reserve/ReserveEmergency.vue'
+import ReserveHospital from '@/components/reserve/ReserveHospital.vue'
+import ReserveTime from '@/components/reserve/ReserveTime.vue'
+import ReservePet from '@/components/reserve/ReservePet.vue'
+
 const reserve = [
   {
     path: '/reserve',
     name: 'reserve',
-    component: '@/views/reserve/ReserveView.vue',
+    component: ReserveView,
     redirect: { name: 'reserve-initial' },
     children: [
       {
         path: 'initial',
         name: 'reserve-initial',
-        component: '@/views/reserve/ReserveInitialView.vue',
+        component: ReserveInitialView,
         redirect: { name: 'reserve-initial-time' },
         children: [
           {
             path: 'hospital',
             name: 'reserve-initial-hospital',
             meta: { hideFooter: true },
-            component: '@/components/reserve/ReserveHospital.vue'
+            component: ReserveHospital
           },
           {
             path: 'time',
             name: 'reserve-initial-time',
             meta: { hideFooter: true },
-            component: '@/components/reserve/ReserveTime.vue'
+            component: ReserveTime
           },
           {
             path: 'pet',
             name: 'reserve-initial-pet',
             meta: { hideFooter: true },
-            component: '@/components/reserve/ReservePet.vue'
+            component: ReservePet
           }
         ]
       },
@@ -39,26 +47,26 @@ const reserve = [
       {
         path: 'appoint',
         name: 'reserve-appoint',
-        component: '@/views/reserve/ReserveAppointView.vue',
+        component: ReserveAppointView,
         redirect: { name: 'reserve-appoint-time' },
         children: [
           {
             path: 'hospital',
             name: 'reserve-appoint-hospital',
             meta: { hideFooter: true },
-            component: '@/components/reserve/ReserveHospital.vue'
+            component: ReserveHospital
           },
           {
             path: 'time',
             name: 'reserve-appoint-time',
             meta: { hideFooter: true },
-            component: '@/components/reserve/ReserveTime.vue'
+            component: ReserveTime
           },
           {
             path: 'pet',
             name: 'reserve-appoint-pet',
             meta: { hideFooter: true },
-            component: '@/components/reserve/ReservePet.vue'
+            component: ReservePet
           }
         ]
       },
@@ -71,7 +79,7 @@ const reserve = [
         path: 'emergency',
         name: 'reserve-emergency',
         meta: { hideFooter: true },
-        component: '@/components/reserve/ReserveEmergency.vue'
+        component: ReserveEmergency
       }
     ]
   }

@@ -1,8 +1,11 @@
+import LoginView from '@/views/login/LoginView.vue'
+import Login from '@/components/login/Login.vue'
+
 const login = [
   {
     path: '/login',
     name: 'login',
-    component: '@/views/login/LoginView.vue',
+    component: LoginView,
     redirect: { name: 'login-home' },
     children: [
       {
@@ -13,7 +16,7 @@ const login = [
           hideFooter: true,
           backgroundColor: 'rgba(189, 243, 254, 0.211)'
         },
-        component: '@/components/login/Login.vue'
+        component: Login
       },
       {
         path: 'pending',
