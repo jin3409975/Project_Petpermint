@@ -134,7 +134,7 @@ const getpetFile = function (event) {
   }
 }
 // 펫 정보 수정후 저장 버튼 클릭시 axios 요청 account.js 의 323번줄 updatePet
-const savenewpetInfo = function () {
+const savenewpetInfo = () => {
   const userId = localStorage.getItem('useremail')
   accountstore.updatePet(
     userId,

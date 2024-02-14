@@ -123,7 +123,7 @@ function displayMarker() {
     )
 
     for (let i = 0; i < markers.value.length; i++) {
-      kakao.maps.event.addListener(markers.value[i], 'click', function () {
+      kakao.maps.event.addListener(markers.value[i], 'click', () => {
         console.log(i, searchList[i])
         dialog.value = true
         listIndex.value = i

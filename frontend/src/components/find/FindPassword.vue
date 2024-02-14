@@ -12,14 +12,14 @@ const password2 = ref(null)
 const name = ref(null)
 const emailcheck = ref(false)
 
-const emailRequest = function () {
+const emailRequest = () => {
   console.log('이메일 인증 요청', emailcheck.value)
   store.emailRequest(email.value, 'find')
   console.log('결과', store.result)
 }
 
 const validateResult = ref(0)
-const emailValidate = function () {
+const emailValidate = () => {
   console.log('이메일 확인 요청', emailcheck.value)
   var data = false
   data = store.emailValidate(email.value, confirm.value)
@@ -33,7 +33,7 @@ const emailValidate = function () {
 
   console.log('결과', store.result)
 }
-const updatePassword = function () {
+const updatePassword = () => {
   console.log('비밀번호 변경 실행')
   store.updatePassword(email.value, name.value, password1.value)
 }

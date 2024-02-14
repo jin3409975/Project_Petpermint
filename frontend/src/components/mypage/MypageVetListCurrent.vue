@@ -35,7 +35,7 @@ export default {
       console.log('Component is about to be mounted')
       mypagestore.getvetevents()
     })
-    const navigationToinfo = function () {
+    const navigationToinfo = () => {
       router.push({ name: 'mypage-vet-info' })
     }
     // Return all reactive references and methods you want to use in the template

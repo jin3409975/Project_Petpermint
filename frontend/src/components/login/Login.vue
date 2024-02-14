@@ -6,7 +6,7 @@ const router = useRouter()
 const store = useAccountStore()
 const useremail = ref(null)
 const password = ref(null)
-const logIn = function () {
+const logIn = () => {
   // 로그인 데이터 준비
   const logindata = {
     useremail: useremail.value,
