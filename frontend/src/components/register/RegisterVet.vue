@@ -34,7 +34,7 @@ const logoUrl = computed(() => {
 })
 
 // 파일 업로드
-const getFile = function (event) {
+const getFile = (event) => {
   console.log(event)
   picture.value = event.target.files[0]
 }
@@ -256,7 +256,7 @@ const register = async () => {
 }
 
 // 카카오 주소 검색
-function openKakaoAddressSearch() {
+const openKakaoAddressSearch = () => {
   new window.daum.Postcode({
     oncomplete: (data) => {
       // if (address2.value !== '') {

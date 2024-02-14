@@ -74,7 +74,7 @@ onMounted(async () => {
   commentcount.value = community_stores.comments.length
 })
 
-function dateConvert(createdAt) {
+const dateConvert = (createdAt) => {
   var date = new Date(createdAt)
   const adjustedCreatedAt = new Date(date.getTime() + 9 * 60 * 60 * 1000)
 

@@ -15,7 +15,7 @@ const router = useRouter()
 
 const { postId } = route.params
 
-const getCommunityDetail = async function (postId) {
+const getCommunityDetail = async (postId) => {
   try {
     article.value = await community_stores.communitydetail(postId)
     user.value = await account_stores.userdata
@@ -26,7 +26,7 @@ const getCommunityDetail = async function (postId) {
   }
 }
 
-const increaseHit = async function (postId) {
+const increaseHit = async (postId) => {
   try {
     user.value = await community_stores.communityhit(postId)
   } catch (error) {
@@ -44,7 +44,7 @@ onBeforeMount(async () => {
 <template>
   <v-container fluid class="w-80" style="margin-top: 90px">
     <CommunityDetail :article="article" :user="user"></CommunityDetail>
-    <hr></hr>
+    <hr />
     <CommunityComment :article="article" :user="user"></CommunityComment>
   </v-container>
 </template>

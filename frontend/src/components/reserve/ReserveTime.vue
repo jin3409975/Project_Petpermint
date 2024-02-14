@@ -17,7 +17,7 @@ watchEffect(() => {
   endtime.value = formatend(date.value)
 })
 
-function formatDate(selected) {
+const formatDate = (selected) => {
   if (selected) {
     const date = new Date(selected)
     const year = date.getFullYear()
@@ -31,7 +31,7 @@ function formatDate(selected) {
   }
   return ''
 }
-function formatstart(selected) {
+const formatstart = (selected) => {
   if (selected) {
     const date = new Date(selected)
     const hour = ('0' + date.getHours()).slice(-2)
@@ -40,7 +40,7 @@ function formatstart(selected) {
   }
   return ''
 }
-function formatend(selected) {
+const formatend = (selected) => {
   if (selected) {
     const date = new Date(selected)
     date.setMinutes(date.getMinutes() + 20)
@@ -52,7 +52,7 @@ function formatend(selected) {
 }
 
 // 00분, 20분, 40분을 제외한 모든 분을 비활성화하는 배열을 생성하는 함수
-function generateDisabledTimes() {
+const generateDisabledTimes = () => {
   const disabledTimes = []
   for (let hour = 0; hour < 24; hour++) {
     for (let minute = 0; minute < 60; minute++) {

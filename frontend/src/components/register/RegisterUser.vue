@@ -88,7 +88,7 @@ const addPetForm = () => {
 }
 
 // 펫 정보 폼 삭제
-function removePetForm(index) {
+const removePetForm = (index) => {
   if (pets.value.length > 1) {
     pets.value.splice(index, 1)
   } else {
@@ -224,21 +224,21 @@ const page2Test = () => {
 //2페이지 검증 완료
 
 // 파일 업로드
-const getFile = function (event) {
+const getFile = (event) => {
   console.log(event)
   picture.value = event.target.files[0]
 }
 
 const petindex = ref(0)
 
-const getPetFile = function (event) {
+const getPetFile = (event) => {
   console.log(pets.value[petindex.value])
   pets.value[petindex.value].picture = event.target.files[0]
 }
 
 const showSnackbar = ref(false)
 
-async function register() {
+const register = async () => {
   // 회원가입 처리 로직 여기에 추가
   console.log(pets.value)
   const payload = {
@@ -259,7 +259,7 @@ async function register() {
 }
 
 // 카카오 주소 검색
-function openKakaoAddressSearch() {
+const openKakaoAddressSearch = () => {
   new window.daum.Postcode({
     oncomplete: (data) => {
       if (address2.value !== '') {

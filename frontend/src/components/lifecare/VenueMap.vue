@@ -19,7 +19,7 @@ onMounted(() => {
   setMap()
 })
 
-function setMap() {
+const setMap = () => {
   // 카카오 맵 스크립트를 동적으로 로드합니다.
   const script = document.createElement('script')
   script.onload = () => initializeMap() // 스크립트 로드가 완료되면 지도를 초기화합니다.
@@ -27,7 +27,7 @@ function setMap() {
   document.head.appendChild(script)
 }
 
-function initializeMap() {
+const initializeMap = () => {
   // 카카오 맵 API가 로드된 후 호출될 함수입니다.
   kakao.maps.load(() => {
     const options = {
@@ -39,7 +39,7 @@ function initializeMap() {
   })
 }
 
-function sidoCall() {
+const sidoCall = () => {
   axios({
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/init'
@@ -50,7 +50,7 @@ function sidoCall() {
   console.log(sidoItems.value)
 }
 
-function getGungu() {
+const getGungu = () => {
   axios({
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/gungu',
@@ -60,7 +60,7 @@ function getGungu() {
   }).then((r) => (gunguItems.value = r.data.result))
 }
 
-function getMyundong() {
+const getMyundong = () => {
   axios({
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/myundong',
@@ -118,7 +118,7 @@ const search = () => {
 var markers = ref([])
 var positions = [] // marker 배열.
 
-function makeList(data) {
+const makeList = (data) => {
   console.log('지도 출력')
   console.log(data)
 
@@ -136,7 +136,7 @@ function makeList(data) {
   displayMarker()
 }
 
-function displayMarker() {
+const displayMarker = () => {
   // 마커 이미지의 이미지 주소입니다
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png'
 
@@ -173,7 +173,7 @@ function displayMarker() {
   map.setLevel(7)
 }
 
-function moveCenter(lat, lng) {
+const moveCenter = (lat, lng) => {
   map.setCenter(new kakao.maps.LatLng(lat, lng))
 }
 
@@ -206,7 +206,7 @@ const venName = ref('')
 const dialog = ref(false)
 const listIndex = ref()
 
-function highlightMarker(index) {
+const highlightMarker = (index) => {
   console.log(searchList.value[index])
   // 현재 페이지에 따라 인덱스 조정
   const adjustedIndex = (currentPage.value - 1) * itemsPerPage + index

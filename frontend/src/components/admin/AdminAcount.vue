@@ -43,7 +43,7 @@ onMounted(() => {
   initialize()
 })
 
-function initialize() {
+const initialize = () => {
   desserts.value = [
     {
       name: 'Frozen Yogurt',
@@ -118,37 +118,37 @@ function initialize() {
   ]
 }
 
-function editItem(item) {
+const editItem = (item) => {
   console.log(item)
   editedIndex = desserts.value.indexOf(item)
   editedItem = Object.assign({}, item)
   dialog.value = true
 }
 
-function deleteItem(item) {
+const deleteItem = (item) => {
   editedIndex = desserts.value.indexOf(item)
   editedItem = Object.assign({}, item)
   dialogDelete.value = true
 }
 
-function deleteItemConfirm() {
+const deleteItemConfirm = () => {
   desserts.value.splice(editedIndex, 1)
   closeDelete()
 }
 
-function close() {
+const close = () => {
   dialog.value = false
   editedItem = Object.assign({}, defaultItem)
   editedIndex = -1
 }
 
-function closeDelete() {
+const closeDelete = () => {
   dialogDelete.value = false
   editedItem = Object.assign({}, defaultItem)
   editedIndex = -1
 }
 
-function save() {
+const save = () => {
   if (editedIndex > -1) {
     Object.assign(desserts.value[editedIndex], editedItem)
   } else {

@@ -19,7 +19,7 @@ export const useAccountStore = defineStore(
     const isUpdated = ref(false)
     const mypetlist = ref([])
 
-    const usersignup = async function (userData, pets) {
+    const usersignup = async (userData, pets) => {
       console.log('pets', pets)
       var data = new FormData()
       data.append('userId', userData.email)
@@ -76,7 +76,7 @@ export const useAccountStore = defineStore(
       return result
     }
 
-    const vetsignup = async function (userData) {
+    const vetsignup = async (userData) => {
       console.log(userData)
       var data = new FormData()
       data.append('userId', userData.email)
@@ -108,7 +108,7 @@ export const useAccountStore = defineStore(
       return result
     }
 
-    const emailRequest = async function (email, type) {
+    const emailRequest = async (email, type) => {
       var url = ''
       if (type == 'regist') {
         url = API_URL + 'email/request/regist'
@@ -140,7 +140,7 @@ export const useAccountStore = defineStore(
       return emailcheck
     }
 
-    const emailValidate = async function (email, code) {
+    const emailValidate = async (email, code) => {
       console.log(email, code)
       let emailcheck = await axios({
         method: 'post',
@@ -170,7 +170,7 @@ export const useAccountStore = defineStore(
 
     const loginStatus = ref(localStorage.getItem('useremail') != null ? true : false)
     //const loginStatus = ref(false)
-    const logIn = function (userdata) {
+    const logIn = (userdata) => {
       console.log('logindatacheck', userdata)
       axios({
         method: 'post',
@@ -203,7 +203,7 @@ export const useAccountStore = defineStore(
           console.log(e)
         })
     }
-    const findId = function (username, phone) {
+    const findId = (username, phone) => {
       console.log('아이디찾기 실행', username, phone)
       axios({
         method: 'post',
@@ -222,7 +222,7 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const updatePassword = function (userId, userName, password) {
+    const updatePassword = (userId, userName, password) => {
       console.log('비밀번호 수정 실행')
       axios({
         method: 'post',
@@ -251,7 +251,7 @@ export const useAccountStore = defineStore(
     }
     // 일반 유저 프로필 정보 불러오기
 
-    const getnormalprofile = function (userId) {
+    const getnormalprofile = (userId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
@@ -276,7 +276,7 @@ export const useAccountStore = defineStore(
           })
       })
     }
-    const updateNormal = function (userId, userName, password, picture, address, phone) {
+    const updateNormal = (userId, userName, password, picture, address, phone) => {
       var data = new FormData()
       console.log(picture)
       data.append('userId', userId)
@@ -304,7 +304,7 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const getexpertprofile = function (userId) {
+    const getexpertprofile = (userId) => {
       axios({
         method: 'get',
         url: API_URL + 'me/expert',
@@ -321,7 +321,7 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const updateExpert = function (
+    const updateExpert = (
       userId,
       userName,
       password,
@@ -331,7 +331,7 @@ export const useAccountStore = defineStore(
       note,
       starttime,
       endtime
-    ) {
+    ) => {
       var data = new FormData()
       // console.log(picture)
       // console.log('startend', starttime, endtime)
@@ -363,7 +363,7 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const getpetlist = function (userId) {
+    const getpetlist = (userId) => {
       axios({
         method: 'get',
         url: API_URL + 'pet/data',
@@ -380,17 +380,7 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const updatePet = function (
-      userId,
-      petname,
-      animalId,
-      picture,
-      specie,
-      age,
-      note,
-      weight,
-      gender
-    ) {
+    const updatePet = (userId, petname, animalId, picture, specie, age, note, weight, gender) => {
       var data = new FormData()
       data.append('userId', userId)
       data.append('name', petname)

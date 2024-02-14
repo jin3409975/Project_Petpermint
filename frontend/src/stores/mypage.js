@@ -12,7 +12,7 @@ export const myPageStore = defineStore('mypage', () => {
   const vetevents = ref([]) // 수의사의 예약 내역
   const useremail = localStorage.getItem('useremail')
   const licenseNumber = localStorage.getItem('licenseNumber')
-  function getmyevents() {
+  const getmyevents = () => {
     //일반 회원의 예약 내역을 불러오기
     axios({
       method: 'get',
@@ -30,7 +30,7 @@ export const myPageStore = defineStore('mypage', () => {
       }
     })
   }
-  function extractEvents(data) {
+  const extractEvents = (data) => {
     return data
       .map((item) => {
         if (item.time.trim() === '') {
@@ -58,7 +58,7 @@ export const myPageStore = defineStore('mypage', () => {
       })
       .filter((event) => event !== null)
   }
-  function addMinutes(timeStr, minsToAdd) {
+  const addMinutes = (timeStr, minsToAdd) => {
     // 문자열 시간을 Date 객체로 변환
     const timeParts = timeStr.split(':')
     const date = new Date()
@@ -75,7 +75,7 @@ export const myPageStore = defineStore('mypage', () => {
   }
 
   //수의사 메인페이지 예약 조회
-  function getvetevents() {
+  const getvetevents = () => {
     //수의사 회원의 예약 내역을 불러오기
     axios({
       method: 'get',

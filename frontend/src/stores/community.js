@@ -20,7 +20,7 @@ export const useCommunityStore = defineStore(
     const videos = ref([])
     const video = ref()
 
-    const communitywrite = function (formData) {
+    const communitywrite = (formData) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
@@ -38,7 +38,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitydetail = function (postId) {
+    const communitydetail = (postId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
@@ -57,7 +57,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communityupdate = function (formData) {
+    const communityupdate = (formData) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'put',
@@ -75,7 +75,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitylist = function (page, postIds) {
+    const communitylist = (page, postIds) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'patch',
@@ -95,7 +95,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitylike = function (postId, userId) {
+    const communitylike = (postId, userId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'put',
@@ -114,7 +114,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitylikecancel = function (postId, userId) {
+    const communitylikecancel = (postId, userId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'put',
@@ -133,7 +133,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitylikecheck = function (postId, userId) {
+    const communitylikecheck = (postId, userId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
@@ -153,7 +153,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communityhit = function (postId) {
+    const communityhit = (postId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'put',
@@ -172,7 +172,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const communitydelete = function (postId) {
+    const communitydelete = (postId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'delete',
@@ -189,7 +189,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const commentlist = function (postId) {
+    const commentlist = (postId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
@@ -207,7 +207,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const commentwrite = function (postId, userId, content) {
+    const commentwrite = (postId, userId, content) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
@@ -226,7 +226,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const commentdelete = function (commentNo, postId) {
+    const commentdelete = (commentNo, postId) => {
       return new Promise((resolve, reject) => {
         axios({
           method: 'delete',

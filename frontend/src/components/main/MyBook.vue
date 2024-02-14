@@ -52,12 +52,12 @@ const textVisibleOnClick = ref(true)
 // }
 const dialog = ref(false)
 // Open dialog method
-function openDialog() {
+const openDialog = () => {
   dialog.value = true
 }
 
 // Close dialog method
-function closeDialog() {
+const closeDialog = () => {
   dialog.value = false
 }
 // function onDrag(e) {

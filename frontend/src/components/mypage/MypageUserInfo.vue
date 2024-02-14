@@ -20,7 +20,7 @@ onBeforeMount(async () => {
   }, 50)
 })
 
-function init() {
+const init = () => {
   userName.value = userdata.value.userName
   email.value = userdata.value.userId
   phoneNumber.value = userdata.value.phone
@@ -45,7 +45,7 @@ const isclicked = ref(false)
 var file = null
 var petfile = null
 // 프로필 사진 파일 업로드
-const getFile = function (event) {
+const getFile = (event) => {
   file = event.target.files[0]
   if (file && file.type.match('image.*')) {
     const reader = new FileReader()
@@ -58,7 +58,7 @@ const getFile = function (event) {
   }
 }
 // 카카오 주소 검색
-function openKakaoAddressSearch() {
+const openKakaoAddressSearch = () => {
   new window.daum.Postcode({
     oncomplete: (data) => {
       if (address.value !== '') {
@@ -75,18 +75,18 @@ function openKakaoAddressSearch() {
     }
   }).open()
 }
-function updateInfo() {
+const updateInfo = () => {
   isreadonly.value = false
   isclicked.value = true
 }
 // 개인정보 수정 저장
-function saveinfo() {
+const saveinfo = () => {
   isreadonly.value = true
   isclicked.value = false
   // 개인정보 변경 실행
   opendialog.value = true
 }
-async function completeUpdate() {
+const completeUpdate = async () => {
   console.log('file', file)
 
   await accountstore.updateNormal(
@@ -121,7 +121,7 @@ const editPetprofile = (pet) => {
   newpetage.value = pet.age
 }
 // 펫 프로필 사진 파일 업로드
-const getpetFile = function (event) {
+const getpetFile = (event) => {
   petfile = event.target.files[0]
   if (petfile && petfile.type.match('image.*')) {
     const reader = new FileReader()
@@ -151,7 +151,7 @@ const savenewpetInfo = async () => {
   router.push({ name: 'mypage-user-info' })
 }
 
-function navigateTocurrentlist() {
+const navigateTocurrentlist = () => {
   router.push({ name: 'mypage-user-list-current' })
 }
 </script>
