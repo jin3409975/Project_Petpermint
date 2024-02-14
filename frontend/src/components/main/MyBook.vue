@@ -96,14 +96,16 @@ const showHoverText = ref(false)
 //   stopDrag()
 //   showHoverText.value = false
 // }
+const type = ref()
 onBeforeMount(() => {
   reservestore.getmybook()
   console.log(mybook.value.appointId)
+  type.value = localStorage.usertype
 })
 </script>
 
 <template>
-  <div>
+  <div v-if="type != 2">
     <div class="draggable" @click="openDialog">
       <svg class="bg" width="100" height="200">
         <path :d="headerPath" fill="#D2E0FB"></path>

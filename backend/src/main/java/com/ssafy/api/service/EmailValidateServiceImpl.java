@@ -45,13 +45,11 @@ public class EmailValidateServiceImpl implements EmailValidateService{
         makeAuthNum();
         String setFrom = "sky500ro@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
         String toMail = email;
-        String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
+        String title = "Petpermint 이메일 인증 번호"; // 이메일 제목
         String content =
-                "나의 APP을 방문해주셔서 감사합니다." + 	//html 형식으로 작성 !
-                        "<br><br>" +
-                        "인증 번호는 " + authNumber + "입니다." +
+                        "<b>인증 번호</b>: " + authNumber  +
                         "<br>" +
-                        "인증번호를 제대로 입력해주세요"; //이메일 내용 삽입
+                        "인증 번호를 기입해 주세요."; //이메일 내용 삽입
         sendEmail(setFrom, toMail, title, content);
         return Integer.toString(authNumber);
     }
