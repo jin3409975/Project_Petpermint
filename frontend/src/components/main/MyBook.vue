@@ -106,7 +106,7 @@ onBeforeMount(() => {
   <div>
     <div class="draggable" @click="openDialog">
       <svg class="bg" width="100" height="200">
-        <path :d="headerPath" fill="#D2E0FB"></path>
+        <path :d="headerPath" fill="#d2e0fb"></path>
       </svg>
       <div class="header">My 예약카드</div>
     </div>
@@ -409,7 +409,7 @@ onBeforeMount(() => {
 }
 .header {
   width: 200px;
-  color: #4c4c4c;
+  color: #565656;
   height: 50px;
   font-size: 19px;
   font-weight: bold;
