@@ -10,13 +10,8 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-// import jQuery from 'jquery'
-
 // MDI CSS 추가
 import '@mdi/font/css/materialdesignicons.css'
-
-// Axios 추가
-import axios from 'axios'
 
 // SASS 추가
 import './styles.scss'
@@ -31,10 +26,7 @@ const vuetify = createVuetify({
   }
 })
 
-// global.$ = jQuery
-
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
-app.use(axios)
 app.mount('#app')
