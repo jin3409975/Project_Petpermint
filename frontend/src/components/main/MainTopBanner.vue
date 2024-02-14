@@ -13,7 +13,7 @@
       <v-col cols="12" md="4" class="d-flex justify-center">
         <v-card class="pa-3 custom-card" variant="text">
           <v-card-title class="justify-center text-center" style="font-weight: 600; width: 100%">
-            초기 화상 상담</v-card-title
+            <p>초기 화상 상담</p></v-card-title
           >
           <v-card-text class="text-center"
             >언제 어디서든 수의사와 간편하게 온라인 상담을 경험해 보세요.</v-card-text
