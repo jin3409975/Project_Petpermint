@@ -338,3 +338,11 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 ### 🎬시연 동영상 바로가기
 
 [youtube] (https://youtu.be/53vllHYgyVc)
+
+<br>
+
+## 10. 서비스 Architecture
+
+<img src="B303_프로젝트 산출물/B303_Architecture/Architecture.png" alt="normal user signup">
+
+<br>
