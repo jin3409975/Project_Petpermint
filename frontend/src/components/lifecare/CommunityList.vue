@@ -62,7 +62,7 @@ const convertUrls = (content) => {
 
 onMounted(async () => {
   userId.value = localStorage.useremail
-  writer.value = await community_stores.communitydetail(props.article.postId)
+  writer.value = community_stores.communitydetail(props.article.postId)
   isNew.value = props.article.new
 
   time.value = dateConvert(
@@ -130,8 +130,8 @@ const toggleComments = () => {
   showComments.value = !showComments.value
 }
 
-const del = async () => {
-  let deleted = await community_stores.communitydelete(props.article.postId)
+const del = () => {
+  let deleted = community_stores.communitydelete(props.article.postId)
   alert('게시물을 삭제합니다')
   location.reload()
 }

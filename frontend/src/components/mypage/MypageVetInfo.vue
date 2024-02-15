@@ -9,9 +9,9 @@ const router = useRouter()
 const { vetdata } = storeToRefs(accountstore)
 const opendialog = ref(false)
 
-onBeforeMount(async () => {
+onBeforeMount(() => {
   const userId = localStorage.getItem('useremail')
-  await accountstore.getexpertprofile(userId)
+  accountstore.getexpertprofile(userId)
   setTimeout(() => {
     init()
   }, 50)
@@ -120,10 +120,10 @@ function saveinfo() {
   // 개인정보 변경 실행
   opendialog.value = true
 }
-async function completeUpdate() {
+function completeUpdate() {
   console.log('file', file)
   console.log(starttime.value, endtime.value)
-  await accountstore.updateExpert(
+  accountstore.updateExpert(
     email.value,
     userName.value,
     password.value,

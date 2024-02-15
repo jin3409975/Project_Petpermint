@@ -28,7 +28,7 @@ const update = async () => {
       })
     }
 
-    let updater = await community_stores.communityupdate(formData)
+    let updater = community_stores.communityupdate(formData)
     await new Promise((resolve) => setTimeout(resolve, 500))
     location.reload()
   }
