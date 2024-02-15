@@ -62,7 +62,7 @@ onMounted(() => {
             </div>
             <v-card-actions
               class="d-flex justify-center"
-              style="margin-top: 10px; width: 415px; margin-left: 170px"
+              style="margin-top: 10px; width: 415px; margin-left: 193px"
             >
               <!-- 예약을 원하시는 날짜와 시간을 선택하고 다음 버튼을 눌러주세요. -->
               <v-btn
@@ -158,8 +158,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+:deep(.v-stepper-window) {
+  margin: 0px;
+}
 :deep(.v-card-title) {
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 :deep(.v-card-subtitle) {
   padding-bottom: 30px;
@@ -201,6 +204,7 @@ onMounted(() => {
 .card {
   width: 100%;
   text-align: center;
+  margin-top: 15px;
 }
 .custom-btn {
   width: 100px;
