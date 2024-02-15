@@ -26,7 +26,7 @@ const reserveList = ref()
 const userName = ref()
 const animalName = ref()
 
-const formatDate = (selected) => {
+function formatDate(selected) {
   if (selected) {
     const date = new Date(selected)
     const year = date.getFullYear()
@@ -63,7 +63,7 @@ const formatDate = (selected) => {
     })
   }
 }
-const formatstart = (selected) => {
+function formatstart(selected) {
   if (selected) {
     const date = new Date(selected)
     const hour = ('0' + date.getHours()).slice(-2)
@@ -72,7 +72,7 @@ const formatstart = (selected) => {
   }
   return ''
 }
-const formatend = (selected) => {
+function formatend(selected) {
   if (selected) {
     const date = new Date(selected)
     date.setMinutes(date.getMinutes() + 20)
@@ -84,7 +84,7 @@ const formatend = (selected) => {
 }
 
 // 00분, 20분, 40분을 제외한 모든 분을 비활성화하는 배열을 생성하는 함수
-const generateDisabledTimes = () => {
+function generateDisabledTimes() {
   const disabledTimes = []
   for (let hour = 0; hour < 24; hour++) {
     for (let minute = 0; minute < 60; minute++) {
@@ -113,7 +113,7 @@ const disabledDates = (date) => {
 
 const listIndex = ref(0)
 
-const selectReservation = (index) => {
+function selectReservation(index) {
   console.log(reserveList.value[index].appointId)
   dialog.value = true
   listIndex.value = index

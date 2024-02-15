@@ -19,7 +19,7 @@ onMounted(() => {
   setMap()
 })
 
-const setMap = () => {
+function setMap() {
   // 카카오 맵 스크립트를 동적으로 로드합니다.
   const script = document.createElement('script')
   script.onload = () => initializeMap() // 스크립트 로드가 완료되면 지도를 초기화합니다.
@@ -27,7 +27,7 @@ const setMap = () => {
   document.head.appendChild(script)
 }
 
-const initializeMap = () => {
+function initializeMap() {
   // 카카오 맵 API가 로드된 후 호출될 함수입니다.
   kakao.maps.load(() => {
     const options = {
@@ -39,7 +39,7 @@ const initializeMap = () => {
   })
 }
 
-const sidoCall = () => {
+function sidoCall() {
   axios({
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/init'
@@ -50,7 +50,7 @@ const sidoCall = () => {
   console.log(sidoItems.value)
 }
 
-const getGungu = () => {
+function getGungu() {
   axios({
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/gungu',
@@ -60,7 +60,7 @@ const getGungu = () => {
   }).then((r) => (gunguItems.value = r.data.result))
 }
 
-const getMyundong = () => {
+function getMyundong() {
   axios({
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/myundong',
@@ -118,7 +118,7 @@ const search = () => {
 var markers = ref([])
 var positions = [] // marker 배열.
 
-const makeList = (data) => {
+function makeList(data) {
   console.log('지도 출력')
   console.log(data)
 
@@ -136,7 +136,7 @@ const makeList = (data) => {
   displayMarker()
 }
 
-const displayMarker = () => {
+function displayMarker() {
   // 마커 이미지의 이미지 주소입니다
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png'
 
@@ -173,7 +173,7 @@ const displayMarker = () => {
   map.setLevel(7)
 }
 
-const moveCenter = (lat, lng) => {
+function moveCenter(lat, lng) {
   map.setCenter(new kakao.maps.LatLng(lat, lng))
 }
 
@@ -206,7 +206,7 @@ const venName = ref('')
 const dialog = ref(false)
 const listIndex = ref()
 
-const highlightMarker = (index) => {
+function highlightMarker(index) {
   console.log(searchList.value[index])
   // 현재 페이지에 따라 인덱스 조정
   const adjustedIndex = (currentPage.value - 1) * itemsPerPage + index

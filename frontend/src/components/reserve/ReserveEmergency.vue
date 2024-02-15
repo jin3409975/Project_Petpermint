@@ -23,7 +23,7 @@ onMounted(() => {
   setMap()
 })
 
-const setMap = () => {
+function setMap() {
   // 카카오 맵 스크립트를 동적으로 로드합니다.
   const script = document.createElement('script')
   script.onload = () => initializeMap() // 스크립트 로드가 완료되면 지도를 초기화합니다.
@@ -31,7 +31,7 @@ const setMap = () => {
   document.head.appendChild(script)
 }
 
-const initializeMap = () => {
+function initializeMap() {
   // 카카오 맵 API가 로드된 후 호출될 함수입니다.
   kakao.maps.load(() => {
     const options = {
@@ -58,7 +58,7 @@ const search = () => {
     }
   }).then((r) => {
     console.log(r.data.address)
-    geocoder.addressSearch(r.data.address, (result, status) => {
+    geocoder.addressSearch(r.data.address, function (result, status) {
       console.log('asdasdasdtbhjtbnkbetn', status)
       if (status === kakao.maps.services.Status.OK) {
         coords = new kakao.maps.LatLng(result[0].y, result[0].x)
@@ -81,7 +81,7 @@ const search = () => {
 var markers = ref([])
 var positions = [] // marker 배열.
 
-const makeList = (data) => {
+function makeList(data) {
   console.log('지도 출력')
   console.log(data)
 
@@ -99,7 +99,7 @@ const makeList = (data) => {
   displayMarker()
 }
 
-const displayMarker = () => {
+function displayMarker() {
   // 마커 이미지의 이미지 주소입니다
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png'
 
@@ -145,7 +145,7 @@ const displayMarker = () => {
   map.setLevel(5)
 }
 
-const moveCenter = (lat, lng) => {
+function moveCenter(lat, lng) {
   map.setCenter(new kakao.maps.LatLng(lat, lng))
 }
 
@@ -153,7 +153,7 @@ const venName = ref('')
 const dialog = ref(false)
 const listIndex = ref()
 
-const highlightMarker = (index) => {
+function highlightMarker(index) {
   console.log(searchList.value[index])
   for (let i = 0; i < markers.value.length; i++) {
     if (i != index) {
@@ -167,7 +167,7 @@ const highlightMarker = (index) => {
   map.setLevel(1)
 }
 
-const doReserve = async () => {
+async function doReserve() {
   console.log(searchList.value[listIndex.value].dataNo)
   dialog.value = false
   await store.emergencyCreate(searchList.value[listIndex.value].dataNo)

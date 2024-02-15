@@ -17,7 +17,7 @@ onBeforeMount(async () => {
   }, 50)
 })
 
-const init = () => {
+function init() {
   // console.log('pa1515919159119159ge', vetdata)
   userName.value = vetdata.value.userName
   email.value = vetdata.value.userId
@@ -78,7 +78,7 @@ const items = [
 var file = null
 
 // 프로필 사진 파일 업로드
-const getFile = (event) => {
+const getFile = function (event) {
   file = event.target.files[0]
   if (file && file.type.match('image.*')) {
     const reader = new FileReader()
@@ -92,7 +92,7 @@ const getFile = (event) => {
 }
 
 // 카카오 주소 검색
-const openKakaoAddressSearch = () => {
+function openKakaoAddressSearch() {
   new window.daum.Postcode({
     oncomplete: (data) => {
       if (address.value !== '') {
@@ -109,18 +109,18 @@ const openKakaoAddressSearch = () => {
     }
   }).open()
 }
-const updateInfo = () => {
+function updateInfo() {
   isreadonly.value = false
   isclicked.value = true
 }
 // 개인정보 수정 저장
-const saveinfo = () => {
+function saveinfo() {
   isreadonly.value = true
   isclicked.value = false
   // 개인정보 변경 실행
   opendialog.value = true
 }
-const completeUpdate = async () => {
+async function completeUpdate() {
   console.log('file', file)
   console.log(starttime.value, endtime.value)
   await accountstore.updateExpert(
@@ -136,7 +136,7 @@ const completeUpdate = async () => {
   )
   opendialog.value = false
 }
-const navigateTocurrentlist = () => {
+function navigateTocurrentlist() {
   router.push({ name: 'mypage-vet-list-current' })
 }
 </script>

@@ -42,7 +42,7 @@ const navigateToCommunity = () => {
   router.push({ name: 'lifecare-community-list' })
 }
 
-const dateConvert = (createdAt) => {
+function dateConvert(createdAt) {
   const adjustedCreatedAt = new Date(createdAt.getTime() + 9 * 60 * 60 * 1000)
 
   const milliSeconds = new Date() - adjustedCreatedAt

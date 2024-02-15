@@ -29,7 +29,7 @@ export const useReserveStore = defineStore('reserve', () => {
   const mybook = ref([])
   const appointId = ref('')
 
-  const consultCreate = () => {
+  function consultCreate() {
     axios({
       method: 'post',
       url: VITE_APP_SERVER_URI + '/reserve/consult/create',
@@ -50,7 +50,7 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     })
   }
-  const hospitalCreate = () => {
+  function hospitalCreate() {
     axios({
       method: 'post',
       url: VITE_APP_SERVER_URI + '/reserve/hospital/create',
@@ -71,7 +71,7 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     })
   }
-  const emergencyCreate = (hospitalNo) => {
+  function emergencyCreate(hospitalNo) {
     var today = new Date()
     const year = today.getFullYear()
     const month = ('0' + (1 + today.getMonth())).slice(-2)
@@ -96,7 +96,7 @@ export const useReserveStore = defineStore('reserve', () => {
     })
   }
   // 초기상담 시간 가능한 수의사, 병원 리스트 + 수의사 면허번호도 추가로 넘어왔으면
-  const getdoctorList = () => {
+  function getdoctorList() {
     axios({
       method: 'get',
       url: API_URL + 'consult/list/',
@@ -114,7 +114,7 @@ export const useReserveStore = defineStore('reserve', () => {
       .catch((err) => console.log(err))
   }
   // 병원 진료예약 가능 병원 병원주소 리스트 + 병원 번호? 도 함께 넘어왔으면 좋겠음
-  const gethospitalList = () => {
+  function gethospitalList() {
     axios({
       method: 'get',
       url: API_URL + 'hospital/list/',
@@ -130,7 +130,7 @@ export const useReserveStore = defineStore('reserve', () => {
       })
       .catch((err) => console.log(err))
   }
-  const getpetList = () => {
+  function getpetList() {
     // console.log(VITE_APP_SERVER_URI + 'user/pet/data/')
     axios({
       method: 'get',
@@ -146,7 +146,7 @@ export const useReserveStore = defineStore('reserve', () => {
       })
       .catch((err) => console.log(err))
   }
-  const getmybook = () => {
+  function getmybook() {
     var today = new Date()
     const year = today.getFullYear()
     const month = ('0' + (1 + today.getMonth())).slice(-2)

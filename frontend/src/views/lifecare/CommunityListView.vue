@@ -61,7 +61,7 @@ const write = (content) => {
   articles.value.unshift(card)
 }
 
-const getCurrentDateTimeString = () => {
+function getCurrentDateTimeString() {
   const currentDate = new Date()
 
   const year = currentDate.getFullYear()

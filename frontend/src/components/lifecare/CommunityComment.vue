@@ -32,7 +32,7 @@ const getComments = async () => {
   commentcount.value = comment.value.length
 }
 
-const dateConvert = (date) => {
+function dateConvert(date) {
   var createdAt = new Date(date)
   const adjustedCreatedAt = new Date(createdAt.getTime() + 9 * 60 * 60 * 1000)
 

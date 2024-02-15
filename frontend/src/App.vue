@@ -25,7 +25,7 @@ const handleMouseOut = () => {
   currentImage.value = defaultImage
 }
 
-const goEmergency = () => {
+function goEmergency() {
   console.log('asdasdasdqefn qejfjoqekbwrh bjw')
   if (localStorage.getItem('useremail') != null) {
     router.push({ name: 'reserve-emergency' })
