@@ -71,7 +71,7 @@ export const useAccountStore = defineStore(
           headers: {
             'Content-Type': 'multipart/formdata'
           }
-        }).then((r) => //console.log(r))
+        }).then((r) => {}) //console.log(r))
       }
       return result
     }
