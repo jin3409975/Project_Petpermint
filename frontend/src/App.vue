@@ -37,6 +37,10 @@ const backgroundColor = computed(() => {
   console.log(route.meta.backgroundColor) // Check the value
   return route.meta.backgroundColor
 })
+const isVeterinarian = computed(() => {
+  const userType = localStorage.getItem('usertype')
+  return userType === '2'
+})
 </script>
 
 <template>
@@ -46,7 +50,7 @@ const backgroundColor = computed(() => {
       <RouterView />
       <Footer v-if="!hideFooter" />
       <div
-        v-if="!hideicon"
+        v-if="!hideicon && !isVeterinarian"
         class="emerg-container"
         @mouseover="handleMouseOver"
         @mouseout="handleMouseOut"
