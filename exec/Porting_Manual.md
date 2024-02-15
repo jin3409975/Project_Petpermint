@@ -29,6 +29,20 @@
     cd /opt
     curl https://s3-eu-west-1.amazonaws.com/aws.openvidu.io/install_openvidu_latest.sh | bash
 
+
+
+    #필수 포트를 개방합니다.
+    ufw allow 22/tcp
+    ufw allow 80/tcp
+    ufw allow 443/tcp
+    ufw allow 3478/tcp
+    ufw allow 3478/udp
+    ufw allow 40000-57000/tcp
+    ufw allow 40000-57000/udp
+    ufw allow 57001-65535/tcp
+    ufw allow 57001-65535/udp
+
+    #(FrontEnd SSL 적용 후 진행)
     #Openvidu를 설정합니다.
     cd ./openvidu
     nano .env
@@ -91,6 +105,11 @@
     # Backend clone
     git clone https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B303.git
     cd S10P12B303/backend
+
+    #(FrontEnd SSL 적용 후 진행)
+    # SSL 키 할당
+    cd /etc/letsencrypt/live/{{인증서 발급 시 설정한 도메인 폴더}}/
+    openssl pkcs12 -export -inkey privkey.pem -in cert.pem -out /{{Backend 폴더 경로}}/src/main/resources/keystore.p12
 
     # JDK 11을 설치합니다
     sudo apt-get install openjdk-11-jdk
