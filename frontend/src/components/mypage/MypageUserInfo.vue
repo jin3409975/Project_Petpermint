@@ -383,10 +383,10 @@ function navigateTocurrentlist() {
       <v-dialog v-model="opendialog" max-width="600px">
         <v-card>
           <v-card-title> 비밀번호 입력 </v-card-title>
-          <v-text-field v-model="password" label="비밀번호" variant="solo"></v-text-field>
+          <v-text-field v-model="password" label="비밀번호" variant="underlined"></v-text-field>
           <v-card-actions>
             <v-btn variant="tonal" rounded color="primary" block @click="completeUpdate"
-              >비밀번호확인</v-btn
+              >비밀번호 확인</v-btn
             >
           </v-card-actions>
         </v-card>
