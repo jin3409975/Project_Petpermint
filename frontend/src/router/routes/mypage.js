@@ -23,6 +23,9 @@ const mypage = [
           {
             path: 'info',
             name: 'mypage-user-info',
+            meta: {
+              backgroundColor: 'rgba(102, 139, 167, 0.211)'
+            },
             component: MypageUserInfo
           },
           {
