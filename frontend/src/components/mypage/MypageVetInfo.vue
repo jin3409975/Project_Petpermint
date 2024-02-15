@@ -145,17 +145,13 @@ function navigateTocurrentlist() {
   <div class="info">
     <v-btn
       width="200px"
+      color="#E27878"
       style="margin-left: 250px; margin-bottom: 10px"
       @click="navigateTocurrentlist"
       >나의 예약 보기</v-btn
     >
     <!-- 유저의 프로필  -->
-    <v-container
-      class="profile-container"
-      elevation="8"
-      width="auto"
-      style="margin-top: 5px; margin-bottom: 100px"
-    >
+    <v-container class="profile-container" elevation="8" width="auto" style="margin-top: 5px">
       <div class="profile-img">
         <v-avatar size="230" variant="inlined">
           <img :src="picture" alt="프로필 사진" style="max-width: 100%; height: auto" />
@@ -166,14 +162,22 @@ function navigateTocurrentlist() {
             :disabled="!isclicked"
           />
         </v-avatar>
-        <v-btn v-show="isclicked == false" style="margin: 10px" @click="updateInfo"
-          >개인정보수정</v-btn
+        <v-btn
+          variant="outlined"
+          v-show="isclicked == false"
+          style="margin-top: 30px"
+          @click="updateInfo"
+          color="#E27878"
+          rounded
+          >개인정보 수정</v-btn
         >
+
         <a
           class="text-caption text-decoration-none text-blue"
           href="/find/password"
           rel="noopener noreferrer"
           target="_self"
+          style="margin-top: 10px"
         >
           비밀번호 변경</a
         >
@@ -184,26 +188,26 @@ function navigateTocurrentlist() {
         <v-text-field
           label="이름"
           v-model="userName"
-          variant="solo"
+          variant="underlined"
           :readonly="isreadonly"
         ></v-text-field>
         <v-text-field
           v-model="email"
           label="Email"
-          variant="solo"
+          variant="underlined"
           :readonly="isreadonly"
         ></v-text-field>
         <v-text-field
           v-model="phoneNumber"
           label="전화번호"
-          variant="solo"
+          variant="underlined"
           :readonly="isreadonly"
         ></v-text-field>
         <div style="position: relative">
           <v-text-field
             v-model="address"
             label="주소"
-            variant="solo"
+            variant="underlined"
             :readonly="isreadonly"
           ></v-text-field>
 
@@ -217,13 +221,13 @@ function navigateTocurrentlist() {
         <v-text-field
           label="인삿말"
           v-model="note"
-          variant="solo"
+          variant="underlined"
           :readonly="isreadonly"
         ></v-text-field>
         <v-text-field
           label="병원"
           v-model="hospitalname"
-          variant="solo"
+          variant="underlined"
           :readonly="isreadonly"
         ></v-text-field>
         <v-select
@@ -256,18 +260,21 @@ function navigateTocurrentlist() {
 </template>
 
 <style scoped>
+.v-container {
+  width: 67%;
+}
 .info {
   height: auto;
   justify-content: left;
   flex-direction: column;
   display: flex;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   margin-top: 100px;
 }
 .profile-container {
   /* max-width: 900px; */
   margin: 200px auto;
-  background-color: #eef5ff;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -279,7 +286,7 @@ function navigateTocurrentlist() {
 .profile-info {
   width: 500px;
   margin-left: 0;
-  background-color: #eef5ff;
+  background-color: #ffffff;
   box-shadow: none;
 }
 .profile-img {
@@ -287,12 +294,11 @@ function navigateTocurrentlist() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 500px;
+  width: 550px;
   margin-bottom: 10px;
+  margin-right: 100px;
 }
-.v-btn {
-  background-color: #ffd0d0;
-}
+
 .v-text-field {
   margin-bottom: 10px;
   width: 85%;
