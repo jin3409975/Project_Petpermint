@@ -4,7 +4,7 @@ import { useAccountStore } from '@/stores/account'
 const store = useAccountStore()
 const username = ref(null)
 const phone = ref(null)
-const findmyId = () => {
+const findmyId = function () {
   store.findId(username.value, phone.value)
 }
 </script>

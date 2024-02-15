@@ -227,7 +227,7 @@ const goToType = () => {
 
 const showSnackbar = ref(false)
 
-const register = () => {
+const register = function () {
   const payload = {
     email: email.value,
     password: password1.value,

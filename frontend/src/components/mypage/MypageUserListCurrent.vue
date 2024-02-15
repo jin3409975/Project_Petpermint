@@ -35,7 +35,7 @@ export default {
       console.log('Component is about to be mounted')
       await mypagestore.getmyevents()
     })
-    const navigationToinfo = () => {
+    const navigationToinfo = function () {
       router.push({ name: 'mypage-user-info' })
     }
     // Return all reactive references and methods you want to use in the template

@@ -244,7 +244,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const videolist = () => {
+    const videolist = function () {
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
@@ -259,7 +259,7 @@ export const useCommunityStore = defineStore(
           })
       })
     }
-    const videocurrent = () => {
+    const videocurrent = function () {
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',

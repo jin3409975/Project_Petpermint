@@ -242,7 +242,7 @@ export const useAccountStore = defineStore(
         }
       })
     }
-    const logout = () => {
+    const logout = function () {
       localStorage.removeItem('useremail')
       localStorage.removeItem('usertype')
       localStorage.removeItem('token')
