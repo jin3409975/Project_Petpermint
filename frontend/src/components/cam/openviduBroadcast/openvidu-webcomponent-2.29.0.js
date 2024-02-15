@@ -53695,9 +53695,6 @@
               (this.ee = new Y()),
               (F = G.PlatformUtils.getInstance()),
               (this.libraryVersion = S.version),
-              m.info('OpenVidu initialized'),
-              m.info('Platform detected: ' + F.getDescription()),
-              m.info('openvidu-browser version: ' + this.libraryVersion),
               (F.isMobileDevice() || F.isReactNative()) &&
                 this.onOrientationChanged(function () {
                   p.publishers.forEach(function (k) {
