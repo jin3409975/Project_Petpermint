@@ -23,6 +23,10 @@ const mypage = [
           {
             path: 'info',
             name: 'mypage-user-info',
+            meta: {
+              hideFooter: true,
+              backgroundColor: 'rgba(102, 139, 167, 0.211)'
+            },
             component: MypageUserInfo
           },
           {
@@ -30,6 +34,9 @@ const mypage = [
             name: 'mypage-user-list',
             component: MypageUserListView,
             redirect: { name: 'mypage-user-list-current' },
+            meta: {
+              hideFooter: true
+            },
             children: [
               {
                 path: 'current',

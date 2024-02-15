@@ -42,7 +42,6 @@ const isLoggedIn = computed(() => {
 })
 const handleLoginLogout = () => {
   if (isLoggedIn.value) {
-    // localStorage.removeItem('useremail');
     store.logout()
     router.push({ name: 'main-home' })
   } else {

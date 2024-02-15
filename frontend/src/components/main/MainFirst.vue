@@ -95,7 +95,7 @@ const scrollDwn = () => {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 100%); /* 중앙 정렬 */
+  transform: translate(-50%, 130%); /* 중앙 정렬 */
   z-index: 10; /* 비디오 위에 표시 */
 }
 </style>

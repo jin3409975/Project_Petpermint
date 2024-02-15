@@ -46,10 +46,7 @@ const sheet = ref(false)
     <v-container fluid style="max-width: 70%">
       <div class="d-flex align-center justify-center flex-wrap text-center">
         <div style="font-size: 30px; font-weight: bold; color: rgb(70, 69, 69)">
-          펫퍼민트만의 반려동물을 위한
-        </div>
-        <div style="font-size: 30px; font-weight: bold; color: rgb(70, 69, 69)">
-          &nbsp;라이브 방송!
+          펫퍼민트만의 반려동물을 위한 라이브 방송!
         </div>
       </div>
       <v-row>
