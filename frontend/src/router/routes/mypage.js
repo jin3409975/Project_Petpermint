@@ -57,6 +57,10 @@ const mypage = [
           {
             path: 'info',
             name: 'mypage-vet-info',
+            meta: {
+              hideFooter: true,
+              backgroundColor: 'rgba(102, 139, 167, 0.211)'
+            },
             component: MypageVetInfo
           },
           {
@@ -68,6 +72,9 @@ const mypage = [
               {
                 path: 'current',
                 name: 'mypage-vet-list-current',
+                meta: {
+                  hideFooter: true
+                },
                 component: MypageVetListCurrent
               }
             ]
