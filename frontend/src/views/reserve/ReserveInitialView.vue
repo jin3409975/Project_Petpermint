@@ -63,7 +63,7 @@ onMounted(() => {
             </div>
             <v-card-actions
               class="d-flex justify-center"
-              style="margin-top: 10px; width: 415px; margin-left: 170px"
+              style="margin-top: 10px; width: 415px; margin-left: 193px"
             >
               <v-btn
                 style="border: 2px solid"
@@ -157,6 +157,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+:deep(.v-stepper-window) {
+  margin: 0px;
+}
 :deep(.v-card-title) {
   margin-bottom: 0px;
 }
@@ -200,6 +203,7 @@ onMounted(() => {
 .card {
   width: 100%;
   text-align: center;
+  margin-top: 15px;
 }
 .custom-btn {
   width: 100px;
