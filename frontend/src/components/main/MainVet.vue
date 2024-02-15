@@ -7,6 +7,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import Navbar from '@/components/main/Navbar.vue'
+import MainFirst from '@/components/main/MainFirst.vue'
 
 const router = useRouter()
 const { VITE_APP_SERVER_URI } = import.meta.env
@@ -140,7 +141,8 @@ onMounted(() => {})
 
 <template>
   <div style="text-align: center">
-    <Navbar />
+    <MainFirst />
+    <!-- <Navbar />
     <video class="background-video" width="100%" autoplay muted loop>
       <source src="/assets/img/MainVideo.mp4" type="video/mp4" />
     </video>
@@ -149,14 +151,14 @@ onMounted(() => {})
         ><b>사용자들과 예약을 진행해보세요</b></span
       >
       <v-btn @click="scrollDwn" style="margin-left: 320px">예약확인</v-btn>
-    </div>
+    </div> -->
 
     <v-row>
-      <v-col style="margin-top: 950px" md="12">
-        <h1>상담 예약</h1>
+      <v-col style="margin-top: 100px" md="12">
+        <span style="font-size: 40px; font-weight: bold">상담 예약</span>
       </v-col>
 
-      <v-col style="margin-top: 100px" md="6">
+      <v-col style="margin-top: 110px; margin-bottom: 15px" md="6">
         <div
           class="calendar-container"
           style="margin-left: 250px; margin-bottom: 100px; margin-top: -50px"
@@ -177,7 +179,7 @@ onMounted(() => {})
         </div>
       </v-col>
       <v-col md="6">
-        <div style="margin-right: 130px; margin-top: 50px">
+        <div style="margin-right: 130px; margin-top: 60px">
           <v-card
             class="mx-auto hospital-list-card"
             max-width="420"
