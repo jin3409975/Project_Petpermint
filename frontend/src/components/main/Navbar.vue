@@ -88,6 +88,10 @@ const navigateToUserRegister = () => {
 const navigateToVenue = () => {
   router.push({ name: 'lifecare-venue' })
 }
+const isVeterinarian = computed(() => {
+  const userType = localStorage.getItem('usertype')
+  return userType === '2'
+})
 </script>
 
 <template>
@@ -104,8 +108,13 @@ const navigateToVenue = () => {
       <div style="display: flex; align-items: center; column-gap: 45px">
         <img @click="navigateToMain" :src="logoUrl" :style="logoStyle" />
         <a @click.prevent="navigateToMain" class="home-link">Home</a>
-        <a @click.prevent="navigateToInitial" class="home-link">초기 상담예약</a>
-        <a @click.prevent="navigateToAppoint" class="home-link">병원 진료예약</a>
+
+        <a v-if="!isVeterinarian" @click.prevent="navigateToInitial" class="home-link"
+          >초기 상담예약</a
+        >
+        <a v-if="!isVeterinarian" @click.prevent="navigateToAppoint" class="home-link"
+          >병원 진료예약</a
+        >
         <v-menu open-on-hover>
           <template v-slot:activator="{ props }">
             <a v-bind="props" class="home-link">
