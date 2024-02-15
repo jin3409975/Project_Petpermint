@@ -23,7 +23,7 @@ const checkLike = async () => {
   } else {
     let checker = await community_stores.communitylikecheck(props.article.postId, userId.value)
     let ch = await community_stores.likecheck
-    console.log(ch)
+    //console.log(ch)
     if (ch == 'Fail') alert('이미 좋아요 하셨습니다')
     else {
       await community_stores.communitylike(props.article.postId, userId.value)
@@ -82,11 +82,11 @@ watch(
 )
 
 const fetchData = async (newId) => {
-  console.log(newId)
+  //console.log(newId)
   await account_stores.getnormalprofile(newId)
   writer.value = await account_stores.userdata
-  console.log(writer.value)
-  console.log(writer.value.picture)
+  //console.log(writer.value)
+  //console.log(writer.value.picture)
   if (writer.value.picture != 0 && writer.value.picture != null)
     picture.value = writer.value.picture
 }
@@ -95,11 +95,11 @@ const time = ref('0일 전')
 watch(
   () => props.article.registTime,
   (newTime) => {
-    console.log(newTime)
+    //console.log(newTime)
     let temp = new Date(newTime)
-    console.log(temp)
+    //console.log(temp)
     time.value = dateConvert(temp)
-    console.log(time)
+    //console.log(time)
   }
 )
 </script>

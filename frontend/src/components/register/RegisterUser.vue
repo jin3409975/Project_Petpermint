@@ -122,7 +122,7 @@ const emailStatus = ref('request')
 
 const emailAction = async () => {
   if (emailStatus.value === 'request') {
-    console.log('이메일 인증 요청 user')
+    //console.log('이메일 인증 요청 user')
     let result = await store.emailRequest(email.value, 'regist')
     if (result) {
       emailStatus.value = 'validate'
@@ -130,7 +130,7 @@ const emailAction = async () => {
       return false
     }
   } else if (emailStatus.value === 'validate') {
-    console.log('이메일 확인 요청 user')
+    //console.log('이메일 확인 요청 user')
     let result = await store.emailValidate(email.value, confirm.value)
     if (result) {
       emailStatus.value = 'completed'
@@ -225,14 +225,14 @@ const page2Test = () => {
 
 // 파일 업로드
 const getFile = function (event) {
-  console.log(event)
+  //console.log(event)
   picture.value = event.target.files[0]
 }
 
 const petindex = ref(0)
 
 const getPetFile = function (event) {
-  console.log(pets.value[petindex.value])
+  //console.log(pets.value[petindex.value])
   pets.value[petindex.value].picture = event.target.files[0]
 }
 
@@ -240,7 +240,7 @@ const showSnackbar = ref(false)
 
 function register() {
   // 회원가입 처리 로직 여기에 추가
-  console.log(pets.value)
+  //console.log(pets.value)
   const payload = {
     email: email.value,
     password: password1.value,

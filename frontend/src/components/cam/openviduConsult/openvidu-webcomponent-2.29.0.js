@@ -6191,7 +6191,7 @@
       let w3 = (() => {
         class t {
           log(e) {
-            console.log(e)
+            //console.log(e)
           }
           warn(e) {
             console.warn(e)
@@ -41404,9 +41404,9 @@
                 (this.adminRecordingsList = new ut([])),
                 (this.adminLoginError = new ut(null)),
                 (this.configuration = e),
-                console.log(this.configuration),
-                this.isProduction() && console.log('OpenVidu Angular Production Mode'),
-                (this.minimalObs = this.minimal.asObservable()),
+                //console.log(this.configuration),
+                this.isProduction() && //console.log('OpenVidu Angular Production Mode'),
+                  (this.minimalObs = this.minimal.asObservable()),
                 (this.participantNameObs = this.participantName.asObservable()),
                 (this.prejoinObs = this.prejoin.asObservable()),
                 (this.videoMutedObs = this.videoMuted.asObservable()),
@@ -60724,8 +60724,8 @@
                               Y.substring(0, v.instance.MAX_LENGTH_STRING_JSON),
                               '...'
                             )),
-                          globalThis.LOG_JSNLOG_RESULTS && console.log(Y),
-                          Y
+                          globalThis.LOG_JSNLOG_RESULTS && //console.log(Y),
+                            Y
                         )
                       },
                       enabled: !0

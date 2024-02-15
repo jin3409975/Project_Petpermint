@@ -57,9 +57,9 @@ const search = () => {
       userId: localStorage.getItem('useremail')
     }
   }).then((r) => {
-    console.log(r.data.address)
+    //console.log(r.data.address)
     geocoder.addressSearch(r.data.address, function (result, status) {
-      console.log('asdasdasdtbhjtbnkbetn', status)
+      //console.log('asdasdasdtbhjtbnkbetn', status)
       if (status === kakao.maps.services.Status.OK) {
         coords = new kakao.maps.LatLng(result[0].y, result[0].x)
         axios({
@@ -70,7 +70,7 @@ const search = () => {
             lon: coords.La
           }
         }).then((r) => {
-          console.log(r)
+          //console.log(r)
           searchList.value = r.data.result
           makeList(r.data.result)
         })
@@ -82,8 +82,8 @@ var markers = ref([])
 var positions = [] // marker 배열.
 
 function makeList(data) {
-  console.log('지도 출력')
-  console.log(data)
+  //console.log('지도 출력')
+  //console.log(data)
 
   positions = []
   data.forEach((area) => {
@@ -94,7 +94,7 @@ function makeList(data) {
     positions.push(markerInfo)
   })
 
-  console.log('asdsadasd', positions)
+  //console.log('asdsadasd', positions)
 
   displayMarker()
 }
@@ -104,9 +104,9 @@ function displayMarker() {
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png'
 
   for (let i = 0; i < positions.length; i++) {
-    //console.log(positions[i])
+    ////console.log(positions[i])
     // 마커 이미지의 이미지 크기 입니다
-    console.log(i, positions[i])
+    //console.log(i, positions[i])
     var imageSize = new kakao.maps.Size(24, 35)
 
     // 마커 이미지를 생성합니다
@@ -124,7 +124,7 @@ function displayMarker() {
 
     for (let i = 0; i < markers.value.length; i++) {
       kakao.maps.event.addListener(markers.value[i], 'click', function () {
-        console.log(i, searchList[i])
+        //console.log(i, searchList[i])
         dialog.value = true
         listIndex.value = i
       })
@@ -154,7 +154,7 @@ const dialog = ref(false)
 const listIndex = ref()
 
 function highlightMarker(index) {
-  console.log(searchList.value[index])
+  //console.log(searchList.value[index])
   for (let i = 0; i < markers.value.length; i++) {
     if (i != index) {
       markers.value[i].setMap(null)
@@ -168,7 +168,7 @@ function highlightMarker(index) {
 }
 
 function doReserve() {
-  console.log(searchList.value[listIndex.value].dataNo)
+  //console.log(searchList.value[listIndex.value].dataNo)
   dialog.value = false
   store.emergencyCreate(searchList.value[listIndex.value].dataNo)
 }

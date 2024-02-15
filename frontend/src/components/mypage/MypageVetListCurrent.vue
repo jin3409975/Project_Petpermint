@@ -32,7 +32,7 @@ export default {
     })
 
     onBeforeMount(() => {
-      console.log('Component is about to be mounted')
+      //console.log('Component is about to be mounted')
       mypagestore.getvetevents()
     })
     const navigationToinfo = function () {

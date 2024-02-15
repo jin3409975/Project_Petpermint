@@ -31,7 +31,7 @@ export const useCommunityStore = defineStore(
           data: formData
         })
           .then((response) => {
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -50,7 +50,7 @@ export const useCommunityStore = defineStore(
           .then((response) => {
             article.value = response.data
             resolve(article.value)
-            console.log(article)
+            //console.log(article)
           })
           .catch((error) => {
             reject(error)
@@ -68,7 +68,7 @@ export const useCommunityStore = defineStore(
           data: formData
         })
           .then((response) => {
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -88,7 +88,7 @@ export const useCommunityStore = defineStore(
           .then((response) => {
             articles.value = response.data.postList
             resolve(articles.value)
-            console.log(articles.value)
+            //console.log(articles.value)
           })
           .catch((error) => {
             reject(error)
@@ -107,7 +107,7 @@ export const useCommunityStore = defineStore(
         })
           .then((response) => {
             resolve(likecheck.value)
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -126,7 +126,7 @@ export const useCommunityStore = defineStore(
         })
           .then((response) => {
             resolve(likecheck.value)
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -146,7 +146,7 @@ export const useCommunityStore = defineStore(
           .then((response) => {
             likecheck.value = response.data.message
             resolve(likecheck.value)
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -165,7 +165,7 @@ export const useCommunityStore = defineStore(
           .then((response) => {
             hit.value = response.data
             resolve(hit.value)
-            console.log('hit')
+            //console.log('hit')
           })
           .catch((error) => {
             reject(error)
@@ -182,7 +182,7 @@ export const useCommunityStore = defineStore(
           }
         })
           .then((response) => {
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -219,7 +219,7 @@ export const useCommunityStore = defineStore(
           }
         })
           .then((response) => {
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)
@@ -237,7 +237,7 @@ export const useCommunityStore = defineStore(
           }
         })
           .then((response) => {
-            console.log(response)
+            //console.log(response)
           })
           .catch((error) => {
             reject(error)

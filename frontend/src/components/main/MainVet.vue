@@ -39,7 +39,7 @@ function formatDate(selected) {
     const startTime = `${year}-${month}-${day} ${hour}:${min}`
     const endTime = `${year}-${month}-${day} 23:59`
 
-    console.log(startTime, endTime, localStorage.getItem('licenseNumber'))
+    //console.log(startTime, endTime, localStorage.getItem('licenseNumber'))
     axios({
       method: 'get',
       url: VITE_APP_SERVER_URI + '/reserve/mybook/expert',
@@ -49,7 +49,7 @@ function formatDate(selected) {
         endTime: endTime
       }
     }).then((r) => {
-      console.log(r)
+      //console.log(r)
       if (r.data.result.length == 0) {
         reserveList.value = null
         userName.value = null
@@ -115,7 +115,7 @@ const disabledDates = (date) => {
 const listIndex = ref(0)
 
 function selectReservation(index) {
-  console.log(reserveList.value[index].appointId)
+  //console.log(reserveList.value[index].appointId)
   dialog.value = true
   listIndex.value = index
 }
@@ -123,7 +123,7 @@ function selectReservation(index) {
 const dialog = ref(false)
 
 const handleEnteringConsultButton = () => {
-  console.log(reserveList.value[listIndex.value].appointId)
+  //console.log(reserveList.value[listIndex.value].appointId)
   dialog.value = false
   router.push({
     name: 'cam-consult',
@@ -132,7 +132,7 @@ const handleEnteringConsultButton = () => {
 }
 
 const scrollDwn = () => {
-  console.log('here')
+  //console.log('here')
   window.scrollTo({ top: 822, left: 0 })
 }
 

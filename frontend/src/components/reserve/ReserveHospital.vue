@@ -19,7 +19,7 @@ const selectDoctor = (doctor) => {
   reservelicense.value = doctor.licenseNumber
 }
 const selectHospital = (hospital) => {
-  console.log('hos', hospital)
+  //console.log('hos', hospital)
   reservehospitalno.value = hospital.dataNo
   hospitalname.value = hospital.venName
   // 예약에 필요한 병원 번호를 store변수에 저장

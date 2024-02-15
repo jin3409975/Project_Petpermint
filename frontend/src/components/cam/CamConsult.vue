@@ -22,19 +22,19 @@ export default {
       const session = event.detail
 
       session.on('connectionCreated', (e) => {
-        console.log('connectionCreated', e)
+        //console.log('connectionCreated', e)
       })
 
       session.on('streamDestroyed', (e) => {
-        console.log('streamDestroyed', e)
+        //console.log('streamDestroyed', e)
       })
 
       session.on('streamCreated', (e) => {
-        console.log('streamCreated', e)
+        //console.log('streamCreated', e)
       })
 
       session.on('sessionDisconnected', (e) => {
-        console.log('sessionDisconnected', e)
+        //console.log('sessionDisconnected', e)
         this.redirectByUserTypeAfterleave()
       })
 

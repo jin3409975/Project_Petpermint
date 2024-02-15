@@ -61,14 +61,14 @@ function closeDialog() {
   dialog.value = false
 }
 // function onDrag(e) {
-//   console.log('Dragging')
+//   //console.log('Dragging')
 //   e = e.changedTouches ? e.changedTouches[0] : e
 //   if (isDragging) {
 //     const dx = e.pageX - start.x
 //     const dampen = dx > 0 ? 1.5 : 4
 //     c.x = sideWidth / 2 + dx / dampen
 //     if (Math.abs(dx) > 40) {
-//       console.log('Opening dialog')
+//       //console.log('Opening dialog')
 //       stopDrag()
 //       dialog.value = true
 //     }
@@ -102,7 +102,7 @@ const type = ref()
 onBeforeMount(async () => {
   await reservestore.getmybook()
   await accountstore.getnormalprofile(localStorage.getItem('useremail'))
-  console.log(mybook.value.appointId)
+  //console.log(mybook.value.appointId)
   type.value = localStorage.usertype
 })
 const isUser = ref(localStorage.getItem('usertype') == 1 ? true : false)

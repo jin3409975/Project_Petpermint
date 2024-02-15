@@ -18,7 +18,7 @@ onBeforeMount(() => {
 })
 
 function init() {
-  // console.log('pa1515919159119159ge', vetdata)
+  // //console.log('pa1515919159119159ge', vetdata)
   userName.value = vetdata.value.userName
   email.value = vetdata.value.userId
   phoneNumber.value = vetdata.value.phone
@@ -32,7 +32,7 @@ function init() {
   hospitalname.value = vetdata.value.hospitalName
   starttime.value = vetdata.value.startTime
   endtime.value = vetdata.value.endTime
-  // console.log('llllll', vetdata.value)
+  // //console.log('llllll', vetdata.value)
 }
 // 유저 프로필 변수
 const userName = ref('')
@@ -121,8 +121,8 @@ function saveinfo() {
   opendialog.value = true
 }
 function completeUpdate() {
-  console.log('file', file)
-  console.log(starttime.value, endtime.value)
+  //console.log('file', file)
+  //console.log(starttime.value, endtime.value)
   accountstore.updateExpert(
     email.value,
     userName.value,

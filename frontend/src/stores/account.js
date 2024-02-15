@@ -20,7 +20,7 @@ export const useAccountStore = defineStore(
     const mypetlist = ref([])
 
     const usersignup = async function (userData, pets) {
-      console.log('pets', pets)
+      //console.log('pets', pets)
       var data = new FormData()
       data.append('userId', userData.email)
       data.append('userName', userData.name)
@@ -40,7 +40,7 @@ export const useAccountStore = defineStore(
           'Content-Type': 'multipart/formdata'
         }
       }).then((r) => {
-        console.log(r)
+        //console.log(r)
         if (r.data.statusCode == 200) {
           return true
         }
@@ -49,21 +49,21 @@ export const useAccountStore = defineStore(
       for (let i = 0; i < pets.length; i++) {
         data = new FormData()
         data.append('name', pets[i].name)
-        console.log(pets[i].name)
+        //console.log(pets[i].name)
         data.append('picture', pets[i].picture)
-        console.log(pets[i].picture)
+        //console.log(pets[i].picture)
         data.append('specie', pets[i].petspecies)
-        console.log(pets[i].petspecies)
+        //console.log(pets[i].petspecies)
         data.append('age', pets[i].petage)
-        console.log(pets[i].petage)
+        //console.log(pets[i].petage)
         data.append('note', pets[i].more)
-        console.log(pets[i].more)
+        //console.log(pets[i].more)
         data.append('weight', pets[i].petweight)
-        console.log(pets[i].petweight)
+        //console.log(pets[i].petweight)
         data.append('gender', pets[i].gender)
-        console.log(pets[i].gender)
+        //console.log(pets[i].gender)
         data.append('userId', userData.email)
-        console.log(userData.email)
+        //console.log(userData.email)
         axios({
           method: 'post',
           url: API_URL + 'pet/create',
@@ -71,13 +71,13 @@ export const useAccountStore = defineStore(
           headers: {
             'Content-Type': 'multipart/formdata'
           }
-        }).then((r) => console.log(r))
+        }).then((r) => //console.log(r))
       }
       return result
     }
 
     const vetsignup = async function (userData) {
-      console.log(userData)
+      //console.log(userData)
       var data = new FormData()
       data.append('userId', userData.email)
       data.append('userName', userData.name)
@@ -98,7 +98,7 @@ export const useAccountStore = defineStore(
           'Content-Type': 'multipart/formdata'
         }
       }).then((r) => {
-        console.log(r)
+        //console.log(r)
         if (r.data.statusCode == 200) {
           return true
         } else {
@@ -122,7 +122,7 @@ export const useAccountStore = defineStore(
           userId: email
         }
       }).then((r) => {
-        console.log(r)
+        //console.log(r)
         if (r.data.message == 'Success') {
           alert('이메일 인증 요청이 완료되었습니다. 5분 이내에 입력해 주세요.')
           return true
@@ -141,7 +141,7 @@ export const useAccountStore = defineStore(
     }
 
     const emailValidate = async function (email, code) {
-      console.log(email, code)
+      //console.log(email, code)
       let emailcheck = await axios({
         method: 'post',
         url: API_URL + 'email/validate',
@@ -151,10 +151,10 @@ export const useAccountStore = defineStore(
         }
       })
         .then((r) => {
-          console.log(r)
+          //console.log(r)
           if (r.data.statusCode == 200) {
             alert('이메일 인증에 성공 하셨습니다.')
-            // console.log(result, 'result 값 확인')
+            // //console.log(result, 'result 값 확인')
             return true
           } else {
             alert('이메일 인증에 실패 하셨습니다.')
@@ -171,7 +171,7 @@ export const useAccountStore = defineStore(
     const loginStatus = ref(localStorage.getItem('useremail') != null ? true : false)
     //const loginStatus = ref(false)
     const logIn = function (userdata) {
-      console.log('logindatacheck', userdata)
+      //console.log('logindatacheck', userdata)
       axios({
         method: 'post',
         url: API_URL + 'login',
@@ -182,29 +182,29 @@ export const useAccountStore = defineStore(
       })
         .then((r) => {
           if (r.data.statusCode == 200) {
-            // console.log('success login', r)
+            // //console.log('success login', r)
             loginStatus.value = true
             localStorage.setItem('useremail', r.data.userId)
             localStorage.setItem('usertype', r.data.type)
             localStorage.setItem('token', r.data.accessToken)
             if (r.data.type == 2) {
-              // console.log('type', r.data.type)
+              // //console.log('type', r.data.type)
               localStorage.setItem('licenseNumber', r.data.licenseNumber)
               router.push({ name: 'main-vet', replace: true })
             } else {
               router.push({ name: 'main-home', replace: true })
             }
           } else {
-            // console.log('failed login', r)
+            // //console.log('failed login', r)
             alert('로그인에 실패 했습니다.')
           }
         })
         .catch((e) => {
-          console.log(e)
+          //console.log(e)
         })
     }
     const findId = function (username, phone) {
-      console.log('아이디찾기 실행', username, phone)
+      //console.log('아이디찾기 실행', username, phone)
       axios({
         method: 'post',
         url: API_URL + 'recover/id',
@@ -214,16 +214,16 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success findID', r)
+          // //console.log('success findID', r)
           alert(`당신의 ID는 ${r.data.userId} 입니다.`)
         } else {
-          // console.log('failed login', r)
+          // //console.log('failed login', r)
           alert('아이디 찾기에 실패 했습니다.')
         }
       })
     }
     const updatePassword = function (userId, userName, password) {
-      console.log('비밀번호 수정 실행')
+      //console.log('비밀번호 수정 실행')
       axios({
         method: 'post',
         url: API_URL + 'recover/password',
@@ -234,10 +234,10 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success update password', r)
+          // //console.log('success update password', r)
           alert(`당신의 패스워드가 변경 되었습니다.`)
         } else {
-          // console.log('failed update password', r)
+          // //console.log('failed update password', r)
           alert('패스워드 변경에 실패 했습니다.')
         }
       })
@@ -262,11 +262,11 @@ export const useAccountStore = defineStore(
         })
           .then((response) => {
             if (response.data.statusCode === 200) {
-              // console.log('success get userinfo', response)
+              // //console.log('success get userinfo', response)
               resolve(response.data)
               userdata.value = response.data
             } else {
-              // console.log('failed get userinfo', response)
+              // //console.log('failed get userinfo', response)
               reject(new Error('유저 정보를 불러오는데 실패 했습니다.'))
             }
           })
@@ -278,7 +278,7 @@ export const useAccountStore = defineStore(
     }
     const updateNormal = function (userId, userName, password, picture, address, phone) {
       var data = new FormData()
-      console.log(picture)
+      //console.log(picture)
       data.append('userId', userId)
       data.append('userName', userName)
       data.append('password', password)
@@ -296,10 +296,10 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success update userinfo', r)
+          // //console.log('success update userinfo', r)
           isUpdated.value = true
         } else {
-          // console.log('failed update password', r)
+          // //console.log('failed update password', r)
           alert('비밀번호가 올바른지 확인해 보세요')
         }
       })
@@ -313,10 +313,10 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success get vet info', r.data)
+          // //console.log('success get vet info', r.data)
           vetdata.value = r.data
         } else {
-          // console.log('failed get userinfo', r)
+          // //console.log('failed get userinfo', r)
           alert('유저 정보를 불러오는데 실패 했습니다.')
         }
       })
@@ -333,8 +333,8 @@ export const useAccountStore = defineStore(
       endtime
     ) {
       var data = new FormData()
-      // console.log(picture)
-      // console.log('startend', starttime, endtime)
+      // //console.log(picture)
+      // //console.log('startend', starttime, endtime)
       data.append('userId', userId)
       data.append('userName', userName)
       data.append('password', password)
@@ -355,10 +355,10 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success update expertinfo', r)
+          // //console.log('success update expertinfo', r)
           isUpdated.value = true
         } else {
-          // console.log('failed update password', r)
+          // //console.log('failed update password', r)
           alert('비밀번호가 올바른지 확인해 보세요')
         }
       })
@@ -372,10 +372,10 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success get pet list info', r.data)
+          // //console.log('success get pet list info', r.data)
           mypetlist.value = r.data.result
         } else {
-          // console.log('failed get pet list info', r)
+          // //console.log('failed get pet list info', r)
           alert('유저 정보를 불러오는데 실패 했습니다.')
         }
       })
@@ -412,9 +412,9 @@ export const useAccountStore = defineStore(
         }
       }).then((r) => {
         if (r.data.statusCode == 200) {
-          // console.log('success update petinfo', r)
+          // //console.log('success update petinfo', r)
         } else {
-          // console.log('failed update password', r)
+          // //console.log('failed update password', r)
           alert('비밀번호가 올바른지 확인해 보세요')
         }
       })

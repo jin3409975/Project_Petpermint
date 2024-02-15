@@ -16,12 +16,12 @@ const vuetify = createVuetify({
 })
 
 const selectPet = () => {
-  console.log(reservepetindex.value)
+  //console.log(reservepetindex.value)
   reservepet.value = petList.value[reservepetindex.value].animalId
   petname.value = petList.value[reservepetindex.value].name
 }
 const navigateToReserveComplete = () => {
-  console.log(type)
+  //console.log(type)
   if (type == 1) {
     reserveStore.consultCreate()
   } else {

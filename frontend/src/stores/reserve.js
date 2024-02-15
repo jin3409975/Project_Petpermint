@@ -42,10 +42,10 @@ export const useReserveStore = defineStore('reserve', () => {
         note: notetext.value
       }
     }).then((r) => {
-      console.log(r)
-      console.log(r.data.statusCode)
+      //console.log(r)
+      //console.log(r.data.statusCode)
       if (r.data.statusCode == 200) {
-        console.log('qwewqeqweeqw')
+        //console.log('qwewqeqweeqw')
         // router.push({ name: 'reserve-initial-complete' })
       }
     })
@@ -63,10 +63,10 @@ export const useReserveStore = defineStore('reserve', () => {
         note: notetext.value
       }
     }).then((r) => {
-      console.log(r)
-      console.log(r.data.statusCode, notetext.value)
+      //console.log(r)
+      //console.log(r.data.statusCode, notetext.value)
       if (r.data.statusCode == 200) {
-        console.log('qwewqeqweeqw')
+        //console.log('qwewqeqweeqw')
         // router.push({ name: 'reserve-initial-complete' })
       }
     })
@@ -90,7 +90,7 @@ export const useReserveStore = defineStore('reserve', () => {
     }).then((r) => {
       if (r.data.statusCode == 200) {
         alert('응급 예약이 완료되었습니다.')
-        console.log('asdsd응급예약', time)
+        //console.log('asdsd응급예약', time)
         router.push({ name: 'main' })
       }
     })
@@ -108,8 +108,8 @@ export const useReserveStore = defineStore('reserve', () => {
     })
       .then((res) => {
         doctorList.value = res.data.result
-        // console.log(reservedate.value)
-        console.log(res.data)
+        // //console.log(reservedate.value)
+        //console.log(res.data)
       })
       .catch((err) => console.log(err))
   }
@@ -123,15 +123,15 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     })
       .then((res) => {
-        console.log(res)
+        //console.log(res)
         hospitalList.value = res.data.result
-        // console.log(reservedate.value)
-        console.log(res.data)
+        // //console.log(reservedate.value)
+        //console.log(res.data)
       })
       .catch((err) => console.log(err))
   }
   function getpetList() {
-    // console.log(VITE_APP_SERVER_URI + 'user/pet/data/')
+    // //console.log(VITE_APP_SERVER_URI + 'user/pet/data/')
     axios({
       method: 'get',
       url: VITE_APP_SERVER_URI + '/user/pet/data/',
@@ -140,9 +140,9 @@ export const useReserveStore = defineStore('reserve', () => {
       }
     })
       .then((res) => {
-        console.log('동물정보 불러오기 성공')
+        //console.log('동물정보 불러오기 성공')
         petList.value = res.data.result
-        console.log(res.data)
+        //console.log(res.data)
       })
       .catch((err) => console.log(err))
   }

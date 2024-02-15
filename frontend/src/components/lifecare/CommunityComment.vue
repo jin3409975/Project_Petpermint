@@ -19,7 +19,7 @@ const commentcount = ref()
 const likes = ref(0)
 
 const getComments = async () => {
-  console.log(props.article.postId)
+  //console.log(props.article.postId)
   await community_stores.commentlist(props.article.postId)
   comment.value = community_stores.comments
 
@@ -74,7 +74,7 @@ const deleteComment = (comment) => {
 }
 
 onMounted(async (article) => {
-  console.log(article)
+  //console.log(article)
   await getComments()
   user.value = props.user
 })
@@ -82,7 +82,7 @@ onMounted(async (article) => {
 watch(
   () => props.article,
   (newArticle) => {
-    console.log('Article changed:', newArticle)
+    //console.log('Article changed:', newArticle)
     getComments()
   }
 )

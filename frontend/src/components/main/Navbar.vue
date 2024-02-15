@@ -34,7 +34,7 @@ onBeforeUnmount(() => {
 })
 
 const isLoggedIn = computed(() => {
-  console.log('computed test ', store.loginStatus)
+  //console.log('computed test ', store.loginStatus)
   if (store.loginStatus == null) {
     return false
   }

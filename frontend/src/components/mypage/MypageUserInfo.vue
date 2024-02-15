@@ -14,7 +14,7 @@ onBeforeMount(() => {
   const userId = localStorage.getItem('useremail')
   accountstore.getnormalprofile(userId)
   accountstore.getpetlist(userId)
-  console.log(mypetlist, 'mypetlist')
+  //console.log(mypetlist, 'mypetlist')
   setTimeout(() => {
     init()
   }, 50)
@@ -87,7 +87,7 @@ function saveinfo() {
   opendialog.value = true
 }
 function completeUpdate() {
-  console.log('file', file)
+  //console.log('file', file)
 
   accountstore.updateNormal(
     email.value,

@@ -44,10 +44,10 @@ function sidoCall() {
     method: 'get',
     url: VITE_APP_SERVER_URI + '/venue/init'
   }).then((r) => {
-    console.log(r)
+    //console.log(r)
     sidoItems.value = r.data.result
   })
-  console.log(sidoItems.value)
+  //console.log(sidoItems.value)
 }
 
 function getGungu() {
@@ -92,7 +92,7 @@ const search = () => {
       venName: venName.value
     }
   }).then((r) => {
-    console.log(r)
+    //console.log(r)
     searchList.value = r.data.result
     makeList(searchList)
   })
@@ -104,13 +104,13 @@ const search = () => {
   // let areaCode = document.getElementById('search-area')?.value
   // let contentTypeId = document.getElementById('search-content-id')?.value
   // let keyword = document.getElementById('search-keyword').value
-  // console.log(areaCode, contentTypeId, keyword)
+  // //console.log(areaCode, contentTypeId, keyword)
   // if (parseInt(areaCode)) baseUrl += '&sido=' + areaCode
   // if (parseInt(contentTypeId)) baseUrl += '&content=' + contentTypeId
   // if (keyword) {
   //   baseUrl += '&word=' + keyword
   // }
-  // console.log(baseUrl)
+  // //console.log(baseUrl)
   // fetch(baseUrl)
   //   .then((response) => response.json())
   //   .then((data) => makeList(data))
@@ -119,8 +119,8 @@ var markers = ref([])
 var positions = [] // marker 배열.
 
 function makeList(data) {
-  console.log('지도 출력')
-  console.log(data)
+  //console.log('지도 출력')
+  //console.log(data)
 
   positions = []
   data.value.forEach((area) => {
@@ -131,7 +131,7 @@ function makeList(data) {
     positions.push(markerInfo)
   })
 
-  console.log('asdsadasd', positions)
+  //console.log('asdsadasd', positions)
 
   displayMarker()
 }
@@ -141,9 +141,9 @@ function displayMarker() {
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png'
 
   for (let i = 0; i < positions.length; i++) {
-    //console.log(positions[i])
+    ////console.log(positions[i])
     // 마커 이미지의 이미지 크기 입니다
-    console.log(i, positions[i])
+    //console.log(i, positions[i])
     var imageSize = new kakao.maps.Size(24, 35)
 
     // 마커 이미지를 생성합니다
@@ -161,7 +161,7 @@ function displayMarker() {
 
     for (let i = 0; i < markers.value.length; i++) {
       kakao.maps.event.addListener(markers.value[i], 'click', function () {
-        console.log(i, searchList[i])
+        //console.log(i, searchList[i])
         dialog.value = true
         listIndex.value = i
       })
@@ -207,7 +207,7 @@ const dialog = ref(false)
 const listIndex = ref()
 
 function highlightMarker(index) {
-  console.log(searchList.value[index])
+  //console.log(searchList.value[index])
   // 현재 페이지에 따라 인덱스 조정
   const adjustedIndex = (currentPage.value - 1) * itemsPerPage + index
 

@@ -35,7 +35,7 @@ const logoUrl = computed(() => {
 
 // 파일 업로드
 const getFile = function (event) {
-  console.log(event)
+  //console.log(event)
   picture.value = event.target.files[0]
 }
 
@@ -44,7 +44,7 @@ const emailStatus = ref('request')
 
 const emailAction = async () => {
   if (emailStatus.value === 'request') {
-    console.log('이메일 인증 요청 user')
+    //console.log('이메일 인증 요청 user')
     let result = await store.emailRequest(email.value, 'regist')
     if (result) {
       emailStatus.value = 'validate'
@@ -52,7 +52,7 @@ const emailAction = async () => {
       return false
     }
   } else if (emailStatus.value === 'validate') {
-    console.log('이메일 확인 요청 user')
+    //console.log('이메일 확인 요청 user')
     let result = await store.emailValidate(email.value, confirm.value)
     if (result) {
       emailStatus.value = 'completed'
@@ -240,7 +240,7 @@ const register = function () {
     address: address1.value,
     note: more.value
   }
-  console.log(payload)
+  //console.log(payload)
   var result = store.vetsignup(payload)
   if (result) {
     showSnackbar.value = true // 회원가입 완료 시 스낵바 표시

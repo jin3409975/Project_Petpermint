@@ -26,7 +26,7 @@ const handleMouseOut = () => {
 }
 
 function goEmergency() {
-  console.log('asdasdasdqefn qejfjoqekbwrh bjw')
+  //console.log('asdasdasdqefn qejfjoqekbwrh bjw')
   if (localStorage.getItem('useremail') != null) {
     router.push({ name: 'reserve-emergency' })
   } else {
@@ -34,7 +34,7 @@ function goEmergency() {
   }
 }
 const backgroundColor = computed(() => {
-  console.log(route.meta.backgroundColor) // Check the value
+  //console.log(route.meta.backgroundColor) // Check the value
   return route.meta.backgroundColor
 })
 const isVeterinarian = computed(() => {
