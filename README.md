@@ -4,14 +4,21 @@
 
 ### 목차
 
-1. 프로젝트 개요
-2. Team member
-3. Convention
-4. 프로젝트 개발 환경
-5. 기술 소개
-6. 주요 기능
-7. 서비스 화면
-8. 설계 과정
+[1. 프로젝트 개요](#1-프로젝트-개요)
+
+[2. Team member](#2-team-member)
+
+[3. Convention](#3-convention)
+
+[4. 프로젝트 개발 환경](#4-프로젝트-개발-환경)
+
+[5. 기술 소개](#5-기술-소개)
+
+[6. 주요 기능](#6-주요-기능)
+
+[7. 서비스 화면](#7-서비스-화면)
+
+[8. 설계 과정](#8-설계-과정)
 
 ## 1. 프로젝트 개요
 
@@ -98,8 +105,8 @@
 | :black_square_button: Desktop App | :black_square_button: Game            | :white_check_mark: Java          | :white_check_mark: Spring/Springboot |
 |                                   |                                       | :black_square_button: Kotlin     |                                      |
 
+- 4-2 BackEnd 개발 환경
 
-- 4-2 BackEnd 개발 환경 
 ```
 InteliJ
 Spring Boot 2.4.5
@@ -119,7 +126,8 @@ Nginx
 
 ```
 
-- 4-3 Front end 개발 환경 
+- 4-3 Front end 개발 환경
+
 ```
 VisualCode
 Node 18.12.0
@@ -129,18 +137,15 @@ Vue3
 Google Cloud Platform - Compute Engine
 ```
 
-
 ## 5. 기술 소개
 
 ```
 1. open vidu
 
 OpenVidu
-WebRTC 기술과 Kudento 미디어 서버를 사용하는 화상 웹 개발 플랫폼을 구현하였습니다.   
+WebRTC 기술과 Kudento 미디어 서버를 사용하는 화상 웹 개발 플랫폼을 구현하였습니다.
 OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하였습니다. DB의 예약 테이블 정보를 통해 Session ID를 만들어 보호자와 수의사가 같은 Session에 접근 할 수 있게 실시간 화상 통화 방을 연결했고 해당 화상 방 안에서 화면공유와 채팅 등의 추가 기능을 제공하였으며 라이브 방송의 경우 호스트와 게스트로 역할을 구분하여 호스트만 마이크와 화면을 제어 가능하도록 권한을 부여하여 전문가 라이브 방송을 구현했습니다.
 ```
-
-
 
 ## 6. 주요 기능
 
@@ -151,7 +156,7 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 서비스 대상자 : 주요 서비스 대상자는 반려동물이 병원에 가야하는 상황인지 알고 싶은 보호자, 간단한 건강 관련 상담을 수의사와 하고 싶은 반려 동물 보호자들이 주요 서비스 대상입니다.
 
 구현 방법 : WebRTC, 외부 컴포넌트 라이브러리 (vuetify , Datepicker)로 화면 구성
-  
+
 <br>
 
 <h3>2. 병원 진료 예약</h3>
@@ -162,7 +167,6 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 - 구현 방법 : 외부 컴포넌트 라이브러리 (vuetify , Datepicker)로 화면 구성
 
-
 <br>
 <h3>3. 응급 예약 </h3>
 
@@ -171,7 +175,6 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 - 서비스 대상자 : 반려동물이 응급한 의료 처치를 받아야하는 보호자
 
 - 구현 방법 : 카카오맵 API
-
 
 <br>
 <h3>4. 전문가 라이브 방송 </h3>
@@ -182,7 +185,6 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 - 구현 방법 : webRTC
 
-
 <br>
 <h3>5. 반려동물 편의시설 조회 </h3>
 
@@ -192,7 +194,6 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 - 구현 방법 : 카카오맵 API, 반려동물편의시설 정보 data set (localdata)
 
-
 <br>
 <h3>6. 펫닥 커뮤니티 </h3>
 
@@ -200,13 +201,7 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 서비스 대상자 : 반려동물을 기르는데 유용한 정보를 얻고 싶은 반려인들이 주요 서비스 대상자가 될 것입니다.
 
-
-
-
-
-
 <br>
-
 
 ## 7. 서비스 화면
 
@@ -216,12 +211,12 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 <br>
 
-2. 수의사 회원가입 
+2. 수의사 회원가입
 
 <img src='./readme_img/signup_vet.PNG' alt="vet signup">
 
 <br>
-3. 일반 사용자 로그인 
+3. 일반 사용자 로그인
 
 <img src="./readme_img/login.PNG" alt="login">
   
@@ -238,17 +233,15 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 <br>
 
-7. 일반 사용자 예약 카드   
+7. 일반 사용자 예약 카드
 
 <img src="./readme_img/main_bookcard.PNG" alt="my book">
   
 <br>
 
+8. 온라인 상담
 
-8. 온라인 상담 
-  
-<img src="./readme_img/consulting.gif" alt="consulting">  
-
+<img src="./readme_img/consulting.gif" alt="consulting">
 
 <br>
 
@@ -258,42 +251,35 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 <img src="./readme_img/consult2.PNG" alt="consult2">
 <img src="./readme_img/consult3.PNG" alt="consult3">
 
-
 <br>
 
 10. 병원 예약 페이지
 
 <img src="./readme_img/hospital1.PNG" alt="hospital1">
 <img src="./readme_img/hospital2.PNG" alt="hospital2">
-<img src="./readme_img/hospital3.PNG" alt="hospital3">  
-
+<img src="./readme_img/hospital3.PNG" alt="hospital3">
 
 <br>
-11. 응급 예약 페이지 
+11. 응급 예약 페이지
 
 <img src="./readme_img/emergency.PNG" alt="emergency">
 
-
 <br>
 
-
-12. 라이브방송 
+12. 라이브방송
 
 <img src="./readme_img/live_broad.PNG" alt="livepage">
 <img src="./readme_img/live.gif" alt="livebroadcast">
 
-
 <br>
-13. 펫닥 커뮤니티 
+13. 펫닥 커뮤니티
 
 <img src="./readme_img/community.png" alt="community">
-
 
 <br>
 14. 반려동물 편의시설 조회
 
 <img src="./readme_img/find_convienience.png" alt="find_places">
-
 
 <br>
 15. 일반 사용자 마이페이지
@@ -303,18 +289,52 @@ OpenVidu를 사용하여 화상 상담과 라이브 방송 기능을 개발 하�
 
 <br>
 
-16. 수의사 마이페이지 
+16. 수의사 마이페이지
 
 <img src="./readme_img/mypage_vet.PNG" alt="vet mypage">
 <img src="./readme_img/mypage_vet_list.PNG" alt="vet schedule">
-
 
 <br>
 
 ## 8. 설계 과정
 
-1.
-2.
-3.
-4.
-5.
+1. ERD
+   <img src="./B303_프로젝트 산출물/B303_ERD/B303_ERD.png">
+
+<br>
+
+2. 화면정의서
+
+[화면정의서] : (https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B303/-/blob/master/B303_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%82%B0%EC%B6%9C%EB%AC%BC/B303_UI%20%EC%A0%95%EC%9D%98%EC%84%9C%20%EB%B0%8F%20%EC%B2%B4%ED%81%AC%EB%A6%AC%EC%8A%A4%ED%8A%B8/B303_UI%20%EC%A0%95%EC%9D%98%EC%84%9C%20%EB%B0%8F%20%EC%B2%B4%ED%81%AC%EB%A6%AC%EC%8A%A4%ED%8A%B8.pdf?ref_type=heads)
+
+3. Permission
+
+[권한_Permission] : (https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B303/-/blob/master/B303_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%82%B0%EC%B6%9C%EB%AC%BC/B303_%EA%B6%8C%ED%95%9C/B303_%EA%B6%8C%ED%95%9C.pdf?ref_type=heads)
+
+4. 기능 명세서
+
+<img src="B303_프로젝트 산출물/B303_기능명세서/B303_기능명세서-1.png">
+
+5. 서비스 구조도
+
+<img src="B303_프로젝트 산출물/B303_서비스구조도/B303_서비스 구조도.png">
+
+6. 시퀀스 다이어그램
+
+[시퀀스 다이어그램] : (https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B303/-/blob/master/B303_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%82%B0%EC%B6%9C%EB%AC%BC/B303_%EC%8B%9C%ED%80%80%EC%8A%A4%20%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8/B303_%EC%8B%9C%ED%80%80%EC%8A%A4%20%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.pdf?ref_type=heads)
+
+7. 와이어프레임
+
+<img src="B303_프로젝트 산출물/B303_와이어프레임/B303_와이어프레임.PNG">
+
+8. Policy
+
+[Policy] : (https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B303/-/blob/master/B303_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%82%B0%EC%B6%9C%EB%AC%BC/B303_%EC%A0%95%EC%B1%85/B303_%EC%A0%95%EC%B1%85.pdf?ref_type=heads)
+
+<br>
+
+## 9. 시연 동영상
+
+### 🎬시연 동영상 바로가기
+
+[youtube] (https://youtu.be/53vllHYgyVc)
