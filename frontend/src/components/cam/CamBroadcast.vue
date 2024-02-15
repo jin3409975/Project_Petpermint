@@ -11,10 +11,10 @@ export default {
     return {
       sessionName: this.$route.params.sessionId,
       participantName: '',
+      userEmail: localStorage.getItem('useremail'),
       APPLICATION_SERVER_URL: `${VITE_APP_SERVER_URI}/`,
       webComponent: null,
-      adminAccount: 'ssafyjam@gmail.com',
-      isMuted: false
+      adminAccount: 'ssafyjam@gmail.com'
     }
   },
   mounted() {
@@ -125,8 +125,8 @@ export default {
     <openvidu-webcomponent
       ref="webComponent"
       prejoin="false"
-      :audio-muted="participantName === adminAccount ? false : true"
-      :video-muted="participantName === adminAccount ? false : true"
+      :audio-muted="this.userEmail === this.adminAccount ? false : true"
+      :video-muted="this.userEmail === this.adminAccount ? false : true"
       leave-button="false"
       recording-button="false"
       toolbar-screenshare-button="false"
