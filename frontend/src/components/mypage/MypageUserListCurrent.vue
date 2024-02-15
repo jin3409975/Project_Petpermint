@@ -49,7 +49,16 @@ export default {
 </script>
 
 <template>
-  <div style="margin-bottom: 50px; margin-top: 80px">
+  <div
+    style="
+      margin-bottom: 50px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+    "
+  >
     <div class="mycalendar">
       <div class="flex-container">
         <v-btn color="#E27878" @click="navigationToinfo" style="margin-bottom: 20px"
