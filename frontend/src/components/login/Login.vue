@@ -141,7 +141,7 @@ const navigateTo = (path) => {
       </v-card-text>
     </v-card>
 
-    <div class="dog" style="position: absolute; top: 520px"></div>
+    <div class="dog" style="position: absolute; bottom: 10px"></div>
     <div class="grass">
       <div class="sand"></div>
       <div class="cloudcontain1">
