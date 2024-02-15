@@ -31,9 +31,9 @@ export default {
       }
     })
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
       console.log('Component is about to be mounted')
-      await mypagestore.getvetevents()
+      mypagestore.getvetevents()
     })
     const navigationToinfo = function () {
       router.push({ name: 'mypage-vet-info' })

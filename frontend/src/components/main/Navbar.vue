@@ -40,10 +40,10 @@ const isLoggedIn = computed(() => {
   }
   return store.loginStatus
 })
-const handleLoginLogout = async () => {
+const handleLoginLogout = () => {
   if (isLoggedIn.value) {
     // localStorage.removeItem('useremail');
-    await store.logout()
+    store.logout()
     router.push({ name: 'main-home' })
   } else {
     router.push({ name: 'login-home' })
