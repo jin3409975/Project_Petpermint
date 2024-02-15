@@ -20,7 +20,7 @@ const getCommunityDetail = async function (postId) {
     article.value = await community_stores.communitydetail(postId)
     user.value = await account_stores.userdata
 
-    console.log(account_stores)
+    // console.log(account_stores)
   } catch (error) {
     console.error('Error fetching community detail:', error)
   }
@@ -37,7 +37,7 @@ const increaseHit = async function (postId) {
 onBeforeMount(async () => {
   await increaseHit(postId)
   await getCommunityDetail(postId)
-  console.log(user)
+  // console.log(user)
 })
 </script>
 

@@ -119,7 +119,7 @@ function initialize() {
 }
 
 function editItem(item) {
-  console.log(item)
+  //console.log(item)
   editedIndex = desserts.value.indexOf(item)
   editedItem = Object.assign({}, item)
   dialog.value = true

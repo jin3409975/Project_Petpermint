@@ -15,12 +15,12 @@ const postIds = ref([0])
 let page = 0
 
 const load = async ($state) => {
-  console.log('loading...')
-  console.log(postIds.value)
+  // console.log('loading...')
+  // console.log(postIds.value)
   try {
     const json = await stores.communitylist(page, postIds.value)
     articles.value.push(...json)
-    console.log(articles.value)
+    // console.log(articles.value)
     json.forEach((element) => {
       postIds.value.push(element.postId)
     })
@@ -48,13 +48,13 @@ document.addEventListener('dataEmitted', (event) => {
   const { userId, content, files } = event.detail
 
   // Do something with the received data
-  console.log('Received data:', userId, content, files)
+  // console.log('Received data:', userId, content, files)
 })
 
 const write = (content) => {
   var card = Object()
   card.userName = '추가 됨'
-  console.log(getCurrentDateTimeString())
+  // console.log(getCurrentDateTimeString())
   card.registTime = getCurrentDateTimeString()
   card.content = content
   card.new = 1

@@ -23,8 +23,8 @@ const selectDate = () => {
 const navigateToReserveComplete = () => {
   notetext.value = note.value
   dialog.value = true
-  console.log(notetext.value, note.value)
-  console.log('tetatetfaefagasdg', type)
+  // console.log(notetext.value, note.value)
+  // console.log('tetatetfaefagasdg', type)
   if (type.value == 1) {
     reserveStore.consultCreate()
   } else {
