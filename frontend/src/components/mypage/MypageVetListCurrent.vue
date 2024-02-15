@@ -49,11 +49,25 @@ export default {
 </script>
 
 <template>
-  <p>나의 예약 내역 보기</p>
-
-  <div class="mycalendar">
-    <button class="pinkbutton" @click="navigationToinfo">나의 정보 보기</button>
-    <Qalendar :events="events" :config="config" />
+  <div
+    style="
+      margin-bottom: 90px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+    "
+  >
+    <div class="mycalendar">
+      <div class="flex-container">
+        <v-btn color="#E27878" @click="navigationToinfo" style="margin-bottom: 20px"
+          >마이페이지로 돌아가기</v-btn
+        >
+        <p style="font-size: 35px; font-weight: bold; margin-left: 300px">나의 예약 내역 보기</p>
+      </div>
+      <Qalendar :events="events" :config="config" />
+    </div>
   </div>
 </template>
 
@@ -62,14 +76,19 @@ export default {
 .calendar-month__weekday[data-v-034f06d8] {
   min-height: 80px;
 }
+.flex-container {
+  display: flex; /* Flexbox 레이아웃 활성화 */
+  align-items: center; /* 수직 방향 중앙 정렬 */
+  gap: 10px; /* 요소 사이의 간격 */
+}
 .mycalendar {
   height: auto;
   width: 80%;
   justify-content: left;
   flex-direction: column;
   display: flex;
-  margin-bottom: 100px;
-  margin: auto;
+  margin-bottom: 130px;
+  margin-top: 200px;
 }
 .pinkbutton {
   background-color: #ffd0d0;
