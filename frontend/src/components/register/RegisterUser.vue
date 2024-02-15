@@ -238,7 +238,7 @@ const getPetFile = function (event) {
 
 const showSnackbar = ref(false)
 
-function register() {
+async function register() {
   // 회원가입 처리 로직 여기에 추가
   console.log(pets.value)
   const payload = {
@@ -248,7 +248,7 @@ function register() {
     phone: phone.value,
     address: address1.value
   }
-  store.usersignup(payload, pets.value)
+  await store.usersignup(payload, pets.value)
   // 여기서는 예시로 바로 스낵바를 표시합니다.
   //showSnackbar.value = true
 

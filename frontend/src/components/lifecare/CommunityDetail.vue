@@ -32,8 +32,8 @@ const checkLike = async () => {
   }
 }
 
-const del = () => {
-  let deleted = community_stores.communitydelete(props.article.postId)
+const del = async () => {
+  let deleted = await community_stores.communitydelete(props.article.postId)
   alert('게시물을 삭제합니다')
   router.push({ name: 'lifecare-community-list' })
 }
@@ -62,9 +62,9 @@ function dateConvert(createdAt) {
   return `${Math.floor(years)}년 전`
 }
 
-onMounted(() => {
+onMounted(async () => {
   userId.value = localStorage.useremail
-  writer.value = community_stores.communitydetail(props.article.postId)
+  writer.value = await community_stores.communitydetail(props.article.postId)
 })
 
 watch(

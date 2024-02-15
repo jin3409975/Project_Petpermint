@@ -12,17 +12,17 @@ const password2 = ref(null)
 const name = ref(null)
 const emailcheck = ref(false)
 
-const emailRequest = function () {
+const emailRequest = async function () {
   console.log('이메일 인증 요청', emailcheck.value)
-  store.emailRequest(email.value, 'find')
+  await store.emailRequest(email.value, 'find')
   console.log('결과', store.result)
 }
 
 const validateResult = ref(0)
-const emailValidate = function () {
+const emailValidate = async function () {
   console.log('이메일 확인 요청', emailcheck.value)
   var data = false
-  data = store.emailValidate(email.value, confirm.value)
+  data = await store.emailValidate(email.value, confirm.value)
   console.log('asddasads', data)
   if (data == true) {
     validateResult.value = 1
@@ -33,9 +33,9 @@ const emailValidate = function () {
 
   console.log('결과', store.result)
 }
-const updatePassword = function () {
+const updatePassword = async function () {
   console.log('비밀번호 변경 실행')
-  store.updatePassword(email.value, name.value, password1.value)
+  await store.updatePassword(email.value, name.value, password1.value)
 }
 const emailRules = ref([
   (v) => !!v || '이메일은 필수입니다.',
