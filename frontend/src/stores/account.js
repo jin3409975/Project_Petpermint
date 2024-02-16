@@ -50,7 +50,9 @@ export const useAccountStore = defineStore(
         data = new FormData()
         data.append('name', pets[i].name)
         //console.log(pets[i].name)
-        data.append('picture', pets[i].picture)
+        if (pets[i].picture != null) {
+          data.append('picture', pets[i].picture)
+        }
         //console.log(pets[i].picture)
         data.append('specie', pets[i].petspecies)
         //console.log(pets[i].petspecies)
