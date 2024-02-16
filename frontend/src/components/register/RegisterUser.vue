@@ -253,9 +253,9 @@ function register() {
   //showSnackbar.value = true
 
   // 스낵바가 표시되고 2000ms 후에 메인 페이지로 이동
-  // setTimeout(() => {
-  //   router.push({ name: 'main-home' })
-  // }, 2000)
+  setTimeout(() => {
+    router.push({ name: 'main-home' })
+  }, 2000)
 }
 
 // 카카오 주소 검색
